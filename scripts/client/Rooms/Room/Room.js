@@ -47,15 +47,13 @@ Client.room = new function() {
 
     this.clickFloormap = function() {
         this.entity.$canvas.on("click", function(event) {
-            const hit = Client.room.entity.getEntity([ event.offsetX, event.offsetY ]);
-            
-            if(hit == undefined)
+            if(Client.room.entity.currentEntity == undefined)
                 return;
 
-            if(hit.entity.name != "floormap")
+            if(Client.room.entity.currentEntity.entity.name != "floormap")
                 return;
 
-            Client.socket.messages.send({ OnRoomMapClick: { row: hit.result.row, column: hit.result.column } });
+            Client.socket.messages.send({ OnRoomMapClick: { row: Client.room.entity.currentEntity.result.row, column: Client.room.entity.currentEntity.result.column } });
         });
     };
 

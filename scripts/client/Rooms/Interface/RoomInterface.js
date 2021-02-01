@@ -58,18 +58,16 @@ Client.rooms.interface = function($parent) {
 
         await cursor.render();
 
-        let hit = undefined;
-
         this.entity.events.render.push(function() {
             entity.removeEntity(cursor);
 
-            hit = entity.getEntity(mousePosition);
+            entity.currentEntity = entity.getEntity(mousePosition);
             
-            if(hit == undefined)
+            if(entity.currentEntity == undefined)
                 return;
 
-            if(hit.entity.name == "floormap") {
-                cursor.setCoordinates(parseInt(hit.result.row), parseInt(hit.result.column), parseInt(hit.result.depth), -2000);
+            if(entity.currentEntity.entity.name == "floormap") {
+                cursor.setCoordinates(parseInt(entity.currentEntity.result.row), parseInt(entity.currentEntity.result.column), parseInt(entity.currentEntity.result.depth), -2000);
                 
                 entity.addEntity(cursor);
             }

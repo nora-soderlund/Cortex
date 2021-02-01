@@ -15,9 +15,11 @@ Client.rooms.entity = function($parent) {
         return entity;
     };
 
+    this.currentEntity = undefined;
+
     this.getEntity = function(position) {
         if(position == undefined)
-            return;
+            return undefined;
 
         const offset = [
             position[0] - this.offset[0],
