@@ -1,0 +1,26 @@
+.client-development {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    
+    margin: 12px;
+
+    color: rgba(255, 255, 255, .5);
+}
+
+#client-development {
+    overflow: hidden;
+    
+    position: fixed;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 256px;
+
+    background: #242424;
+
+    border-top: 1px solid #525252;
+}

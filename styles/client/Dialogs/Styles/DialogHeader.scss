@@ -1,0 +1,62 @@
+.dialog-header {
+    height: 90px;
+
+    background: #0E3F52;
+
+    position: relative;
+
+    display: flex;
+
+    &:after {
+        content: '';
+
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        border: 2px solid rgba(255, 255, 255, .25);
+    }
+
+    .dialog-header-image {
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        opacity: .5;
+    }
+
+    .dialog-header-container {
+        margin: auto 12px;
+
+        color: #FFF;
+
+        padding-bottom: 30px;
+
+        .dialog-header-content {
+            display: grid;
+            grid-template-columns: auto auto;
+            grid-gap: 12px;
+
+            opacity: .9;
+            
+            .dialog-header-details {
+                margin: auto 0;
+            }
+
+            .dialog-header-icon {
+                margin: auto 0;
+
+                text-align: center;
+            }
+        }
+    }
+}
+
+.dialog-default-content > .dialog-header {
+    margin: -7px -8px 0;
+}

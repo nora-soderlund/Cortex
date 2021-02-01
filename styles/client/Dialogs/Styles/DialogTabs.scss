@@ -1,0 +1,117 @@
+.dialog-tabs {
+    .dialog-tabs-header {
+        height: 34px;
+        width: 100%;
+
+        background: #FFF;
+
+        position: relative;
+
+        padding: 4px 12px 0;
+
+        border-bottom: 1px solid #242424;
+
+        .dialog-tabs-button {
+            display: inline-block;
+
+            height: 30px;
+            line-height: 28px;
+
+            padding: 0 12px;
+
+            background: #CAC9C1;
+
+            border: 1px solid #504F4E;
+            border-bottom-color: #85847C;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+
+            
+            cursor: pointer;
+
+            &:hover {
+                border-color: #686868;
+            }
+
+            &[active] {
+                border-color: #000;
+            }
+
+            &:hover, &[active] {
+                background: #ECEAE0;
+
+                border-bottom: none;
+
+                position: relative;
+
+                &:before, &:after {
+                    content: '';
+
+                    width: 100%;
+
+                    position: absolute;
+                    left: 0;
+                }
+
+                &:before {
+                    height: 100%;
+
+                    box-sizing: border-box;
+
+                    border: 2px solid #FFF;
+                    
+                    border-top-left-radius: 6px;
+                    border-top-right-radius: 6px;
+
+                    border-bottom: none;
+
+                    top: 0;
+                }
+
+                &:after {
+                    height: 1px;
+
+                    background: #ECEAE0;
+
+                    left: 1px;
+                    width: calc(100% - 2px);
+
+                    bottom: -1px;
+                }
+            }
+        }
+    }
+
+    .dialog-tabs-container {
+        border-top: 1px solid #FFF;
+
+        height: 100%;
+        width: 100%;
+
+        overflow: auto;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+        .dialog-tabs-content {
+
+        }
+    }
+}
+
+.dialog-default-content > .dialog-tabs {
+    margin: -6px -8px;
+
+    .dialog-tabs-content {
+        padding: 6px 8px;
+    }
+}
+
+.dialog-header ~ .dialog-tabs {
+    margin-top: -34px;
+
+    .dialog-tabs-header {
+        background: transparent;
+    }
+}

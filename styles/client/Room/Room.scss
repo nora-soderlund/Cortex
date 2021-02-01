@@ -1,0 +1,16 @@
+@import "RoomImages";
+
+@import "Interface/RoomInterface";
+@import "Navigator/RoomNavigator"; 
+
+.room {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+}
+
+.room-navigator-create-sprite { @include sprite-room-navigator-create; }
+.room-navigator-explore-sprite { @include sprite-room-navigator-explore; }
+.room-navigator-event-sprite { @include sprite-room-navigator-event; }
+.room-navigator-public-sprite { @include sprite-room-navigator-public; }

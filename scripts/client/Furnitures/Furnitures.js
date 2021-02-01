@@ -1,0 +1,3 @@
+Client.furnitures = new function() {
+
+};

@@ -1,0 +1,140 @@
+.room-navigator-tab-home {
+    @include sprite-room-home-active;
+
+    margin: 0 10px 0 0;
+
+    cursor: pointer;
+}
+
+.room-navigator-list {
+    background: #FFF;
+    
+    width: 100%;
+
+    padding: 2px 4px;
+
+    &:not(:last-child) {
+        margin: 0 0 8px 0;
+    }
+
+    .room-navigator-list-header {
+        height: 24px;
+        line-height: 22px;
+
+        color: #0F557B;
+
+        position: relative;
+
+        .room-navigator-list-toggle {
+            @include sprite-room-navigator-expand;
+
+            position: absolute;
+
+            cursor: pointer;
+
+            left: 6px;
+
+            top: 0; bottom: 0;
+            margin: auto 0;
+        }
+
+        .room-navigator-list-title {
+            position: absolute;
+
+            left: 22px;
+        }
+
+        .room-navigator-list-expand {
+            position: absolute;
+
+            cursor: pointer;
+
+            right: 6px;
+
+            top: 0; bottom: 0;
+            margin: auto 0;
+
+            @include sprite-room-navigator-list-expand;
+
+            &[active] {
+                @include sprite-room-navigator-list-collapse;
+            }
+        }
+    }
+
+    .room-navigator-list-table {
+        display: none;
+
+        width: 100%;
+
+        .room-navigator-list-item {
+            height: 20px;
+            
+            line-height: 20px;
+
+            padding: 0 6px;
+
+            cursor: pointer;
+
+            &.room-navigator-list-expanded {
+                display: none;
+            }
+
+            .room-navigator-list-users {
+                width: 40px;
+                height: 18px;
+
+                display: inline-block;
+
+                margin-left: -5px;
+                margin-right: 6px;
+
+                text-align: center;
+
+                background: #CAC9C0;
+
+                border-radius: 4px;
+
+                color: #FFF;
+
+                line-height: 18px;
+
+                i {
+                    margin-right: 3px;
+
+                    &:after {
+                        content: '';
+
+                        @include sprite-room-navigator-users;
+
+                        position: relative;
+
+                        top: 0px;
+                    }
+                }
+            }
+
+            &:nth-child(odd) {
+                background: #D5EDFF;
+
+                border-radius: 3px;
+            }
+
+            &:not(:last-child) {
+                margin: 1px 0;
+            }
+        }
+    }
+
+    &[active] {
+        .room-navigator-list-header {
+            .room-navigator-list-toggle {
+                @include sprite-room-navigator-collapse;
+            }
+        }
+
+        .room-navigator-list-table {
+            display: block;
+        }
+    }
+}

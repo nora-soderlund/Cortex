@@ -1,0 +1,163 @@
+.dialog-default {
+    position: fixed;
+
+    left: 12.5%;
+    top: 12.5%;
+
+
+
+    border: 1px solid #000;
+
+	border-bottom-width: 2px;
+
+	border-radius: 6px;
+    
+    &:before {
+		content: '';
+
+		position: absolute;
+
+		z-index: -1;
+
+		left: 2px;
+		top: 2px;
+
+		width: calc(100% - 2px);
+		height: 100%;
+
+		border-radius: 6px;
+
+		box-shadow: 0 0 5px 0 #000;
+	}
+
+    .dialog-default-header {
+        background: #367896;
+
+        height: 32px;
+        width: 100%;
+
+		border: 2px solid rgba(255, 255, 255, .2);
+		border-bottom: none;
+
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	
+		position: relative;
+
+		&:after {
+			content: '';
+
+			position: absolute;
+
+			left: -2px;
+			bottom: 0px;
+
+			width: calc(100% + 4px);
+			height: 1px;
+
+			background: #000;
+		}
+        
+        .dialog-default-header-title {
+            pointer-events: none;
+
+            margin: 0 12px;
+
+            text-align: center;
+
+            line-height: 28px;
+
+            font-weight: normal;
+            font-family: "Ubuntu Bold";
+			font-size: 13px;
+		}
+
+		.dialog-default-header-buttons {
+			position: absolute;
+
+			text-align: right;
+
+			right: 6px;
+
+			height: 22px;
+
+			top: 0; bottom: 0;
+
+			margin: auto 0;
+
+			.dialog-default-header-info {
+				@include sprite-dialog-info;
+
+				cursor: pointer;
+
+				&:hover {
+					@include sprite-dialog-info-hover;
+				}
+
+				&:active {
+					@include sprite-dialog-info-active;
+				}
+			}
+
+			.dialog-default-header-close {
+				@include sprite-dialog-close;
+
+				margin-left: 6px;
+
+				cursor: pointer;
+
+				&:hover {
+					@include sprite-dialog-close-hover;
+				}
+
+				&:active {
+					@include sprite-dialog-close-active;
+				}
+			}
+		}
+    }
+
+	.dialog-default-container {
+		height: 100%;
+		width: 100%;
+
+		position: relative;
+		
+		.dialog-default-content {
+			background: #E9E9E1;
+	
+			border: 2px solid #FFF;
+	
+			border-top-width: 1px;
+	
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+
+			padding: 6px;
+
+			font-size: 13px;
+
+			text-shadow: 0px 1px 1px rgba(255, 255, 255, .7);
+
+			position: relative;
+
+			color: black;
+		}
+
+		.dialog-default-overlay {
+			display: none;
+			
+			position: absolute;
+
+			left: 0;
+			top: 0;
+			
+			width: 100%;
+			height: 100%;
+
+			background: rgba(255, 255, 255, .5);
+		}
+	}
+
+	overflow: hidden;
+}

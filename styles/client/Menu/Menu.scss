@@ -1,0 +1,61 @@
+@import "MenuImages";
+
+#menu {
+    height: 50px;
+    width: 100%;
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    background: rgba(28, 28, 26, .9);
+
+    border-top: 2px solid rgba(64, 64, 64, .75);
+    border-bottom: 1px solid rgba(64, 64, 64, .75);
+
+    padding: 0 12px;
+
+    &:before {
+        content: '';
+
+        left: 0;
+        top: -1px;
+
+        width: 100%;
+        height: 1px;
+
+        background: rgba(0, 0, 0, .5);
+    }
+
+    .menu-item {
+        display: inline-block;
+
+        height: 45px;
+        width: 50px;
+
+        display: flex;
+
+        cursor: pointer;
+
+        .menu-navigator {
+            @include sprite-menu-navigator;
+
+            margin: auto;
+        }
+
+        &:hover {
+            .menu-navigator {
+                transform: translate(-1px, -1px);
+            }
+        }
+
+        &:active {
+            .menu-navigator {
+                opacity: .5;
+
+                transform: translate(1px, 1px);
+            }
+        }
+    }
+}

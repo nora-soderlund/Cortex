@@ -1,0 +1,27 @@
+@import "development/development.scss";
+@import "Room/Room.scss";
+@import "Loader/Loader.scss";
+@import "Dialogs/Dialogs.scss";
+@import "Menu/Menu.scss";
+
+body {
+    background: #111;
+}
+
+* {
+    box-sizing: border-box;
+
+    user-select: none;
+} 
+
+#client {
+    overflow: hidden;
+    
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: calc(100% - 256px);
+}

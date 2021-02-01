@@ -1,0 +1,37 @@
+@import "../../../images/general/logo";
+
+#client-loader {
+    background: #111;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    z-index: 1;
+
+    display: flex;
+
+    .client-loader-container {
+        margin: auto;
+
+        min-width: 200px;
+
+        text-align: center
+    }
+
+    .client-loader-logo {
+        @include sprite-logo;
+
+        margin: auto auto 4px;
+    }
+
+    #client-loader-text {
+        margin: 4px auto auto;
+
+        color: rgb(212, 212, 212, .75);
+    } 
+}
