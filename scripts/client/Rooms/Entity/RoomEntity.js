@@ -119,8 +119,11 @@ Client.rooms.entity = function($parent) {
 
         const median = Client.utils.getArrayMedian(this.framePerformance);
         
-        if(median > 6 || milliseconds > (1000 / 75))
+        if(median > 6 || milliseconds > (1000 / 75)) {
             Client.utils.warn("RoomEntity", "Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!");
+        
+            this.framePerformance.length = 0;
+        }
     };
 
     this.events = new function() {
