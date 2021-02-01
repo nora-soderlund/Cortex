@@ -112,6 +112,14 @@ Client.figures.entity = function(figure) {
         for(let type in priorities)
             layers[priorities[type]] = [];
 
+        const shadow = await this.getSprite("hh_human_body", "sd", 1, 0, 0);
+
+        if(shadow != null) {
+            shadow.alpha = .25;
+
+            layers["bd"].push(shadow);
+        }
+
         for(let set in this.parts) {
             const setType = await Client.figures.getSetType(set);
 
@@ -143,51 +151,12 @@ Client.figures.entity = function(figure) {
 
                 const library = await Client.figures.getLibrary(id, type);
 
-                const asset = await Client.assets.get("HabboFigures/" + library);
+                const sprite = await this.getSprite(library, type, id, direction, color);
 
-                let frame = 0;
-
-                let sprite;
-
-                for(let index in this.actions) {
-                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-
-                    if(asset.manifest.sprites[sprite] == undefined)
-                        continue;
-
-                    if(this.frames[this.actions[index].id] != undefined) {
-                        frame = this.frames[this.actions[index].id];
-                        
-                        sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-
-                        if(asset.manifest.sprites[sprite] == undefined) {
-                            frame = 0;
-
-                            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-                        }
-                    }
-
-                    break;
-                }
-
-                if(asset.manifest.sprites[sprite] == undefined) {
-                    //Client.utils.warn("FigureEntity", "Unable to locate sprite " + sprite + " in library " + library + "!");
-
+                if(sprite == null)
                     continue;
-                }
 
-                let image = await Client.assets.getSprite("HabboFigures/" + library, sprite);
-
-                if(color != undefined)
-                    image = await Client.assets.getSpriteColor("HabboFigures/" + library, sprite, "#" + color);
-
-                const spriteData = Client.figures.getSprite(asset, sprite).split(',');
-
-                layers[type].push({
-                    image,
-                    left: (parseInt(spriteData[0]) * -1),
-                    top: (parseInt(spriteData[1]) * -1)
-                });
+                layers[type].push(sprite);
             }
         }
 
@@ -210,6 +179,8 @@ Client.figures.entity = function(figure) {
 
         for(let type in layers) {
             for(let index in layers[type]) {
+                context.globalAlpha = (layers[type][index].alpha == undefined)?(1.0):(layers[type][index].alpha);
+
                 context.drawImage(layers[type][index].image, 128 + offset.left + layers[type][index].left, 128 + offset.top + layers[type][index].top);
             }
         }
@@ -232,6 +203,54 @@ Client.figures.entity = function(figure) {
             this.events.render[event](sprites);
 
         //Client.utils.warn("FigureEntity", "After math render processes took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms to execute!");
+    };
+
+    this.getSprite = async function(library, type, id, direction, color) {
+        const asset = await Client.assets.get("HabboFigures/" + library);
+
+        let frame = 0;
+
+        let sprite;
+
+        for(let index in this.actions) {
+            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+
+            if(asset.manifest.sprites[sprite] == undefined)
+                continue;
+
+            if(this.frames[this.actions[index].id] != undefined) {
+                frame = this.frames[this.actions[index].id];
+                
+                sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+
+                if(asset.manifest.sprites[sprite] == undefined) {
+                    frame = 0;
+
+                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                }
+            }
+
+            break;
+        }
+
+        if(asset.manifest.sprites[sprite] == undefined) {
+            Client.utils.warn("FigureEntity", "Unable to locate sprite " + sprite + " in library " + library + "!");
+
+            return null;
+        }
+
+        let image = await Client.assets.getSprite("HabboFigures/" + library, sprite);
+
+        if(color != undefined)
+            image = await Client.assets.getSpriteColor("HabboFigures/" + library, sprite, "#" + color);
+
+        const spriteData = Client.figures.getSprite(asset, sprite).split(',');
+
+        return {
+            image,
+            left: (parseInt(spriteData[0]) * -1),
+            top: (parseInt(spriteData[1]) * -1)
+        };
     };
 
     this.set(figure);
