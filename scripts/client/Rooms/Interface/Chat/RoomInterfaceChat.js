@@ -1,11 +1,11 @@
-Client.rooms.interface.chat = function() {
-    this.$element = $('<div class="room-interface-chat"></div>');
+Client.rooms.interface.chat = new function() {
+    this.$element = $('<div class="room-interface-chat"></div>').appendTo(Client.rooms.interface.$element);
 
     this.messages = [];
 
     this.interval = undefined;
 
-    this.addMessage = async function(style, message, left, color = undefined) {
+    this.addMessage = async function(style, message, left = 0, color = undefined) {
         const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
 
         const sprite = (color == undefined)?(await Client.assets.getSprite("HabboRoomMessages", style)):(await Client.assets.getSpriteColor("HabboRoomMessages", style, color));

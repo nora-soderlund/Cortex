@@ -32,7 +32,7 @@
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>sass-mixins</string>
+        <string>css-simple</string>
         <key>textureFileName</key>
         <filename>../../../images/Menu/images.png</filename>
         <key>flipPVR</key>
@@ -74,11 +74,11 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>0</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
-        <string>../images/Menu/</string>
+        <string></string>
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -129,10 +129,10 @@
         </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
-            <key>sass</key>
+            <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>MenuImages.sass</filename>
+                <filename>MenuImages.css</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -149,11 +149,11 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <true/>
+        <false/>
         <key>trimSpriteNames</key>
         <true/>
         <key>prependSmartFolderName</key>
-        <false/>
+        <true/>
         <key>autodetectAnimations</key>
         <true/>
         <key>globalSpriteSettings</key>
@@ -163,7 +163,7 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>1</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
@@ -196,10 +196,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Images/menu-shop.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,9,19,19</rect>
+                <key>scale9Paddings</key>
+                <rect>9,9,19,19</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>Images/menu-navigator.png</filename>
+            <filename>Images/menu-shop.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
@@ -222,6 +238,17 @@
         <key>normalMapSheetFileName</key>
         <filename></filename>
         <key>exporterProperties</key>
-        <map type="ExporterProperties"/>
+        <map type="ExporterProperties">
+            <key>css::media-query-2x</key>
+            <struct type="ExporterProperty">
+                <key>value</key>
+                <string>(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)</string>
+            </struct>
+            <key>css::sprite-prefix</key>
+            <struct type="ExporterProperty">
+                <key>value</key>
+                <string></string>
+            </struct>
+        </map>
     </struct>
 </data>

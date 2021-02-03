@@ -47,7 +47,7 @@ Client.rooms.entity = function($parent) {
         this.entities.splice(index, 1);
     };
 
-    this.$canvas = $('<canvas></canvas>');
+    this.$canvas = $('<canvas></canvas>').appendTo($parent);
 
     this.updateCanvas = function() {
         const width = $parent.width();

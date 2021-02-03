@@ -4,13 +4,13 @@ Client.socket.messages.register("OnRoomEntityAdd", function(data) {
             data.furnitures = [ data.furnitures ];
 
         for(let index in data.furnitures) {
-            let entity = new Client.rooms.items.furniture(Client.room.entity, "HabboFurnitures/Club/Sofa", data.furnitures[index].position.direction);
+            let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/Club/Sofa", data.furnitures[index].position.direction);
             
             entity.setPosition(data.furnitures[index].position);
             
             entity.render();
 
-            Client.room.entity.addEntity(entity);
+            Client.rooms.interface.entity.addEntity(entity);
         }
     }
     
@@ -19,7 +19,7 @@ Client.socket.messages.register("OnRoomEntityAdd", function(data) {
             data.users = [ data.users ];
 
         for(let index in data.users) {
-            let entity = new Client.rooms.items.figure(Client.room.entity, data.users[index].figure, data.users[index].position.direction);
+            let entity = new Client.rooms.items.figure(Client.rooms.interface.entity, data.users[index].figure, data.users[index].position.direction);
             
             entity.setPosition(data.users[index].position);
             
@@ -27,9 +27,9 @@ Client.socket.messages.register("OnRoomEntityAdd", function(data) {
 
             entity.data = data.users[index];
 
-            Client.room.entity.addEntity(entity);
+            Client.rooms.interface.entity.addEntity(entity);
 
-            Client.room.users[data.users[index].id] = entity;
+            Client.rooms.interface.users[data.users[index].id] = entity;
         }
     }
 });

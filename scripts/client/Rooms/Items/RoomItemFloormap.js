@@ -18,7 +18,7 @@ Client.rooms.items.floormap = function(parent, map = "", floor = "default", floo
 
         entity.parent.center = entity.floormap.rows * 32;
 
-        entity.parent.setOffset((entity.parent.$canvas.width() / 2) + -(entity.floormap.rows * 16) + -(entity.floormap.columns * 16), (entity.parent.$canvas.height() / 2) - (entity.floormap.floorDepth * 16) - (entity.floormap.rows * 8));
+        //entity.parent.setOffset((entity.parent.$canvas.width() / 2) + -(entity.floormap.rows * 16) + -(entity.floormap.columns * 16), (entity.parent.$canvas.height() / 2) - (entity.floormap.floorDepth * 16) - (entity.floormap.rows * 8));
 
         const sprite = new Client.rooms.items.sprite(entity, entity.floormap.$canvas[0]);
         
