@@ -1,7 +1,7 @@
-Client.dialogs.header = function() {
+Client.dialogs.header = function(settings = {}) {
     this.$element = $('<div class="dialog-header"></div>');
 
-    this.$image = $('<div class="dialog-header-image"></div>').appendTo(this.$element);
+    this.$image = $('<canvas class="dialog-header-image"></canvas>').appendTo(this.$element);
 
     this.$content = $(
         '<div class="dialog-header-container">' +
@@ -23,6 +23,15 @@ Client.dialogs.header = function() {
         this.$content.find(".dialog-header-description").html(description);
     };
 
+    this.getContext = function(context) {
+        this.$image.attr({
+            width: this.$image.parent().width(),
+            height: this.$image.parent().height()
+        });
+
+        return this.$image[0].getContext(context);
+    };
+
     this.setIcon = function($element) {
         const $icon = this.$content.find(".dialog-header-icon").css("min-width", "64px");
         
@@ -30,4 +39,11 @@ Client.dialogs.header = function() {
 
         $element.appendTo($icon);
     };
+
+    this.set = function(settings) {
+        if(settings.height != undefined)
+            this.$element.css("height", settings.height);
+    };
+
+    this.set(settings);
 };
