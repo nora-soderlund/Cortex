@@ -232,7 +232,8 @@ Client.figures.entity = function(figure) {
         }
 
         if(asset.manifest.sprites[sprite] == undefined) {
-            console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
+            if(Client.figures.logging.missingSprite)
+                console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
 
             return null;
         }

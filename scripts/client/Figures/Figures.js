@@ -1,4 +1,8 @@
 Client.figures = new function() {
+    this.logging = {
+        missingSprite: false
+    };
+
     this.getLibrary = async function(id, type) {
         const map = await Client.assets.get("HabboFigureMap");
 
