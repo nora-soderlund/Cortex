@@ -66,11 +66,12 @@ Client.rooms.entity = function($parent) {
 
     this.frame = 0;
     this.frameRate = 24;
+    this.frameRates = [];
     this.frameStamp = performance.now();
     this.framePerformance = [];
 
     this.render = function() {
-        const timestamp = performance.now();
+        let timestamp = performance.now();
 
         if((timestamp - this.frameStamp) > 1000 / this.frameRate) {
             this.frame++;
@@ -132,6 +133,17 @@ Client.rooms.entity = function($parent) {
 
             this.framePerformance.length = 0;
         }
+
+        timestamp = performance.now();
+
+        this.frameRates.push(timestamp);
+
+        for(let index in this.frameRates) {
+            if(timestamp - this.frameRates[index] >= 1000)
+                this.frameRates.splice(index, 1);
+        }
+
+        Client.development.$debug.text(this.frameRates.length + " FPS");
     };
 
     this.events = new function() {
