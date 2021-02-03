@@ -1,14 +1,18 @@
 Client.furnitures.visualization = function(visualization) {
     this.data = visualization;
+
+    this.graphics = (this.data.graphics == undefined)?(this.data):(this.data.graphics);
     
     this.type = visualization.type;
+
+    this.layers = [];
     
     this.getGraphicsSize = function(size) {
-        for(let index in this.data.graphics.visualization) {
-            if(this.data.graphics.visualization[index].size != size)
+        for(let index in this.graphics.visualization) {
+            if(this.graphics.visualization[index].size != size)
                 continue;
 
-            this.graphics = this.data.graphics.visualization[index];
+            this.graphics = this.graphics.visualization[index];
 
             break;
         }
@@ -19,7 +23,8 @@ Client.furnitures.visualization = function(visualization) {
 
         this.angle = parseInt(this.graphics.angle);
 
-        this.layers = [ this.graphics.layers.layer ];
+        if(this.graphics.layers != null)
+            this.layers = [ this.graphics.layers.layer ];
 
         this.directionLayers = this.graphics.directions.direction;
 

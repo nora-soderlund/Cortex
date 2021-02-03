@@ -213,6 +213,15 @@ Client.loader.addStep(async function(finished) {
 
     await figure2.render();
 
+    
+
+    const asset = await Client.assets.get("HabboFurnidata/laptopdesk");
+
+    const furniture = new Client.furnitures.entity("HabboFurnidata/laptopdesk", asset);
+
+    furniture.render();
+
+
     finished();
 });
 
