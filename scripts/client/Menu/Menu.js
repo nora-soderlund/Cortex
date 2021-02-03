@@ -6,7 +6,7 @@ Client.menu = new function() {
     this.addItem = function(identifier, callback) {
         const $element = $(
             '<div class="menu-item">' +
-                '<div class="menu-' + identifier + '"></div>' +
+                '<div class="menu-sprite menu-' + identifier + '"></div>' +
             '</div>'
         ).on("click", function() {
             callback();
@@ -15,5 +15,9 @@ Client.menu = new function() {
 
     this.addItem("navigator", function() {
         Client.rooms.navigator.toggle();
+    });
+
+    this.addItem("shop", function() {
+        
     });
 };

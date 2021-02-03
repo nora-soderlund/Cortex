@@ -91,6 +91,10 @@ Client.rooms.entity = function($parent) {
         
         const context = this.$canvas[0].getContext("2d");
 
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+        context.save();
+
         //context.imageSmoothingEnabled = false;
 
         context.scale(window.devicePixelRatio, window.devicePixelRatio);
@@ -104,11 +108,15 @@ Client.rooms.entity = function($parent) {
             return a.getIndex() - b.getIndex();
         });
 
+        const offset = [ this.center + this.offset[0], this.offset[1] ];
+
         for(let index in this.sprites)
-            this.sprites[index].render(context, [ this.center + this.offset[0], this.offset[1] ]);
+            this.sprites[index].render(context, offset);
 
         for(let index in this.events.render)
             this.events.render[index]();
+
+        context.restore();
 
         if(this.framePerformance.length == this.frameRate)
             this.framePerformance.shift();
