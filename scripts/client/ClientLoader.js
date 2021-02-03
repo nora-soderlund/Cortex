@@ -50,7 +50,7 @@ Client.loader = new function() {
     this.loadScript = function(data, finished) {
         const name = data[0].substring(data[0].lastIndexOf('/') + 1);
 
-        Client.utils.log("Loader", "Downloading and running script " + name + "...", 1, true);
+        console.log("[%cLoader%c]%c Downloading and running " + name + "...", "color: orange", "color: inherit", "color: lightblue");
 
         $.getScript("scripts/client/" + data[0], function() {
             data.shift();
@@ -74,7 +74,7 @@ Client.loader.addStep(function(finished) {
     if(Client.loader.data.scripts.length == 0)
         return finished();
 
-    Client.utils.log("Loader", "Starting the download of the client scripts...");
+    console.log("[%cLoader%c]%c Starting the download of the client scripts...", "color: orange", "color: inherit", "color: lightblue");
     
     Client.loader.setText("Downloading scripts...");
     
@@ -83,21 +83,21 @@ Client.loader.addStep(function(finished) {
     Client.loader.loadScripts(Client.loader.data.scripts, function() {
         $.holdReady(false);
     
-        Client.utils.log("Loader", "Finished loading the client scripts!");
+        console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
 
         finished();
     });
 });
 
 Client.loader.addStep(async function(finished) {
-    Client.utils.log("Loader", "Starting the download of the pre-loaded assets...");
+    console.log("[%cLoader%c]%c Starting the download of the pre-loaded assets...", "color: orange", "color: inherit", "color: lightblue");
 
     Client.loader.setText("Preparing assets...");
 
     for(let index in Client.loader.data.assets)
         await Client.assets.get(Client.loader.data.assets[index]);
 
-    Client.utils.log("Loader", "Finished loading the pre-loaded assets!");
+    console.log("[%cLoader%c]%c Finished loading the pre-loaded assets!", "color: orange", "color: inherit", "color: lightblue");
 
     finished();
 });

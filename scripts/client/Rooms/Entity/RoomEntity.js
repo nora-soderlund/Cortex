@@ -120,8 +120,8 @@ Client.rooms.entity = function($parent) {
         const median = Client.utils.getArrayMedian(this.framePerformance);
         
         if(median > 6 || milliseconds > (1000 / 75)) {
-            Client.utils.warn("RoomEntity", "Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!");
-        
+            console.warn("[%cRoomEntity%c]%c Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!", "color: darkred", "color: inherit", "color: lightblue");
+
             this.framePerformance.length = 0;
         }
     };

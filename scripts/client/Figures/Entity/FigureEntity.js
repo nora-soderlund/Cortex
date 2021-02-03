@@ -142,9 +142,7 @@ Client.figures.entity = function(figure) {
                 const type = setData.part[index].type;
 
                 if(layers[type] == undefined) {
-                    console.log(layers);
-
-                    Client.utils.warn("FigureEntity", "Unable to locate type " + type + " in current priority list!");
+                    console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
 
                     continue;
                 }
@@ -234,7 +232,7 @@ Client.figures.entity = function(figure) {
         }
 
         if(asset.manifest.sprites[sprite] == undefined) {
-            Client.utils.warn("FigureEntity", "Unable to locate sprite " + sprite + " in library " + library + "!");
+            console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
 
             return null;
         }

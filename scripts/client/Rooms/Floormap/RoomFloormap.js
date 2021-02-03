@@ -100,7 +100,7 @@ Client.rooms.floormap = function() {
 
         this.renderTiles(context);
 
-        Client.utils.log("RoomFloormap", "Floormap render process took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms!");
+        console.warn("[RoomFloormap]%c Floormap render process took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms!", "color: lightblue");
     };
 
     this.renderTiles = function(context) {

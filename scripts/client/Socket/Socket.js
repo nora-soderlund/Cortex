@@ -1,14 +1,14 @@
 Client.socket = new function() {
     this.open = function(url = "ws://127.0.0.1:81/local:cake") {
         return new Promise(function(resolve, failure) {
-            Client.utils.log("Socket", "Connecting to the server at " + url + "...");
+            console.log("[%cSocket%c]%c Connecting to the server at " + url + "...", "color: orange", "color: inherit", "color: lightblue");
 
             const timestamp = performance.now();
 
             const server = new WebSocket(url);
 
             server.onopen = function() {
-                Client.utils.log("Socket", "Connected to the server after " + Math.floor(performance.now() - timestamp) + "ms!");
+                console.log("[%cSocket%c]%c Connected to the server after " + Math.floor(performance.now() - timestamp) + "ms!", "color: orange", "color: inherit", "color: lightblue");
 
                 server.onopen = function() {
 
@@ -31,7 +31,7 @@ Client.socket = new function() {
             };
 
             server.onclose = function() {
-                Client.utils.error("Socket", "Failed to connect to the server after " + Math.floor(performance.now() - timestamp) + "ms!");
+                console.log("[%cSocket%c]%c Failed to connect to the server after " + Math.floor(performance.now() - timestamp) + "ms!", "color: orange", "color: inherit", "color: lightblue");
 
                 failure(server);
             };

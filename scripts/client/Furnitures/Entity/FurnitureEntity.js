@@ -70,7 +70,7 @@ Client.furnitures.entity = function(name, asset) {
             const spriteData = this.assetsData.getAsset(sprite);
 
             if(spriteData == undefined) {
-                Client.utils.warn("FurnitureEntity", "Asset " + sprite + " is not valid and doesn't exist!");
+                console.warn("[FurnitureEntity]%c Asset " + sprite + " is not valid and doesn't exist!", "color: lightblue");
 
                 continue;
             }

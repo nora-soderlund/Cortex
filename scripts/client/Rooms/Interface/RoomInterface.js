@@ -13,7 +13,7 @@ Client.rooms.interface = function($parent) {
 
     this.addMouseEvents = async function() {
         if(this.entity == undefined) {
-            Client.utils.error("RoomInterface", "Cannot register mouse events, there's no room entity!");
+            console.error("[%cRoomInterface%c]%c Cannot register mouse events, there's no room entity!", "color: darkred", "color: inherit", "color: lightblue");
 
             return;
         }
@@ -76,7 +76,7 @@ Client.rooms.interface = function($parent) {
 
     this.addChat = function(chat) {
         if(this.entity == undefined) {
-            Client.utils.error("RoomInterface", "Cannot register chat, there's already a chat entity!");
+            console.error("[%cRoomInterface%c]%c Cannot register chat, there's already a chat entity!", "color: darkred", "color: inherit", "color: lightblue");
 
             return;
         }

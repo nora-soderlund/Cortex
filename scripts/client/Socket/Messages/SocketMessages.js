@@ -50,10 +50,10 @@ Client.socket.messages = new function() {
 
     this.call = function(event, data) {
         //Client.utils.log("SocketMessages", "Received " + event + " from the server:");
-        Client.utils.object("SocketMessages", "Received " + event + " from the server:", data);
+        console.log("[%cSocketMessage%c]%c Received " + event + " from the server: %o", "color: orange", "color: inherit", "color: lightblue", data);
 
         if(this.events[event] == undefined)
-            Client.utils.warn("SocketMessage", "Event " + event + " does not have any client handlers!");
+            console.warn("[%cSocketMessage%c]%c Event " + event + " does not have any client handlers!", "color: orange", "color: inherit", "color: lightblue");
 
         for(let index in this.events[event])
             this.events[event][index](data);
