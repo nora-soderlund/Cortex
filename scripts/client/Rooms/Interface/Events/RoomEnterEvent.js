@@ -1,7 +1,7 @@
-Client.socket.messages.register("OnRoomEnter", function(data) {
+Client.socket.messages.register("OnRoomEnter", async function(data) {
     Client.rooms.navigator.hide();
 
-    Client.rooms.interface.clear();
+    await Client.rooms.interface.clear();
 
     Client.rooms.interface.floormap = new Client.rooms.items.floormap(Client.rooms.interface.entity, data.map.floor, "301", 8);
     

@@ -18,10 +18,18 @@ Client.rooms.interface = new function() {
         window.requestAnimationFrame(this.render);
     };
 
-    this.stop = function() {
-        this.active = false;
-        
-        this.chat.addMessage("information", "Room interface renderer stopped!");
+    this.stop = async function() {
+        Client.rooms.interface.active = false;
+
+        return new Promise(function(resolve) {
+            window.requestAnimationFrame(function() {
+                window.requestAnimationFrame(function() {
+                    Client.rooms.interface.chat.addMessage("information", "Room interface renderer stopped!");
+    
+                    resolve();
+                });
+            });
+        });
     }
 
     this.render = function() {
@@ -30,13 +38,14 @@ Client.rooms.interface = new function() {
 
         Client.rooms.interface.entity.render();
 
-        window.requestAnimationFrame(Client.rooms.interface.render);
+        if(Client.rooms.interface.active)
+            window.requestAnimationFrame(Client.rooms.interface.render);
     };
 
-    this.clear = function() {
-        if(this.active)
-            this.stop();
-
+    this.clear = async function() {
         this.entity.entities.length = 0;
+        
+        if(this.active)
+            await this.stop();
     };
 };
