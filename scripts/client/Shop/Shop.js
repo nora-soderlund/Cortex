@@ -48,18 +48,21 @@ Client.shop = new function() {
         });
     };
 
-    entity.setCategory = function(id) {
+    entity.setCategory = async function(id) {
         const page = entity.pages.find(x => x.id == id);
+
+        if(!page.data)
+            page.data = await Client.socket.messages.sendCall({ OnShopPageUpdate: id }, "OnShopPageUpdate");
 
         entity.header.setTitle(page.title);
 
-        entity.header.setDescription("");
+        entity.header.setDescription((page.data.description)?(page.data.description):(""));
 
         entity.setIcon(page.icon);
 
-        entity.setHeader("");
+        entity.setHeader((page.data.header)?(page.data.header):(""));
 
-        entity.category = new Client.shop.types.pages();
+        entity.category = new Client.shop.types[page.data.type]();
     };
 
     entity.setPage = function(id) {

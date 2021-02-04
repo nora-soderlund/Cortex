@@ -9,7 +9,7 @@
     .shop-pages-left {
         display: grid;
     
-        grid-template-rows: 24px auto;
+        grid-template-rows: 23px auto;
         grid-gap: 6px;
 
         .shop-pages-search {
@@ -28,8 +28,8 @@
                 position: absolute;
 
                 right: 6px;
-                
-                top: 0;
+
+                top: 1px;
                 bottom: 0;
 
                 margin: auto 0;
