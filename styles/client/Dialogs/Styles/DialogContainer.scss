@@ -1,0 +1,28 @@
+.dialog-container {
+    background: #D2D1CB;
+
+    border: 1px solid #757571;
+    border-bottom-width: 2px;
+    border-radius: 6px;
+
+    position: relative;
+
+    padding: 2px 4px;
+
+    overflow: auto;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+
+        border: 2px solid #FFF;
+        border-radius: 6px;
+    }
+}

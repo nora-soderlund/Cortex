@@ -1,5 +1,15 @@
 Client.shop.types.pages = function() {
-    this.$element = $('<div>HELLO</div>');
+    this.$element = $(
+        '<div class="shop-pages">' +
+            '<div class="shop-pages-left">' +
+                '<div class="shop-pages-search"></div>' +
+                
+                '<div class="shop-pages-list dialog-container"></div>' +
+            '</div>' +
+            
+            '<div class="shop-pages-right"></div>' +
+        '</div>'
+    );
 
     Client.shop.tabs.$content.html(this.$element);
 };

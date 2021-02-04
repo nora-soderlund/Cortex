@@ -82,7 +82,7 @@ Client.shop = new function() {
 
         entity.header.$element.appendTo(entity.$content);
 
-        entity.tabs = new Client.dialogs.tabs("auto");
+        entity.tabs = new Client.dialogs.tabs(500);
 
         entity.$icon = $('<canvas width="64" height="64"></canvas>');
 

@@ -1,0 +1,20 @@
+.shop-pages {
+    display: grid;
+
+    grid-template-columns: 30% auto;
+    grid-gap: 12px;
+
+    height: 100%;
+
+    .shop-pages-left {
+        display: grid;
+    
+        grid-template-rows: 24px auto;
+        grid-gap: 12px;
+
+        .shop-pages-list {
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
