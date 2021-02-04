@@ -1,19 +1,21 @@
-Client.furnitures.entity = function(name, asset) {
+Client.furnitures.entity = function(name) {
     this.name = name;
-
-    this.asset = asset;
-
-    this.visualizationData = new Client.furnitures.visualization(this.asset.manifest.visualization.visualizationData);
-
-    this.logicData = new Client.furnitures.logic(this.asset.manifest.logic.objectData);
-
-    this.assetsData = new Client.furnitures.assets(this.asset.manifest.assets.assets.asset);
 
     this.direction = 2;
 
     this.$canvas = $('<canvas width="256" height="256"></canvas>').appendTo(Client.development.$element);
 
     this.render = async function() {
+        if(!this.asset) {
+            this.asset = await Client.assets.get(name);
+            
+            this.visualizationData = new Client.furnitures.visualization(this.asset.manifest.visualization.visualizationData);
+
+            this.logicData = new Client.furnitures.logic(this.asset.manifest.logic.objectData);
+
+            this.assetsData = new Client.furnitures.assets(this.asset.manifest.assets.assets.asset);
+        }
+
         const sprites = [];
 
         let layers = {};

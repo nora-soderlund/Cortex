@@ -48,7 +48,7 @@ Client.shop = new function() {
         });
     };
 
-    entity.setCategory = async function(id) {
+    entity.setPage = async function(id) {
         const page = entity.pages.find(x => x.id == id);
 
         if(!page.data)
@@ -61,20 +61,11 @@ Client.shop = new function() {
         entity.setIcon(page.icon);
 
         entity.setHeader((page.data.header)?(page.data.header):(""));
-
-        entity.category = new Client.shop.types[page.data.type](page);
-    };
-
-    entity.setPage = function(id) {
-        const page = entity.pages.find(x => x.id == id);
-
-        entity.header.setTitle(page.title);
-
-        entity.header.setDescription("");
-
-        entity.setIcon(page.icon);
-
-        entity.setHeader("");
+    
+        if(page.parent == 0)
+            entity.category = new Client.shop.types[page.data.type](page);
+        else
+            entity.page = await Client.shop.types[page.data.type](page);
     };
 
     entity.events.create.push(async function() {
@@ -96,7 +87,7 @@ Client.shop = new function() {
         for(let index in categories)
             entity.tabs.add(categories[index].id, categories[index].title);
 
-        entity.tabs.click(entity.setCategory);
+        entity.tabs.click(entity.setPage);
 
         entity.tabs.show(categories[0].id);
 

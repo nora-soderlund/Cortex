@@ -17,6 +17,8 @@ Client.shop.types.pages = function(page) {
 
     this.$list = this.$element.find(".shop-pages-list-container");
 
+    this.$content = this.$element.find(".shop-pages-right");
+
     this.addPage = function(page, $parent) {
         const $element = $(
             '<div class="shop-pages-item">' +
@@ -28,7 +30,13 @@ Client.shop.types.pages = function(page) {
             '</div>'
         ).appendTo($parent);
 
-        const $button = $element.find(".shop-pages-item-button");
+        const $button = $element.find(".shop-pages-item-button").on("click", function() {
+            $parent.find(".shop-pages-item.active").removeClass("active");
+
+            $element.addClass("active");
+
+            Client.shop.setPage(page.id);
+        });
 
         const $icon = $element.find(".shop-pages-item-icon");
 

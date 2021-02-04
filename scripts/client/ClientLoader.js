@@ -213,11 +213,8 @@ Client.loader.addStep(async function(finished) {
 
     await figure2.render();
 
-    
 
-    const asset = await Client.assets.get("HabboFurnitures/valentine/teddy_bear");
-
-    const furniture = new Client.furnitures.entity("HabboFurnitures/valentine/teddy_bear", asset);
+    const furniture = new Client.furnitures.entity("HabboFurnitures/easter_2016/clothing_hat_space1");
 
     furniture.render();
 
