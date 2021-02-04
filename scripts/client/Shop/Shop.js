@@ -12,6 +12,8 @@ Client.shop = new function() {
         }
     });
 
+    entity.types = {};
+
     entity.setIcon = function(icon) {
         Client.assets.getSpritesheetOnly("HabboShopIcons/icon_" + icon).then(function(spritesheet) {
             const context = entity.$icon[0].getContext("2d");
@@ -29,9 +31,15 @@ Client.shop = new function() {
     };
 
     entity.setHeader = function(header) {
-        Client.assets.getSpritesheetOnly("HabboShopHeaders/" + header).then(function(spritesheet) {
-            const context = entity.header.getContext("2d");
+        const context = entity.header.getContext("2d");
 
+        if(header.length == 0) {
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+            return;
+        }
+
+        Client.assets.getSpritesheetOnly("HabboShopHeaders/" + header).then(function(spritesheet) {
             context.imageSmoothingEnabled = false;
 
             context.drawImage(spritesheet,
@@ -40,28 +48,54 @@ Client.shop = new function() {
         });
     };
 
-    entity.events.create.push(function() {
+    entity.setCategory = function(id) {
+        const page = entity.pages.find(x => x.id == id);
+
+        entity.header.setTitle(page.title);
+
+        entity.header.setDescription("");
+
+        entity.setIcon(page.icon);
+
+        entity.setHeader("");
+
+        entity.category = new Client.shop.types.pages();
+    };
+
+    entity.setPage = function(id) {
+        const page = entity.pages.find(x => x.id == id);
+
+        entity.header.setTitle(page.title);
+
+        entity.header.setDescription("");
+
+        entity.setIcon(page.icon);
+
+        entity.setHeader("");
+    };
+
+    entity.events.create.push(async function() {
+        if(!entity.pages)
+            entity.pages = await Client.socket.messages.sendCall({ OnShopUpdate: null }, "OnShopUpdate");
+
         entity.header = new Client.dialogs.header({ height: 95 });
 
         entity.header.$element.appendTo(entity.$content);
 
         entity.tabs = new Client.dialogs.tabs("auto");
 
-        entity.$icon = $('<canvas width="60" height="60"></canvas>');
+        entity.$icon = $('<canvas width="64" height="64"></canvas>');
 
         entity.header.setIcon(entity.$icon);
 
-        entity.tabs.add("frontpage", "Frontpage", function($element) {
-            entity.header.setTitle("Frontpage!");
-    
-            entity.header.setDescription("");
+        const categories = entity.pages.filter(x => x.parent == 0);
 
-            entity.setIcon(213);
+        for(let index in categories)
+            entity.tabs.add(categories[index].id, categories[index].title);
 
-            entity.setHeader("Shop");
-        });
+        entity.tabs.click(entity.setCategory);
 
-        entity.tabs.show("frontpage");
+        entity.tabs.show(categories[0].id);
 
         entity.tabs.$element.appendTo(entity.$content);
     });
