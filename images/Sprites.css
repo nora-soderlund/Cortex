@@ -1,7 +1,7 @@
 /* -----------------------------------------------------
    created with https://www.codeandweb.com/texturepacker 
    -----------------------------------------------------
-   $TexturePacker:SmartUpdate:ddea4d76973672a909c00292084b031b:d4f30bc2ef97e20d49202f6c56da7fe8:41eba71ca81c511b1817c0b60c550994$
+   $TexturePacker:SmartUpdate:498bb96427ac9a06957ff91196222e28:fe2859933852afcb3f750e367374beef:41eba71ca81c511b1817c0b60c550994$
    -----------------------------------------------------
 
    usage: <span class="{-spritename-} sprite"></span>
@@ -12,4 +12,6 @@
 
 .sprite {display:inline-block; overflow:hidden; background-repeat: no-repeat;background-image:url(Sprites.png);}
 
-.pen {width:17px; height:18px; background-position: -0px -0px}
+.dropdown {width:10px; height:10px; background-position: -0px -0px}
+.dropup {width:10px; height:10px; background-position: -10px -0px}
+.pen {width:17px; height:18px; background-position: -0px -10px}

@@ -62,7 +62,7 @@ Client.shop = new function() {
 
         entity.setHeader((page.data.header)?(page.data.header):(""));
 
-        entity.category = new Client.shop.types[page.data.type]();
+        entity.category = new Client.shop.types[page.data.type](page);
     };
 
     entity.setPage = function(id) {

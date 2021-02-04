@@ -12,6 +12,9 @@
         grid-template-rows: 23px auto;
         grid-gap: 6px;
 
+        max-height: 100%;
+        overflow: hidden;
+
         .shop-pages-search {
             input {
                 width: 100%;
@@ -39,6 +42,106 @@
         .shop-pages-list {
             height: 100%;
             width: 100%;
+
+            overflow: hidden;
+            
+            .shop-pages-list-container {
+                max-height: 100%;
+                
+                overflow: auto;
+            }
+
+            .shop-pages-item-drop {
+                &:before {
+                    content: '';
+
+                    @include sprite-dropdown;
+
+                    position: absolute;
+                    right: 6px;
+
+                    top: 0;
+                    bottom: 0;
+
+                    margin: auto 0;
+                }
+            }
+
+            .shop-pages-item.active > .shop-pages-item-button, .shop-pages-item > .shop-pages-item-button:hover {
+                background: #63C5E9;
+
+                border-color: #82D1ED;
+
+                position: relative;
+
+                color: #FFF;
+
+                &:after {
+                    content: '';
+
+                    height: 1px;
+                    width: 100%;
+
+                    position: absolute;
+
+                    bottom: -3px;
+                    left: 0;
+
+                    background: #B4B4AE;
+                }
+            }
+            
+            .shop-pages-item.active {
+                .shop-pages-item-list {
+                    display: block;
+                }
+                
+                .shop-pages-item-drop:before {
+                    @include sprite-dropup;
+                }
+            }
+
+            .shop-pages-item {
+                .shop-pages-item-button {
+                    height: 20px;
+
+                    line-height: 16px;
+
+                    border-top: 2px solid transparent;
+                    border-bottom: 2px solid transparent;
+
+                    cursor: pointer;
+
+                    font-family: "Ubuntu Bold";
+
+                    text-shadow: none;
+
+                    color: #6D6D6D;
+
+                    position: relative;
+
+                    padding-left: 24px;
+
+                    .shop-pages-item-icon {
+                        position: absolute;
+                        
+                        left: 0px;
+                        top: -1px;
+                    }
+                }
+                
+                .shop-pages-item-list {
+                    display: none;
+
+                    .shop-pages-item-button {
+                        padding-left: 30px;
+
+                        .shop-pages-item-icon {
+                            left: 6px;
+                        }
+                    }
+                }
+            }
         }
     }
 }

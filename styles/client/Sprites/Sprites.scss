@@ -1,10 +1,6 @@
 $url: url('./../images/Sprites.png');
 
-@mixin sprite-pen() {
-    background: $url;
+@mixin sprite-dropdown {background: $url;width:10px; height:10px; background-position: -0px -0px}
+@mixin sprite-dropup {background: $url;width:10px; height:10px; background-position: -10px -0px}
+@mixin sprite-pen {background: $url;width:17px; height:18px; background-position: -0px -10px}
 
-    width: 17px;
-    height: 18px;
-
-    position: 0px 0px;
-}
