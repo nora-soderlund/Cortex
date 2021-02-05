@@ -46,6 +46,8 @@ Client.shop.types.pages = function(page) {
             context.drawImage(purse, Math.floor((context.canvas.width - purse.width) / 2), Math.floor((context.canvas.height - purse.height) / 2));
 
             Client.assets.getSpritesheetOnly("HabboShopIcons/icon_" + page.icon).then(function(icon) {
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                
                 context.drawImage(icon, Math.floor((context.canvas.width - icon.width) / 2), Math.floor((context.canvas.height - icon.height) / 2));
             });
         });
