@@ -17,11 +17,15 @@ Client.shop.types.furnitures = async function(page) {
     for(let index in page.furnitures) {
         const furniture = page.furnitures[index].furniture;
 
-        const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id);
+        /*const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id);
 
-        entity.render();
+        entity.render();*/
 
-        entity.$canvas.appendTo($items);
+        const $canvas = $('<div></div>').appendTo($items);
+
+        Client.furnitures.icon(furniture.id).then(function(image) {
+            $canvas.append(image);
+        });
     }
 
     Client.shop.category.$content.html($element);

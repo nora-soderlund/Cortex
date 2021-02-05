@@ -34,9 +34,12 @@ Client.socket.messages = new function() {
         Client.socket.server.send(JSON.stringify(message));
     };
 
-    this.sendCall = function(message, event) {
+    this.sendCall = function(message, event, correct = undefined) {
         return new Promise(function(resolve) {
             const task = function(data) {
+                if(correct != undefined && correct(data) == 0)
+                    return;
+
                 Client.socket.messages.unregister(event, task);
 
                 resolve(data);

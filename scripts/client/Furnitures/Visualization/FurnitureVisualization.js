@@ -1,4 +1,4 @@
-Client.furnitures.visualization = function(visualization) {
+Client.furnitures.visualization = function(visualization, size = 64) {
     this.data = visualization;
 
     this.graphics = (this.data.graphics == undefined)?(this.data):(this.data.graphics);
@@ -26,7 +26,7 @@ Client.furnitures.visualization = function(visualization) {
         if(this.graphics.layers != null)
             this.layers = [ this.graphics.layers.layer ];
 
-        this.directionLayers = this.graphics.directions.direction;
+        this.directionLayers = (this.graphics.directions)?(this.graphics.directions.direction):(0);
 
         /*for(let index in this.graphics.directions.direction) {
             const direction = parseInt(this.graphics.directions.direction[index].id);
@@ -38,5 +38,5 @@ Client.furnitures.visualization = function(visualization) {
         }*/
     };
 
-    this.getGraphicsSize(64);
+    this.getGraphicsSize(size);
 };

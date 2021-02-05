@@ -58,8 +58,6 @@ Client.furnitures.entity = function(name) {
             }
         }
 
-        console.log(layers);
-
         for(let index in layers) {
             const layer = Client.utils.charCode(parseInt(index));
 
