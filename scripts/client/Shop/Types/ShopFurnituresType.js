@@ -21,10 +21,14 @@ Client.shop.types.furnitures = async function(page) {
 
         entity.render();*/
 
-        const $canvas = $('<div></div>').appendTo($items);
+        const $item = $(
+            '<div class="shop-furnitures-item">' +
+                '<div class="shop-furnitures-item-icon"></div>' +
+            '</div>'
+        ).appendTo($items);
 
         Client.furnitures.icon(furniture.id).then(function(image) {
-            $canvas.append(image);
+            $item.find(".shop-furnitures-item-icon").append(image);
         });
     }
 

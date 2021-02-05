@@ -12,6 +12,38 @@
         .shop-furnitures-items-container {
             overflow: auto;
             height: 100%;
+
+            .shop-furnitures-item {
+                width: 54px;
+                height: 64px;
+
+                border: 1px solid transparent;
+                border-radius: 6px;
+
+                display: inline-block;
+
+                &:hover {
+                    background: #FFF;
+
+                    border-color: #757571;
+                }
+
+                position: relative;
+
+                overflow: hidden;
+
+                .shop-furnitures-item-icon {
+                    position: absolute;
+
+                    left: 0; right: 0;
+
+                    top: 12px; bottom: 24px;
+
+                    text-align: center;
+
+                    margin: auto;
+                }
+            }
         }
     }
 }

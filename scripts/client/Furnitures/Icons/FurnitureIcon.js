@@ -11,7 +11,7 @@ Client.furnitures.icon = async function(id) {
 
     const layers = [];
 
-    let maxWidth = 0, maxHeight = 0;
+    let maxWidth = 0, maxHeight = 0, maxLeft = 0, maxTop = 0;
 
     for(let index = 0; index < visualization.layerCount; index++) {
         const layer = Client.utils.charCode(parseInt(index));
@@ -33,14 +33,20 @@ Client.furnitures.icon = async function(id) {
 
         if((layerData.top + layerData.image.height) > maxHeight)
             maxHeight = (layerData.top + layerData.image.height);
+
+        if(layerData.top > maxTop)
+            maxTop = layerData.top;
+            
+        if(layerData.left > maxLeft)
+            maxLeft = layerData.left;
     }
 
-    const $canvas = $('<canvas width="' + maxWidth + '" height="' + maxHeight+ '"></div>');
+    const $canvas = $('<canvas width="' + (maxWidth - maxLeft) + '" height="' + (maxHeight - maxTop) + '"></div>');
 
     const context = $canvas[0].getContext("2d");
 
     for(let index in layers)
-        context.drawImage(layers[index].image, layers[index].left, layers[index].top);
+        context.drawImage(layers[index].image, maxLeft + -layers[index].left, maxTop + -layers[index].top);
 
     return $canvas[0];
 };
