@@ -27,8 +27,18 @@ Client.shop.types.furnitures = async function(page) {
             '</div>'
         ).appendTo($items);
 
-        Client.furnitures.icon(furniture.id).then(function(image) {
-            $item.find(".shop-furnitures-item-icon").append(image);
+        const $icon = $item.find(".shop-furnitures-item-icon");
+
+        Client.assets.getSpritesheetOnly("HabboLoadingIcon/HabboLoadingIcon").then(function(icon) {
+            const $canvas = $('<canvas width="' + icon.width + '" height="' + icon.height + '">').appendTo($icon);
+
+            const context = $canvas[0].getContext("2d");
+
+            context.drawImage(icon, 0, 0);
+
+            Client.furnitures.icon(furniture.id).then(function(image) {
+                $icon.html(image);
+            });
         });
     }
 
