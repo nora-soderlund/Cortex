@@ -22,9 +22,6 @@
             </div>
         </section>
 
-        <div style="font-family: Ubuntu Regular; opacity: 0">Ubuntu Regular</div>
-        <div style="font-family: Ubuntu Italic; opacity: 0">Ubuntu Italic</div>
-
         <script src="scripts/libraries/jquery-3.5.1.min.js"></script>
         <script src="scripts/libraries/jquery-ui-custom.min.js"></script>
         

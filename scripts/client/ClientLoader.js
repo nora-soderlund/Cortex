@@ -89,6 +89,22 @@ Client.loader.addStep(function(finished) {
     });
 });
 
+Client.loader.addStep(function(finished) {
+    if(Client.loader.data.fonts.length == 0)
+        return finished();
+
+    console.log("[%cLoader%c]%c Starting the download of the font faces...", "color: orange", "color: inherit", "color: lightblue");
+    
+    Client.loader.setText("Downloading fonts...");
+    
+    for(let index in Client.loader.data.fonts)
+        document.body.style.fontFamily = Client.loader.data.fonts[index];
+    
+    document.body.style.fontFamily = "Ubuntu Regular";
+    
+    finished();
+});
+
 Client.loader.addStep(async function(finished) {
     console.log("[%cLoader%c]%c Starting the download of the pre-loaded assets...", "color: orange", "color: inherit", "color: lightblue");
 
@@ -214,7 +230,7 @@ Client.loader.addStep(async function(finished) {
     await figure2.render();
 
 
-    const furniture = new Client.furnitures.entity("HabboFurnitures/easter_2016/clothing_hat_space1");
+    const furniture = new Client.furnitures.entity("HabboFurnitures/lost_city/clothing_hat_space1");
 
     furniture.render();
 
