@@ -6,6 +6,8 @@ Client.furnitures.entity = function(name) {
     this.$canvas = $('<canvas width="256" height="256"></canvas>').appendTo(Client.development.$element);
 
     this.render = async function() {
+        const data = { maxWidth: 0, maxHeight: 0, minLeft: 0, minTop: 0 };
+
         if(!this.asset) {
             this.asset = await Client.assets.get(name);
             
@@ -96,6 +98,18 @@ Client.furnitures.entity = function(name) {
                 canvas = $flipCanvas[0];
             }
 
+            if(data.minLeft > left)
+                data.minLeft = left;
+
+            if(data.minTop > top)
+                data.minTop = top;
+
+            if((left + canvas.width) > data.maxWidth)
+                data.maxWidth = left + canvas.width;
+
+            if((top + canvas.height) > data.maxHeight)
+                data.maxHeight = top + canvas.height;
+
             sprites.push({
                 image: canvas,
                 left, top,
@@ -112,10 +126,8 @@ Client.furnitures.entity = function(name) {
         for(let index in sprites)
            context.drawImage(sprites[index].image, 128 + sprites[index].left, 128 + sprites[index].top);
 
-        console.log(sprites);
-
         for(let event in this.events.render)
-            this.events.render[event](sprites);
+            this.events.render[event](sprites, data);
     };
 
     this.events = new function() {

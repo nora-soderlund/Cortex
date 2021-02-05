@@ -6,6 +6,19 @@
 
     height: 100%;
 
+    .shop-furnitures-display {
+        position: relative;
+
+        .shop-furnitures-display-canvas {
+            position: absolute;
+
+            left: 0; right: 0;
+            top: 0; bottom: 0;
+
+            margin: auto;
+        }
+    }
+
     .shop-furnitures-items {
         height: 100%;
 
