@@ -56,10 +56,12 @@ Client.rooms.entity = function($parent) {
         this.$canvas.attr({
             "width": width,
             "height": height
-        }).css({
+        });
+
+        /*.css({
             "width": Math.floor(width * window.devicePixelRatio),
             "height": Math.floor(height * window.devicePixelRatio)
-        });
+        })*/
     };
 
     this.sprites = [];
@@ -98,7 +100,7 @@ Client.rooms.entity = function($parent) {
 
         //context.imageSmoothingEnabled = false;
 
-        context.scale(window.devicePixelRatio, window.devicePixelRatio);
+        //context.scale(window.devicePixelRatio, window.devicePixelRatio);
 
         this.sprites = [];
 
