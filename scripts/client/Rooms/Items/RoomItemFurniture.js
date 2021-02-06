@@ -2,12 +2,12 @@ Client.rooms.items.furniture = function(parent, name, direction) {
     const entity = new Client.rooms.items.entity(parent, "furniture");
 
     entity.render = async function() {
-        const loading = await Client.assets.get("HabboRoomFurniture");
+        const loading = await Client.assets.getManifest("HabboRoomFurniture");
 
         await Client.assets.getSprite("HabboRoomFurniture", "default").then(async function(data) {
             const boxSprite = new Client.rooms.items.sprite(entity, data);
                 
-            boxSprite.setOffset(loading.manifest.visualization["default"].offset.left, loading.manifest.visualization["default"].offset.top);
+            boxSprite.setOffset(loading.visualization["default"].offset.left, loading.visualization["default"].offset.top);
         
             entity.sprites.push(boxSprite);
 

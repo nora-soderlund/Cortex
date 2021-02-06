@@ -3,11 +3,11 @@ Client.furnitures.icon = async function(id) {
 
     const library = "HabboFurnitures/" + furniture.line + "/" + furniture.id;
 
-    const assets = await Client.assets.get(library);
+    const assets = await Client.assets.getManifest(library);
 
-    const visualization = new Client.furnitures.visualization(assets.manifest.visualization.visualizationData, 1);
+    const visualization = new Client.furnitures.visualization(assets.visualization.visualizationData, 1);
 
-    const assetsData = new Client.furnitures.assets(assets.manifest.assets.assets.asset);
+    const assetsData = new Client.furnitures.assets(assets.assets.assets.asset);
 
     const layers = [];
 

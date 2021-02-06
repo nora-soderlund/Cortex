@@ -118,7 +118,7 @@ Client.loader.addStep(async function(finished) {
     Client.loader.setText("Preparing assets...");
 
     for(let index in Client.loader.data.assets)
-        await Client.assets.get(Client.loader.data.assets[index]);
+        await Client.assets.getManifest(Client.loader.data.assets[index]);
 
     console.log("[%cLoader%c]%c Finished loading the pre-loaded assets!", "color: orange", "color: inherit", "color: lightblue");
 
@@ -162,7 +162,7 @@ Client.loader.addStep(async function(finished) {
 Client.loader.addStep(async function(finished) {
     Client.loader.setText("Executing scripts...");
 
-    Client.rooms.asset = await Client.assets.get("HabboRoomContent");
+    Client.rooms.asset = await Client.assets.getManifest("HabboRoomContent");
 
     /*const interface = new Client.rooms.interface(Client.$element);
 
@@ -228,7 +228,7 @@ Client.loader.addStep(async function(finished) {
 
     // figure tests
 
-    const figure = new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91");
+    /*const figure = new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91");
 
     await figure.render();
     
@@ -239,7 +239,7 @@ Client.loader.addStep(async function(finished) {
 
     const furniture = new Client.furnitures.entity("HabboFurnitures/lost_city/clothing_hat_space1");
 
-    furniture.render();
+    furniture.render();*/
 
 
     finished();

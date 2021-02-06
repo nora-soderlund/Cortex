@@ -9,13 +9,13 @@ Client.furnitures.entity = function(name) {
         const data = { maxWidth: 0, maxHeight: 0, minLeft: 0, minTop: 0 };
 
         if(!this.asset) {
-            this.asset = await Client.assets.get(name);
+            this.asset = await Client.assets.getManifest(name);
             
-            this.visualizationData = new Client.furnitures.visualization(this.asset.manifest.visualization.visualizationData);
+            this.visualizationData = new Client.furnitures.visualization(this.asset.visualization.visualizationData);
 
-            this.logicData = new Client.furnitures.logic(this.asset.manifest.logic.objectData);
+            this.logicData = new Client.furnitures.logic(this.asset.logic.objectData);
 
-            this.assetsData = new Client.furnitures.assets(this.asset.manifest.assets.assets.asset);
+            this.assetsData = new Client.furnitures.assets(this.asset.assets.assets.asset);
         }
 
         const sprites = [];

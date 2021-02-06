@@ -27,7 +27,7 @@ Client.shop.types.furnitures = async function(page) {
 
         const $icon = $item.find(".shop-furnitures-item-icon");
 
-        Client.assets.getSpritesheetOnly("HabboLoadingIcon/HabboLoadingIcon").then(function(icon) {
+        Client.assets.getSpritesheet("HabboLoadingIcon").then(function(icon) {
             const $canvas = $('<canvas width="' + icon.width + '" height="' + icon.height + '">').appendTo($icon);
 
             const context = $canvas[0].getContext("2d");

@@ -42,13 +42,13 @@ Client.shop.types.pages = function(page) {
 
         const context = $icon[0].getContext("2d");
 
-        Client.assets.getSpritesheetOnly("HabboShopIcons/icon_1").then(function(purse) {
-            context.drawImage(purse, Math.floor((context.canvas.width - purse.width) / 2), Math.floor((context.canvas.height - purse.height) / 2));
+        Client.assets.getSpritesheet("HabboShopIcons/icon_1", false).then(function(spritesheet) {
+            context.drawImage(spritesheet, Math.floor((context.canvas.width - spritesheet.width) / 2), Math.floor((context.canvas.height - spritesheet.height) / 2));
 
-            Client.assets.getSpritesheetOnly("HabboShopIcons/icon_" + page.icon).then(function(icon) {
+            Client.assets.getSpritesheet("HabboShopIcons/icon_" + page.icon, false).then(function(spritesheet) {
                 context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                 
-                context.drawImage(icon, Math.floor((context.canvas.width - icon.width) / 2), Math.floor((context.canvas.height - icon.height) / 2));
+                context.drawImage(spritesheet, Math.floor((context.canvas.width - spritesheet.width) / 2), Math.floor((context.canvas.height - spritesheet.height) / 2));
             });
         });
 

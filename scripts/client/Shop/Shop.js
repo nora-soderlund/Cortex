@@ -15,7 +15,7 @@ Client.shop = new function() {
     entity.types = {};
 
     entity.setIcon = function(icon) {
-        Client.assets.getSpritesheetOnly("HabboShopIcons/icon_" + icon).then(function(spritesheet) {
+        Client.assets.getSpritesheet("HabboShopIcons/icon_" + icon, false).then(function(spritesheet) {
             const context = entity.$icon[0].getContext("2d");
 
             context.imageSmoothingEnabled = false;
@@ -39,7 +39,7 @@ Client.shop = new function() {
             return;
         }
 
-        Client.assets.getSpritesheetOnly("HabboShopHeaders/" + header).then(function(spritesheet) {
+        Client.assets.getSpritesheet("HabboShopHeaders/" + header, false).then(function(spritesheet) {
             context.imageSmoothingEnabled = false;
 
             context.drawImage(spritesheet,

@@ -12,13 +12,13 @@ Client.rooms.interface.chat = new function() {
 
         const context = $canvas[0].getContext("2d");
 
-        const assets = await Client.assets.get("HabboRoomMessages");
+        const assets = await Client.assets.getManifest("HabboRoomMessages");
 
-        const visualization = JSON.parse(JSON.stringify(assets.manifest.visualization["default"]));
+        const visualization = JSON.parse(JSON.stringify(assets.visualization["default"]));
 
-        if(assets.manifest.visualization[style] != undefined) {
-            for(let key in assets.manifest.visualization[style]) {
-                visualization[key] = assets.manifest.visualization[style][key];
+        if(assets.visualization[style] != undefined) {
+            for(let key in assets.visualization[style]) {
+                visualization[key] = assets.visualization[style][key];
             }
         }
 

@@ -4,9 +4,9 @@ Client.figures = new function() {
     };
 
     this.getLibrary = async function(id, type) {
-        const map = await Client.assets.get("HabboFigureMap");
+        const map = await Client.assets.getManifest("HabboFigureMap");
 
-        const libraries = map.manifest.map.lib;
+        const libraries = map.map.lib;
 
         let index = 0;
 
@@ -28,9 +28,9 @@ Client.figures = new function() {
     };
 
     this.getSetType = async function(type) {
-        const figures = await Client.assets.get("HabboFigures");
+        const figures = await Client.assets.getManifest("HabboFigures");
 
-        const sets = figures.manifest.figuredata.sets.settype;
+        const sets = figures.figuredata.sets.settype;
 
         let index = 0;
 
@@ -58,7 +58,7 @@ Client.figures = new function() {
     };
 
     this.getSprite = function(asset, sprite) {
-        const assets = asset.manifest.manifest.manifest.library.assets.asset;
+        const assets = asset.manifest.manifest.library.assets.asset;
 
         let index = 0;
 
@@ -73,9 +73,9 @@ Client.figures = new function() {
     }
 
     this.getPalette = async function(palette) {
-        const figures = await Client.assets.get("HabboFigures");
+        const figures = await Client.assets.getManifest("HabboFigures");
 
-        const palettes = figures.manifest.figuredata.colors.palette;
+        const palettes = figures.figuredata.colors.palette;
 
         let index = 0;
 
@@ -103,17 +103,17 @@ Client.figures = new function() {
     };
 
     this.getAction = async function(id) {
-        const actions = await Client.assets.get("HabboFigureActions");
+        const actions = await Client.assets.getManifest("HabboFigureActions");
 
         let index = 0;
 
-        for(index in actions.manifest.actions.action) {
-            if(actions.manifest.actions.action[index].id != id)
+        for(index in actions.actions.action) {
+            if(actions.actions.action[index].id != id)
                 continue;
 
             break;
         }
 
-        return actions.manifest.actions.action[index];
+        return actions.actions.action[index];
     };
 };

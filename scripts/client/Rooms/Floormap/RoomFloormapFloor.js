@@ -1,6 +1,6 @@
 Client.rooms.floormap.floor = new function() {
     this.getFloorData = function() {
-        return Client.rooms.asset.manifest.room_visualization.visualizationData.floorData;
+        return Client.rooms.asset.room_visualization.visualizationData.floorData;
     };
 
     this.getFloorSizes = function(index) {
