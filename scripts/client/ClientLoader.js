@@ -96,11 +96,18 @@ Client.loader.addStep(function(finished) {
     console.log("[%cLoader%c]%c Starting the download of the font faces...", "color: orange", "color: inherit", "color: lightblue");
     
     Client.loader.setText("Downloading fonts...");
+
+    const $canvas = $('<canvas width="1" height="1"></canvas>').appendTo(Client.loader.$scripts);
+
+    const context = $canvas[0].getContext("2d");
     
-    for(let index in Client.loader.data.fonts)
-        document.body.style.fontFamily = Client.loader.data.fonts[index];
-    
-    document.body.style.fontFamily = "Ubuntu Regular";
+    for(let index in Client.loader.data.fonts) {
+        context.font = Client.loader.data.fonts[index];
+
+        context.fillText(" ", 0, 0);
+    }
+
+    $canvas.remove();
     
     finished();
 });
