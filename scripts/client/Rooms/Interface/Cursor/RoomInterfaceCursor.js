@@ -24,7 +24,7 @@ Client.rooms.interface.cursor = new function() {
 
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
     }).on("click", function() {
-        if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 100)
+        if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 250)
             return;
 
         if(Client.rooms.interface.entity.currentEntity == undefined)
