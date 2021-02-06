@@ -1,0 +1,48 @@
+.dialog-button {
+    padding: 5px 12px 6px;
+    
+    background: linear-gradient(0deg, #D9D9D9 50%, #F3F3F3 50%);
+
+    border: 2px solid #000;
+    border-bottom-width: 3px;
+    border-radius: 6px;
+
+    position: relative;
+
+    text-align: center;
+
+    font-family: "Ubuntu Bold";
+
+    cursor: pointer;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        left: 0;
+        top: 0;
+
+        width: calc(100% - 4px);
+        height: calc(100% - 4px);
+
+        border: 2px solid #D9D9D9;
+        border-radius: 4px;
+    }
+
+    &:hover {
+        background: linear-gradient(0deg, #EBEBEB 50%, #FFF 50%);
+
+        &:after {
+            border-color: #FFF;
+        }
+    }
+
+    &:active {
+        background: linear-gradient(0deg, #A3A3A3 50%, #E1E1E1 50%);
+
+        &:after {
+            border-color: #A3A3A3;
+        }
+    }
+}

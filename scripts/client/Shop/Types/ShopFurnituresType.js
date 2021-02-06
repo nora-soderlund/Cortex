@@ -56,6 +56,15 @@ Client.shop.types.furnitures = async function(page) {
                 }
             });
 
+            const $information = $(
+                '<div class="shop-furnitures-display-info">' + 
+                    '<b>' + furniture.title + '</b>' +
+                    '<p>' + furniture.description + '</p>' +
+                '</div>'
+            ).appendTo($display);
+
+            const $button = $('<div class="dialog-button shop-furnitures-display-button">Add to inventory</div>').appendTo($display);
+
             entity.render();
         });
     }
