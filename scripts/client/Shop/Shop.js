@@ -62,10 +62,22 @@ Client.shop = new function() {
 
         entity.setHeader((page.data.header)?(page.data.header):(""));
     
-        if(page.parent == 0)
-            entity.category = new Client.shop.types[page.data.type](page);
-        else
-            entity.page = await Client.shop.types[page.data.type](page);
+        if(page.parent == 0) {
+            try {
+                entity.category = new Client.shop.types[page.data.type](page);
+            }
+            catch(exception) {
+                entity.tabs.$content.html(exception);
+            }
+        }
+        else {
+            try {
+                entity.page = await Client.shop.types[page.data.type](page);
+            }
+            catch(exception) {
+                entity.category.$content.html(exception);
+            }
+        }
     };
 
     entity.events.create.push(async function() {
