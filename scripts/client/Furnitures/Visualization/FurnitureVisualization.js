@@ -28,13 +28,15 @@ Client.furnitures.visualization = function(visualization, size = 64) {
         if(this.graphics.layers != null)
             this.layers = (this.graphics.layers.layer.id != undefined)?([ this.graphics.layers.layer ]):(this.graphics.layers.layer);
 
-        const directions = this.graphics.directions.direction;
+        if(this.graphics.directions != undefined) {
+            const directions = this.graphics.directions.direction;
 
-        for(let index in directions) {
-            if(directions[index].layer == undefined)
-                continue;
+            for(let index in directions) {
+                if(directions[index].layer == undefined)
+                    continue;
 
-            this.directionLayers[directions[index].id] = (directions[index].layer.length == undefined)?([ directions[index].layer ]):(directions[index].layer);
+                this.directionLayers[directions[index].id] = (directions[index].layer.length == undefined)?([ directions[index].layer ]):(directions[index].layer);
+            }
         }
     };
 
