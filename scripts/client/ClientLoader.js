@@ -235,11 +235,11 @@ Client.loader.addStep(async function(finished) {
     const figure2 = new Client.figures.entity("hr-678-34.fa-3276-95.lg-3136-71.he-1606-71.hd-209-1.sh-3275-110.ch-3342-71-92");
 
     await figure2.render();
+    */
 
+    const furniture = new Client.furnitures.entity("HabboFurnitures/area/silo_studydesk");
 
-    const furniture = new Client.furnitures.entity("HabboFurnitures/lost_city/clothing_hat_space1");
-
-    furniture.render();*/
+    furniture.render();
 
 
     finished();

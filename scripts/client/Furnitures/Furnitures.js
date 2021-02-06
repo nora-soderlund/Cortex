@@ -14,4 +14,14 @@ Client.furnitures = new function() {
 
         return this.cache[id];
     };
+
+    this.getComposite = function(ink) {
+        switch(ink) {
+            case "ADD": return "lighter";
+
+            case undefined: return "source-over";
+
+            default: return ink;
+        }
+    }
 };

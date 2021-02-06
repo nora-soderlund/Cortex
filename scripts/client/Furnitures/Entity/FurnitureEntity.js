@@ -23,53 +23,60 @@ Client.furnitures.entity = function(name) {
         let layers = {};
 
         for(let index = 0; index < this.visualizationData.layerCount; index++)
-            layers[index] = 0;
+            layers[index] = { index: 0 };
 
-        if(this.visualizationData.layers.length == undefined) {
-            if(this.visualizationData.layers.z != undefined) {
-                const layer = parseInt(this.visualizationData.layers.id);
+        for(let index in this.visualizationData.layers) {
+            const layer = parseInt(this.visualizationData.layers[index].id);
 
-                layers[layer] += parseInt(this.visualizationData.layers.z);
-            }
-        }
-        else {
-            for(let index in this.visualizationData.layers) {
-                if(this.visualizationData.layers[index].z == undefined)
+            if(layers[layer] == undefined)
+                layers[layer] = { index: 0 };
+
+            if(this.visualizationData.layers[index].z != undefined)
+                layers[layer].index += parseInt(this.visualizationData.layers[index].z);
+
+            for(let key in this.visualizationData.layers[index]) {
+                if(key == "z")
                     continue;
 
-                const layer = parseInt(this.visualizationData.layers[index].id);
-    
-                layers[layer] += parseInt(this.visualizationData.layers[index].z);
+                layers[layer][key] = this.visualizationData.layers[index][key];
             }
         }
 
-        if(this.visualizationData.directionLayers.length == undefined) {
-            const layer = parseInt(this.visualizationData.directionLayers.id);
+        if(this.visualizationData.directionLayers[this.direction] != undefined) {
+            for(let index in this.visualizationData.directionLayers[this.direction]) {
+                const layer = parseInt(this.visualizationData.directionLayers[this.direction][index].id);
 
-            if(layers[layer] == undefined) layers[layer] = 0;
+                if(layers[layer] == undefined)
+                    layers[layer] = { index: 0 };
 
-            layers[layer] += (this.visualizationData.directionLayers.z != undefined)?(parseInt(this.visualizationData.directionLayers.z)):(0);
-        }
-        else {
-            for(let index in this.visualizationData.directionLayers) {
-                const layer = parseInt(this.visualizationData.directionLayers[index].id);
+                if(this.visualizationData.directionLayers[this.direction][index].z != undefined)
+                    layers[layer].index += parseInt(this.visualizationData.directionLayers[this.direction][index].z);
+                
+                for(let key in this.visualizationData.directionLayers[this.direction][index]) {
+                    if(key == "z")
+                        continue;
 
-                if(layers[layer] == undefined) layers[layer] = 0;
-
-                layers[layer] += (this.visualizationData.directionLayers[index].z != undefined)?(parseInt(this.visualizationData.directionLayers[index].z)):(0);
+                    layers[layer][key] = this.visualizationData.directionLayers[this.direction][index][key];
+                }
             }
         }
 
         for(let index in layers) {
             const layer = Client.utils.charCode(parseInt(index));
 
-            const priority = parseInt(layers[index]);
+            const priority = parseInt(layers[index].index);
 
             const frame = 0;
 
             const sprite = this.visualizationData.type + "_" + this.visualizationData.size + "_" + layer + "_" + this.direction + "_" + frame;
 
             const spriteData = this.assetsData.getAsset(sprite);
+
+            if(layers[index].x != undefined)
+                spriteData.x = parseInt(spriteData.x) - parseInt(layers[index].x);
+
+            if(layers[index].y != undefined)
+                spriteData.y = parseInt(spriteData.y) - parseInt(layers[index].y);
 
             if(spriteData == undefined) {
                 console.warn("[FurnitureEntity]%c Asset " + sprite + " is not valid and doesn't exist!", "color: lightblue");
@@ -110,21 +117,33 @@ Client.furnitures.entity = function(name) {
             if((top + canvas.height) > data.maxHeight)
                 data.maxHeight = top + canvas.height;
 
-            sprites.push({
+            const result = {
                 image: canvas,
                 left, top,
-                index: priority
-            });
+                index: priority,
+                composite: Client.furnitures.getComposite(layers[index].ink)
+            };
+
+            sprites.push(result);
         }
-        
-        const context = this.$canvas[0].getContext("2d");
+
+        console.log(sprites);
 
         sprites.sort(function(a, b) {
             return a.index - b.index;
         });
+        
+        const context = this.$canvas[0].getContext("2d");
 
-        for(let index in sprites)
-           context.drawImage(sprites[index].image, 128 + sprites[index].left, 128 + sprites[index].top);
+        context.fillStyle = "#242424";
+
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+        for(let index in sprites) {
+            context.globalCompositeOperation = sprites[index].composite;
+            
+            context.drawImage(sprites[index].image, 128 + sprites[index].left, 128 + sprites[index].top);
+        }
 
         for(let event in this.events.render)
             this.events.render[event](sprites, data);
