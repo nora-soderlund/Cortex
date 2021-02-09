@@ -237,7 +237,7 @@ Client.loader.addStep(async function(finished) {
     await figure2.render();
     */
 
-    const furniture = new Client.furnitures.entity("HabboFurnitures/lodge/lamp2_armas");
+    const furniture = new Client.furnitures.entity("HabboFurnitures/area/divider_silo1");
 
     furniture.render();
 
