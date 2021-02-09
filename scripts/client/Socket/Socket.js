@@ -1,5 +1,5 @@
 Client.socket = new function() {
-    this.open = function(url = "ws://192.168.1.101:81/local:cake") {
+    this.open = function(url = "ws://127.0.0.1:81/Cake") {
         return new Promise(function(resolve, failure) {
             console.log("[%cSocket%c]%c Connecting to the server at " + url + "...", "color: orange", "color: inherit", "color: lightblue");
 
