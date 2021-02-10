@@ -16,7 +16,7 @@ Client.rooms.floormap = function() {
     this.getCanvasSize = function() {
         return [
             (this.rows * 32) + (this.columns * 32),
-            (this.rows * 16) + (this.columns * 16) + this.floorThickness + (this.floorDepth * 16)
+            (this.rows * 16) + (this.columns * 16) + this.floorThickness + (this.floorDepth * 16) + 10
         ];
     };
 
@@ -98,7 +98,16 @@ Client.rooms.floormap = function() {
 
         context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-        this.renderTiles(context);
+        const $storageCanvas = $('<canvas width="' + context.canvas.width + '" height="' + context.canvas.height + '"></canvas>');
+
+        const storageContext = $storageCanvas[0].getContext("2d");
+
+        this.renderTiles(storageContext);
+
+        context.filter = "blur(5px) brightness(0%) opacity(50%)";
+        context.drawImage($storageCanvas[0], 0, 5);
+        context.filter = "blur(0) brightness(100%) opacity(100%)";
+        context.drawImage($storageCanvas[0], 0, 0);
 
         console.warn("[RoomFloormap]%c Floormap render process took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms!", "color: lightblue");
     };
