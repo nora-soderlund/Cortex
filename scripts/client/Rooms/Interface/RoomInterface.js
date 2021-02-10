@@ -7,6 +7,9 @@ Client.rooms.interface = new function() {
 
     this.active = false;
 
+    this.frameLimit = 60;
+    this.frameLimitStamp = null;
+
     this.start = function() {
         if(this.active == true)
             return;
@@ -14,6 +17,8 @@ Client.rooms.interface = new function() {
         this.active = true;
 
         this.chat.addMessage("information", "Room interface renderer started!");
+
+        this.frameLimitStamp = performance.now();
 
         window.requestAnimationFrame(this.render);
     };
@@ -36,10 +41,23 @@ Client.rooms.interface = new function() {
         if(!Client.rooms.interface.active)
             return;
 
-        Client.rooms.interface.entity.render();
+        window.requestAnimationFrame(Client.rooms.interface.render);
 
-        if(Client.rooms.interface.active)
-            window.requestAnimationFrame(Client.rooms.interface.render);
+        if(Client.rooms.interface.frameLimit != 0) {
+            const timestamp = performance.now();
+
+            const delta = timestamp - Client.rooms.interface.frameLimitStamp;
+
+            const interval = (1000 / Client.rooms.interface.frameLimit);
+
+            if(delta > interval) {
+                Client.rooms.interface.frameLimitStamp = timestamp - (delta % interval);
+
+                Client.rooms.interface.entity.render();
+            }
+        }
+        else
+            Client.rooms.interface.entity.render();
     };
 
     this.clear = async function() {

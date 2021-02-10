@@ -10,3 +10,14 @@ Client.development = new function() {
 
     this.$debug = $('<p></p>').appendTo(this.$info);
 };
+
+Client.development.frames = new function() {
+    $(window).on("wheel", function(event) {
+        const direction = (event.originalEvent.deltaY < 0)?(1):(-1);
+        
+        if(!Client.rooms.interface.active)
+            return;
+
+        Client.rooms.interface.frameLimit += direction;
+    });
+};
