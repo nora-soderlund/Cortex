@@ -240,7 +240,7 @@ Client.figures.entity = function(figure) {
 
         let image = await Client.assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
 
-        if(color != undefined)
+        if(color != undefined && type != "ey")
             image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
 
         const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
