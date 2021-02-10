@@ -30,7 +30,7 @@ Client.rooms.interface.cursor = new function() {
         if(Client.rooms.interface.entity.currentEntity == undefined)
             return;
         
-        if(Client.rooms.interface.entity.currentEntity.entity.name == "floormap")
+        if(Client.rooms.interface.entity.currentEntity.entity.name == "map")
             Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentEntity.result.row, column: Client.rooms.interface.entity.currentEntity.result.column } });
     });
 
@@ -45,7 +45,7 @@ Client.rooms.interface.cursor = new function() {
             if(Client.rooms.interface.entity.currentEntity == undefined)
                 return;
     
-            if(Client.rooms.interface.entity.currentEntity.entity.name == "floormap") {
+            if(Client.rooms.interface.entity.currentEntity.entity.name == "map") {
                 cursor.setCoordinates(parseInt(Client.rooms.interface.entity.currentEntity.result.row), parseInt(Client.rooms.interface.entity.currentEntity.result.column), parseInt(Client.rooms.interface.entity.currentEntity.result.depth), -2000);
                 
                 Client.rooms.interface.entity.addEntity(cursor);

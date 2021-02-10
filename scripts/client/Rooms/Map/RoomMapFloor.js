@@ -1,30 +1,12 @@
-Client.rooms.floormap = function() {
-    this.$canvas = $('<canvas></canvas>');
-
-    this.floorDepth = 0;
-    this.floorThickness = 8;
-    this.floorPatterns = [];
-    this.floorPaths = [];
-
-    this.getCoordinate = function(row, column) {
-        if(this.map[row] == undefined || this.map[row][column] == undefined)
-            return 'X';
-
-        return this.map[row][column];
-    };
-
-    this.getCanvasSize = function() {
-        return [
-            (this.rows * 32) + (this.columns * 32),
-            (this.rows * 16) + (this.columns * 16) + this.floorThickness + (this.floorDepth * 16) + 10
-        ];
-    };
+Client.rooms.map.floor = function() {
+    this.patterns = [];
 
     this.setMap = function(map) {
         map = map.split('|');
 
         this.rows = map.length;
         this.columns = map[0].length;
+        this.depth = 0;
 
         this.map = {};
 
@@ -42,77 +24,58 @@ Client.rooms.floormap = function() {
                 else
                     this.map[row][column] = Client.utils.fromCharCode(this.map[row][column]);
 
-                if(this.map[row][column] > this.floorDepth)
-                    this.floorDepth = this.map[row][column];
+                if(this.map[row][column] > this.depth)
+                    this.depth = this.map[row][column];
             }
         }
-
-        const size = this.getCanvasSize();
-   
-        this.$canvas.attr({
-            "width": size[0],
-            "height": size[1]
-        });
     };
 
-    this.setFloor = async function(floor) {
-        const index = Client.rooms.floormap.floor.getFloorIndex(floor);
-
-        const sizes = Client.rooms.floormap.floor.getFloorSizes(index);
-
-        const visualization = Client.rooms.floormap.floor.getFloorVisualization(sizes, 64);
-
-        const material = Client.rooms.floormap.floor.getFloorMaterial(visualization.materialId);
-
-        const texture = Client.rooms.floormap.floor.getFloorTexture(material.materialCell.textureId);
+    this.setPatternAsync = async function(id) {
+        const index         = Client.rooms.map.data.getIndex("floor", id);
+        const sizes         = Client.rooms.map.data.getSizes("floor", index);
+        const visualization = Client.rooms.map.data.getVisualization(sizes, 64);
+        const material      = Client.rooms.map.data.getMaterial("floor", visualization.materialId);
+        const texture       = Client.rooms.map.data.getTexture("floor", material.materialCell.textureId);
 
         let canvas, context;
 
         canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture, visualization.color);
-
         context = canvas.getContext("2d");
-
-        this.floorPatterns[0] = context.createPattern(canvas, "repeat");
+        this.patterns[0] = context.createPattern(canvas, "repeat");
 
         canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#666");
-
         context = canvas.getContext("2d");
-
-        this.floorPatterns[1] = context.createPattern(canvas, "repeat");
+        this.patterns[1] = context.createPattern(canvas, "repeat");
 
         canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#BBB");
-
         context = canvas.getContext("2d");
-
-        this.floorPatterns[2] = context.createPattern(canvas, "repeat");
+        this.patterns[2] = context.createPattern(canvas, "repeat");
     };
 
-    this.setFloorThickness = function(floorThickness) {
-        this.floorThickness = floorThickness;
+    this.getCoordinate = function(row, column) {
+        if(this.map[row] == undefined || this.map[row][column] == undefined)
+            return 'X';
+
+        return this.map[row][column];
     };
 
-    this.render = function() {
-        const timestamp = performance.now();
+    this.renderAsync = async function(context, settings) {
+        for(let key in settings)
+            this[key] = settings[key];
 
-        const context = this.$canvas[0].getContext("2d");
+        this.setMap(settings.map);
 
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        await this.setPatternAsync(this.floorMaterial);
+   
+        context.canvas.width = (this.rows * 32) + (this.columns * 32);
+        context.canvas.height = (this.rows * 16) + (this.columns * 16) + this.thickness + (this.depth * 16) + 10;
 
-        const $storageCanvas = $('<canvas width="' + context.canvas.width + '" height="' + context.canvas.height + '"></canvas>');
+        this.drawTiles(context);
 
-        const storageContext = $storageCanvas[0].getContext("2d");
-
-        this.renderTiles(storageContext);
-
-        context.filter = "blur(5px) brightness(0%) opacity(50%)";
-        context.drawImage($storageCanvas[0], 0, 5);
-        context.filter = "blur(0) brightness(100%) opacity(100%)";
-        context.drawImage($storageCanvas[0], 0, 0);
-
-        console.warn("[RoomFloormap]%c Floormap render process took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms!", "color: lightblue");
+        console.log(context);
     };
 
-    this.renderTiles = function(context) {
+    this.drawTiles = function(context) {
         const rectangles = [];
 
         for(let row in this.map) {
@@ -158,13 +121,13 @@ Client.rooms.floormap = function() {
             }
         }
 
-        this.renderTileEdges(context, rectangles);
+        this.drawEdges(context, rectangles);
 
         context.beginPath();
 
-        context.setTransform(1, .5, -1, .5, this.rows * 32, this.floorDepth * 16);
+        context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);
                 
-        context.fillStyle = this.floorPatterns[0];
+        context.fillStyle = this.patterns[0];
 
         const tiles = new Path2D();
 
@@ -188,20 +151,15 @@ Client.rooms.floormap = function() {
         context.fill(tiles);
     };
 
-    this.renderTileEdges = function(context, rectangles) {
+    this.drawEdges = function(context, rectangles) {
         context.beginPath();
 
-        context.setTransform(1, .5, 0, 1, this.rows * 32, this.floorDepth * 16);
+        context.setTransform(1, .5, 0, 1, this.rows * 32, this.depth * 16);
                 
-        context.fillStyle = this.floorPatterns[1];
+        context.fillStyle = this.patterns[1];
 
         for(let index in rectangles) {
             const rectangle = rectangles[index];
-
-            //const nextTile = this.getCoordinate(parseInt(rectangle.row) + 1, rectangle.column);
-
-            //if(nextTile != 'X' && nextTile == rectangle.depth)
-                //continue;
 
             if(rectangles.find(x => (parseInt(x.row) == parseInt(rectangle.row) + 1 && x.column == rectangle.column && x.depth == rectangle.depth)) != null)
                 continue;
@@ -209,16 +167,16 @@ Client.rooms.floormap = function() {
             const left = (rectangle.column * 32) - (rectangle.row * 32) - rectangle.height;
             const top = (rectangle.row * 32) - (rectangle.depth * 32) + rectangle.height;
 
-            context.rect(left, top, rectangle.width, this.floorThickness);
+            context.rect(left, top, rectangle.width, this.thickness);
         }
 
         context.fill();
 
         context.beginPath();
 
-        context.setTransform(1, -.5, 0, 1, this.rows * 32, this.floorDepth * 16);
+        context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
                 
-        context.fillStyle = this.floorPatterns[2];
+        context.fillStyle = this.patterns[2];
 
         for(let index in rectangles) {
             const rectangle = rectangles[index];
@@ -233,7 +191,7 @@ Client.rooms.floormap = function() {
             const left = -(row * 32) + (column * 32) + rectangle.width - rectangle.height;
             const top = (column * 32) - (rectangle.depth * 32) + rectangle.width;
 
-            context.rect(left, top, rectangle.height, this.floorThickness);
+            context.rect(left, top, rectangle.height, this.thickness);
         }
 
         context.fill();
