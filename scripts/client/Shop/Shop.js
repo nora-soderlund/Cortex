@@ -12,6 +12,7 @@ Client.shop = new function() {
         }
     });
 
+    entity.categories = {};
     entity.types = {};
 
     entity.setIcon = function(icon) {
@@ -64,7 +65,7 @@ Client.shop = new function() {
     
         if(page.parent == 0) {
             try {
-                entity.category = new Client.shop.types[page.data.type](page);
+                entity.category = new Client.shop.categories[page.data.type](page);
             }
             catch(exception) {
                 entity.tabs.$content.html(exception);

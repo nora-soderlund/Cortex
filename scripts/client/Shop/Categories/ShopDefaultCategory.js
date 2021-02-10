@@ -1,4 +1,4 @@
-Client.shop.types.pages = function(page) {
+Client.shop.categories.default = function(page) {
     this.$element = $(
         '<div class="shop-pages">' +
             '<div class="shop-pages-left">' +

@@ -1,4 +1,4 @@
-Client.shop.types.furnitures = async function(page) {
+Client.shop.types.default = async function(page) {
     const $element = $(
         '<div class="shop-furnitures">' +
             '<div class="shop-furnitures-display"></div>' +
