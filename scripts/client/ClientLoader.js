@@ -227,15 +227,14 @@ Client.loader.addStep(async function(finished) {
     room.addEntity(sofa);*/
 
     // figure tests
-
-    /*const figure = new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91");
-
-    await figure.render();
     
     const figure2 = new Client.figures.entity("hr-678-34.fa-3276-95.lg-3136-71.he-1606-71.hd-209-1.sh-3275-110.ch-3342-71-92");
 
     await figure2.render();
-    */
+
+   const figure = new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91");
+
+   await figure.render();
 
     const furniture = new Client.furnitures.entity("HabboFurnitures/area/divider_silo1");
 

@@ -120,11 +120,18 @@ Client.assets = new function() {
 
         const data = manifest.sprites[sprite];
 
+        if(data.link != undefined) {
+            for(let key in manifest.sprites[data.link])
+                data[key] = manifest.sprites[data.link][key];
+
+            delete data.link;
+        }
+
         const $canvas = $('<canvas width="' + data.width + '" height="' + data.height + '"></canvas>');
 
         const context = $canvas[0].getContext("2d");
 
-        context.drawImage(spritesheet, parseInt(data.left) * -1, parseInt(data.top) * -1);
+        context.drawImage(spritesheet, parseInt(data.left), parseInt(data.top), parseInt(data.width), parseInt(data.height), 0, 0, parseInt(data.width), parseInt(data.height));
 
         this.cache[asset].sprites[sprite] = $canvas[0];
 
@@ -140,14 +147,14 @@ Client.assets = new function() {
         const $colorCanvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
         const colorContext = $colorCanvas[0].getContext("2d");
         colorContext.drawImage(image, 0, 0);
-        colorContext.globalCompositeMode = "multiply";
+        colorContext.globalCompositeOperation = "multiply";
         colorContext.fillStyle = color.replace('0x', '#');
-        colorContext.fillRect(0, 0, colorContext.canvas.width, colorContext.canvas.height);
+        colorContext.fillRect(0, 0, image.width, image.height);
 
         const $canvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
         const context = $canvas[0].getContext("2d");
         context.drawImage(image, 0, 0);
-        context.globalCompositeMode = "source-in";
+        context.globalCompositeOperation = "source-in";
         context.drawImage($colorCanvas[0], 0, 0);
 
         this.cache[asset].sprites[sprite + "?color=" + color] = $canvas[0];

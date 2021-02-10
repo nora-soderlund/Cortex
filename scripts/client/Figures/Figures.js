@@ -19,14 +19,10 @@ Client.figures = new function() {
                     (libraries[index].part[part].type[0] == type[0]) &&
                     (libraries[index].part[part].type[1] == type[1])) {
 
-                    console.log("library: " + index + ": id " + libraries[index].id);
-
                     return libraries[index].id;
                 }
             }
         }
-
-        console.log("library: " + index + ": id " + libraries[index].id);
 
         return libraries[index].id;
     };

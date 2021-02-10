@@ -97,7 +97,7 @@ Client.figures.entity = function(figure) {
         const layers = {};
 
         await this.addAction("Default");
-        //await this.addAction("GestureSmile");
+        await this.addAction("GestureSmile");
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
 
@@ -211,37 +211,37 @@ Client.figures.entity = function(figure) {
         let sprite;
 
         for(let index in this.actions) {
-            sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
 
-            if(manifest.sprites[sprite] == undefined)
+            if(manifest.sprites[library + "_" + sprite] == undefined)
                 continue;
 
             if(this.frames[this.actions[index].id] != undefined) {
                 frame = this.frames[this.actions[index].id];
                 
-                sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
 
-                if(manifest.sprites[sprite] == undefined) {
+                if(manifest.sprites[library + "_" + sprite] == undefined) {
                     frame = 0;
 
-                    sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
                 }
             }
 
             break;
         }
 
-        if(manifest.sprites[sprite] == undefined) {
-            //if(Client.figures.logging.missingSprite)
+        if(manifest.sprites[library + "_" + sprite] == undefined) {
+            if(Client.figures.logging.missingSprite)
                 console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
 
             return null;
         }
 
-        let image = await Client.assets.getSprite("HabboFigures/" + library, sprite);
+        let image = await Client.assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
 
         if(color != undefined)
-            image = await Client.assets.getSpriteColor("HabboFigures/" + library, sprite, "#" + color);
+            image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
 
         const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
 
