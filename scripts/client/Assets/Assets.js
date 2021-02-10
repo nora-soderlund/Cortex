@@ -134,8 +134,8 @@ Client.assets = new function() {
     this.getSpriteColor = async function(asset, sprite, color) {
         const image = await this.getSprite(asset, sprite);
 
-        if(this.cache[assets].sprites[sprite + "?color=" + color] != undefined)
-            return this.cache[assets].sprites[sprite + "?color=" + color];
+        if(this.cache[asset].sprites[sprite + "?color=" + color] != undefined)
+            return this.cache[asset].sprites[sprite + "?color=" + color];
 
         const $colorCanvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
         const colorContext = $colorCanvas[0].getContext("2d");
@@ -150,8 +150,8 @@ Client.assets = new function() {
         context.globalCompositeMode = "source-in";
         context.drawImage($colorCanvas[0], 0, 0);
 
-        this.cache[assets].sprites[sprite + "?color=" + color] = $canvas[0];
+        this.cache[asset].sprites[sprite + "?color=" + color] = $canvas[0];
 
-        return this.cache[assets].sprites[sprite + "?color=" + color];
+        return this.cache[asset].sprites[sprite + "?color=" + color];
     };
 };

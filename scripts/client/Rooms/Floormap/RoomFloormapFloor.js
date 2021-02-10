@@ -64,6 +64,6 @@ Client.rooms.floormap.floor = new function() {
             break;
         }
 
-        return textures[index].bitmap.assetName;
+        return "HabboRoomContent_" + textures[index].bitmap.assetName;
     };
 };

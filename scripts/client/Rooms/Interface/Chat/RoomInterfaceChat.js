@@ -6,7 +6,7 @@ Client.rooms.interface.chat = new function() {
     this.interval = undefined;
 
     this.addMessage = async function(style, message, left = 0, color = undefined) {
-        const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
+        /*const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
 
         const sprite = (color == undefined)?(await Client.assets.getSprite("HabboRoomMessages", style)):(await Client.assets.getSpriteColor("HabboRoomMessages", style, color));
 
@@ -71,7 +71,7 @@ Client.rooms.interface.chat = new function() {
         this.messages.push($canvas);
 
         if(this.interval == undefined)
-            this.interval = setInterval(this.updateMessages, 2000, this);
+            this.interval = setInterval(this.updateMessages, 2000, this);*/
     };
 
     this.updateMessages = function(self) {

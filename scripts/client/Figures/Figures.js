@@ -19,16 +19,20 @@ Client.figures = new function() {
                     (libraries[index].part[part].type[0] == type[0]) &&
                     (libraries[index].part[part].type[1] == type[1])) {
 
+                    console.log("library: " + index + ": id " + libraries[index].id);
+
                     return libraries[index].id;
                 }
             }
         }
 
+        console.log("library: " + index + ": id " + libraries[index].id);
+
         return libraries[index].id;
     };
 
     this.getSetType = async function(type) {
-        const figures = await Client.assets.getManifest("HabboFigures");
+        const figures = await Client.assets.getManifest("HabboFigureData");
 
         const sets = figures.figuredata.sets.settype;
 
@@ -73,7 +77,7 @@ Client.figures = new function() {
     }
 
     this.getPalette = async function(palette) {
-        const figures = await Client.assets.getManifest("HabboFigures");
+        const figures = await Client.assets.getManifest("HabboFigureData");
 
         const palettes = figures.figuredata.colors.palette;
 

@@ -101,11 +101,11 @@ Client.figures.entity = function(figure) {
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
 
-        let priorities = map.map.priorities["std"][direction];
+        let priorities = map.priorities["std"][direction];
 
-        if(map.map.priorities[this.stance] != undefined) {
-            if(map.map.priorities[this.stance][direction] != undefined) {
-                priorities = map.map.priorities[this.stance][direction];
+        if(map.priorities[this.stance] != undefined) {
+            if(map.priorities[this.stance][direction] != undefined) {
+                priorities = map.priorities[this.stance][direction];
             }
         }
 
@@ -158,13 +158,13 @@ Client.figures.entity = function(figure) {
             }
         }
 
-        let offset = map.map.offsets["std"];
+        let offset = map.offsets["std"];
 
-        if(map.map.offsets[this.stance] != undefined) {
-            if(map.map.offsets[this.stance].link != undefined)
-                offset = map.map.offsets[map.map.offsets[this.stance].link];
+        if(map.offsets[this.stance] != undefined) {
+            if(map.offsets[this.stance].link != undefined)
+                offset = map.offsets[map.offsets[this.stance].link];
             else
-                offset = map.map.offsets[this.stance];
+                offset = map.offsets[this.stance];
         }
 
         context.clearRect(0, 0, 256, 256);
@@ -211,7 +211,7 @@ Client.figures.entity = function(figure) {
         let sprite;
 
         for(let index in this.actions) {
-            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+            sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
 
             if(manifest.sprites[sprite] == undefined)
                 continue;
@@ -219,12 +219,12 @@ Client.figures.entity = function(figure) {
             if(this.frames[this.actions[index].id] != undefined) {
                 frame = this.frames[this.actions[index].id];
                 
-                sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
 
                 if(manifest.sprites[sprite] == undefined) {
                     frame = 0;
 
-                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                    sprite = library + "_h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
                 }
             }
 
@@ -232,7 +232,7 @@ Client.figures.entity = function(figure) {
         }
 
         if(manifest.sprites[sprite] == undefined) {
-            if(Client.figures.logging.missingSprite)
+            //if(Client.figures.logging.missingSprite)
                 console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
 
             return null;
