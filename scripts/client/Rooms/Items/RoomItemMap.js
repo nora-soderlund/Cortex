@@ -12,11 +12,13 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
         entity.parent.center = entity.map.floor.rows * 32;
 
-        const sprite = new Client.rooms.items.sprite(entity, entity.map.$canvas[0]);
-        
-        sprite.setOffset(-entity.parent.center, -(entity.map.floor.depth * 16));
 
-        sprite.mouseover = function(position) {
+
+        const floor = new Client.rooms.items.sprite(entity, entity.map.$floor[0]);
+        
+        floor.setOffset(-entity.parent.center, -(entity.map.floor.depth * 16));
+
+        floor.mouseover = function(position) {
             const context = entity.parent.$canvas[0].getContext("2d");
 
             context.setTransform(1, .5, -1, .5, entity.map.floor.rows * 32, 0);
@@ -31,7 +33,19 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
             return false;
         };
 
-        entity.sprites.push(sprite);
+        entity.sprites.push(floor);
+
+        
+
+        const wall = new Client.rooms.items.sprite(entity, entity.map.$wall[0]);
+        
+        wall.setOffset(-entity.parent.center, entity.map.wall.top);
+
+        wall.mouseover = function(position) {
+            return false;
+        };
+
+        entity.sprites.push(wall);
     };
 
     return entity;

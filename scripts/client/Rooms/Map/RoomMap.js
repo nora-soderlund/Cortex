@@ -4,10 +4,20 @@ Client.rooms.map = function(settings = {}) {
     this.floorThickness = 8;
     this.floorMaterial  = "default";
 
+    this.wallThickness  = 8;
+    this.wallMaterial   = "404";
+
     for(let key in settings)
         this[key] = settings[key];
 
-    this.$canvas = $('<canvas></canvas>');
+    this.$wall = $('<canvas></canvas>');
+
+    this.wall = new Client.rooms.map.wall({
+        map: this.map,
+        thickness: this.wallThickness
+    });
+
+    this.$floor = $('<canvas></canvas>');
 
     this.floor = new Client.rooms.map.floor({
         map: this.map,
@@ -24,7 +34,7 @@ Client.rooms.map = function(settings = {}) {
             material: this.floorMaterial
         });
 
-        context = this.$canvas[0].getContext("2d");
+        context = this.$floor[0].getContext("2d");
         context.canvas.width = $canvas[0].width;
         context.canvas.height = $canvas[0].height;
 
@@ -33,5 +43,17 @@ Client.rooms.map = function(settings = {}) {
 
         context.filter = "blur(0) brightness(100%) opacity(100%)";
         context.drawImage($canvas[0], 0, 0);
+        
+        await this.wall.renderAsync(this.$wall[0].getContext("2d"), {
+            map: this.floor.map,
+            thickness: this.wallThickness,
+            material: this.wallMaterial,
+
+            floor: this.floorThickness,
+
+            rows: this.floor.rows,
+            columns: this.floor.columns,
+            depth: this.floor.depth
+        });
     };
 };
