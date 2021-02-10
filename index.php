@@ -4,6 +4,10 @@
 
         <link rel="stylesheet" href="styles/fonts.min.css">
         <link rel="stylesheet" href="styles/client.min.css">
+
+        <script type="text/javascript">
+            const key = "<?= (isset($_GET["key"])?($_GET["key"]):("Cake")) ?>";
+        </script>
     </head>
     <body>
         <section id="client">
