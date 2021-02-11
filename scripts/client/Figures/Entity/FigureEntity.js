@@ -97,7 +97,7 @@ Client.figures.entity = function(figure) {
         const layers = {};
 
         await this.addAction("Default");
-        await this.addAction("GestureSmile");
+        //await this.addAction("GestureSmile");
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
 

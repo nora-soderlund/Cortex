@@ -20,4 +20,8 @@ Client.menu = new function() {
     this.addItem("shop", function() {
         Client.shop.toggle();
     });
+
+    this.addItem("inventory", function() {
+        Client.inventory.toggle();
+    });
 };
