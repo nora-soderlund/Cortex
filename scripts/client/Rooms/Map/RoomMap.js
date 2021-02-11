@@ -5,7 +5,7 @@ Client.rooms.map = function(settings = {}) {
     this.floorMaterial  = "default";
 
     this.wallThickness  = 8;
-    this.wallMaterial   = "404";
+    this.wallMaterial   = "401";
 
     for(let key in settings)
         this[key] = settings[key];

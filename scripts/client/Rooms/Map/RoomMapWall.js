@@ -94,6 +94,14 @@ Client.rooms.map.wall = function() {
 
                         break;
                     }
+
+                    for(let previousRow = row - 1; previousRow >= 0; previousRow--) {
+                        if(this.getCoordinate(previousRow, previousColumn) != 'X') {
+                            hasPrevious = true;
+    
+                            break;
+                        }
+                    }
                 }
 
                 if(hasPrevious)
@@ -111,6 +119,7 @@ Client.rooms.map.wall = function() {
 
         this.drawLeft(context, rectangles);
         this.drawRight(context, rectangles);
+        this.drawEdges(context, rectangles);
     };
 
     this.drawLeft = function(context, rectangles) {
@@ -185,6 +194,45 @@ Client.rooms.map.wall = function() {
             let top = (row * 32) - (rectangle.depth * 32);
             
             context.rect(left - ((width == 32)?(0):(8)), top, width, height);
+        }
+
+        context.fill();
+        context.closePath();
+    };
+
+    this.drawEdges = function(context, rectangles) {
+        context.beginPath();
+        context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);     
+        context.fillStyle = this.patterns[0];
+
+        for(let index in rectangles) {
+            const rectangle = rectangles[index];
+
+            let row = rectangle.row;
+            let column = rectangle.column;  
+
+            let width = 32;
+            let height = 32;
+
+            let left = column * 32 - (rectangle.depth * 32);
+            let top = row * 32 - (rectangle.depth * 32);
+           
+            if(rectangle.direction == 2) {
+                width = this.floor;
+
+                left -= this.floor;
+            }
+            else if(rectangle.direction == 4) {
+                height = this.floor;
+
+                top -= this.floor;
+
+                //left -= this.floor;
+            }
+            else
+                continue;
+
+            context.rect(left, top, width, height);
         }
 
         context.fill();
