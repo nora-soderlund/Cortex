@@ -45,8 +45,6 @@ Client.shop.types.default = async function(page) {
             const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, { direction: 4 });
 
             entity.events.render.push(function(sprites, data) {
-                console.log(data);
-
                 const $canvas = $('<canvas class="shop-furnitures-display-canvas" width="' + ((data.minLeft * -1) + data.maxWidth) + '" height="' + ((data.minTop * -1) + data.maxHeight) + '">').appendTo($display);
     
                 const context = $canvas[0].getContext("2d");

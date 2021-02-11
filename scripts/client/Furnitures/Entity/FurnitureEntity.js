@@ -132,8 +132,6 @@ Client.furnitures.entity = function(name, settings = {}) {
             sprites.push(result);
         }
 
-        console.log(sprites);
-
         sprites.sort(function(a, b) {
             return a.index - b.index;
         });
