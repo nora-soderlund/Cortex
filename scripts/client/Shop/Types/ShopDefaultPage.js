@@ -65,6 +65,14 @@ Client.shop.types.default = async function(page) {
 
             const $button = $('<div class="dialog-button shop-furnitures-display-button">Add to inventory</div>').appendTo($display);
 
+            $button.click(async function() {
+                Client.shop.pause();
+
+                await Client.socket.messages.sendCall({ OnShopFurniturePurchase: page.furnitures[index].id }, "OnShopFurniturePurchase");
+
+                Client.shop.unpause();
+            });
+
             entity.render();
         });
     }
