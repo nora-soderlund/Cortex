@@ -111,6 +111,17 @@ Client.rooms.map.wall = function() {
             }
         }
 
+        const rectanglesLeft = rectangles.filter(x => x.direction == 4);
+
+        for(let index in rectanglesLeft) {
+            const rectangle = rectanglesLeft[index];
+
+            if(rectangles.find(x => (x.direction == 2 && x.row == rectangle.row && x.column == rectangle.column)) == null)
+                continue;
+
+            rectangles.push({ row: rectangle.row, column: rectangle.column, depth: rectangle.depth, direction: 1 });
+        }
+
         this.draw(context, rectangles);
     };
 
@@ -217,7 +228,14 @@ Client.rooms.map.wall = function() {
             let left = column * 32 - (rectangle.depth * 32);
             let top = row * 32 - (rectangle.depth * 32);
            
-            if(rectangle.direction == 2) {
+            if(rectangle.direction == 1) {
+                width = this.floor;
+                height = this.floor;
+
+                left -= this.floor;
+                top -= this.floor;
+            }
+            else if(rectangle.direction == 2) {
                 width = this.floor;
 
                 left -= this.floor;

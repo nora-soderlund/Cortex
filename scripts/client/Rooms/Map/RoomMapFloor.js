@@ -71,8 +71,6 @@ Client.rooms.map.floor = function() {
         context.canvas.height = (this.rows * 16) + (this.columns * 16) + this.thickness + (this.depth * 16) + 10;
 
         this.drawTiles(context);
-
-        console.log(context);
     };
 
     this.drawTiles = function(context) {
