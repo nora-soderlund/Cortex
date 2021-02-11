@@ -42,7 +42,7 @@ Client.shop.types.default = async function(page) {
         $item.click(async function() {
             $display.html("");
 
-            const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id);
+            const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, { direction: 4 });
 
             entity.events.render.push(function(sprites, data) {
                 console.log(data);

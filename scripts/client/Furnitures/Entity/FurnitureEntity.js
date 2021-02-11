@@ -1,7 +1,10 @@
-Client.furnitures.entity = function(name) {
+Client.furnitures.entity = function(name, settings = {}) {
     this.name = name;
 
     this.direction = 2;
+
+    for(let key in settings)
+        this[key] = settings[key];
 
     this.$canvas = $('<canvas width="256" height="256"></canvas>').appendTo(Client.development.$element);
 
@@ -14,6 +17,8 @@ Client.furnitures.entity = function(name) {
             this.visualizationData = new Client.furnitures.visualization(this.asset.visualization.visualizationData);
 
             this.logicData = new Client.furnitures.logic(this.asset.logic.objectData);
+
+            this.direction = this.logicData.fixDirection(this.direction);
 
             this.assetsData = new Client.furnitures.assets(this.asset.assets.assets.asset);
         }
