@@ -35,22 +35,7 @@ Client.inventory.pages.furnitures = async function($element) {
         
         const $canvas = $element.find(".inventory-furniture-display-canvas");
 
-        const sprite = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, { direction: 4 });
-
-        sprite.events.render.push(function(sprites, data) {
-            const context = $canvas[0].getContext("2d");
-
-            context.canvas.width = ((data.minLeft * -1) + data.maxWidth);
-            context.canvas.height = ((data.minTop * -1) + data.maxHeight);
-
-            for(let index in sprites) {
-                context.globalCompositeOperation = sprites[index].composite;
-
-                context.drawImage(sprites[index].image, (data.minLeft * -1) + sprites[index].left, (data.minTop * -1) + sprites[index].top);
-            }
-        });
-
-        sprite.render();
+        Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
     };
 
     for(let id in Client.inventory.furnitures) {
