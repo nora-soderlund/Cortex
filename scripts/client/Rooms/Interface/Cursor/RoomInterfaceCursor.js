@@ -12,6 +12,8 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
     }).on("mouseup", function() {
         Client.rooms.interface.cursor.down = false;
+
+        Client.rooms.interface.cursor.position = [ 0, 0 ];
     }).on("mousemove", function(event) {
         if(!Client.rooms.interface.cursor.down) {
             Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
@@ -32,6 +34,10 @@ Client.rooms.interface.cursor = new function() {
         
         if(Client.rooms.interface.entity.currentEntity.entity.name == "map")
             Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentEntity.result.row, column: Client.rooms.interface.entity.currentEntity.result.column } });
+    }).on("mouseout", function() {
+        Client.rooms.interface.cursor.down = false;
+
+        Client.rooms.interface.cursor.position = [ 0, 0 ];
     });
 
     const cursor = Client.rooms.items.cursor(Client.rooms.interface.entity);
