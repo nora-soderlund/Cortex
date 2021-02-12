@@ -1,11 +1,11 @@
 Client.inventory.pages.furnitures = async function($element) {
-    if(Client.inventory.furnitures == undefined) {
+    //if(Client.inventory.furnitures == undefined) {
         Client.inventory.pause();
 
         Client.inventory.furnitures = await Client.socket.messages.sendCall({ OnInventoryFurnituresUpdate: null }, "OnInventoryFurnituresUpdate");
         
         Client.inventory.unpause();
-    }
+    //}
 
     $element.html(
         '<div class="inventory-furnitures">' +

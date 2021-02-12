@@ -70,11 +70,11 @@ Client.assets = new function() {
         const path = (library)?("assets/" + asset + "/" + name + ".png"):("assets/" + asset + ".png");
 
         if(this.promises[asset] == undefined)
-            this.promises[asset] = {};
+            this.promises[asset] = [];
 
         if(this.promises[asset].spritesheet != undefined) {
             return new Promise(function(resolve) {
-                Client.assets.promises[asset].push(function() {
+                Client.assets.promises[asset].spritesheet.push(function() {
                     resolve();
                 });
             });
