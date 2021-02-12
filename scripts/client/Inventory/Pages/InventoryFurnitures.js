@@ -58,6 +58,10 @@ Client.inventory.pages.furnitures = async function($element) {
             });
             
             $furniture.click(function() {
+                $furniture.parent().find(".active").removeClass("active");
+
+                $furniture.addClass("active");
+                
                 setDisplay(furniture);
             });
         });
