@@ -48,6 +48,8 @@ Client.rooms.interface.furniture.place = new function() {
     
         Client.rooms.interface.cursor.events.hover.push(this.hover);
         Client.rooms.interface.cursor.events.unhover.push(this.unhover);
+
+        Client.rooms.interface.entity.$canvas.bind("wheel", this.scroll);
     };
 
     this.hover = function(position) {
@@ -123,12 +125,22 @@ Client.rooms.interface.furniture.place = new function() {
         Client.rooms.interface.furniture.place.showIcon();
     };
 
+    this.scroll = async function(event) {
+        const direction = (event.originalEvent.deltaY < 0)?(1):(0);
+       
+        Client.rooms.interface.furniture.place.entity.furniture.nextDirection(1);
+
+        await Client.rooms.interface.furniture.place.entity.furniture.render();
+    };
+
     this.unbind = function() {
         Client.rooms.interface.furniture.place.hideIcon();
 
         Client.rooms.interface.cursor.events.hover.splice(Client.rooms.interface.cursor.events.hover.indexOf(Client.rooms.interface.furniture.place.hover), 1);
         Client.rooms.interface.cursor.events.unhover.splice(Client.rooms.interface.cursor.events.unhover.indexOf(Client.rooms.interface.furniture.place.unhover), 1);
-    
+   
+        Client.rooms.interface.entity.$canvas.unbind("wheel", Client.rooms.interface.furniture.place.scroll);
+
         Client.rooms.interface.furniture.place.$icon.remove();
     };
 

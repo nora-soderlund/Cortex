@@ -156,6 +156,10 @@ Client.furnitures.entity = function(name, settings = {}) {
         this.render = [];
     };
 
+    this.nextDirection = function(step) {
+        this.direction = this.logicData.closestDirection(this.direction, step);
+    };
+
     this.getDimensions = function() {
         const result = { row: 0, column: 0, depth: 0 };
 

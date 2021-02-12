@@ -29,5 +29,27 @@ Client.furnitures.logic = function(logic) {
         return this.getDirection();
     };
 
+    this.closestDirection = function(direction, step = 1) {
+        const data = this.data.model.directions.direction;
+
+        let next = false;
+
+        for(let index in data) {
+            const current = this.getDirectionAngle(data[index].id);
+
+            if(next == true && step == 1) {
+                return current;
+            }
+
+            if(current == direction && step == 1) {
+                next = true;
+
+                continue;
+            }
+        }
+
+        return this.getDirection();
+    };
+
     return this;
 };

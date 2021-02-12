@@ -13,6 +13,9 @@ Client.development = new function() {
 
 Client.development.frames = new function() {
     $(window).on("wheel", function(event) {
+        if(!event.shiftKey)
+            return;
+            
         const direction = (event.originalEvent.deltaY < 0)?(1):(-1);
         
         if(!Client.rooms.interface.active)
