@@ -44,7 +44,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         Client.rooms.interface.entity.addEntity(this.entity);
 
-        Client.rooms.interface.entity.$canvas.bind("mousemove", this.move);
+        this.showIcon();
     
         Client.rooms.interface.cursor.events.hover.push(this.hover);
         Client.rooms.interface.cursor.events.unhover.push(this.unhover);
@@ -54,18 +54,44 @@ Client.rooms.interface.furniture.place = new function() {
         const dimensions = Client.rooms.interface.furniture.place.entity.furniture.getDimensions();
 
         for(let row = 0; row < dimensions.row; row++) {
-            if(Client.rooms.interface.data.map.height[position.row + row] == undefined)
+            if(Client.rooms.interface.data.map.height[position.row + row] == undefined) {
+                Client.rooms.interface.furniture.place.showIcon();
+
                 return;
+            }
                 
             for(let column = 0; column < dimensions.column; column++) {
-                if(Client.rooms.interface.data.map.height[position.row + row][position.column + column] == undefined)
+                if(Client.rooms.interface.data.map.height[position.row + row][position.column + column] == undefined) {
+                    Client.rooms.interface.furniture.place.showIcon();
+
                     return;
+                }
             }
         }
+        
+        Client.rooms.interface.furniture.place.hideIcon();
 
         Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, position.depth, 0);
 
         Client.rooms.interface.furniture.place.entity.enable();
+    };
+
+    this.showIcon = function() {
+        if(Client.rooms.interface.furniture.place.iconShown == true)
+            return;
+        
+            Client.rooms.interface.furniture.place.entity.disable();
+
+        Client.rooms.interface.furniture.place.iconShown = true;
+
+        Client.rooms.interface.entity.$canvas.bind("mousemove", Client.rooms.interface.furniture.place.move);
+    };
+
+    this.hideIcon = function() {
+        if(Client.rooms.interface.furniture.place.iconShown == false)
+            return;
+
+        Client.rooms.interface.furniture.place.iconShown = false;
 
         Client.rooms.interface.entity.$canvas.unbind("mousemove", Client.rooms.interface.furniture.place.move);
         
@@ -94,11 +120,11 @@ Client.rooms.interface.furniture.place = new function() {
     this.unhover = function() {
         Client.rooms.interface.furniture.place.entity.disable();
         
-        Client.rooms.interface.entity.$canvas.bind("mousemove", Client.rooms.interface.furniture.place.move);
+        Client.rooms.interface.furniture.place.showIcon();
     };
 
     this.unbind = function() {
-        Client.rooms.interface.entity.$canvas.unbind("mousemove", Client.rooms.interface.furniture.place.move);
+        Client.rooms.interface.furniture.place.hideIcon();
 
         Client.rooms.interface.cursor.events.hover.splice(Client.rooms.interface.cursor.events.hover.indexOf(Client.rooms.interface.furniture.place.hover), 1);
         Client.rooms.interface.cursor.events.unhover.splice(Client.rooms.interface.cursor.events.unhover.indexOf(Client.rooms.interface.furniture.place.unhover), 1);
