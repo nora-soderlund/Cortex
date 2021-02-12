@@ -120,6 +120,12 @@ Client.assets = new function() {
 
         const data = manifest.sprites[sprite];
 
+        if(data == undefined) {
+            console.warn("[Assets] " + sprite + " in library " + asset + " does not exist!");
+
+            return new Image();
+        }
+
         if(data.link != undefined) {
             for(let key in manifest.sprites[data.link])
                 data[key] = manifest.sprites[data.link][key];

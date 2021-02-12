@@ -38,7 +38,7 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.cursor.position = [ 0, 0 ];
     });
 
-    const cursor = Client.rooms.items.cursor(Client.rooms.interface.entity);
+    const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
 
     cursor.render().then(function() {
         Client.rooms.interface.entity.events.render.push(function() {
