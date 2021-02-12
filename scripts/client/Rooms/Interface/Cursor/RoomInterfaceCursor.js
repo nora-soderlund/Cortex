@@ -73,14 +73,14 @@ Client.rooms.interface.cursor = new function() {
             }
     
             if(Client.rooms.interface.entity.currentEntity.entity.name == "map") {
-                const row = parseInt(Client.rooms.interface.entity.currentEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentEntity.result.column), depth = parseInt(Client.rooms.interface.entity.currentEntity.result.depth);
+                const row = parseInt(Client.rooms.interface.entity.currentEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentEntity.result.column), depth = Client.rooms.interface.data.map.height[row][column];
 
                 cursor.setCoordinates(row, column, depth, -2000);
 
                 cursor.enable();
 
                 for(let index in Client.rooms.interface.cursor.events.hover)
-                    Client.rooms.interface.cursor.events.hover[index](Client.rooms.interface.entity.currentEntity.result);
+                    Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
             }
         });
     });
