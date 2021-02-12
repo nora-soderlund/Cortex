@@ -236,9 +236,9 @@ Client.loader.addStep(async function(finished) {
 
    await figure.render();
 
-    const furniture = new Client.furnitures.entity("HabboRoomCursor");
+    //const furniture = new Client.furnitures.entity("HabboRoomCursor");
 
-    furniture.render();
+    //furniture.render();
 
 
     finished();

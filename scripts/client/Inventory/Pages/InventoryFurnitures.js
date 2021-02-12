@@ -28,10 +28,18 @@ Client.inventory.pages.furnitures = async function($element) {
             '<div class="inventory-furniture-display-information">' +
                 '<b>' + furniture.title + '</b>' +
                 '<p>' + furniture.description + '</p>' +
-
-                '<div class="dialog-button">Place in room</div>' +
             '</div>'
         );
+
+        if(Client.rooms.interface.active == true) {
+            const $button = $('<div class="dialog-button">Place in room</div>').appendTo($display.find(".inventory-furniture-display-information"));
+
+            $button.click(function() {
+                Client.inventory.hide();
+                
+                Client.rooms.interface.furniture.place.start(furniture);
+            });
+        }
         
         const $canvas = $element.find(".inventory-furniture-display-canvas");
 

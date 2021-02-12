@@ -10,11 +10,19 @@ Client.rooms.interface = new function() {
     this.frameLimit = 60;
     this.frameLimitStamp = null;
 
+    this.events = {
+        start: [],
+        stop: []
+    };
+
     this.start = function() {
         if(this.active == true)
             return;
 
         this.active = true;
+
+        for(let index in this.events.start)
+            this.events.start[index]();
 
         this.chat.addMessage("information", "Room interface renderer started!");
 
@@ -29,6 +37,9 @@ Client.rooms.interface = new function() {
         return new Promise(function(resolve) {
             window.requestAnimationFrame(function() {
                 window.requestAnimationFrame(function() {
+                    for(let index in Client.rooms.interfac.events.stop)
+                        Client.rooms.interfac.events.stop[index]();
+
                     Client.rooms.interface.chat.addMessage("information", "Room interface renderer stopped!");
     
                     resolve();

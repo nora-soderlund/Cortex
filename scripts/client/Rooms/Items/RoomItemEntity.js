@@ -113,5 +113,15 @@ Client.rooms.items.entity = function(parent, name) {
         this.updatePath(frame);
     };
 
+    this.enabled = true;
+
+    this.enable = function() {
+        this.enabled = true;
+    };
+
+    this.disable = function() {
+        this.enabled = false;
+    };
+
     return this;
 };

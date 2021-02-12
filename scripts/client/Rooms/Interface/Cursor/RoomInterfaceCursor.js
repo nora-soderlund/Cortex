@@ -4,6 +4,11 @@ Client.rooms.interface.cursor = new function() {
 
     this.position = null;
 
+    this.events = {
+        hover: [],
+        unhover: []
+    };
+
     Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
         Client.rooms.interface.cursor.down = true;
 
@@ -41,18 +46,35 @@ Client.rooms.interface.cursor = new function() {
     const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
 
     cursor.render().then(function() {
+        cursor.disable();
+
+        Client.rooms.interface.events.start.push(function() {
+            Client.rooms.interface.entity.addEntity(cursor);
+        });
+
         Client.rooms.interface.entity.events.render.push(function() {
-            Client.rooms.interface.entity.removeEntity(cursor);
-    
             Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
             
-            if(Client.rooms.interface.entity.currentEntity == undefined)
+            if(Client.rooms.interface.entity.currentEntity == undefined) {
+                if(cursor.enabled) {
+                    cursor.disable();
+
+                    for(let index in Client.rooms.interface.cursor.events.unhover)
+                        Client.rooms.interface.cursor.events.unhover[index]();
+                }
+
                 return;
+            }
     
             if(Client.rooms.interface.entity.currentEntity.entity.name == "map") {
-                cursor.setCoordinates(parseInt(Client.rooms.interface.entity.currentEntity.result.row), parseInt(Client.rooms.interface.entity.currentEntity.result.column), parseInt(Client.rooms.interface.entity.currentEntity.result.depth), -2000);
-                
-                Client.rooms.interface.entity.addEntity(cursor);
+                const row = parseInt(Client.rooms.interface.entity.currentEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentEntity.result.column), depth = parseInt(Client.rooms.interface.entity.currentEntity.result.depth);
+
+                cursor.setCoordinates(row, column, depth, -2000);
+
+                cursor.enable();
+
+                for(let index in Client.rooms.interface.cursor.events.hover)
+                    Client.rooms.interface.cursor.events.hover[index](Client.rooms.interface.entity.currentEntity.result);
             }
         });
     });

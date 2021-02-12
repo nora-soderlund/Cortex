@@ -104,8 +104,12 @@ Client.rooms.entity = function($parent) {
 
         this.sprites = [];
 
-        for(let index in this.entities)
+        for(let index in this.entities) {
+            if(this.entities[index].enabled == false)
+                continue;
+
             this.sprites = this.sprites.concat(this.entities[index].sprites);
+        }
 
         this.sprites.sort(function(a, b) {
             return a.getIndex() - b.getIndex();
