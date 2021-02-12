@@ -26,7 +26,7 @@ Client.rooms.items.sprite = function(parent, image) {
     this.alpha = 1.0;
 
     this.getAlpha = function() {
-        return (this.alpha != 1.0)?(this.alpha):(this.parent.alpha);
+        return 1.0 - ((1.0 - this.alpha) + (1.0 - this.parent.alpha));
     };
 
     this.mouseover = function(position) {

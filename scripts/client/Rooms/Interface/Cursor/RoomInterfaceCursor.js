@@ -32,6 +32,12 @@ Client.rooms.interface.cursor = new function() {
         if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 250)
             return;
 
+        if(Client.rooms.interface.furniture.place.enabled) {
+            Client.rooms.interface.furniture.place.click();
+            
+            return;
+        }
+
         if(Client.rooms.interface.entity.currentEntity == undefined)
             return;
         

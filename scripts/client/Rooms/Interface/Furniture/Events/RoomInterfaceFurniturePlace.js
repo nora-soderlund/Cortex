@@ -1,7 +1,11 @@
 Client.rooms.interface.furniture.place = new function() {
+    this.enabled = false;
+
     this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
 
     this.start = async function(furniture) {
+        this.enabled = true;
+
         this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 2);
 
         this.entity.disable();
@@ -41,7 +45,6 @@ Client.rooms.interface.furniture.place = new function() {
         Client.rooms.interface.entity.addEntity(this.entity);
 
         Client.rooms.interface.entity.$canvas.bind("mousemove", this.move);
-        Client.rooms.interface.entity.$canvas.bind("click", this.click);
     
         Client.rooms.interface.cursor.events.hover.push(this.hover);
         Client.rooms.interface.cursor.events.unhover.push(this.unhover);
@@ -79,6 +82,8 @@ Client.rooms.interface.furniture.place = new function() {
     };
 
     this.stop = function() {
+        this.enabled = false;
+
         Client.rooms.interface.entity.$canvas.unbind("mousemove", Client.rooms.interface.furniture.place.move);
 
         Client.rooms.interface.cursor.events.hover.splice(Client.rooms.interface.cursor.events.hover.indexOf(Client.rooms.interface.furniture.place.hover), 1);
