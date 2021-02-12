@@ -1,0 +1,33 @@
+.inventory-furnitures {
+    display: grid;
+
+    grid-gap: 6px;
+    grid-template-columns: auto 170px;
+
+    height: 100%;
+
+    .inventory-furniture-display {
+        position: relative;
+
+        .inventory-furniture-display-canvas {
+            position: absolute;
+
+            left: 0; top: 0;
+            right: 0; bottom: 100px;
+
+            margin: auto;
+        }
+
+        .inventory-furniture-display-information {
+            width: 100%;
+
+            position: absolute;
+
+            bottom: 0;
+
+            .dialog-button {
+                margin-top: 6px;
+            }
+        }
+    }
+}

@@ -11,8 +11,15 @@ Client.dialogs.tabs = function(height) {
 
     this.buttons = {};
 
-    this.add = function(identifier, text, callback = undefined) {
+    this.add = function(identifier, text, callback = undefined, disabled = false) {
         const $element = $('<div class="dialog-tabs-button">' + text + '</div>').appendTo(this.$header);
+
+        if(disabled) {
+            $element.css({
+                "pointer-events": "none",
+                "opacity": .5
+            });
+        }
 
         this.buttons[identifier] = { element: $element, callback: callback };
 
