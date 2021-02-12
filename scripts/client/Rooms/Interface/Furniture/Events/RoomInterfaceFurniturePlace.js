@@ -6,6 +6,8 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.entity.disable();
 
+        this.entity.alpha = 0.5;
+
         Client.assets.getSpritesheet("HabboLoadingIcon").then(function(icon) {
             const context = Client.rooms.interface.furniture.place.$icon[0].getContext("2d");
 

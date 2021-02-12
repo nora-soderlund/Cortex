@@ -13,6 +13,8 @@ Client.rooms.items.entity = function(parent, name) {
     
     this.index = 0;
 
+    this.alpha = 1.0;
+
     this.sprites = [];
 
     this.data = {};
