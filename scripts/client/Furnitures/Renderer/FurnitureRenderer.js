@@ -1,4 +1,13 @@
 Client.furnitures.renderer = async function(id, settings, $canvas) {
+    const loading = await Client.assets.getSpritesheet("HabboLoading").then(function(image) {
+        const context = $canvas[0].getContext("2d");
+
+        context.canvas.width = image.width;
+        context.canvas.height = image.height;
+
+        context.drawImage(image, 0, 0);
+    });
+
     const furniture = await Client.furnitures.get(id);
 
     const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, settings);
