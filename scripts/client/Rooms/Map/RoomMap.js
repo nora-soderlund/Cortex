@@ -38,10 +38,10 @@ Client.rooms.map = function(settings = {}) {
         context.canvas.width = $canvas[0].width;
         context.canvas.height = $canvas[0].height;
 
-        context.filter = "blur(5px) brightness(0%) opacity(50%)";
-        context.drawImage($canvas[0], 0, 5);
+        //context.filter = "blur(5px) brightness(0%) opacity(50%)";
+        //context.drawImage($canvas[0], 0, 5);
 
-        context.filter = "blur(0) brightness(100%) opacity(100%)";
+        //context.filter = "blur(0) brightness(100%) opacity(100%)";
         context.drawImage($canvas[0], 0, 0);
         
         await this.wall.renderAsync(this.$wall[0].getContext("2d"), {
