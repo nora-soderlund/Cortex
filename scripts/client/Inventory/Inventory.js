@@ -39,7 +39,9 @@ Client.inventory = new function() {
     });
 
     entity.events.show.push(function() {
-        
+        if(Client.rooms.interface.furniture.place.enabled == true) {
+            Client.rooms.interface.furniture.place.stop();
+        }
     });
 
     return entity;

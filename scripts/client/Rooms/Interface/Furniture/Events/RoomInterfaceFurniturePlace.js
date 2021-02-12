@@ -65,7 +65,11 @@ Client.rooms.interface.furniture.place = new function() {
             Client.rooms.interface.furniture.place.stop();
 
             Client.inventory.show();
+
+            return;
         }
+
+        Client.rooms.interface.furniture.place.unbind();
     };
 
     this.move = function(event) {
@@ -81,15 +85,19 @@ Client.rooms.interface.furniture.place = new function() {
         Client.rooms.interface.entity.$canvas.bind("mousemove", Client.rooms.interface.furniture.place.move);
     };
 
-    this.stop = function() {
-        this.enabled = false;
-
+    this.unbind = function() {
         Client.rooms.interface.entity.$canvas.unbind("mousemove", Client.rooms.interface.furniture.place.move);
 
         Client.rooms.interface.cursor.events.hover.splice(Client.rooms.interface.cursor.events.hover.indexOf(Client.rooms.interface.furniture.place.hover), 1);
         Client.rooms.interface.cursor.events.unhover.splice(Client.rooms.interface.cursor.events.unhover.indexOf(Client.rooms.interface.furniture.place.unhover), 1);
     
         Client.rooms.interface.furniture.place.$icon.remove();
+    };
+
+    this.stop = function() {
+        this.enabled = false;
+
+        this.unbind();
         
         Client.rooms.interface.entity.removeEntity(Client.rooms.interface.furniture.place.entity);
     };
