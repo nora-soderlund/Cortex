@@ -16,7 +16,15 @@ Client.inventory = new function() {
     entity.events.create.push(async function() {
         entity.tabs = new Client.dialogs.tabs(260);
 
-        entity.tabs.add("furnitures", "Furnitures", function($element) {
+        entity.tabs.add("furnitures", "Furnitures", async function($element) {
+            if(entity.furnitures == undefined) {
+                entity.pause();
+
+                entity.furnitures = await Client.socket.messages.sendCall({ OnInventoryFurnituresUpdate: null }, "OnInventoryFurnituresUpdate");
+                
+                entity.unpause();
+            }
+
             $element.html(
                 '<div class="inventory-furnitures">' +
                     '<div class="inventory-furnitures-container">' +
@@ -38,11 +46,36 @@ Client.inventory = new function() {
 
             const $content = $element.find(".inventory-furnitures-content");
 
+            for(let id in entity.furnitures) {
+                Client.furnitures.get(id).then(function(furniture) {
+                    const $furniture = $(
+                        '<div class="inventory-furniture-icon">' +
+                            '<div class="inventory-furniture-icon-image"></div>' +
+                        '</div>'
+                    ).appendTo($content);
+
+                    const $icon = $furniture.find(".inventory-furniture-icon-image");
+
+                    Client.assets.getSpritesheet("HabboLoadingIcon").then(function(icon) {
+                        const $canvas = $('<canvas width="' + icon.width + '" height="' + icon.height + '">').appendTo($icon);
+
+                        const context = $canvas[0].getContext("2d");
+
+                        context.drawImage(icon, 0, 0);
+
+                        Client.furnitures.icon(furniture.id).then(function(image) {
+                            $icon.html(image);
+                        });
+                    });
+                    //const $furniture = $('<p>' + result.line + '/' + result.id + ' (' + entity.furnitures[result.id] + ')</p>').appendTo($content);
+                });
+            }
+
             const $canvas = $element.find(".inventory-furniture-display-canvas");
 
-            const entity = new Client.furnitures.entity("HabboFurnitures/lodge/table_armas", { direction: 4 });
+            const furniture = new Client.furnitures.entity("HabboFurnitures/lodge/table_armas", { direction: 4 });
 
-            entity.events.render.push(function(sprites, data) {
+            furniture.events.render.push(function(sprites, data) {
                 const context = $canvas[0].getContext("2d");
 
                 context.canvas.width = ((data.minLeft * -1) + data.maxWidth);
@@ -55,7 +88,7 @@ Client.inventory = new function() {
                 }
             });
 
-            entity.render();
+            furniture.render();
         });
 
         entity.tabs.add("pets", "Pets", undefined, true);
