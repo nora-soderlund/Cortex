@@ -156,5 +156,24 @@ Client.furnitures.entity = function(name, settings = {}) {
         this.render = [];
     };
 
+    this.getDimensions = function() {
+        const result = { row: 0, column: 0, depth: 0 };
+
+        const data = this.logicData.data.model.dimensions;
+
+        if(data.x != undefined) result.row = parseFloat(data.x);
+        if(data.y != undefined) result.column = parseFloat(data.y);
+        if(data.z != undefined) result.depth = parseFloat(data.z);
+
+        if(this.direction == 0 || this.direction == 4) {
+            const spare = result.row;
+
+            result.row = result.column;
+            result.column = spare;
+        }
+
+        return result;
+    };
+
     return this;
 };

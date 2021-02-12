@@ -6,7 +6,7 @@ Client.rooms.interface.furniture.place = new function() {
     this.start = async function(furniture) {
         this.enabled = true;
 
-        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 2);
+        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 0);
 
         this.entity.disable();
 
@@ -51,6 +51,18 @@ Client.rooms.interface.furniture.place = new function() {
     };
 
     this.hover = function(position) {
+        const dimensions = Client.rooms.interface.furniture.place.entity.furniture.getDimensions();
+
+        for(let row = 0; row < dimensions.row; row++) {
+            if(Client.rooms.interface.data.map.height[position.row + row] == undefined)
+                return;
+                
+            for(let column = 0; column < dimensions.column; column++) {
+                if(Client.rooms.interface.data.map.height[position.row + row][position.column + column] == undefined)
+                    return;
+            }
+        }
+
         Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, position.depth, 0);
 
         Client.rooms.interface.furniture.place.entity.enable();
