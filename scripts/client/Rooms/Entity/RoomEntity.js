@@ -17,7 +17,7 @@ Client.rooms.entity = function($parent) {
 
     this.currentEntity = undefined;
 
-    this.getEntity = function(position) {
+    this.getEntity = function(position, type = null) {
         if(position == undefined)
             return undefined;
 
@@ -26,13 +26,15 @@ Client.rooms.entity = function($parent) {
             position[1] - this.offset[1]
         ];
 
-        for(let index in this.sprites) {
-            const mouseover = this.sprites[index].mouseover(offset, this.center);
+        const sprites = (type == null)?(this.sprites):(this.sprites.filter(x => x.parent.name == type));
+
+        for(let index in sprites) {
+            const mouseover = sprites[index].mouseover(offset, this.center);
             
             if(mouseover == false)
                 continue;
 
-            return { entity: this.sprites[index].parent, sprite: this.sprites[index], result: mouseover };
+            return { entity: sprites[index].parent, sprite: sprites[index], result: mouseover };
         }
 
         return undefined;
