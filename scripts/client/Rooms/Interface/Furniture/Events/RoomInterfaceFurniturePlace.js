@@ -4,6 +4,8 @@ Client.rooms.interface.furniture.place = new function() {
     this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
 
     this.start = async function(furniture) {
+        this.map = await Client.socket.messages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate");
+
         this.enabled = true;
 
         this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 0);
@@ -56,14 +58,14 @@ Client.rooms.interface.furniture.place = new function() {
         const dimensions = Client.rooms.interface.furniture.place.entity.furniture.getDimensions();
 
         for(let row = 0; row < dimensions.row; row++) {
-            if(Client.rooms.interface.data.map.height[position.row + row] == undefined) {
+            if(Client.rooms.interface.furniture.place.map[position.row + row] == undefined) {
                 Client.rooms.interface.furniture.place.showIcon();
 
                 return;
             }
                 
             for(let column = 0; column < dimensions.column; column++) {
-                if(Client.rooms.interface.data.map.height[position.row + row][position.column + column] == undefined) {
+                if(Client.rooms.interface.furniture.place.map[position.row + row][position.column + column] == undefined) {
                     Client.rooms.interface.furniture.place.showIcon();
 
                     return;
