@@ -85,7 +85,7 @@ Client.rooms.interface.cursor = new function() {
             }
 
             if(previousFurniture != null) {
-                previousFurniture.entity.alpha = 1;
+                previousFurniture.sprite.alpha = 1;
 
                 previousFurniture = null;
             }
@@ -93,7 +93,7 @@ Client.rooms.interface.cursor = new function() {
             const furniture = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "furniture");
 
             if(furniture != undefined) {
-                furniture.entity.alpha = .5;
+                furniture.sprite.alpha = .5;
 
                 previousFurniture = furniture;
             }

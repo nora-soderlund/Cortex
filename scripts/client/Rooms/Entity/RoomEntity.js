@@ -28,7 +28,7 @@ Client.rooms.entity = function($parent) {
 
         const sprites = (type == null)?(this.sprites):(this.sprites.filter(x => x.parent.name == type));
 
-        for(let index = sprites.length - 1; index != 0; index--) {
+        for(let index = sprites.length - 1; index != -1; index--) {
             const mouseover = sprites[index].mouseover(offset, this.center);
             
             if(mouseover == false)
