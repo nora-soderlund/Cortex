@@ -12,6 +12,8 @@ Client.rooms.items.furniture = function(parent, name, direction) {
             for(let index in sprites) {
                 const sprite = new Client.rooms.items.sprite(entity, sprites[index].image);
 
+                sprite.composite = sprites[index].composite;
+
                 const spriteData = sprites[index].imageData;
 
                 sprite.mouseover = function(position) {

@@ -19,6 +19,10 @@ Client.furnitures = new function() {
         switch(ink) {
             case "ADD": return "lighter";
 
+            case "SUBTRACT": return "luminosity";
+
+            case "COPY": return "source-over";
+
             case undefined: return "source-over";
 
             default: return ink;
