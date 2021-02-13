@@ -42,17 +42,9 @@ Client.shop.types.default = async function(page) {
         $item.click(async function() {
             $display.html("");
 
-            const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, { direction: 4 });
+            const $canvas = $('<canvas class="shop-furnitures-display-canvas"></canvas>').appendTo($display);
 
-            entity.events.render.push(function(sprites, data) {
-                const $canvas = $('<canvas class="shop-furnitures-display-canvas" width="' + ((data.minLeft * -1) + data.maxWidth) + '" height="' + ((data.minTop * -1) + data.maxHeight) + '">').appendTo($display);
-    
-                const context = $canvas[0].getContext("2d");
-
-                for(let index in sprites) {
-                    context.drawImage(sprites[index].image, (data.minLeft * -1) + sprites[index].left, (data.minTop * -1) + sprites[index].top);
-                }
-            });
+            new Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
 
             const $information = $(
                 '<div class="shop-furnitures-display-info">' + 
@@ -70,8 +62,6 @@ Client.shop.types.default = async function(page) {
 
                 Client.shop.unpause();
             });
-
-            entity.render();
         });
     }
 
