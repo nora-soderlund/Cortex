@@ -20,10 +20,10 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
         
         floor.setOffset(-entity.parent.center, -(entity.map.floor.depth * 16));
 
-        floor.mouseover = function(position) {
+        floor.mouseover = function(position, center) {
             const context = entity.parent.$canvas[0].getContext("2d");
 
-            context.setTransform(1, .5, -1, .5, entity.map.floor.rows * 32, 0);
+            context.setTransform(1, .5, -1, .5, entity.map.floor.rows * 32 - center, 0);
 
             for(let path in entity.map.floor.floorPaths) {
                 if(!context.isPointInPath(entity.map.floor.floorPaths[path].path, position[0], position[1]))

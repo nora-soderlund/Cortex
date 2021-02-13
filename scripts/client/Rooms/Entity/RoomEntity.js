@@ -22,12 +22,12 @@ Client.rooms.entity = function($parent) {
             return undefined;
 
         const offset = [
-            position[0] - this.offset[0],
+            position[0] - this.offset[0] - this.center,
             position[1] - this.offset[1]
         ];
 
         for(let index in this.sprites) {
-            const mouseover = this.sprites[index].mouseover(offset);
+            const mouseover = this.sprites[index].mouseover(offset, this.center);
             
             if(mouseover == false)
                 continue;

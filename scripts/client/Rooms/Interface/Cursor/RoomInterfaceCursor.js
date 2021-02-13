@@ -51,6 +51,8 @@ Client.rooms.interface.cursor = new function() {
 
     const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
 
+    let currentEntity = null;
+
     cursor.render().then(function() {
         cursor.disable();
 
@@ -59,6 +61,12 @@ Client.rooms.interface.cursor = new function() {
         });
 
         Client.rooms.interface.entity.events.render.push(function() {
+            if(currentEntity != null) {
+                currentEntity.alpha = 1.0;
+                
+                currentEntity = null;
+            }
+
             Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
             
             if(Client.rooms.interface.entity.currentEntity == undefined) {
@@ -85,6 +93,11 @@ Client.rooms.interface.cursor = new function() {
 
                 for(let index in Client.rooms.interface.cursor.events.hover)
                     Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
+            }
+            else if(Client.rooms.interface.entity.currentEntity.entity.name == "furniture") {
+                currentEntity = Client.rooms.interface.entity.currentEntity.entity;
+
+                currentEntity.alpha = 0.5;
             }
         });
     });
