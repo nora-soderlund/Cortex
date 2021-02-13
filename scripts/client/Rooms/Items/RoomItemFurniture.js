@@ -34,8 +34,6 @@ Client.rooms.items.furniture = function(parent, name, direction) {
                 //sprite.index = parseInt(sprites[index].index);
 
                 sprite.index = parseInt(sprites[index].index);
-               
-                console.log(sprite.index);
 
                 entity.sprites.push(sprite);
             }
