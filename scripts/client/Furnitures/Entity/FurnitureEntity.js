@@ -36,13 +36,8 @@ Client.furnitures.entity = function(name, settings = {}) {
             if(layers[layer] == undefined)
                 layers[layer] = { index: 0 };
 
-            if(this.visualizationData.layers[index].z != undefined) {
-                console.log(this.name + ": before " + layers[layer].index);
-
+            if(this.visualizationData.layers[index].z != undefined)
                 layers[layer].index += parseInt(this.visualizationData.layers[index].z);
-                
-                console.log(this.name + ": after " + layers[layer].index);
-            }
 
             for(let key in this.visualizationData.layers[index]) {
                 if(key == "z")
