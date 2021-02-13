@@ -65,6 +65,8 @@ Client.rooms.interface.cursor = new function() {
                 if(cursor.enabled) {
                     cursor.disable();
 
+                    //Client.rooms.interface.entity.setCursor("default");
+
                     for(let index in Client.rooms.interface.cursor.events.unhover)
                         Client.rooms.interface.cursor.events.unhover[index]();
                 }
@@ -78,6 +80,8 @@ Client.rooms.interface.cursor = new function() {
                 cursor.setCoordinates(row, column, depth, -2000);
 
                 cursor.enable();
+
+                //Client.rooms.interface.entity.setCursor("pointer");
 
                 for(let index in Client.rooms.interface.cursor.events.hover)
                     Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });

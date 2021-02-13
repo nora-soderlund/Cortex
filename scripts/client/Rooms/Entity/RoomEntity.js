@@ -158,4 +158,8 @@ Client.rooms.entity = function($parent) {
 
         this.beforeRender = [];
     };
+
+    this.setCursor = function(cursor) {
+        this.$canvas.css("cursor", cursor);
+    };
 };
