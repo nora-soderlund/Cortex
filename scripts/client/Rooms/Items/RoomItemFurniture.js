@@ -11,13 +11,14 @@ Client.rooms.items.furniture = function(parent, name, direction) {
 
             for(let index in sprites) {
                 let sprite = new Client.rooms.items.sprite(entity, sprites[index].image);
+                const spriteData = sprites[index].imageData;
 
                 sprite.mouseover = function(position) {
                     const entityOffset = sprite.parent.getOffset();
                    
                     const offset = [
-                        position[0] - (sprite.offset[0] + entityOffset[0]),
-                        position[1] - (sprite.offset[1] + entityOffset[1])
+                        Math.floor(position[0] - (sprite.offset[0] + entityOffset[0])),
+                        Math.floor(position[1] - (sprite.offset[1] + entityOffset[1]))
                     ];
 
                     if(offset[0] < 0 || offset[1] < 0)
@@ -25,7 +26,12 @@ Client.rooms.items.furniture = function(parent, name, direction) {
 
                     if(offset[0] > sprite.image.width || offset[1] > sprite.image.height)
                         return false;
-        
+
+                    const pixel = ((offset[0] + offset[1] * spriteData.width) * 4) + 3;
+
+                    if(spriteData.data[pixel] == 0)
+                        return false;
+
                     return true;
                 };
 
