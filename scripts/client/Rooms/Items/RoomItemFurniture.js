@@ -1,6 +1,4 @@
 Client.rooms.items.furniture = function(parent, name, direction) {
-    console.trace();
-    
     const entity = new Client.rooms.items.entity(parent, "furniture");
     
     entity.furniture = new Client.furnitures.entity(name, {
@@ -16,8 +14,12 @@ Client.rooms.items.furniture = function(parent, name, direction) {
 
                 sprite.setOffset(64 + sprites[index].left, 16 + sprites[index].top);
 
+                //sprite.index = parseInt(sprites[index].index);
+
                 sprite.index = parseInt(sprites[index].index);
-                
+               
+                console.log(sprite.index);
+
                 entity.sprites.push(sprite);
             }
         });
