@@ -4,11 +4,17 @@ Client.rooms.interface.furniture.place = new function() {
     this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
 
     this.start = async function(furniture) {
+        this.furniture = furniture;
+
         this.map = await Client.socket.messages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate");
 
         this.enabled = true;
 
         this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 0);
+
+        this.entity.furniture.events.render.push(function() {
+            Client.rooms.interface.furniture.place.direction = Client.rooms.interface.furniture.place.entity.furniture.direction;
+        });
 
         this.entity.disable();
 
@@ -75,6 +81,8 @@ Client.rooms.interface.furniture.place = new function() {
         
         Client.rooms.interface.furniture.place.hideIcon();
 
+        Client.rooms.interface.furniture.place.position = position;
+
         Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, position.depth, 0);
 
         Client.rooms.interface.furniture.place.entity.enable();
@@ -112,6 +120,21 @@ Client.rooms.interface.furniture.place = new function() {
         }
 
         Client.rooms.interface.furniture.place.unbind();
+
+        Client.socket.messages.sendCall({
+            OnRoomFurniturePlace: {
+                id: Client.rooms.interface.furniture.place.furniture.id,
+                position: {
+                    row: Client.rooms.interface.furniture.place.position.row,
+                    column: Client.rooms.interface.furniture.place.position.column,
+                    direction: Client.rooms.interface.furniture.place.direction
+                }
+            }
+        }, "OnRoomFurniturePlace").then(function(response) {
+            Client.rooms.interface.furniture.place.stop();
+            
+            Client.inventory.show();
+        });
     };
 
     this.move = function(event) {

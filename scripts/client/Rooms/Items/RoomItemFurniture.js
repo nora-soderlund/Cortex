@@ -2,12 +2,12 @@ Client.rooms.items.furniture = function(parent, name, direction) {
     console.trace();
     
     const entity = new Client.rooms.items.entity(parent, "furniture");
+    
+    entity.furniture = new Client.furnitures.entity(name, {
+        direction
+    });
 
     entity.render = async function() {
-        entity.furniture = new Client.furnitures.entity(name, {
-            direction
-        });
-    
         entity.furniture.events.render.push(function(sprites) {
             entity.sprites.length = 0;
 

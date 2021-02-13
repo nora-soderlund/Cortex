@@ -4,13 +4,17 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
             data.furnitures = [ data.furnitures ];
 
         for(let index in data.furnitures) {
-            let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/Club/Sofa", data.furnitures[index].position.direction);
+            const dataFurniture = data.furnitures[index];
             
-            entity.setPosition(data.furnitures[index].position);
-            
-            entity.render();
-
-            Client.rooms.interface.entity.addEntity(entity);
+            Client.furnitures.get(dataFurniture.furniture).then(function(furniture) {
+                let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, dataFurniture.position.direction);
+                
+                entity.setPosition(dataFurniture.position);
+                
+                entity.render();
+    
+                Client.rooms.interface.entity.addEntity(entity);
+            });
         }
     }
     
