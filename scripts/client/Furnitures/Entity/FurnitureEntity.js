@@ -91,6 +91,8 @@ Client.furnitures.entity = function(name, settings = {}) {
 
             let canvas = await Client.assets.getSprite(this.name, spriteData.name);
 
+            const canvasData = await Client.assets.getSpriteData(this.name, spriteData.name);
+
             let left = -parseInt(spriteData.x);
             let top = -parseInt(spriteData.y);
 
@@ -124,6 +126,7 @@ Client.furnitures.entity = function(name, settings = {}) {
 
             const result = {
                 image: canvas,
+                imageData: canvasData,
                 left, top,
                 index: priority,
                 composite: Client.furnitures.getComposite(layers[index].ink)

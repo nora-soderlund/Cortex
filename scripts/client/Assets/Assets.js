@@ -118,6 +118,9 @@ Client.assets = new function() {
         if(this.cache[asset].sprites == undefined)
             this.cache[asset].sprites = {};
 
+        if(this.cache[asset].spritesData == undefined)
+            this.cache[asset].spritesData = {};
+
         if(this.cache[asset].sprites[sprite] != undefined)
             return this.cache[asset].sprites[sprite];
 
@@ -145,6 +148,17 @@ Client.assets = new function() {
         this.cache[asset].sprites[sprite] = $canvas[0];
 
         return this.cache[asset].sprites[sprite];
+    };
+
+    this.getSpriteData = async function(asset, sprite) {
+        const image = await this.getSprite(asset, sprite);
+
+        if(this.cache[asset].spritesData[sprite] != undefined)
+            return this.cache[asset].spritesData[sprite];
+
+        this.cache[asset].spritesData[sprite] = image.getContext("2d").getImageData(0, 0, image.width, image.height);
+
+        return this.cache[asset].spritesData[sprite];
     };
 
     this.getSpriteColor = async function(asset, sprite, color) {
