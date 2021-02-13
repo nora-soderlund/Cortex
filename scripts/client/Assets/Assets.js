@@ -22,10 +22,13 @@ Client.assets = new function() {
 
         if(this.promises[asset] == undefined)
             this.promises[asset] = {};
+            
+        if(this.promises[asset] == undefined)
+            this.promises[asset] = {};
 
         if(this.promises[asset].manifest != undefined) {
             return new Promise(function(resolve) {
-                Client.assets.promises[asset].push(function() {
+                Client.assets.promises[asset].manifest.push(function() {
                     resolve();
                 });
             });
