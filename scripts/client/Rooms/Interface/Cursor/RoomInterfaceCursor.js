@@ -51,6 +51,8 @@ Client.rooms.interface.cursor = new function() {
 
     const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
 
+    cursor.name = "cursor";
+
     let previousFurniture = null;
 
     cursor.render().then(function() {
