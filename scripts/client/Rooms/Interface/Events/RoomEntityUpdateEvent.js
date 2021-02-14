@@ -1,4 +1,18 @@
 Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
+    for(let key in data) {
+        for(let id in data[key]) {
+            const item = data[key][id];
+
+            if(item.position != undefined) {
+                if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined)
+                    Client.rooms.interface.users[id].setPath(Client.rooms.interface.users[id].data.position, item.position, 500);
+            }
+
+            for(let property in item)
+                Client.rooms.interface[key][id].data[property] = item[property];
+        }
+    }
+
     if(data.users != undefined) {
         for(let id in data.users) {
             let render = false;
@@ -24,16 +38,7 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
                 }
             }
 
-            if(render)
-                await Client.rooms.interface.users[id].figure.render();
-
-            if(data.users[id].position != undefined) {
-                if(data.users[id].position.row != undefined && data.users[id].position.column != undefined && data.users[id].position.depth != undefined)
-                    Client.rooms.interface.users[id].setPath(Client.rooms.interface.users[id].data.position, data.users[id].position, 500);
-            }
-
-            for(let key in data.users[id])
-                Client.rooms.interface.users[id].data[key] = data.users[id][key];
+            Client.rooms.interface.users[id].figure.render();
         }
     }
 });
