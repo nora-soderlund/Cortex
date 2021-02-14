@@ -3,9 +3,17 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
         for(let id in data[key]) {
             const item = data[key][id];
 
+            const entity = Client.rooms.interface[key][id];
+
             if(item.position != undefined) {
-                if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined)
-                    Client.rooms.interface.users[id].setPath(Client.rooms.interface.users[id].data.position, item.position, 500);
+                if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined) {
+                    if(item.position.speed != 0)
+                        entity.setPath(entity.data.position, item.position, item.position.speed);
+                    else
+                        entity.setCoordinates(item.position.row, item.position.column, item.position.depth);
+
+                    entity.enable();
+                }
             }
 
             for(let property in item)

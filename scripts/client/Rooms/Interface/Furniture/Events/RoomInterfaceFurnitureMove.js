@@ -24,8 +24,6 @@ Client.rooms.interface.furniture.move = new function() {
                 }
             }, "OnRoomFurnitureMove", x => x == entity.data.id).then(function(response) {
                 result.stop();
-
-                entity.enable();
             });
         });
     };
