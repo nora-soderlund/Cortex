@@ -58,41 +58,40 @@ Client.rooms.interface.chat = new function() {
         
         const $element = this.$element;
 
-        for(let index in this.messages) {
-            this.messages[index].css({
-                bottom: "+=40"
-            });
-        }
-
         $canvas.css({
             "left": left
         }).appendTo($element);
     
         this.messages.push($canvas);
 
-        if(this.interval == undefined)
-            this.interval = setInterval(this.updateMessages, 2000, this);
+        this.updateMessages(this);
     };
 
     this.updateMessages = function(self) {
-        if(self.messages.length == 0) {
-            clearInterval(this.interval);
-
-            this.interval = undefined;
-
-            return;
+        if(self.interval != undefined) {
+            clearInterval(self.interval);
+            
+            self.interval = undefined;
         }
 
+        if(self.messages.length == 0)
+            return;
+
         for(let index in self.messages) {
+            const $this = self.messages[index];
+            const thisIndex = index;
+
             self.messages[index].animate({
-                bottom: "+=40"
+                bottom: "+=30"
             }, 400, function() {
                 if($(this).offset().top < 0) {
-                    $(this).remove();
+                    $this.remove();
 
-                    self.messages.splice(index, 1);
+                    self.messages.splice(thisIndex, 1);
                 }
             });
         }
+
+        self.interval = setInterval(self.updateMessages, 2000, self);
     };
 };
