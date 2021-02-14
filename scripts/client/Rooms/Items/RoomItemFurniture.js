@@ -1,5 +1,13 @@
 Client.rooms.items.furniture = function(parent, name, direction) {
     const entity = new Client.rooms.items.entity(parent, "furniture");
+
+    const loading = Client.assets.getSpritesheet("HabboLoading").then(function(image) {
+        const sprite = new Client.rooms.items.sprite(entity, image);
+
+        sprite.setOffset(32, -32);
+
+        entity.sprites.push(sprite);
+    });
     
     entity.furniture = new Client.furnitures.entity(name, {
         direction
