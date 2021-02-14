@@ -38,6 +38,10 @@ Client.rooms.items.furniture = function(parent, name, direction) {
                     return true;
                 };
 
+                sprite.mouseclick = function(event) {
+                    Client.rooms.interface.chat.addMessage("information", entity.furniture.name + " was clicked on!");
+                };
+
                 sprite.setOffset(64 + sprites[index].left, 16 + sprites[index].top);
 
                 //sprite.index = parseInt(sprites[index].index);

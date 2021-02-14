@@ -37,5 +37,9 @@ Client.rooms.items.sprite = function(parent, image) {
         return false;
     };
 
+    this.mouseclick = function(event) {
+
+    };
+
     return this;
 };

@@ -28,7 +28,7 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.entity.offset[1] += (event.offsetY - Client.rooms.interface.cursor.position[1]);
 
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
-    }).on("click", function() {
+    }).on("click", function(event) {
         if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 250)
             return;
 
@@ -43,6 +43,8 @@ Client.rooms.interface.cursor = new function() {
         
         if(Client.rooms.interface.entity.currentEntity.entity.name == "map")
             Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentEntity.result.row, column: Client.rooms.interface.entity.currentEntity.result.column } });
+        else
+            Client.rooms.interface.entity.currentEntity.sprite.mouseclick(event);
     }).on("mouseout", function() {
         Client.rooms.interface.cursor.down = false;
 
@@ -53,8 +55,6 @@ Client.rooms.interface.cursor = new function() {
 
     cursor.name = "cursor";
 
-    let previousFurniture = null;
-
     cursor.render().then(function() {
         cursor.disable();
 
@@ -63,9 +63,9 @@ Client.rooms.interface.cursor = new function() {
         });
 
         Client.rooms.interface.entity.events.render.push(function() {
-            Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
+            const map = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
             
-            if(Client.rooms.interface.entity.currentEntity == undefined) {
+            if(map == undefined) {
                 if(cursor.enabled) {
                     cursor.disable();
 
@@ -74,7 +74,7 @@ Client.rooms.interface.cursor = new function() {
                 }
             }
             else {
-                const row = parseInt(Client.rooms.interface.entity.currentEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentEntity.result.column), depth = Client.rooms.interface.data.map.height[row][column];
+                const row = parseInt(map.result.row), column = parseInt(map.result.column), depth = Client.rooms.interface.data.map.height[row][column];
 
                 cursor.setCoordinates(row, column, depth, -2000);
 
@@ -84,19 +84,7 @@ Client.rooms.interface.cursor = new function() {
                     Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
             }
 
-            if(previousFurniture != null) {
-                previousFurniture.sprite.alpha = 1;
-
-                previousFurniture = null;
-            }
-
-            const furniture = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "furniture");
-
-            if(furniture != undefined) {
-                furniture.sprite.alpha = .5;
-
-                previousFurniture = furniture;
-            }
+            Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
         });
     });
 };
