@@ -16,6 +16,8 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
                 entity.data = data.furnitures[index];
     
                 Client.rooms.interface.entity.addEntity(entity);
+
+                Client.rooms.interface.furnitures[dataFurniture.id] = entity;
             });
         }
     }

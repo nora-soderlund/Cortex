@@ -4,6 +4,7 @@ Client.rooms.interface = new function() {
     this.entity = new Client.rooms.entity(this.$element);
 
     this.users = {};
+    this.furnitures = {};
 
     this.active = false;
 
