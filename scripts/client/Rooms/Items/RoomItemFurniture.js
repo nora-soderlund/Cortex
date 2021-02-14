@@ -44,7 +44,12 @@ Client.rooms.items.furniture = function(parent, name, direction) {
                 };
 
                 sprite.mouseclick = function(event) {
-                    Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on!");
+                    if(Client.keys.down["ShiftLeft"])
+                        Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on to rotate!");
+                    else if(Client.keys.down["ControlLeft"])
+                        Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on to pick up!");
+                    else if(Client.keys.down["AltLeft"])
+                        Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on to move!");
                 };
 
                 sprite.setOffset(64 + sprites[index].left, 16 + sprites[index].top);

@@ -31,7 +31,7 @@ Client.rooms.map = function(settings = {}) {
         await this.floor.renderAsync(context, {
             map: this.map,
             thickness: this.floorThickness,
-            material: this.floorMaterial
+            material: "102"
         });
 
         context = this.$floor[0].getContext("2d");

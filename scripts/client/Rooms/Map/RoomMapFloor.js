@@ -65,7 +65,7 @@ Client.rooms.map.floor = function() {
 
         this.setMap(settings.map);
 
-        await this.setPatternAsync(this.floorMaterial);
+        await this.setPatternAsync(this.material);
    
         context.canvas.width = (this.rows * 32) + (this.columns * 32);
         context.canvas.height = (this.rows * 16) + (this.columns * 16) + this.thickness + (this.depth * 16) + 10;
