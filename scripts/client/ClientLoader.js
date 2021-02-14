@@ -90,21 +90,21 @@ Client.loader.addStep(function(finished) {
 });
 
 Client.loader.addStep(function(finished) {
-    if(Client.loader.data.fonts.length == 0)
-        return finished();
+    //if(Client.loader.data.fonts.length == 0)
+    //    return finished();
 
     console.log("[%cLoader%c]%c Starting the download of the font faces...", "color: orange", "color: inherit", "color: lightblue");
     
     Client.loader.setText("Downloading fonts...");
 
-    const $canvas = $('<canvas width="1" height="1"></canvas>').appendTo(Client.loader.$scripts);
+    const $canvas = $('<canvas width="100" height="100"></canvas>').appendTo(Client.$element);
 
     const context = $canvas[0].getContext("2d");
     
     for(let index in Client.loader.data.fonts) {
-        context.font = Client.loader.data.fonts[index];
+        context.font = "12px " + Client.loader.data.fonts[index] + "";
 
-        context.fillText(" ", 0, 0);
+        context.fillText(".", 20, 20);
     }
 
     $canvas.remove();
