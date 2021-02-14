@@ -129,7 +129,8 @@ Client.furnitures.entity = function(name, settings = {}) {
                 imageData: canvasData,
                 left, top,
                 index: priority,
-                composite: Client.furnitures.getComposite(layers[index].ink)
+                composite: Client.furnitures.getComposite(layers[index].ink),
+                layer: layers[index]
             };
 
             sprites.push(result);
