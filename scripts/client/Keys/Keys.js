@@ -8,4 +8,9 @@ Client.keys = new function() {
     $(window).on("keyup", function(event) {
         delete Client.keys.down[event.code];
     });
+
+    $(window).on("blur", function() {
+        for(let key in Client.keys.down)
+            delete Client.keys.down[key];
+    });
 };
