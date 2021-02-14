@@ -37,7 +37,32 @@ Client.inventory.pages.furnitures = async function($element) {
             $button.click(function() {
                 Client.inventory.hide();
                 
-                Client.rooms.interface.furniture.place.start(furniture);
+                Client.rooms.interface.furniture.place.start(furniture.id, function(result) {
+                    if(result.entity.enabled == false) {
+                        result.stop();
+            
+                        Client.inventory.show();
+            
+                        return;
+                    }
+            
+                    result.unbind();
+            
+                    Client.socket.messages.sendCall({
+                        OnRoomFurniturePlace: {
+                            id: result.furniture.id,
+                            position: {
+                                row: result.position.row,
+                                column: result.position.column,
+                                direction: result.direction
+                            }
+                        }
+                    }, "OnRoomFurniturePlace").then(function(response) {
+                        result.stop();
+                        
+                        Client.inventory.show();
+                    });
+                });
             });
         }
         

@@ -59,8 +59,11 @@ Client.rooms.items.furniture = function(parent, name, direction) {
                     }
                     else if(Client.keys.down["ShiftLeft"])
                         Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on to rotate!");
-                    else if(Client.keys.down["AltLeft"])
+                    else if(Client.keys.down["AltLeft"]) {
                         Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on to move!");
+                    
+                        Client.rooms.interface.furniture.move.start(entity);
+                    }
                     else
                         Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on!");
                 };
