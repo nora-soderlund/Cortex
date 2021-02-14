@@ -12,6 +12,8 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
                 entity.setPosition(dataFurniture.position);
                 
                 entity.render();
+
+                entity.data = data.furnitures[index];
     
                 Client.rooms.interface.entity.addEntity(entity);
             });
