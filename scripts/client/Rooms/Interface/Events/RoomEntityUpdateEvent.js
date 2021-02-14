@@ -11,8 +11,6 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
                         entity.setPath(entity.data.position, item.position, item.position.speed);
                     else
                         entity.setCoordinates(item.position.row, item.position.column, item.position.depth);
-
-                    entity.enable();
                 }
             }
 
