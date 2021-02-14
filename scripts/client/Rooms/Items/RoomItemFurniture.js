@@ -39,7 +39,7 @@ Client.rooms.items.furniture = function(parent, name, direction) {
                 };
 
                 sprite.mouseclick = function(event) {
-                    Client.rooms.interface.chat.addMessage("information", entity.furniture.name + " was clicked on!");
+                    Client.rooms.interface.chat.addMessage("info", entity.furniture.name + " was clicked on!");
                 };
 
                 sprite.setOffset(64 + sprites[index].left, 16 + sprites[index].top);
