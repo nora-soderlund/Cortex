@@ -16,9 +16,9 @@ Client.rooms.interface.chat = new function() {
 
         const visualization = JSON.parse(JSON.stringify(assets.visualization["default"]));
 
-        if(assets.visualization[style] != undefined) {
-            for(let key in assets.visualization[style]) {
-                visualization[key] = assets.visualization[style][key];
+        if(assets.visualization["HabboRoomChat_" + style] != undefined) {
+            for(let key in assets.visualization["HabboRoomChat_" + style]) {
+                visualization[key] = assets.visualization["HabboRoomChat_" + style][key];
             }
         }
 
