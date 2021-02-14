@@ -24,7 +24,7 @@ Client.rooms.interface = new function() {
         for(let index in this.events.start)
             this.events.start[index]();
 
-        this.chat.addMessage("information", "Room interface renderer started!");
+        this.chat.addMessage("info", "Room interface renderer started!");
 
         this.frameLimitStamp = performance.now();
 
@@ -40,7 +40,7 @@ Client.rooms.interface = new function() {
                     for(let index in Client.rooms.interfac.events.stop)
                         Client.rooms.interfac.events.stop[index]();
 
-                    Client.rooms.interface.chat.addMessage("information", "Room interface renderer stopped!");
+                    Client.rooms.interface.chat.addMessage("info", "Room interface renderer stopped!");
     
                     resolve();
                 });

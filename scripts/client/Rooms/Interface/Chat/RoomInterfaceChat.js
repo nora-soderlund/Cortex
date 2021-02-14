@@ -6,13 +6,13 @@ Client.rooms.interface.chat = new function() {
     this.interval = undefined;
 
     this.addMessage = async function(style, message, left = 0, color = undefined) {
-        /*const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
+        const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
 
-        const sprite = (color == undefined)?(await Client.assets.getSprite("HabboRoomMessages", style)):(await Client.assets.getSpriteColor("HabboRoomMessages", style, color));
+        const sprite = (color == undefined)?(await Client.assets.getSprite("HabboRoomChat", "HabboRoomChat_" + style)):(await Client.assets.getSpriteColor("HabboRoomChat", "HabboRoomChat_" + style, color));
 
         const context = $canvas[0].getContext("2d");
 
-        const assets = await Client.assets.getManifest("HabboRoomMessages");
+        const assets = await Client.assets.getManifest("HabboRoomChat");
 
         const visualization = JSON.parse(JSON.stringify(assets.visualization["default"]));
 
@@ -71,7 +71,7 @@ Client.rooms.interface.chat = new function() {
         this.messages.push($canvas);
 
         if(this.interval == undefined)
-            this.interval = setInterval(this.updateMessages, 2000, this);*/
+            this.interval = setInterval(this.updateMessages, 2000, this);
     };
 
     this.updateMessages = function(self) {
