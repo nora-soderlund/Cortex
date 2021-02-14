@@ -152,7 +152,7 @@ Client.rooms.entity = function($parent) {
 
         this.frameRates.push(timestamp);
 
-        Client.development.$debug.text(this.frameRates.length + " FPS");
+        Client.development.$frames.text(this.frameRates.length + " FPS");
     };
 
     this.events = new function() {

@@ -31,6 +31,8 @@ Client.socket.messages = new function() {
     };
 
     this.send = function(message) {
+        Client.socket.network.sent++;
+
         Client.socket.server.send(JSON.stringify(message));
     };
 
@@ -51,9 +53,15 @@ Client.socket.messages = new function() {
         });
     };
 
+    this.blocks = {};
+
+    this.block = function(event) {
+        this.blocks[event] = 1;
+    };
+
     this.call = function(event, data) {
-        //Client.utils.log("SocketMessages", "Received " + event + " from the server:");
-        console.log("[%cSocketMessage%c]%c Received " + event + " from the server: %o", "color: orange", "color: inherit", "color: lightblue", data);
+        if(this.blocks[event] != 1)
+            console.log("[%cSocketMessage%c]%c Received " + event + " from the server: %o", "color: orange", "color: inherit", "color: lightblue", data);
 
         if(this.events[event] == undefined)
             console.warn("[%cSocketMessage%c]%c Event " + event + " does not have any client handlers!", "color: orange", "color: inherit", "color: lightblue");

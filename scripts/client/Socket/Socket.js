@@ -24,6 +24,8 @@ Client.socket = new function() {
             };
 
             server.onmessage = function(data) {
+                Client.socket.network.received++;
+                
                 const message = JSON.parse(data.data);
 
                 for(let key in message)
