@@ -38,13 +38,13 @@ Client.rooms.interface.cursor = new function() {
             return;
         }
 
-        if(Client.rooms.interface.entity.currentEntity == undefined)
-            return;
-        
-        if(Client.rooms.interface.entity.currentEntity.entity.name == "map")
-            Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentEntity.result.row, column: Client.rooms.interface.entity.currentEntity.result.column } });
-        else
+        if(Client.rooms.interface.entity.currentMapEntity != undefined) {
+            Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
+        }
+
+        if(Client.rooms.interface.entity.currentEntity != undefined) {
             Client.rooms.interface.entity.currentEntity.sprite.mouseclick(event);
+        }
     }).on("mouseout", function() {
         Client.rooms.interface.cursor.down = false;
 
@@ -63,9 +63,9 @@ Client.rooms.interface.cursor = new function() {
         });
 
         Client.rooms.interface.entity.events.render.push(function() {
-            const map = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
+            Client.rooms.interface.entity.currentMapEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
             
-            if(map == undefined) {
+            if(Client.rooms.interface.entity.currentMapEntity == undefined) {
                 if(cursor.enabled) {
                     cursor.disable();
 
@@ -74,7 +74,7 @@ Client.rooms.interface.cursor = new function() {
                 }
             }
             else {
-                const row = parseInt(map.result.row), column = parseInt(map.result.column), depth = Client.rooms.interface.data.map.height[row][column];
+                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Client.rooms.interface.data.map.height[row][column];
 
                 cursor.setCoordinates(row, column, depth, -2000);
 
