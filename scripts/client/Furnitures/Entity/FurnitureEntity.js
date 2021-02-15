@@ -118,7 +118,11 @@ Client.furnitures.entity = function(settings = {}) {
         switch(ink) {
             case "ADD": return "lighter";
 
-            default: return "source-over";
+            case "SUBTRACT": return "luminosity";
+
+            //case "COPY": return "source-over";
+
+            default: return ink;
         }
     };
 
