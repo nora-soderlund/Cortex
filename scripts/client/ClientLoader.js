@@ -236,7 +236,16 @@ Client.loader.addStep(async function(finished) {
 
    await figure.render();
 
-    //const furniture = new Client.furnitures.entity("HabboRoomCursor");
+    new Client.furnitures.newEntity({
+        id: "HabboRoomCursor",
+        library: "HabboRoomCursor"
+    }).render();
+
+    new Client.furnitures.newEntity({
+        id: "rare_dragonlamp",
+
+        direction: 4
+    }).render();
 
     //furniture.render();
 

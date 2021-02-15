@@ -1,5 +1,7 @@
 Client.furnitures = new function() {
-    this.cache = {};
+    this.cache = {
+        HabboRoomCursor: {}
+    };
 
     this.get = async function(id) {
         if(this.cache[id] != undefined)

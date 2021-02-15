@@ -20,7 +20,7 @@ Client.socket.network = new function() {
 
         const sent = Client.socket.network.sent;
 
-        console.log("[%cSocketNetwork%c]%c Communicated ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms (to " + Math.round(result.time - time) + "ms, from " + Math.round(Date.now() - result.time) + "ms); sent " + sent + "/" + result.received + "; received " + received + "/" + result.sent, "color: orange", "color: inherit", "color: lightblue");
+        //console.log("[%cSocketNetwork%c]%c Communicated ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms (to " + Math.round(result.time - time) + "ms, from " + Math.round(Date.now() - result.time) + "ms); sent " + sent + "/" + result.received + "; received " + received + "/" + result.sent, "color: orange", "color: inherit", "color: lightblue");
     
         Client.development.$network.text("Ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms");
     }, 1000);

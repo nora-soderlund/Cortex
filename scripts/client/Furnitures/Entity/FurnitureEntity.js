@@ -6,7 +6,7 @@ Client.furnitures.entity = function(name, settings = {}) {
     for(let key in settings)
         this[key] = settings[key];
 
-    this.$canvas = $('<canvas width="256" height="256"></canvas>').appendTo(Client.development.$element);
+    this.$canvas = $('<canvas width="256" height="256"></canvas>');
 
     this.render = async function() {
         const data = { maxWidth: 0, maxHeight: 0, minLeft: 0, minTop: 0 };
