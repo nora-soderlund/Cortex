@@ -29,7 +29,7 @@ Client.rooms.interface.display = new function() {
         new Client.furnitures.renderer(entity.data.furniture, { direction: 4 }, $canvas);
 
         this.addButton("Move", function() {
-
+            Client.rooms.interface.furniture.move.start(entity);
         });
 
         this.addButton("Rotate", function() {
@@ -37,7 +37,7 @@ Client.rooms.interface.display = new function() {
         });
 
         this.addButton("Pickup", function() {
-
+            Client.rooms.interface.furniture.pickup.start(entity);
         });
         
         this.$element.show();
