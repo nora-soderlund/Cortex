@@ -16,30 +16,36 @@ Client.rooms.interface.display = new function() {
         $element.click(click);
     };
 
-    this.furniture = function(entity) {
+    this.furniture = async function(entity) {
         this.$element.hide();
 
         this.$content.html("");
         this.$buttons.html("");
 
+        const furniture = await Client.furnitures.get(entity.data.furniture);
+
+        const $header = $('<div class="room-interface-display-title">' + furniture.title + '</div>').appendTo(this.$content);
+
+        $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+
         const $canvas = $('<canvas class="room-interface-display-canvas"></canvas>').appendTo(this.$content);
 
         console.log(entity);
 
-        new Client.furnitures.renderer(entity.data.furniture, { direction: 4 }, $canvas);
+        new Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
 
-        this.addButton("Move", function() {
-            Client.rooms.interface.furniture.move.start(entity);
+        this.addButton("Pickup", function() {
+            Client.rooms.interface.furniture.pickup.start(entity);
         });
 
         this.addButton("Rotate", function() {
 
         });
-
-        this.addButton("Pickup", function() {
-            Client.rooms.interface.furniture.pickup.start(entity);
-        });
         
+        this.addButton("Move", function() {
+            Client.rooms.interface.furniture.move.start(entity);
+        });
+
         this.$element.show();
     };
 

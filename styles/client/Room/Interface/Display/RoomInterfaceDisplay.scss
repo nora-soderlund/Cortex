@@ -2,9 +2,7 @@
     position: absolute;
 
     right: 6px;
-    bottom: 64px;
-
-    min-width: 200px;
+    bottom: 62px;
 
     display: grid;
 
@@ -12,11 +10,28 @@
     grid-template-rows: auto 24px;
 
     .room-interface-display-content {
-        text-align: center;
+        background: rgba(28, 28, 26, .9);
 
-        margin-bottom: 6px;
+        border: 1px solid rgba(64, 64, 64, .75);
+        border-radius: 6px;
+
+        padding: 6px;
+        
+        .room-interface-display-title {
+            font-size: 13px;
+        }
+
+        .room-interface-display-break {
+            border-bottom: 1px solid rgba(68, 68, 68, .75);
+
+            width: 100%;
+
+            margin: 6px 0;
+        }
 
         .room-interface-display-canvas {
+            display: flex;
+            margin: 0 auto;
         }
     }
 
@@ -24,18 +39,20 @@
         .room-interface-display-button {
             float: right;
 
-            display: inline-block;
-
             background: rgba(28, 28, 26, .9);
             
             border: 1px solid rgba(64, 64, 64, .75);
             border-radius: 3px;
 
-            margin-left: 6px;
-
             padding: 6px 8px;
 
+            margin-left: 6px;
+
             cursor: pointer;
+
+            &:last-child {
+                margin-left: 0;
+            }
         }
     }
 }
