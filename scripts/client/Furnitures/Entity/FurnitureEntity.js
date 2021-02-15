@@ -5,7 +5,7 @@ Client.furnitures.entity = function(settings = {}) {
         
         size: 64,
 
-        direction: 0
+        direction: null
     };
 
     this.events = {
@@ -20,6 +20,13 @@ Client.furnitures.entity = function(settings = {}) {
         const library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + furniture.line + "/" + furniture.id);
 
         const manifest = await Client.assets.getManifest(library);
+
+        if(this.settings.direction == null) {
+            this.settings.direction = this.getDirectionIndex(manifest, 0);
+        }
+        else {
+            this.settings.direction = this.getDirection(manifest, this.settings.direction);
+        }
 
         const visualization = this.getVisualization(manifest, this.settings.size);
 
@@ -219,7 +226,36 @@ Client.furnitures.entity = function(settings = {}) {
         return {};
     };
 
-    this.update = function(settings) {
+    this.getDirection = function(manifest, direction) {
+        if(manifest.logic.objectData.model.directions == undefined)
+            return 0;
+
+        const directions = manifest.logic.objectData.model.directions.direction;
+        
+        for(let index in directions) {
+            if((Math.floor(directions[index].id) / 45) == direction)
+                return direction;
+        }
+
+        return this.getDirectionIndex(manifest, 0);
+    };
+
+    this.getDirectionIndex = function(manifest, index) {
+        if(manifest.logic.objectData.model.directions == undefined)
+            return 0;
+
+        if(manifest.logic.objectData.model.directions.direction.length == undefined)
+            manifest.logic.objectData.model.directions.direction = [ manifest.logic.objectData.model.directions.direction ];
+
+        const directions = manifest.logic.objectData.model.directions.direction;
+
+        if(directions[index] == undefined)
+            return 0;
+
+        return Math.floor(parseInt(directions[index].id) / 45);
+    };
+
+    this.update = async function(settings) {
         if(settings.id != undefined && settings.id == "HabboRoomCursor")
             settings.library = settings.id;
 
