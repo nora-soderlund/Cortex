@@ -5,7 +5,7 @@ Client.rooms.interface.display = new function() {
 
             '<div class="room-interface-display-buttons"></div>' + 
         '</div>'
-    ).appendTo(Client.rooms.interface.$element);
+    ).hide().appendTo(Client.rooms.interface.$element);
 
     this.$content = this.$element.find(".room-interface-display-content");
     this.$buttons = this.$element.find(".room-interface-display-buttons");
