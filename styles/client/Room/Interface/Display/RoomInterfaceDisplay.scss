@@ -1,0 +1,41 @@
+.room-interface-display {
+    position: absolute;
+
+    right: 6px;
+    bottom: 64px;
+
+    min-width: 200px;
+
+    display: grid;
+
+    grid-gap: 6px;
+    grid-template-rows: auto 24px;
+
+    .room-interface-display-content {
+        text-align: center;
+
+        margin-bottom: 6px;
+
+        .room-interface-display-canvas {
+        }
+    }
+
+    .room-interface-display-buttons {
+        .room-interface-display-button {
+            float: right;
+
+            display: inline-block;
+
+            background: rgba(28, 28, 26, .9);
+            
+            border: 1px solid rgba(64, 64, 64, .75);
+            border-radius: 3px;
+
+            margin-left: 6px;
+
+            padding: 6px 8px;
+
+            cursor: pointer;
+        }
+    }
+}

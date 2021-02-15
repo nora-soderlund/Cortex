@@ -6,7 +6,8 @@ Client.rooms.interface.cursor = new function() {
 
     this.events = {
         hover: [],
-        unhover: []
+        unhover: [],
+        click: []
     };
 
     Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
@@ -43,9 +44,11 @@ Client.rooms.interface.cursor = new function() {
                 Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
         }
 
-        if(Client.rooms.interface.entity.currentEntity != undefined) {
+        if(Client.rooms.interface.entity.currentEntity != undefined)
             Client.rooms.interface.entity.currentEntity.sprite.mouseclick(event);
-        }
+        
+        for(let index in Client.rooms.interface.cursor.events.click)
+            Client.rooms.interface.cursor.events.click[index](Client.rooms.interface.entity.currentEntity, event);
     }).on("mouseout", function() {
         Client.rooms.interface.cursor.down = false;
 
