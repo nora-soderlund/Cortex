@@ -17,7 +17,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.finished = finished;
 
-        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, 0);
+        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, 0);
 
         this.entity.furniture.events.render.push(function() {
             Client.rooms.interface.furniture.place.direction = Client.rooms.interface.furniture.place.entity.furniture.direction;

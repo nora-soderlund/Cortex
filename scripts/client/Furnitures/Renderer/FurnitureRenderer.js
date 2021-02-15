@@ -1,4 +1,4 @@
-Client.furnitures.renderer = function(id, settings, $canvas) {
+Client.furnitures.renderer = function(settings, $canvas) {
     this.renderer = async function() {
         const loading = await Client.assets.getSpritesheet("HabboLoading").then(function(image) {
             const context = $canvas[0].getContext("2d");
@@ -8,21 +8,35 @@ Client.furnitures.renderer = function(id, settings, $canvas) {
     
             context.drawImage(image, 0, 0);
         });
+
+        const entity = new Client.furnitures.entity(settings);
     
-        const furniture = await Client.furnitures.get(id);
-    
-        const entity = new Client.furnitures.entity("HabboFurnitures/" + furniture.line + "/" + furniture.id, settings);
-    
-        entity.events.render.push(function(sprites, data) {
+        entity.events.render.push(function(sprites) {
             const context = $canvas[0].getContext("2d");
+
+            let minLeft = 0, minTop = 0, maxWidth = 0, maxHeight = 0;
+
+            for(let index in sprites) {
+                if(minLeft > (sprites[index].asset.x * -1))
+                    minLeft = (sprites[index].asset.x * -1);
+                    
+                if(minTop > (sprites[index].asset.y * -1))
+                    minTop = (sprites[index].asset.y * -1);
+
+                if(((sprites[index].asset.x * -1) + sprites[index].sprite.width) > maxWidth)
+                    maxWidth = (sprites[index].asset.x * -1) + sprites[index].sprite.width;
+
+                if(((sprites[index].asset.y * -1) + sprites[index].sprite.height) > maxHeight)
+                    maxHeight = (sprites[index].asset.y * -1) + sprites[index].sprite.height;
+            }
     
-            context.canvas.width = ((data.minLeft * -1) + data.maxWidth);
-            context.canvas.height = ((data.minTop * -1) + data.maxHeight);
+            context.canvas.width = ((minLeft * -1) + maxWidth);
+            context.canvas.height = ((minTop * -1) + maxHeight);
     
             for(let index in sprites) {
-                context.globalCompositeOperation = sprites[index].composite;
+                context.globalCompositeOperation = sprites[index].ink;
     
-                context.drawImage(sprites[index].image, (data.minLeft * -1) + sprites[index].left, (data.minTop * -1) + sprites[index].top);
+                context.drawImage(sprites[index].sprite, (minLeft * -1) - sprites[index].asset.x, (minTop * -1) - sprites[index].asset.y);
             }
         });
     

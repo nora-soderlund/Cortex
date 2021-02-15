@@ -44,7 +44,7 @@ Client.shop.types.default = async function(page) {
 
             const $canvas = $('<canvas class="shop-furnitures-display-canvas"></canvas>').appendTo($display);
 
-            new Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
+            new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
 
             const $information = $(
                 '<div class="shop-furnitures-display-info">' + 

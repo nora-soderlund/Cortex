@@ -6,19 +6,17 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
         for(let index in data.furnitures) {
             const dataFurniture = data.furnitures[index];
             
-            Client.furnitures.get(dataFurniture.furniture).then(function(furniture) {
-                let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboFurnitures/" + furniture.line + "/" + furniture.id, dataFurniture.position.direction);
-                
-                entity.setPosition(dataFurniture.position);
-                
-                entity.render();
+            let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, dataFurniture.furniture, dataFurniture.position.direction);
+            
+            entity.setPosition(dataFurniture.position);
+            
+            entity.render();
 
-                entity.data = data.furnitures[index];
-    
-                Client.rooms.interface.entity.addEntity(entity);
+            entity.data = data.furnitures[index];
 
-                Client.rooms.interface.furnitures[dataFurniture.id] = entity;
-            });
+            Client.rooms.interface.entity.addEntity(entity);
+
+            Client.rooms.interface.furnitures[dataFurniture.id] = entity;
         }
     }
     

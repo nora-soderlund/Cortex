@@ -236,12 +236,12 @@ Client.loader.addStep(async function(finished) {
 
    await figure.render();
 
-    new Client.furnitures.newEntity({
+    new Client.furnitures.entity({
         id: "HabboRoomCursor",
         library: "HabboRoomCursor"
     }).render();
 
-    new Client.furnitures.newEntity({
+    new Client.furnitures.entity({
         id: "rare_dragonlamp",
 
         direction: 4

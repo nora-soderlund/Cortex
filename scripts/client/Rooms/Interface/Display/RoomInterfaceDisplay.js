@@ -22,7 +22,7 @@ Client.rooms.interface.display = new function() {
         this.$content.html("");
         this.$buttons.html("");
 
-        const furniture = await Client.furnitures.get(entity.data.furniture);
+        const furniture = await Client.furnitures.get(entity.furniture.settings.id);
 
         const $header = $('<div class="room-interface-display-title">' + furniture.title + '</div>').appendTo(this.$content);
 
@@ -32,7 +32,7 @@ Client.rooms.interface.display = new function() {
 
         console.log(entity);
 
-        new Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
+        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
 
         this.addButton("Pickup", function() {
             Client.rooms.interface.furniture.pickup.start(entity);

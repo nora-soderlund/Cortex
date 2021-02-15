@@ -68,7 +68,7 @@ Client.inventory.pages.furnitures = async function($element) {
         
         const $canvas = $element.find(".inventory-furniture-display-canvas");
 
-        new Client.furnitures.renderer(furniture.id, { direction: 4 }, $canvas);
+        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
     };
 
     for(let id in Client.inventory.furnitures) {

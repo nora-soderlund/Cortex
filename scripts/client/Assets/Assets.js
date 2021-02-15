@@ -129,7 +129,7 @@ Client.assets = new function() {
         if(data == undefined) {
             console.warn("[Assets] " + sprite + " in library " + asset + " does not exist!");
 
-            return new Image();
+            return null;
         }
 
         if(data.link != undefined) {

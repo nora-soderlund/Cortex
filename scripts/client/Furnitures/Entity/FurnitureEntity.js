@@ -1,187 +1,231 @@
-Client.furnitures.entity = function(name, settings = {}) {
-    this.name = name;
+Client.furnitures.entity = function(settings = {}) {
+    this.settings = {
+        id: null,
+        library: null,
+        
+        size: 64,
 
-    this.direction = 2;
+        direction: 0
+    };
 
-    for(let key in settings)
-        this[key] = settings[key];
+    this.events = {
+        render: []
+    };
 
-    this.$canvas = $('<canvas width="256" height="256"></canvas>');
+    this.$canvas = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
 
     this.render = async function() {
-        const data = { maxWidth: 0, maxHeight: 0, minLeft: 0, minTop: 0 };
+        const furniture = await Client.furnitures.get(this.settings.id);
 
-        if(!this.asset) {
-            this.asset = await Client.assets.getManifest(name);
-            
-            this.visualizationData = new Client.furnitures.visualization(this.asset.visualization.visualizationData);
+        const library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + furniture.line + "/" + furniture.id);
 
-            this.logicData = new Client.furnitures.logic(this.asset.logic.objectData);
+        const manifest = await Client.assets.getManifest(library);
 
-            this.direction = this.logicData.fixDirection(this.direction);
+        const visualization = this.getVisualization(manifest, this.settings.size);
 
-            this.assetsData = new Client.furnitures.assets(this.asset.assets.assets.asset);
-        }
+        const layers = this.getLayers(visualization);
+
+        const type = manifest.visualization.visualizationData.type;
 
         const sprites = [];
 
-        let layers = {};
-
-        for(let index = 0; index < this.visualizationData.layerCount; index++)
-            layers[index] = { index: 0 };
-
-        for(let index in this.visualizationData.layers) {
-            const layer = parseInt(this.visualizationData.layers[index].id);
-
-            if(layers[layer] == undefined)
-                layers[layer] = { index: 0 };
-
-            if(this.visualizationData.layers[index].z != undefined)
-                layers[layer].index += parseInt(this.visualizationData.layers[index].z);
-
-            for(let key in this.visualizationData.layers[index]) {
-                if(key == "z")
-                    continue;
-
-                layers[layer][key] = this.visualizationData.layers[index][key];
-            }
-        }
-
-        if(this.visualizationData.directionLayers[this.direction] != undefined) {
-            for(let index in this.visualizationData.directionLayers[this.direction]) {
-                const layer = parseInt(this.visualizationData.directionLayers[this.direction][index].id);
-
-                if(layers[layer] == undefined)
-                    layers[layer] = { index: 0 };
-
-                if(this.visualizationData.directionLayers[this.direction][index].z != undefined)
-                    layers[layer].index += parseInt(this.visualizationData.directionLayers[this.direction][index].z);
-                
-                for(let key in this.visualizationData.directionLayers[this.direction][index]) {
-                    if(key == "z")
-                        continue;
-
-                    layers[layer][key] = this.visualizationData.directionLayers[this.direction][index][key];
-                }
-            }
-        }
-
         for(let index in layers) {
-            const layer = Client.utils.charCode(parseInt(index));
+            const layer = layers[index];
 
-            const priority = parseInt(layers[index].index);
+            const name = this.getLayerName(type, this.settings.size, index, this.settings.direction, 0);
 
-            const frame = 0;
+            layer.asset = this.getLayerAsset(manifest, name);
 
-            const sprite = this.visualizationData.type + "_" + this.visualizationData.size + "_" + layer + "_" + this.direction + "_" + frame;
-
-            const spriteData = this.assetsData.getAsset(sprite);
-
-            if(layers[index].x != undefined)
-                spriteData.x = parseInt(spriteData.x) - parseInt(layers[index].x);
-
-            if(layers[index].y != undefined)
-                spriteData.y = parseInt(spriteData.y) - parseInt(layers[index].y);
-
-            if(spriteData == undefined) {
-                console.warn("[FurnitureEntity]%c Asset " + sprite + " is not valid and doesn't exist!", "color: lightblue");
+            if(layer.asset == null) {
+                delete layers[index];
 
                 continue;
             }
 
-            let canvas = await Client.assets.getSprite(this.name, spriteData.name);
+            layer.sprite = await Client.assets.getSprite(library, layer.asset.name);
 
-            const canvasData = await Client.assets.getSpriteData(this.name, spriteData.name);
+            if(layer.sprite == null) {
+                delete layers[index];
 
-            let left = -parseInt(spriteData.x);
-            let top = -parseInt(spriteData.y);
-
-            if(spriteData.flipH) {
-                left = (left * -1) - canvas.width;
-
-                const $flipCanvas = $('<canvas width="' + canvas.width + '" height="' + canvas.height + '"></canvas>');
-
-                const flipContext = $flipCanvas[0].getContext("2d");
-
-                flipContext.translate(canvas.width, 0);
-
-                flipContext.scale(-1, 1);
-
-                flipContext.drawImage(canvas, 0, 0);
-
-                canvas = $flipCanvas[0];
+                continue;
             }
 
-            if(data.minLeft > left)
-                data.minLeft = left;
+            layer.spriteData = await Client.assets.getSpriteData(library, layer.asset.name);
+            
+            layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
 
-            if(data.minTop > top)
-                data.minTop = top;
+            layer.ink = (layer.ink == undefined)?("source-over"):(this.getLayerInk(layer.ink));
 
-            if((left + canvas.width) > data.maxWidth)
-                data.maxWidth = left + canvas.width;
+            layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
+            layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
 
-            if((top + canvas.height) > data.maxHeight)
-                data.maxHeight = top + canvas.height;
-
-            const result = {
-                image: canvas,
-                imageData: canvasData,
-                left, top,
-                index: priority,
-                composite: Client.furnitures.getComposite(layers[index].ink),
-                layer: layers[index]
-            };
-
-            sprites.push(result);
+            sprites.push(layer);
         }
 
         sprites.sort(function(a, b) {
-            return a.index - b.index;
+            return a.z - b.z;
         });
-        
+
         const context = this.$canvas[0].getContext("2d");
 
-        context.fillStyle = "#242424";
-
-        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-
         for(let index in sprites) {
-            context.globalCompositeOperation = sprites[index].composite;
-            
-            context.drawImage(sprites[index].image, 128 + sprites[index].left, 128 + sprites[index].top);
+            const sprite = sprites[index];
+
+            context.globalCompositeOperation = sprite.ink;
+
+            context.drawImage(sprite.sprite, 128 - sprite.asset.x, 128 - sprite.asset.y);
         }
 
-        for(let event in this.events.render)
-            this.events.render[event](sprites, data);
+        for(let index in this.events.render)
+            this.events.render[index](sprites);
     };
 
-    this.events = new function() {
-        this.render = [];
-    };
+    this.getLayers = function(visualization) {
+        const layerCount = parseInt(visualization.layerCount);
 
-    this.nextDirection = function(step) {
-        this.direction = this.logicData.closestDirection(this.direction, step);
-    };
+        const layers = this.getVisualizationLayers(visualization);
 
-    this.getDimensions = function() {
-        const result = { row: 0, column: 0, depth: 0 };
+        const directions = this.getVisualizationDirectionLayers(visualization, this.settings.direction);
 
-        const data = this.logicData.data.model.dimensions;
+        for(let key in directions) {
+            if(layers[key] == undefined)
+                layers[key] = {};
 
-        if(data.x != undefined) result.row = parseFloat(data.x);
-        if(data.y != undefined) result.column = parseFloat(data.y);
-        if(data.z != undefined) result.depth = parseFloat(data.z);
-
-        if(this.direction == 0 || this.direction == 4) {
-            const spare = result.row;
-
-            result.row = result.column;
-            result.column = spare;
+            for(let property in directions[key])
+                layers[property] = directions[key][property];
+        }
+        
+        for(let index = 0; index < layerCount; index++) {
+            if(layers[index] == undefined)
+                layers[index] = {};
         }
 
-        return result;
+        return layers;
     };
 
-    return this;
+    this.getLayerName = function(id, size, layer, direction, frame) {
+        return id + "_" + size + "_" + Client.utils.charCode(parseInt(layer)) + "_" + direction + "_" + frame;
+    };
+
+    this.getLayerInk = function(ink) {
+        switch(ink) {
+            case "ADD": return "lighter";
+
+            default: return "source-over";
+        }
+    };
+
+    this.getLayerAsset = function(manifest, name) {
+        for(let index in manifest.assets.assets.asset) {
+            const asset = manifest.assets.assets.asset[index];
+
+            if(asset.name != name)
+                continue;
+
+            if(asset.source != undefined) {
+                const sourceAsset = this.getLayerAsset(manifest, asset.source);
+
+                delete asset.source;
+
+                for(let key in sourceAsset) {
+                    if(asset[key] == undefined) 
+                        asset[key] = sourceAsset[key];
+                }
+
+                asset.name = sourceAsset.name;
+            }
+
+            return asset;
+        }
+
+        return null;
+    };
+
+    this.getVisualization = function(manifest, size) {
+        const data = manifest.visualization.visualizationData;
+
+        const visualization = (data.graphics != undefined)?(data.graphics.visualization):(data.visualization);
+
+        for(let index in visualization) {
+            if(visualization[index].size == size)
+                return visualization[index];
+        }
+
+        return null;
+    };
+
+    this.getVisualizationLayers = function(visualization) {
+        const layers = {};
+
+        if(visualization.layers == undefined)
+            return {};
+
+        if(visualization.layers.layer.length == undefined)
+            visualization.layers.layer = [ visualization.layers.layer ];
+
+        for(let index in visualization.layers.layer) {
+            const layer = visualization.layers.layer[index];
+
+            layers[layer.id] = {};
+
+            for(let key in layer) {
+                if(key == "id")
+                    continue;
+
+                layers[layer.id][key] = layer[key];
+            }
+        }
+
+        return layers;
+    };
+
+    this.getVisualizationDirectionLayers = function(visualization, direction) {
+        if(visualization.directions == undefined)
+            return {};
+
+        if(visualization.directions.direction.length == undefined)
+            visualization.directions.direction = [ visualization.directions.direction ];
+
+        for(let index in visualization.directions.direction) {
+            if(visualization.directions.direction[index].id != direction)
+                continue;
+
+            const directions = visualization.directions.direction[index];
+
+            if(directions.layer == undefined)
+                return {};
+
+            if(directions.layer.length == undefined)
+                directions.layer = [ directions.layer ];
+
+            const layers = {};
+
+            for(let index in directions.layer) {
+                const layer = directions.layer[index];
+
+                layers[layer.id] = {};
+
+                for(let key in layers) {
+                    if(key == "id")
+                        continue;
+
+                    layers[layer.id][key] = layers[key];
+                }
+            }
+
+            return layers;
+        }
+
+        return {};
+    };
+
+    this.update = function(settings) {
+        if(settings.id != undefined && settings.id == "HabboRoomCursor")
+            settings.library = settings.id;
+
+        for(let key in settings)
+            this.settings[key] = settings[key];
+    };
+
+    this.update(settings);
 };
