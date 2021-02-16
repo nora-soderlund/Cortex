@@ -110,7 +110,7 @@ Client.assets = new function() {
         });
     };
 
-    this.getSprite = async function(asset, sprite) {
+    this.getSprite = async function(asset, sprite, flipped = false) {
         const manifest = await this.getManifest(asset);
 
         const spritesheet = await this.getSpritesheet(asset);
@@ -121,8 +121,8 @@ Client.assets = new function() {
         if(this.cache[asset].spritesData == undefined)
             this.cache[asset].spritesData = {};
 
-        if(this.cache[asset].sprites[sprite] != undefined)
-            return this.cache[asset].sprites[sprite];
+        if(this.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))] != undefined)
+            return this.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))];
 
         const data = manifest.sprites[sprite];
 
@@ -146,6 +146,22 @@ Client.assets = new function() {
         context.drawImage(spritesheet, parseInt(data.left), parseInt(data.top), parseInt(data.width), parseInt(data.height), 0, 0, parseInt(data.width), parseInt(data.height));
 
         this.cache[asset].sprites[sprite] = $canvas[0];
+
+        if(flipped == true) {
+            const $flippedCanvas = $('<canvas width="' + data.width + '" height="' + data.height + '"></canvas>');
+
+            const flippedContext = $flippedCanvas[0].getContext("2d");
+
+            flippedContext.translate(flippedContext.canvas.width, 0);
+
+            flippedContext.scale(-1, 1);
+
+            flippedContext.drawImage($canvas[0], 0, 0);
+            
+            this.cache[asset].sprites[sprite + "?flipped=true"] = $flippedCanvas[0];
+
+            return this.cache[asset].sprites[sprite + "?flipped=true"];
+        }
 
         return this.cache[asset].sprites[sprite];
     };

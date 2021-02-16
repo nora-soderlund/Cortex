@@ -34,7 +34,7 @@ Client.furnitures.entity = function(settings = {}) {
                 continue;
             }
 
-            layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name);
+            layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name, (layer.asset.flipH == 1)?(true):(false));
 
             if(layer.sprite == null) {
                 delete layers[index];
@@ -42,7 +42,7 @@ Client.furnitures.entity = function(settings = {}) {
                 continue;
             }
 
-            layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name);
+            layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name + ((layer.asset.flipH == 1)?("?flipped=true"):("")));
             
             layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
 
@@ -50,6 +50,10 @@ Client.furnitures.entity = function(settings = {}) {
 
             layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
             layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
+            
+            if(layer.asset.flipH == 1) {
+                layer.asset.x = (layer.asset.x * -1) + layer.sprite.width;
+            }
 
             sprites.push(layer);
         }
@@ -106,7 +110,7 @@ Client.furnitures.entity = function(settings = {}) {
 
     this.getLayerAsset = function(name) {
         for(let index in this.manifest.assets.assets.asset) {
-            const asset = this.manifest.assets.assets.asset[index];
+            const asset = JSON.parse(JSON.stringify(this.manifest.assets.assets.asset[index]));
 
             if(asset.name != name)
                 continue;
@@ -296,7 +300,7 @@ Client.furnitures.entity = function(settings = {}) {
         return this.getDirectionAngle(directions.direction[0].id);
     };
 
-    this.getNextDirection = function(direction) {
+    this.getNextDirection = function(direction = this.settings.direction) {
         const directions = this.manifest.logic.objectData.model.directions;
 
         if(directions == undefined)
@@ -309,10 +313,10 @@ Client.furnitures.entity = function(settings = {}) {
             if(this.getDirectionAngle(directions.direction[index].id) != direction)
                 continue;
 
-            if(index + 1 == directions.direction.length)
+            if(directions.direction[parseInt(index) + 1] == undefined)
                 return this.getDirectionAngle(directions.direction[0].id);
 
-            return this.getDirectionAngle(directions.direction[index + 1].id);
+            return this.getDirectionAngle(directions.direction[parseInt(index) + 1].id);
         }
 
         return this.getDirectionAngle(directions.direction[0].id);
