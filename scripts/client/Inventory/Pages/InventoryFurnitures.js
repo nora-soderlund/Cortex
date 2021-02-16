@@ -75,21 +75,10 @@ Client.inventory.pages.furnitures = async function($element) {
         Client.furnitures.get(id).then(function(furniture) {
             const $furniture = $('<div class="inventory-furniture-icon"></div>').appendTo($content);
 
-            Client.assets.getSpritesheet("HabboLoadingIcon").then(function(icon) {
-                const $canvas = $('<canvas class="inventory-furniture-icon-image" width="' + icon.width + '" height="' + icon.height + '">').appendTo($furniture);
+            const $canvas = $('<canvas class="inventory-furniture-icon-image"></canvas>').appendTo($furniture);
 
-                const context = $canvas[0].getContext("2d");
-
-                context.drawImage(icon, 0, 0);
-
-                Client.furnitures.icon(furniture.id).then(function(image) {
-                    context.canvas.width = image.width;
-                    context.canvas.height = image.height;
-
-                    context.drawImage(image, 0, 0);
-                });
-            });
-            
+            const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, $canvas);
+        
             $furniture.click(function() {
                 $furniture.parent().find(".active").removeClass("active");
 

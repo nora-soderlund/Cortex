@@ -27,31 +27,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.entity.alpha = 0.5;
 
-        Client.assets.getSpritesheet("HabboLoadingIcon").then(function(icon) {
-            const context = Client.rooms.interface.furniture.place.$icon[0].getContext("2d");
-
-            context.canvas.width = icon.width;
-            context.canvas.height = icon.height;
-
-            context.drawImage(icon, 0, 0);
-
-            Client.rooms.interface.furniture.place.$icon.css({
-                "margin-left": -(Math.floor(icon.width / 2)),
-                "margin-top": -(Math.floor(icon.height / 2))
-            });
-
-            Client.furnitures.icon(furniture.id).then(function(image) {
-                context.canvas.width = image.width;
-                context.canvas.height = image.height;
-
-                context.drawImage(image, 0, 0);
-
-                Client.rooms.interface.furniture.place.$icon.css({
-                    "margin-left": -(Math.floor(image.width / 2)),
-                    "margin-top": -(Math.floor(image.height / 2))
-                });
-            });
-        });
+        const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, this.$icon);
 
         await this.entity.render();
 
