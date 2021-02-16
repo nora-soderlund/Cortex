@@ -39,6 +39,17 @@ Client.furnitures.renderer = function(settings, $canvas) {
                 context.drawImage(sprites[index].sprite, (minLeft * -1) - sprites[index].asset.x, (minTop * -1) - sprites[index].asset.y);
             }
         });
+
+        if(settings.animation != undefined) {
+            setInterval(function() {
+                const timestamp = performance.now();
+
+                if(!entity.updateAnimations(timestamp))
+                    return;
+
+                entity.render();
+            }, 1000 / 12);
+        }
     
         entity.render();
     };

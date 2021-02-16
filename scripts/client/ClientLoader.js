@@ -236,25 +236,14 @@ Client.loader.addStep(async function(finished) {
 
    await figure.render();
 
-    const entity = new Client.furnitures.entity({
-        id: "rare_dragonlamp",
-
-        direction: 4
-    });
-
     const $canvas = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
 
-    entity.events.render.push(function(sprites) {
-        const context = $canvas[0].getContext("2d");
+    const renderer = new Client.furnitures.renderer({
+        id: "rare_dragonlamp",
 
-        for(let index in sprites) {
-            context.globalCompositeOperation = sprites[index].ink;
-
-            context.drawImage(sprites[index].sprite, 128 - sprites[index].asset.x, 128 - sprites[index].asset.y);
-        }
-    });
-
-    entity.render();
+        direction: 4,
+        animation: 1
+    }, $canvas);
 
     //furniture.render();
 

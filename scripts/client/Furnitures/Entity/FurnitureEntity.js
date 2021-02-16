@@ -5,7 +5,9 @@ Client.furnitures.entity = function(settings = {}) {
         
         size: 64,
 
-        direction: null
+        direction: null,
+
+        animation: 1
     };
 
     this.events = {
@@ -18,6 +20,8 @@ Client.furnitures.entity = function(settings = {}) {
         const library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + furniture.line + "/" + furniture.id);
 
         const manifest = await Client.assets.getManifest(library);
+
+        // TODO: move this to an independant function
 
         if(this.settings.direction == null) {
             this.settings.direction = this.getDirectionIndex(manifest, 0);
@@ -32,12 +36,17 @@ Client.furnitures.entity = function(settings = {}) {
 
         const type = manifest.visualization.visualizationData.type;
 
+        if(manifest.index.object.visualization == "furniture_animated" && this.animations == undefined)
+            this.animations = this.getVisualizationAnimation(visualization, this.settings.animation);
+
         const sprites = [];
 
         for(let index in layers) {
             const layer = layers[index];
 
-            const name = this.getLayerName(type, this.settings.size, index, this.settings.direction, 0);
+            const frame = this.getVisualizationAnimationLayer(index);
+
+            const name = this.getLayerName(type, this.settings.size, index, this.settings.direction, frame);
 
             layer.asset = this.getLayerAsset(manifest, name);
 
@@ -218,6 +227,56 @@ Client.furnitures.entity = function(settings = {}) {
         return {};
     };
 
+    this.getVisualizationAnimation = function(visualization, animation) {
+        if(visualization.animations == null || visualization.animations == undefined)
+            return {};
+
+        for(let index in visualization.animations.animation) {
+            if(visualization.animations.animation[index].id != animation)
+                continue;
+
+            const animationLayers = visualization.animations.animation[index].animationLayer;
+
+            const layers = {};
+
+            for(let index in animationLayers) {
+                const layer = animationLayers[index].id;
+
+                if(animationLayers[index].frameSequence == undefined)
+                    continue;
+
+                if(animationLayers[index].frameSequence.frame == undefined)
+                    continue;
+
+                layers[layer] = {
+                    frameSequence: [],
+                    frameRepeat: (animationLayers[index].frameRepeat != undefined)?(parseInt(animationLayers[index].frameRepeat)):(0),
+                    frameLoop: (animationLayers[index].loopCount != undefined)?(parseInt(animationLayers[index].loopCount)):(0),
+
+                    timestamp: performance.now(),
+                    frame: 0
+                };
+
+                if(animationLayers[index].frameSequence.frame.length == undefined)
+                    animationLayers[index].frameSequence.frame = [ animationLayers[index].frameSequence.frame ];
+
+                for(let frame in animationLayers[index].frameSequence.frame)
+                    layers[layer].frameSequence.push(animationLayers[index].frameSequence.frame[frame].id);
+            }
+
+            return layers;
+        }
+
+        return {};
+    };
+
+    this.getVisualizationAnimationLayer = function(layer) {
+        if(this.animations == undefined || this.animations[layer] == undefined)
+            return 0;
+
+        return this.animations[layer].frameSequence[this.animations[layer].frame];
+    };
+
     this.getDirection = function(manifest, direction) {
         if(manifest.logic.objectData.model.directions == undefined)
             return 0;
@@ -253,6 +312,26 @@ Client.furnitures.entity = function(settings = {}) {
 
         for(let key in settings)
             this.settings[key] = settings[key];
+    };
+
+    this.updateAnimations = function(timestamp = performance.now()) {
+        let updated = false;
+
+        for(let index in this.animations) {
+            if(!((timestamp - this.animations[index].timestamp) > (1000 / 12)))
+                continue;
+
+            this.animations[index].frame++;
+
+            if(this.animations[index].frame >= this.animations[index].frameSequence.length)
+                this.animations[index].frame = 0;
+
+            this.animations[index].timestamp = timestamp;
+
+            updated = true;
+        }
+
+        return updated;
     };
 
     this.update(settings);
