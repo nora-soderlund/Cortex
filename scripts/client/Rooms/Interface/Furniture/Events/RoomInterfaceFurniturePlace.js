@@ -115,7 +115,7 @@ Client.rooms.interface.furniture.place = new function() {
     this.scroll = async function(event) {
         const direction = (event.originalEvent.deltaY < 0)?(1):(0);
        
-        Client.rooms.interface.furniture.place.entity.furniture.nextDirection(1);
+        Client.rooms.interface.furniture.place.entity.furniture.settings.direction = Client.rooms.interface.furniture.place.entity.furniture.getNextDirection();
 
         await Client.rooms.interface.furniture.place.entity.furniture.render();
     };

@@ -54,7 +54,7 @@ Client.inventory.pages.furnitures = async function($element) {
                             position: {
                                 row: result.position.row,
                                 column: result.position.column,
-                                direction: result.direction
+                                direction: result.entity.furniture.settings.direction
                             }
                         }
                     }, "OnRoomFurniturePlace").then(function(response) {

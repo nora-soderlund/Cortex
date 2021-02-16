@@ -19,7 +19,7 @@ Client.rooms.interface.furniture.move = new function() {
                     position: {
                         row: result.position.row,
                         column: result.position.column,
-                        direction: result.direction
+                        direction: result.entity.furniture.settings.direction
                     }
                 }
             }, "OnRoomFurnitureMove", x => x == entity.data.id).then(function(response) {
