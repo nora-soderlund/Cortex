@@ -15,7 +15,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.enabled = true;
 
-        this.direction = 0;
+        Client.rooms.interface.furniture.place.direction = 0;
 
         this.finished = finished;
 

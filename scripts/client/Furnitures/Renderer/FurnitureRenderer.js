@@ -57,7 +57,9 @@ Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
             }, 1000 / 12);
         }
     
-        entity.render();
+        entity.process().then(function() {
+            entity.render();
+        });
     };
 
     this.renderer();

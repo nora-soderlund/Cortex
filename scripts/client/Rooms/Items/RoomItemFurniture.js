@@ -80,7 +80,9 @@ Client.rooms.items.furniture = function(parent, id, direction) {
             }
         });
 
-        entity.furniture.render();
+        entity.furniture.process().then(function() {
+            entity.furniture.render()
+        });
     };
 
     return entity;

@@ -7,7 +7,7 @@ Client.furnitures.entity = function(settings = {}) {
 
         direction: null,
 
-        animation: 1
+        animation: 0
     };
 
     this.events = {
@@ -15,30 +15,7 @@ Client.furnitures.entity = function(settings = {}) {
     };
 
     this.render = async function() {
-        const furniture = await Client.furnitures.get(this.settings.id);
-
-        const library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + furniture.line + "/" + furniture.id);
-
-        if(this.manifest == undefined)
-            this.manifest = await Client.assets.getManifest(library);
-
-        // TODO: move this to an independant function
-
-        if(this.settings.direction == null) {
-            this.settings.direction = this.getDirectionIndex(this.manifest, 0);
-        }
-        else {
-            this.settings.direction = this.getDirection(this.manifest, this.settings.direction);
-        }
-
-        const visualization = this.getVisualization(this.manifest, this.settings.size);
-
-        const layers = this.getLayers(visualization);
-
-        const type = this.manifest.visualization.visualizationData.type;
-
-        if(this.manifest.index.object.visualization == "furniture_animated" && this.animations == undefined)
-            this.animations = this.getVisualizationAnimation(visualization, this.settings.animation);
+        const layers = this.getLayers();
 
         const sprites = [];
 
@@ -47,9 +24,9 @@ Client.furnitures.entity = function(settings = {}) {
 
             const frame = this.getVisualizationAnimationLayer(index);
 
-            const name = this.getLayerName(type, this.settings.size, index, this.settings.direction, frame);
+            const name = this.getLayerName(this.types.type, this.settings.size, index, this.settings.direction, frame);
 
-            layer.asset = this.getLayerAsset(this.manifest, name);
+            layer.asset = this.getLayerAsset(name);
 
             if(layer.asset == null) {
                 delete layers[index];
@@ -57,7 +34,7 @@ Client.furnitures.entity = function(settings = {}) {
                 continue;
             }
 
-            layer.sprite = await Client.assets.getSprite(library, layer.asset.name);
+            layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name);
 
             if(layer.sprite == null) {
                 delete layers[index];
@@ -65,7 +42,7 @@ Client.furnitures.entity = function(settings = {}) {
                 continue;
             }
 
-            layer.spriteData = await Client.assets.getSpriteData(library, layer.asset.name);
+            layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name);
             
             layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
 
@@ -85,12 +62,12 @@ Client.furnitures.entity = function(settings = {}) {
             this.events.render[index](sprites);
     };
 
-    this.getLayers = function(visualization) {
-        const layerCount = parseInt(visualization.layerCount);
+    this.getLayers = function() {
+        const layerCount = parseInt(this.visualization.layerCount);
 
-        const layers = this.getVisualizationLayers(visualization);
+        const layers = this.getVisualizationLayers();
 
-        const directions = this.getVisualizationDirectionLayers(visualization, this.settings.direction);
+        const directions = this.getVisualizationDirectionLayers(this.settings.direction);
 
         for(let key in directions) {
             if(layers[key] == undefined)
@@ -127,15 +104,15 @@ Client.furnitures.entity = function(settings = {}) {
         }
     };
 
-    this.getLayerAsset = function(manifest, name) {
-        for(let index in manifest.assets.assets.asset) {
-            const asset = manifest.assets.assets.asset[index];
+    this.getLayerAsset = function(name) {
+        for(let index in this.manifest.assets.assets.asset) {
+            const asset = this.manifest.assets.assets.asset[index];
 
             if(asset.name != name)
                 continue;
 
             if(asset.source != undefined) {
-                const sourceAsset = this.getLayerAsset(manifest, asset.source);
+                const sourceAsset = this.getLayerAsset(asset.source);
 
                 delete asset.source;
 
@@ -153,30 +130,30 @@ Client.furnitures.entity = function(settings = {}) {
         return null;
     };
 
-    this.getVisualization = function(manifest, size) {
-        const data = manifest.visualization.visualizationData;
+    this.getVisualization = function() {
+        const data = this.manifest.visualization.visualizationData;
 
         const visualization = (data.graphics != undefined)?(data.graphics.visualization):(data.visualization);
 
         for(let index in visualization) {
-            if(visualization[index].size == size)
+            if(visualization[index].size == this.settings.size)
                 return visualization[index];
         }
 
         return null;
     };
 
-    this.getVisualizationLayers = function(visualization) {
+    this.getVisualizationLayers = function() {
         const layers = {};
 
-        if(visualization.layers == undefined)
+        if(this.visualization.layers == undefined)
             return {};
 
-        if(visualization.layers.layer.length == undefined)
-            visualization.layers.layer = [ visualization.layers.layer ];
+        if(this.visualization.layers.layer.length == undefined)
+            this.visualization.layers.layer = [ this.visualization.layers.layer ];
 
-        for(let index in visualization.layers.layer) {
-            const layer = visualization.layers.layer[index];
+        for(let index in this.visualization.layers.layer) {
+            const layer = this.visualization.layers.layer[index];
 
             layers[layer.id] = {};
 
@@ -191,18 +168,18 @@ Client.furnitures.entity = function(settings = {}) {
         return layers;
     };
 
-    this.getVisualizationDirectionLayers = function(visualization, direction) {
-        if(visualization.directions == undefined)
+    this.getVisualizationDirectionLayers = function() {
+        if(this.visualization.directions == undefined)
             return {};
 
-        if(visualization.directions.direction.length == undefined)
-            visualization.directions.direction = [ visualization.directions.direction ];
+        if(this.visualization.directions.direction.length == undefined)
+            this.visualization.directions.direction = [ this.visualization.directions.direction ];
 
-        for(let index in visualization.directions.direction) {
-            if(visualization.directions.direction[index].id != direction)
+        for(let index in this.visualization.directions.direction) {
+            if(this.visualization.directions.direction[index].id != this.settings.direction)
                 continue;
 
-            const directions = visualization.directions.direction[index];
+            const directions = this.visualization.directions.direction[index];
 
             if(directions.layer == undefined)
                 return {};
@@ -231,15 +208,15 @@ Client.furnitures.entity = function(settings = {}) {
         return {};
     };
 
-    this.getVisualizationAnimation = function(visualization, animation) {
-        if(visualization.animations == null || visualization.animations == undefined)
+    this.getVisualizationAnimation = function() {
+        if(this.visualization.animations == null || this.visualization.animations == undefined)
             return {};
 
-        for(let index in visualization.animations.animation) {
-            if(visualization.animations.animation[index].id != animation)
+        for(let index in this.visualization.animations.animation) {
+            if(this.visualization.animations.animation[index].id != this.settings.animation)
                 continue;
 
-            const animationLayers = visualization.animations.animation[index].animationLayer;
+            const animationLayers = this.visualization.animations.animation[index].animationLayer;
 
             const layers = {};
 
@@ -281,35 +258,6 @@ Client.furnitures.entity = function(settings = {}) {
         return this.animations[layer].frameSequence[this.animations[layer].frame];
     };
 
-    this.getDirection = function(manifest, direction) {
-        if(manifest.logic.objectData.model.directions == undefined)
-            return 0;
-
-        const directions = manifest.logic.objectData.model.directions.direction;
-        
-        for(let index in directions) {
-            if((Math.floor(directions[index].id) / 45) == direction)
-                return direction;
-        }
-
-        return this.getDirectionIndex(manifest, 0);
-    };
-
-    this.getDirectionIndex = function(manifest, index) {
-        if(manifest.logic.objectData.model.directions == undefined)
-            return 0;
-
-        if(manifest.logic.objectData.model.directions.direction.length == undefined)
-            manifest.logic.objectData.model.directions.direction = [ manifest.logic.objectData.model.directions.direction ];
-
-        const directions = manifest.logic.objectData.model.directions.direction;
-
-        if(directions[index] == undefined)
-            return 0;
-
-        return Math.floor(parseInt(directions[index].id) / 45);
-    };
-
     this.getDimensions = function() {
         const result = { row: 0, column: 0, depth: 0 };
 
@@ -327,6 +275,51 @@ Client.furnitures.entity = function(settings = {}) {
         }
 
         return result;
+    };
+
+    this.getDirection = function(direction = this.settings.direction) {
+        const directions = this.manifest.logic.objectData.model.directions;
+
+        if(directions == undefined)
+            return 0;
+
+        if(directions.direction.length == undefined)
+            directions.direction = [ directions.direction ];
+
+        for(let index in directions.direction) {
+            if(this.getDirectionAngle(directions.direction[index].id) != direction)
+                continue;
+
+            return direction;
+        }
+
+        return this.getDirectionAngle(directions.direction[0].id);
+    };
+
+    this.getNextDirection = function(direction) {
+        const directions = this.manifest.logic.objectData.model.directions;
+
+        if(directions == undefined)
+            return direction;
+
+        if(directions.direction.length == undefined)
+            directions.direction = [ directions.direction ];
+
+        for(let index in directions.direction) {
+            if(this.getDirectionAngle(directions.direction[index].id) != direction)
+                continue;
+
+            if(index + 1 == directions.direction.length)
+                return this.getDirectionAngle(directions.direction[0].id);
+
+            return this.getDirectionAngle(directions.direction[index + 1].id);
+        }
+
+        return this.getDirectionAngle(directions.direction[0].id);
+    };
+
+    this.getDirectionAngle = function(angle) {
+        return Math.floor(parseInt(angle) / 45);
     };
 
     this.update = async function(settings) {
@@ -358,4 +351,21 @@ Client.furnitures.entity = function(settings = {}) {
     };
 
     this.update(settings);
+
+    this.process = async function() {
+        this.furniture = await Client.furnitures.get(this.settings.id);
+
+        this.library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + this.furniture.line + "/" + this.furniture.id);
+
+        this.manifest = await Client.assets.getManifest(this.library);
+        
+        this.visualization = this.getVisualization();
+
+        this.types = this.manifest.index.object;
+        
+        if(this.types.visualization == "furniture_animated")
+            this.animations = this.getVisualizationAnimation();
+
+        this.settings.direction = this.getDirection();
+    };
 };
