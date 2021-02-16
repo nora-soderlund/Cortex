@@ -7,7 +7,8 @@ Client.rooms.interface.cursor = new function() {
     this.events = {
         hover: [],
         unhover: [],
-        click: []
+        click: [],
+        doubleclick: []
     };
 
     Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
@@ -29,6 +30,15 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.entity.offset[1] += (event.offsetY - Client.rooms.interface.cursor.position[1]);
 
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
+    }).on("dblclick", function(event) {
+        if(Client.rooms.interface.furniture.place.enabled)
+            return;
+
+        if(Client.rooms.interface.entity.currentEntity != undefined)
+            Client.rooms.interface.entity.currentEntity.sprite.mousedoubleclick(event);
+        
+        for(let index in Client.rooms.interface.cursor.events.doubleclick)
+            Client.rooms.interface.cursor.events.doubleclick[index](Client.rooms.interface.entity.currentEntity, event);
     }).on("click", function(event) {
         if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 250)
             return;

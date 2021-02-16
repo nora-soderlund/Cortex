@@ -41,5 +41,9 @@ Client.rooms.items.sprite = function(parent, image) {
 
     };
 
+    this.mousedoubleclick = function(event) {
+
+    };
+
     return this;
 };

@@ -15,6 +15,8 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.enabled = true;
 
+        this.direction = 0;
+
         this.finished = finished;
 
         this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, 0);

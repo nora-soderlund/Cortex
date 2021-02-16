@@ -19,24 +19,25 @@ Client.furnitures.entity = function(settings = {}) {
 
         const library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + furniture.line + "/" + furniture.id);
 
-        const manifest = await Client.assets.getManifest(library);
+        if(this.manifest == undefined)
+            this.manifest = await Client.assets.getManifest(library);
 
         // TODO: move this to an independant function
 
         if(this.settings.direction == null) {
-            this.settings.direction = this.getDirectionIndex(manifest, 0);
+            this.settings.direction = this.getDirectionIndex(this.manifest, 0);
         }
         else {
-            this.settings.direction = this.getDirection(manifest, this.settings.direction);
+            this.settings.direction = this.getDirection(this.manifest, this.settings.direction);
         }
 
-        const visualization = this.getVisualization(manifest, this.settings.size);
+        const visualization = this.getVisualization(this.manifest, this.settings.size);
 
         const layers = this.getLayers(visualization);
 
-        const type = manifest.visualization.visualizationData.type;
+        const type = this.manifest.visualization.visualizationData.type;
 
-        if(manifest.index.object.visualization == "furniture_animated" && this.animations == undefined)
+        if(this.manifest.index.object.visualization == "furniture_animated" && this.animations == undefined)
             this.animations = this.getVisualizationAnimation(visualization, this.settings.animation);
 
         const sprites = [];
@@ -48,7 +49,7 @@ Client.furnitures.entity = function(settings = {}) {
 
             const name = this.getLayerName(type, this.settings.size, index, this.settings.direction, frame);
 
-            layer.asset = this.getLayerAsset(manifest, name);
+            layer.asset = this.getLayerAsset(this.manifest, name);
 
             if(layer.asset == null) {
                 delete layers[index];
@@ -307,6 +308,25 @@ Client.furnitures.entity = function(settings = {}) {
             return 0;
 
         return Math.floor(parseInt(directions[index].id) / 45);
+    };
+
+    this.getDimensions = function() {
+        const result = { row: 0, column: 0, depth: 0 };
+
+        const data = this.manifest.logic.objectData.model.dimensions;
+
+        if(data.x != undefined) result.row = parseFloat(data.x);
+        if(data.y != undefined) result.column = parseFloat(data.y);
+        if(data.z != undefined) result.depth = parseFloat(data.z);
+
+        if(this.direction == 0 || this.direction == 4) {
+            const spare = result.row;
+         
+            result.row = result.column;
+            result.column = spare;
+        }
+
+        return result;
     };
 
     this.update = async function(settings) {

@@ -64,6 +64,12 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                         Client.rooms.interface.chat.addMessage("info", entity.furniture.settings.id + " was clicked on!");
                 };
 
+                sprite.mousedoubleclick = function(event) {
+                    Client.rooms.interface.chat.addMessage("info", entity.furniture.settings.id + " was double clicked on!");
+                    
+                    Client.rooms.interface.furniture.use.start(entity);
+                };
+
                 sprite.setOffset(64 - sprites[index].asset.x, 16 - sprites[index].asset.y);
 
                 //sprite.index = parseInt(sprites[index].index);
