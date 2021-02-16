@@ -1,4 +1,4 @@
-Client.furnitures.renderer = function(settings, $canvas) {
+Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
     this.renderer = async function() {
         const loading = await Client.assets.getSpritesheet("HabboLoading").then(function(image) {
             const context = $canvas[0].getContext("2d");
@@ -32,6 +32,12 @@ Client.furnitures.renderer = function(settings, $canvas) {
     
             context.canvas.width = ((minLeft * -1) + maxWidth);
             context.canvas.height = ((minTop * -1) + maxHeight);
+
+            if(color != undefined) {
+                context.fillStyle = color;
+             
+                context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+            }
     
             for(let index in sprites) {
                 context.globalCompositeOperation = sprites[index].ink;

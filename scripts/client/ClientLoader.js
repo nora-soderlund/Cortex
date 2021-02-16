@@ -243,7 +243,7 @@ Client.loader.addStep(async function(finished) {
 
         direction: 4,
         animation: 1
-    }, $canvas);
+    }, $canvas, "#242424");
 
     //furniture.render();
 
