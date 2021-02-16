@@ -236,16 +236,25 @@ Client.loader.addStep(async function(finished) {
 
    await figure.render();
 
-    new Client.furnitures.entity({
-        id: "HabboRoomCursor",
-        library: "HabboRoomCursor"
-    }).render();
-
-    new Client.furnitures.entity({
+    const entity = new Client.furnitures.entity({
         id: "rare_dragonlamp",
 
         direction: 4
-    }).render();
+    });
+
+    const $canvas = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
+
+    entity.events.render.push(function(sprites) {
+        const context = $canvas[0].getContext("2d");
+
+        for(let index in sprites) {
+            context.globalCompositeOperation = sprites[index].ink;
+
+            context.drawImage(sprites[index].sprite, 128 - sprites[index].asset.x, 128 - sprites[index].asset.y);
+        }
+    });
+
+    entity.render();
 
     //furniture.render();
 

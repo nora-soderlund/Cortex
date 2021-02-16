@@ -12,8 +12,6 @@ Client.furnitures.entity = function(settings = {}) {
         render: []
     };
 
-    this.$canvas = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
-
     this.render = async function() {
         const furniture = await Client.furnitures.get(this.settings.id);
 
@@ -72,16 +70,6 @@ Client.furnitures.entity = function(settings = {}) {
         sprites.sort(function(a, b) {
             return a.z - b.z;
         });
-
-        const context = this.$canvas[0].getContext("2d");
-
-        for(let index in sprites) {
-            const sprite = sprites[index];
-
-            context.globalCompositeOperation = sprite.ink;
-
-            context.drawImage(sprite.sprite, 128 - sprite.asset.x, 128 - sprite.asset.y);
-        }
 
         for(let index in this.events.render)
             this.events.render[index](sprites);
