@@ -38,8 +38,8 @@ Client.rooms.interface = new function() {
         return new Promise(function(resolve) {
             window.requestAnimationFrame(function() {
                 window.requestAnimationFrame(function() {
-                    for(let index in Client.rooms.interfac.events.stop)
-                        Client.rooms.interfac.events.stop[index]();
+                    for(let index in Client.rooms.interface.events.stop)
+                        Client.rooms.interface.events.stop[index]();
 
                     Client.rooms.interface.chat.addMessage("info", "Room interface renderer stopped!");
     
