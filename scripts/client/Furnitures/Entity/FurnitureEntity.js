@@ -334,6 +334,25 @@ Client.furnitures.entity = function(settings = {}) {
             this.settings[key] = settings[key];
     };
 
+    this.getNextAnimation = function(animation = this.settings.animation) {
+        const animations = this.visualization.animations;
+
+        if(animations.animation.length == undefined)
+            animations.animation = [ animations.animation ];
+
+        for(let index in animations.animation) {
+            if(animations.animation[index].id != animation)
+                continue;
+
+            if(parseInt(index + 1) == animations.animation.length)
+                return parseInt(animations.animation[0].id);
+                
+            return parseInt(animations.animation[parseInt(index + 1)].id);
+        }
+
+        return parseInt(animations.animation[0].id);
+    };
+
     this.updateAnimations = function(timestamp = performance.now()) {
         let updated = false;
 
@@ -354,6 +373,12 @@ Client.furnitures.entity = function(settings = {}) {
         return updated;
     };
 
+    this.setAnimation = function(animation) {
+        this.settings.animation = animation;
+
+        this.animations = this.getVisualizationAnimation();
+    };
+
     this.update(settings);
 
     this.process = async function() {
@@ -368,7 +393,7 @@ Client.furnitures.entity = function(settings = {}) {
         this.types = this.manifest.index.object;
         
         if(this.types.visualization == "furniture_animated")
-            this.animations = this.getVisualizationAnimation();
+            this.setAnimation(this.settings.animation);
 
         this.settings.direction = this.getDirection();
     };

@@ -85,5 +85,14 @@ Client.rooms.items.furniture = function(parent, id, direction) {
         });
     };
 
+    entity.process = function(timestamp) {
+        entity.updatePath();
+
+        if(!entity.furniture.updateAnimations(timestamp))
+            return;
+
+        entity.furniture.render();
+    };
+
     return entity;
 };

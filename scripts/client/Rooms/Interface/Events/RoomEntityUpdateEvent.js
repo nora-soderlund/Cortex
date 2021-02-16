@@ -47,4 +47,12 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
             Client.rooms.interface.users[id].figure.render();
         }
     }
+
+    if(data.furnitures != undefined) {
+        for(let id in data.furnitures) {
+            if(data.furnitures[id].animation != undefined) {
+                Client.rooms.interface.furnitures[id].furniture.setAnimation(data.furnitures[id].animation);
+            }
+        }
+    }
 });
