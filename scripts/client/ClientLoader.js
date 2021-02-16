@@ -245,6 +245,14 @@ Client.loader.addStep(async function(finished) {
         animation: 1
     }, $canvas, "#242424");
 
+    const $canvasIcon = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
+
+    const iconRenderer = new Client.furnitures.renderer({
+        id: "rare_dragonlamp",
+
+        size: 1
+    }, $canvasIcon, "red");
+
     //furniture.render();
 
 

@@ -9,6 +9,9 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
             let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, dataFurniture.furniture, dataFurniture.position.direction);
             
             entity.setPosition(dataFurniture.position);
+
+            if(dataFurniture.animation)
+                entity.furniture.update({ animation: dataFurniture.animation });
             
             entity.render();
 

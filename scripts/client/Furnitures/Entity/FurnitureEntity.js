@@ -108,6 +108,9 @@ Client.furnitures.entity = function(settings = {}) {
     };
 
     this.getLayerName = function(id, size, layer, direction, frame) {
+        if(size == 1)
+            return id + "_icon_" + Client.utils.charCode(parseInt(layer));
+
         return id + "_" + size + "_" + Client.utils.charCode(parseInt(layer)) + "_" + direction + "_" + frame;
     };
 
