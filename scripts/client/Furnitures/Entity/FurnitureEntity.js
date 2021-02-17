@@ -15,55 +15,61 @@ Client.furnitures.entity = function(settings = {}) {
     };
 
     this.render = async function() {
-        const layers = this.getLayers();
+        const layerName = this.types.type + "_" + this.settings.size + "_" + this.settings.animation + "_" + this.settings.direction;
 
-        const sprites = [];
+        if(this.types.visualization == "furniture_animated" || Client.furnitures.layers[layerName] == undefined) {
+            const layers = this.getLayers();
 
-        for(let index in layers) {
-            const layer = layers[index];
+            const sprites = [];
 
-            const frame = this.getVisualizationAnimationLayer(index);
+            for(let index in layers) {
+                const layer = layers[index];
 
-            const name = this.getLayerName(this.types.type, this.settings.size, index, this.settings.direction, frame);
+                const frame = this.getVisualizationAnimationLayer(index);
 
-            layer.asset = this.getLayerAsset(name);
+                const name = this.getLayerName(this.types.type, this.settings.size, index, this.settings.direction, frame);
 
-            if(layer.asset == null) {
-                delete layers[index];
+                layer.asset = this.getLayerAsset(name);
 
-                continue;
+                if(layer.asset == null) {
+                    delete layers[index];
+
+                    continue;
+                }
+
+                layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name, (layer.asset.flipH == 1)?(true):(false));
+
+                if(layer.sprite == null) {
+                    delete layers[index];
+
+                    continue;
+                }
+
+                layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name + ((layer.asset.flipH == 1)?("?flipped=true"):("")));
+                
+                layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
+
+                layer.ink = (layer.ink == undefined)?("source-over"):(this.getLayerInk(layer.ink));
+
+                layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
+                layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
+                
+                if(layer.asset.flipH == 1) {
+                    layer.asset.x = (layer.asset.x * -1) + layer.sprite.width;
+                }
+
+                sprites.push(layer);
             }
 
-            layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name, (layer.asset.flipH == 1)?(true):(false));
-
-            if(layer.sprite == null) {
-                delete layers[index];
-
-                continue;
-            }
-
-            layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name + ((layer.asset.flipH == 1)?("?flipped=true"):("")));
+            sprites.sort(function(a, b) {
+                return a.z - b.z;
+            });
             
-            layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
-
-            layer.ink = (layer.ink == undefined)?("source-over"):(this.getLayerInk(layer.ink));
-
-            layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
-            layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
-            
-            if(layer.asset.flipH == 1) {
-                layer.asset.x = (layer.asset.x * -1) + layer.sprite.width;
-            }
-
-            sprites.push(layer);
+            Client.furnitures.layers[layerName] = sprites;
         }
 
-        sprites.sort(function(a, b) {
-            return a.z - b.z;
-        });
-
         for(let index in this.events.render)
-            this.events.render[index](sprites);
+            this.events.render[index](Client.furnitures.layers[layerName]);
     };
 
     this.getLayers = function() {

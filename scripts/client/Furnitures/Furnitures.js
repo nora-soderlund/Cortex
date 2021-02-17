@@ -3,6 +3,8 @@ Client.furnitures = new function() {
         HabboRoomCursor: {}
     };
 
+    this.layers = {};
+
     this.get = async function(id) {
         if(this.cache[id] != undefined)
             return this.cache[id];
