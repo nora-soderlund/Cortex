@@ -19,10 +19,6 @@ Client.rooms.navigator = new function() {
         entity.header.$element.appendTo(entity.$content);
 
         entity.tabs = new Client.dialogs.tabs(400);
-        
-        entity.$home = $('<div class="room-navigator-tab-icon room-navigator-tab-home"></div>').on("click", function() {
-            Client.socket.messages.send({ OnRoomNavigatorEnter: Client.user.home });
-        }).appendTo(entity.tabs.$header);
 
         entity.tabs.add("public", "Public", function($element) {
             entity.header.setTitle("Public Lounges!");
@@ -72,6 +68,10 @@ Client.rooms.navigator = new function() {
 
             entity.unpause();
         });
+        
+        entity.$home = $('<div class="room-navigator-tab-icon room-navigator-tab-home"></div>').on("click", function() {
+            Client.socket.messages.send({ OnRoomNavigatorEnter: Client.user.home });
+        }).appendTo(entity.tabs.$header);
 
         entity.tabs.show("my_rooms");
 
