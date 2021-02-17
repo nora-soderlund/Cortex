@@ -381,6 +381,10 @@ Client.furnitures.entity = function(settings = {}) {
         this.render();
     };
 
+    this.setDirection = function(direction) {
+        this.settings.direction = this.getDirection(direction);
+    };
+
     this.update(settings);
 
     this.process = async function() {

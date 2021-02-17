@@ -3,7 +3,7 @@ Client.rooms.interface.furniture.place = new function() {
 
     this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
 
-    this.start = async function(furniture, finished) {
+    this.start = async function(furniture, finished, direction = null) {
         furniture = await Client.furnitures.get(furniture);
         
         if(finished == undefined)
@@ -15,11 +15,9 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.enabled = true;
 
-        Client.rooms.interface.furniture.place.direction = 0;
-
         this.finished = finished;
 
-        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, 0);
+        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, direction);
 
         this.entity.furniture.events.render.push(function() {
             Client.rooms.interface.furniture.place.direction = Client.rooms.interface.furniture.place.entity.furniture.direction;

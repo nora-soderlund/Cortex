@@ -53,6 +53,14 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
             if(data.furnitures[id].animation != undefined) {
                 Client.rooms.interface.furnitures[id].furniture.setAnimation(data.furnitures[id].animation);
             }
+
+            if(data.furnitures[id].position != undefined) {
+                if(data.furnitures[id].position.direction != undefined) {
+                    Client.rooms.interface.furnitures[id].furniture.setDirection(data.furnitures[id].position.direction);
+                }
+            }
+
+            Client.rooms.interface.furnitures[id].furniture.render();
         }
     }
 });

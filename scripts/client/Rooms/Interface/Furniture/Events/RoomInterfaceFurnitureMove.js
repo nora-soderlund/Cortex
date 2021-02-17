@@ -29,6 +29,6 @@ Client.rooms.interface.furniture.move = new function() {
 
                 entity.setCoordinates(result.position.row, result.position.column, result.position.depth);
             });
-        });
+        }, entity.furniture.settings.direction);
     };
 };
