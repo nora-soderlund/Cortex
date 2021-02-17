@@ -343,6 +343,9 @@ Client.furnitures.entity = function(settings = {}) {
     this.getNextAnimation = function(animation = this.settings.animation) {
         const animations = this.visualization.animations;
 
+        if(animations == undefined)
+            return 0;
+
         if(animations.animation.length == undefined)
             animations.animation = [ animations.animation ];
 
