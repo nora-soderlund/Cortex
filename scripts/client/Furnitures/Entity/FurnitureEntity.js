@@ -377,6 +377,8 @@ Client.furnitures.entity = function(settings = {}) {
         this.settings.animation = animation;
 
         this.animations = this.getVisualizationAnimation();
+
+        this.render();
     };
 
     this.update(settings);
