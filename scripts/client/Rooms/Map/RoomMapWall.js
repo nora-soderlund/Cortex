@@ -36,8 +36,8 @@ Client.rooms.map.wall = function() {
 
         await this.setPatternAsync(this.material);
 
-        context.canvas.width = (this.rows * 32) + (this.columns * 32);
-        context.canvas.height = (this.rows * 16) + (this.columns * 16) + (this.depth * 16);
+        context.canvas.width = (this.rows * 32) + (this.columns * 32) + (8);
+        context.canvas.height = (this.rows * 16) + (this.columns * 16) + (this.depth * 16) + 8;
 
         const rectangles = [];
 
@@ -126,7 +126,7 @@ Client.rooms.map.wall = function() {
     };
 
     this.draw = function(context, rectangles) {
-        this.top = -((this.depth + 3) * 32);
+        this.top = -((this.depth + 3.5) * 32);
 
         this.drawLeft(context, rectangles);
         this.drawRight(context, rectangles);
@@ -142,7 +142,7 @@ Client.rooms.map.wall = function() {
             const rectangle = rectangles[index];
 
             let width = 32;
-            let height = (this.depth + 3) * 32;
+            let height = (this.depth + 3.5) * 32;
 
             let row = rectangle.row;
             let column = rectangle.column;
@@ -184,7 +184,7 @@ Client.rooms.map.wall = function() {
             let column = rectangle.column;  
 
             let width = 32;
-            let height = (this.depth + 3) * 32;
+            let height = (this.depth + 3.5) * 32;
 
             if(rectangle.direction == 4) {
 
