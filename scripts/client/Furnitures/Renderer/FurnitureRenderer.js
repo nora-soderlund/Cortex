@@ -45,20 +45,24 @@ Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
                 context.drawImage(sprites[index].sprite, (minLeft * -1) - sprites[index].asset.x, (minTop * -1) - sprites[index].asset.y);
             }
         });
-
-        if(settings.animation != undefined) {
-            setInterval(function() {
-                const timestamp = performance.now();
-
-                if(!entity.updateAnimations(timestamp))
-                    return;
-
-                entity.render();
-            }, 1000 / 12);
-        }
     
-        entity.process().then(function() {
-            entity.render();
+        entity.process().then(async function() {
+            await entity.render();
+
+            if(entity.types.visualization == "furniture_animated") {
+                setInterval(function() {
+                    const timestamp = performance.now();
+    
+                    if(!entity.updateAnimations(timestamp))
+                        return;
+    
+                    entity.render();
+                }, 1000 / 12);
+
+                $canvas.on("click", function() {
+                    entity.setAnimation(entity.getNextAnimation());
+                });
+            }
         });
     };
 

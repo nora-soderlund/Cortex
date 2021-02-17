@@ -32,7 +32,7 @@ Client.rooms.interface.display = new function() {
 
         console.log(entity);
 
-        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
+        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
         this.addButton("Pickup", function() {
             Client.rooms.interface.furniture.pickup.start(entity);
