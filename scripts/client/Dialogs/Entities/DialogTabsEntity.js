@@ -36,18 +36,18 @@ Client.dialogs.tabs = function(height) {
         this.$content.html("");
     };
 
-    this.show = function(identifier) {
+    this.show = async function(identifier) {
         this.hide();
             
         this.buttons[identifier].element.attr("active", "");
 
+        this.$content.html("");
+
         if(this.buttons[identifier].callback != undefined)
             this.buttons[identifier].callback(this.$content);
-        else
-            this.$content.html(identifier);
 
         for(let index in this.callbacks)
-            this.callbacks[index](identifier, this.$content);
+            await this.callbacks[index](identifier, this.$content);
     };
 
     this.callbacks = [];
