@@ -111,7 +111,7 @@ Client.rooms.items.entity = function(parent, name) {
         this.index = (row * 1250) + (column * 1250) + (depth * 500) + index;
     };
     
-    this.process = function(frame) {
+    this.process = function(timestamp, frame) {
         this.updatePath(frame);
     };
 

@@ -85,8 +85,8 @@ Client.rooms.items.furniture = function(parent, id, direction) {
         });
     };
 
-    entity.process = function(timestamp) {
-        entity.updatePath();
+    entity.process = function(timestamp, frame) {
+        entity.updatePath(frame);
 
         if(!entity.furniture.updateAnimations(timestamp))
             return;

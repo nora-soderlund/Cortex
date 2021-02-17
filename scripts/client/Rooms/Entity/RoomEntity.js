@@ -87,7 +87,7 @@ Client.rooms.entity = function($parent) {
         }
 
         for(let index in this.entities)
-            this.entities[index].process(timestamp);
+            this.entities[index].process(timestamp, this.frame);
 
         this.updateCanvas();
 
