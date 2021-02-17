@@ -344,7 +344,7 @@ Client.furnitures.entity = function(settings = {}) {
             if(animations.animation[index].id != animation)
                 continue;
 
-            if(parseInt(index + 1) == animations.animation.length)
+            if(animations.animation[parseInt(index + 1)] == undefined)
                 return parseInt(animations.animation[0].id);
                 
             return parseInt(animations.animation[parseInt(index + 1)].id);
