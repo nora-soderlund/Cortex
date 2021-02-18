@@ -3,7 +3,7 @@ Client.shop.categories.default = function(page) {
         '<div class="shop-pages">' +
             '<div class="shop-pages-left">' +
                 '<div class="shop-pages-search">' +
-                    '<input type="text" placeholder="Search...">' +
+                    '<input class="shop-pages-search-input" type="text" placeholder="Search...">' +
                 '</div>' +
                 
                 '<div class="shop-pages-list dialog-container">' +
@@ -14,6 +14,8 @@ Client.shop.categories.default = function(page) {
             '<div class="shop-pages-right"></div>' +
         '</div>'
     );
+
+    this.$search = this.$element.find(".shop-pages-search-input");
 
     this.$list = this.$element.find(".shop-pages-list-container");
 
@@ -71,6 +73,10 @@ Client.shop.categories.default = function(page) {
 
     for(let index in subPages)
         this.addPage(subPages[index], this.$list);
+
+    this.$search.on("keyup", function() {
+        
+    });
 
     Client.shop.tabs.$content.html(this.$element);
 };

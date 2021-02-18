@@ -72,6 +72,10 @@ Client.rooms.navigator = new function() {
         entity.$home = $('<div class="room-navigator-tab-icon room-navigator-tab-home"></div>').on("click", function() {
             Client.socket.messages.send({ OnRoomNavigatorEnter: Client.user.home });
         }).appendTo(entity.tabs.$header);
+        
+        entity.$create = $('<div class="room-navigator-tab-icon room-navigator-tab-create"></div>').on("click", function() {
+            
+        }).appendTo(entity.tabs.$header);
 
         entity.tabs.show("my_rooms");
 
@@ -79,10 +83,10 @@ Client.rooms.navigator = new function() {
     });
 
     entity.events.show.push(function() {
-        if(Client.user.home == null)
+        //if(Client.user.home == null)
             entity.$home.hide();
-        else
-            entity.$home.show();
+        //else
+        //    entity.$home.show();
     });
 
     return entity;

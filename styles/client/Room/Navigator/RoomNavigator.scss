@@ -1,7 +1,23 @@
+.room-navigator-tab-icon {
+    display: inline-block;
+}
+
 .room-navigator-tab-home {
     @include sprite-room-home-active;
 
-    margin: 6px 0 0 6px;
+    margin: 0 0 0 6px;
+
+    cursor: pointer;
+}
+
+.room-navigator-tab-create {
+    @include sprite-plus;
+
+    margin: 0 0 0 6px;
+
+    position: relative;
+
+    top: 2px;
 
     cursor: pointer;
 }
