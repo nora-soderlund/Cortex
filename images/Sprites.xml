@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:ee5d5575af1de82658b09cef1d63f22d:32b492da052993ba7105d3140738fc7f:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:339348366b15d5e3a0112320906c19ae:58208cf6cc08c41545e3aee27bbfe481:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,9 +19,10 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="32" height="28">
+<TextureAtlas imagePath="Sprites.png" width="52" height="47">
+    @mixin sprite-arrow-big-left { background: $url; background-position: -0px -18px; width: 44px; height: 29px; }
     @mixin sprite-dropdown { background: $url; background-position: -0px -0px; width: 10px; height: 10px; }
     @mixin sprite-dropup { background: $url; background-position: -10px -0px; width: 10px; height: 10px; }
-    @mixin sprite-pen { background: $url; background-position: -0px -10px; width: 17px; height: 18px; }
-    @mixin sprite-plus { background: $url; background-position: -17px -10px; width: 15px; height: 15px; }
+    @mixin sprite-pen { background: $url; background-position: -35px -0px; width: 17px; height: 18px; }
+    @mixin sprite-plus { background: $url; background-position: -20px -0px; width: 15px; height: 15px; }
 </TextureAtlas>

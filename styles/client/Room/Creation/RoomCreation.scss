@@ -1,0 +1,42 @@
+.room-creation {
+    .room-creation-grid {
+        display: grid;
+
+        grid-gap: 6px;
+        grid-template-columns: 50% 50%;
+
+        height: 266px;
+    }
+
+    .room-creation-property {
+        p {
+            b {
+                display: block;
+            }
+
+            margin-bottom: 6px;
+        }
+
+        input, textarea {
+            width: 100%;
+        }
+
+        textarea {
+            height: 64px;
+        }
+
+        margin-bottom: 12px;
+    }
+
+    .room-creation-buttons {
+        width: 100%;
+
+        text-align: right;
+
+        .dialog-button {
+            display: inline-block;
+
+            margin-left: 6px;
+        }
+    }
+}

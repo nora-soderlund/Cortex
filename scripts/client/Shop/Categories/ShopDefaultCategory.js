@@ -2,7 +2,7 @@ Client.shop.categories.default = function(page) {
     this.$element = $(
         '<div class="shop-pages">' +
             '<div class="shop-pages-left">' +
-                '<div class="shop-pages-search">' +
+                '<div class="shop-pages-search input-pen">' +
                     '<input class="shop-pages-search-input" type="text" placeholder="Search...">' +
                 '</div>' +
                 

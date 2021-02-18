@@ -181,6 +181,21 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">Sprites/arrow-big-left.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,7,22,15</rect>
+                <key>scale9Paddings</key>
+                <rect>11,7,22,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/dropdown.png</key>
             <key type="filename">Sprites/dropup.png</key>
             <struct type="IndividualSpriteSettings">
@@ -234,6 +249,7 @@
             <filename>Sprites/dropup.png</filename>
             <filename>Sprites/pen.png</filename>
             <filename>Sprites/plus.png</filename>
+            <filename>Sprites/arrow-big-left.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

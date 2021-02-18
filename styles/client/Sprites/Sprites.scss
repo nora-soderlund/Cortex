@@ -1,6 +1,7 @@
 $url: url('./../images/Sprites.png');
 
+@mixin sprite-arrow-big-left { background: $url; background-position: -0px -18px; width: 44px; height: 29px; }
 @mixin sprite-dropdown { background: $url; background-position: -0px -0px; width: 10px; height: 10px; }
 @mixin sprite-dropup { background: $url; background-position: -10px -0px; width: 10px; height: 10px; }
-@mixin sprite-pen { background: $url; background-position: -0px -10px; width: 17px; height: 18px; }
-@mixin sprite-plus { background: $url; background-position: -17px -10px; width: 15px; height: 15px; }
+@mixin sprite-pen { background: $url; background-position: -35px -0px; width: 17px; height: 18px; }
+@mixin sprite-plus { background: $url; background-position: -20px -0px; width: 15px; height: 15px; }
