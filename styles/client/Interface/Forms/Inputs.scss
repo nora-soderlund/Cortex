@@ -17,6 +17,12 @@ input, textarea {
     &:focus {
         outline: none;
     }
+
+    &.disabled {
+        pointer-events: none;
+
+        opacity: .5;
+    }
 }
 
 .textarea-pen, .input-pen {
@@ -42,4 +48,23 @@ input, textarea {
     margin: initial;
 
     top: 6px;
+}
+
+.input-lock {
+    position: relative;
+    
+    &:after {
+        content: '';
+
+        @include sprite-lock();
+
+        position: absolute;
+
+        right: 6px;
+
+        top: 2px;
+        bottom: 0px;
+
+        margin: auto 0;
+    }
 }

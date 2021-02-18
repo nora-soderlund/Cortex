@@ -17,12 +17,7 @@ Client.rooms.creation = new function() {
         
         entity.$grid = $('<div class="room-creation-grid"></div>').appendTo(entity.$content);
         
-        entity.$buttons = $(
-            '<div class="room-creation-buttons">' +
-                '<div class="dialog-button">Next step</div>' +
-                '<div class="dialog-button disabled">Previous step</div>' +
-            '</div>'
-        ).appendTo(entity.$content);
+        entity.$buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
     });
 
     entity.showProperties = function() {
@@ -64,6 +59,51 @@ Client.rooms.creation = new function() {
                 '<input type="text" value="Chill rooms thingy thing">' +
             '</div>'
         ).appendTo($information);
+
+        const $privacy = $('<div class="room-creation-privacy"></div>').appendTo(entity.$grid);
+
+        const $locks = $(
+            '<div class="room-creation-property">' +
+                '<p>' +
+                    '<b>Room Privacy</b>' +
+                    '<span>Select whether you want a public, private, or passworded room!</span>' + 
+                '</p>' +
+
+                '<div class="input-lock">' +
+                    '<input class="room-creation-password disabled" type="text" placeholder="Enter a room password...">' +
+                '</div>' + 
+                
+                '<div class="room-creation-privacy-selection">' +
+                    '<div class="room-creation-privacy-option active" value="0">' + 
+                        '<div class="room-creation-privacy-public"></div>' +
+                    '</div>' +
+                    
+                    '<div class="room-creation-privacy-option" value="1">' + 
+                        '<div class="room-creation-privacy-private"></div>' +
+                    '</div>' +
+
+                    '<div class="room-creation-privacy-option" value="2">' + 
+                        '<div class="room-creation-privacy-password"></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>'
+        ).appendTo($privacy);
+
+
+        const $password = $locks.find(".room-creation-password");
+
+        $locks.find(".room-creation-privacy-option").on("click", function() {
+            $locks.find(".room-creation-privacy-option.active").removeClass("active");
+
+            $(this).addClass("active");
+
+            if($(this).attr("value") != 2)
+                $password.addClass("disabled");
+            else
+                $password.removeClass("disabled");
+        });
+
+        const $continue = $('<div class="dialog-button">Continue »</div>').appendTo(entity.$buttons);
     };
 
     entity.events.show.push(function() {

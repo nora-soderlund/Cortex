@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:339348366b15d5e3a0112320906c19ae:58208cf6cc08c41545e3aee27bbfe481:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:2e00b1e9182357b10d859c24383c0714:c16630235f1c0c791dd02caecef1b18c:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,10 +19,11 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="52" height="47">
-    @mixin sprite-arrow-big-left { background: $url; background-position: -0px -18px; width: 44px; height: 29px; }
-    @mixin sprite-dropdown { background: $url; background-position: -0px -0px; width: 10px; height: 10px; }
-    @mixin sprite-dropup { background: $url; background-position: -10px -0px; width: 10px; height: 10px; }
-    @mixin sprite-pen { background: $url; background-position: -35px -0px; width: 17px; height: 18px; }
-    @mixin sprite-plus { background: $url; background-position: -20px -0px; width: 15px; height: 15px; }
+<TextureAtlas imagePath="Sprites.png" width="109" height="73">
+    <sprite n="arrow-big-left" x="65" y="0" w="44" h="29"/>
+    <sprite n="dropdown" x="0" y="0" w="10" h="10"/>
+    <sprite n="dropup" x="10" y="0" w="10" h="10"/>
+    <sprite n="lock" x="35" y="0" w="13" h="16"/>
+    <sprite n="pen" x="48" y="0" w="17" h="18"/>
+    <sprite n="plus" x="20" y="0" w="15" h="15"/>
 </TextureAtlas>

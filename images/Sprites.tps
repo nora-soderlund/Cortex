@@ -212,6 +212,52 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/lock-big-password.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>9,11,18,22</rect>
+                <key>scale9Paddings</key>
+                <rect>9,11,18,22</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/lock-big-private.png</key>
+            <key type="filename">Sprites/lock-big-public.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9Paddings</key>
+                <rect>7,11,15,21</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/lock.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,4,7,8</rect>
+                <key>scale9Paddings</key>
+                <rect>3,4,7,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/pen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -250,6 +296,10 @@
             <filename>Sprites/pen.png</filename>
             <filename>Sprites/plus.png</filename>
             <filename>Sprites/arrow-big-left.png</filename>
+            <filename>Sprites/lock.png</filename>
+            <filename>Sprites/lock-big-password.png</filename>
+            <filename>Sprites/lock-big-private.png</filename>
+            <filename>Sprites/lock-big-public.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -23,9 +23,55 @@
 
         textarea {
             height: 64px;
+
+            min-height: 64px;
+            max-height: 64px;
+
+            max-width: 100%;
+            min-width: 100%;
+        }
+
+        .room-creation-privacy-selection {
+            display: grid;
+
+            grid-template-columns: 33% 33% 33%;
+
+            margin-top: 12px;
+
+            .room-creation-privacy-option {
+                text-align: center;
+
+                opacity: .25;
+
+                cursor: pointer;
+
+                &:hover, &.active {
+                    opacity: 1;
+                }
+            }
         }
 
         margin-bottom: 12px;
+    }
+
+    .room-creation-privacy {
+        .room-creation-privacy-public {
+            display: inline-block;
+            
+            @include sprite-lock-big-public();
+        }
+
+        .room-creation-privacy-private {
+            display: inline-block;
+            
+            @include sprite-lock-big-private();
+        }
+
+        .room-creation-privacy-password {
+            display: inline-block;
+            
+            @include sprite-lock-big-password();
+        }
     }
 
     .room-creation-buttons {
