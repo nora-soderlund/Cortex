@@ -21,6 +21,8 @@ Client.rooms.creation = new function() {
     });
 
     entity.showProperties = function() {
+        entity.settings.properties = {};
+
         const $information = $('<div class="room-creation-information"></div>').appendTo(entity.$grid);
 
         $(
@@ -31,10 +33,12 @@ Client.rooms.creation = new function() {
                 '</p>' +
                 
                 '<div class="input-pen">' +
-                    '<input type="text" placeholder="Enter a room name...">' +
+                    '<input type="text" class="room-creation-name" placeholder="Enter a room name...">' +
                 '</div>' + 
             '</div>'
-        ).appendTo($information);
+        ).appendTo($information).find(".room-creation-name").on("change", function() {
+            entity.settings.properties.name = $(this).val();
+        });
 
         $(
             '<div class="room-creation-property">' +
@@ -44,10 +48,12 @@ Client.rooms.creation = new function() {
                 '</p>' +
                 
                 '<div class="textarea-pen">' +
-                    '<textarea type="text" placeholder="Enter a room name..."></textarea>' +
+                    '<textarea type="text" class="room-creation-description" placeholder="Enter a room name..."></textarea>' +
                 '</div>' + 
             '</div>'
-        ).appendTo($information);
+        ).appendTo($information).find(".room-creation-description").on("change", function() {
+            entity.settings.properties.description = $(this).val();
+        });;
 
         $(
             '<div class="room-creation-property">' +
@@ -108,6 +114,8 @@ Client.rooms.creation = new function() {
 
     entity.events.show.push(function() {
         Client.rooms.navigator.hide();
+
+        entity.settings = {};
         
         entity.showProperties();
     });
