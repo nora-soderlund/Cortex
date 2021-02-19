@@ -13,6 +13,8 @@ Client.rooms.creation = new function() {
     });
 
     entity.events.create.push(function() {
+        entity.$element.css("overflow", "initial");
+
         entity.$content.addClass("room-creation");
         
         entity.$grid = $('<div class="room-creation-grid"></div>').appendTo(entity.$content);
@@ -53,18 +55,26 @@ Client.rooms.creation = new function() {
             '</div>'
         ).appendTo($information).find(".room-creation-description").on("change", function() {
             entity.settings.properties.description = $(this).val();
-        });;
+        });
 
-        $(
+        const $category = $(
             '<div class="room-creation-property">' +
                 '<p>' +
                     '<b>Room Category</b>' +
                     '<span>What category does your room fall into?</span>' + 
                 '</p>' +
-                
-                '<input type="text" value="Chill rooms thingy thing">' +
             '</div>'
         ).appendTo($information);
+
+        const categories = new Client.dialogs.selection("Select a room category...", [
+            { text: "Chill", value: 0 },
+            { text: "Chill", value: 0 },
+            { text: "Chill", value: 0 },
+            { text: "Chill", value: 0 },
+            { text: "Chill", value: 0 }
+        ]);
+
+        $category.append(categories.$element);
 
         const $privacy = $('<div class="room-creation-privacy"></div>').appendTo(entity.$grid);
 

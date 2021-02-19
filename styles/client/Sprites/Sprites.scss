@@ -1,11 +1,13 @@
 $url: url('./../images/Sprites.png');
 
-@mixin sprite-arrow-big-left { background: $url -65px -0px; width: 44px; height: 29px; }
-@mixin sprite-dropdown { background: $url -0px -0px; width: 10px; height: 10px; }
-@mixin sprite-dropup { background: $url -10px -0px; width: 10px; height: 10px; }
-@mixin sprite-lock { background: $url -35px -0px; width: 13px; height: 16px; }
-@mixin sprite-pen { background: $url -48px -0px; width: 17px; height: 18px; }
-@mixin sprite-plus { background: $url -20px -0px; width: 15px; height: 15px; }
-@mixin sprite-lock-big-password { background: $url -58px -29px; width: 36px; height: 44px; }
-@mixin sprite-lock-big-private { background: $url -0px -29px; width: 29px; height: 43px; }
-@mixin sprite-lock-big-public { background: $url -29px -29px; width: 29px; height: 43px; }
+@mixin sprite-arrow-big-left { background: $url -17px -16px; width: 44px; height: 29px; }
+@mixin sprite-dropdown { background: $url -16px -0px; width: 10px; height: 10px; }
+@mixin sprite-dropup { background: $url -26px -0px; width: 10px; height: 10px; }
+@mixin sprite-lock-big-password { background: $url -0px -88px; width: 36px; height: 44px; }
+@mixin sprite-lock-big-private { background: $url -0px -45px; width: 29px; height: 43px; }
+@mixin sprite-lock-big-public { background: $url -29px -45px; width: 29px; height: 43px; }
+@mixin sprite-lock { background: $url -51px -0px; width: 13px; height: 16px; }
+@mixin sprite-pen { background: $url -0px -16px; width: 17px; height: 18px; }
+@mixin sprite-plus { background: $url -36px -0px; width: 15px; height: 15px; }
+@mixin sprite-pointer-down { background: $url -0px -0px; width: 8px; height: 8px; }
+@mixin sprite-pointer-right { background: $url -8px -0px; width: 8px; height: 8px; }
