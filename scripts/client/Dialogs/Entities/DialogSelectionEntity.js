@@ -22,7 +22,7 @@ Client.dialogs.selection = function(placeholder, options = []) {
             $(this).parent().find(".dialog-selection-option.active").removeClass("active");
 
             $(this).addClass("active");
-            
+
             $placeholder.text($(this).text()).attr("value", $(this).attr("value"));
 
             $options.hide();
