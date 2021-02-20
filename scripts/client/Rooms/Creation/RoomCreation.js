@@ -145,7 +145,8 @@ Client.rooms.creation = new function() {
             }).appendTo($element);
 
             for(let index in models) {
-                const $canvas = new Client.rooms.creation.map(models[index].map.split('|')).appendTo($models);
+                
+                const $canvas = new Client.rooms.creation.map(models[index].map.split('|'), models[index].door).appendTo($models);
             } 
         });
 
