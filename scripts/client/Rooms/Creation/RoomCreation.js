@@ -22,7 +22,7 @@ Client.rooms.creation = new function() {
         entity.$buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
     });
 
-    entity.showProperties = function() {
+    entity.showProperties = async function() {
         entity.settings.properties = {};
 
         const $information = $('<div class="room-creation-information"></div>').appendTo(entity.$grid);
@@ -66,15 +66,16 @@ Client.rooms.creation = new function() {
             '</div>'
         ).appendTo($information);
 
-        const categories = new Client.dialogs.selection("Select a room category...", [
-            { text: "Chill", value: 0 },
-            { text: "Chill", value: 0 },
-            { text: "Chill", value: 0 },
-            { text: "Chill", value: 0 },
-            { text: "Chill", value: 0 }
-        ]);
+        const list = [];
 
-        $category.append(categories.$element);
+        const categories = await Client.rooms.categories.get();
+
+        for(let index in categories)
+            list.push({ text: categories[index].name, value: categories[index].id });
+
+        const selection = new Client.dialogs.selection("Select a room category...", list);
+
+        $category.append(selection.$element);
 
         const $privacy = $('<div class="room-creation-privacy"></div>').appendTo(entity.$grid);
 
@@ -120,6 +121,19 @@ Client.rooms.creation = new function() {
         });
 
         const $continue = $('<div class="dialog-button">Continue »</div>').appendTo(entity.$buttons);
+
+        $continue.click(function() {
+            Client.rooms.creation.showMap();
+        });
+    };
+
+    entity.showMap = function() {
+        entity.$grid.html("");
+        
+        entity.$buttons.html("");
+
+        entity.settings.map = {};
+        
     };
 
     entity.events.show.push(function() {
@@ -132,5 +146,3 @@ Client.rooms.creation = new function() {
 
     return entity;
 };
-
-Client.rooms.creation.show();
