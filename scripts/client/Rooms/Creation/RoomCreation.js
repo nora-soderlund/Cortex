@@ -136,7 +136,7 @@ Client.rooms.creation = new function() {
         
         const models = await Client.socket.messages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
         
-        const tabs = new Client.dialogs.tabs(243);
+        const tabs = new Client.dialogs.tabs(231);
 
         tabs.add("default", "Default Maps", function($element) {
             const $models = $('<div class="room-creation-models"></div>').appendTo($element);
@@ -164,8 +164,13 @@ Client.rooms.creation = new function() {
                     $models.find(".room-creation-model.active").removeClass("active");
 
                     $element.addClass("active");
+
+                    entity.settings.map = models[index];
                 });
-            } 
+
+                if(entity.settings.map.id == undefined || entity.settings.map.id == models[index].id)
+                    $element.click();
+            }
         });
 
         tabs.add("editor", "Map Editor");
