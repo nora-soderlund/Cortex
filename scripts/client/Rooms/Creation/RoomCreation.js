@@ -129,26 +129,38 @@ Client.rooms.creation = new function() {
         });
     };
 
-    entity.showMap = function() {
+    entity.showMap = async function() {
         entity.$content.html("");
 
         entity.settings.map = {};
         
+        const models = await Client.socket.messages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
+        
         const tabs = new Client.dialogs.tabs(243);
 
-        tabs.add("default", "Default Maps");
+        tabs.add("default", "Default Maps", function($element) {
+            const $models = $('<div></div>').css({
+                "overflow": "scroll",
+                "height": "243px"
+            }).appendTo($element);
+
+            for(let index in models) {
+                const $canvas = new Client.rooms.creation.map(models[index].map.split('|')).appendTo($models);
+            } 
+        });
+
         tabs.add("editor", "Map Editor");
 
         tabs.show("default");
 
         tabs.$element.appendTo(entity.$content);
-        
+
         const $buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
-        
+            
         $('<div class="dialog-button">« Back</div>').appendTo($buttons).on("click", function() {
             entity.showProperties();
         });
-        
+
         const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
     };
 
