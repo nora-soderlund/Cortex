@@ -20,7 +20,7 @@ Client.rooms.creation.map = function(map, door) {
     }
 
     context.canvas.width = (rows * 4) + (columns * 4) + 2;
-    context.canvas.height = (rows * 2) + (columns * 2) + (maxDepth * 4) + 4 + 2;
+    context.canvas.height = (rows * 2) + (columns * 2) + (maxDepth * 4) + 6 + 2;
 
     context.imageSmoothingEnabled = false;
 
@@ -36,7 +36,7 @@ Client.rooms.creation.map = function(map, door) {
 
             let left = 0, top = 0, hasPrevious = false;
 
-            context.setTransform(1, .5, -1, .5, (rows * 4) + 4, (maxDepth * 4) + 4 + 1);
+            context.setTransform(1, .5, -1, .5, (rows * 4) + 4, (maxDepth * 4) + 6 + 1);
             
             context.fillStyle = "#A57B51";
 
@@ -77,14 +77,14 @@ Client.rooms.creation.map = function(map, door) {
             }
 
             if(!hasPrevious) {
-                context.setTransform(1, -.5, 0, 1, (rows * 4) + 4, (maxDepth * 4) + 4 + 1);
+                context.setTransform(1, -.5, 0, 1, (rows * 4) + 4, (maxDepth * 4) + 6 + 1);
                 
                 context.fillStyle = "#D48612";
 
                 left = -(row * 4) + ((column - 1) * 4);
                 top = ((column - 1) * 4) - (depth * 4);
 
-                context.fillRect(left, top - 4, 4.5, (door.row == row && door.column == parseInt(column) - 1)?(1):(8.5));
+                context.fillRect(left, top - 5.5, 4.5, (door.row == row && door.column == parseInt(column) - 1)?(1):(9));
             }
 
             hasPrevious = false;
@@ -119,14 +119,14 @@ Client.rooms.creation.map = function(map, door) {
             }
 
             if(!hasPrevious) {
-                context.setTransform(1, .5, 0, 1, (rows * 4) + 4, (maxDepth * 4) + 4 + 1);   
+                context.setTransform(1, .5, 0, 1, (rows * 4) + 4, (maxDepth * 4) + 6 + 1);   
                 
                 context.fillStyle = "#F0C032";
 
                 left = (column * 4) - (row * 4);
                 top = (row * 4) - (depth * 4);
 
-                context.fillRect(left, top - 8, 4.5, (door.row == parseInt(row) - 1 && door.column == column)?(1):(8.5));
+                context.fillRect(left, top - 9.5, 4.5, (door.row == parseInt(row) - 1 && door.column == column)?(1):(9));
             }
         }
     }
@@ -136,7 +136,7 @@ Client.rooms.creation.map = function(map, door) {
     context.globalCompositeOperation = "destination-over";
 
     context.filter = "brightness(0%)";
-    context.globalAlpha = .5;
+    context.globalAlpha = .75;
     
     context.drawImage(context.canvas, 1, 0);
     context.drawImage(context.canvas, -1, 0);

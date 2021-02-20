@@ -159,6 +159,12 @@ Client.rooms.creation = new function() {
                 ).appendTo($models);
 
                 const $canvas = new Client.rooms.creation.map(map, models[index].door).prependTo($element);
+
+                $element.on("click", function() {
+                    $models.find(".room-creation-model.active").removeClass("active");
+
+                    $element.addClass("active");
+                });
             } 
         });
 
