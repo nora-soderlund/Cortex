@@ -20,7 +20,7 @@ Client.rooms.creation.map = function(map, door) {
     }
 
     context.canvas.width = (rows * 4) + (columns * 4) + 2;
-    context.canvas.height = (rows * 2) + (columns * 2) + (maxDepth * 4) + 4 + 1;
+    context.canvas.height = (rows * 2) + (columns * 2) + (maxDepth * 4) + 4 + 2;
 
     context.imageSmoothingEnabled = false;
 
