@@ -16,16 +16,18 @@ Client.rooms.creation = new function() {
         entity.$element.css("overflow", "initial");
 
         entity.$content.addClass("room-creation");
-        
-        entity.$grid = $('<div class="room-creation-grid"></div>').appendTo(entity.$content);
-        
-        entity.$buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
     });
 
     entity.showProperties = async function() {
         entity.settings.properties = {};
 
-        const $information = $('<div class="room-creation-information"></div>').appendTo(entity.$grid);
+        entity.$content.html("");
+        
+        const $grid = $('<div class="room-creation-grid"></div>').appendTo(entity.$content);
+        
+        const $buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
+
+        const $information = $('<div class="room-creation-information"></div>').appendTo($grid);
 
         $(
             '<div class="room-creation-property">' +
@@ -77,7 +79,7 @@ Client.rooms.creation = new function() {
 
         $category.append(selection.$element);
 
-        const $privacy = $('<div class="room-creation-privacy"></div>').appendTo(entity.$grid);
+        const $privacy = $('<div class="room-creation-privacy"></div>').appendTo($grid);
 
         const $locks = $(
             '<div class="room-creation-property">' +
@@ -120,7 +122,7 @@ Client.rooms.creation = new function() {
                 $password.removeClass("disabled");
         });
 
-        const $continue = $('<div class="dialog-button">Continue »</div>').appendTo(entity.$buttons);
+        const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
 
         $continue.click(function() {
             Client.rooms.creation.showMap();
@@ -128,12 +130,26 @@ Client.rooms.creation = new function() {
     };
 
     entity.showMap = function() {
-        entity.$grid.html("");
-        
-        entity.$buttons.html("");
+        entity.$content.html("");
 
         entity.settings.map = {};
         
+        const tabs = new Client.dialogs.tabs(243);
+
+        tabs.add("default", "Default Maps");
+        tabs.add("editor", "Map Editor");
+
+        tabs.show("default");
+
+        tabs.$element.appendTo(entity.$content);
+        
+        const $buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
+        
+        $('<div class="dialog-button">« Back</div>').appendTo($buttons).on("click", function() {
+            entity.showProperties();
+        });
+        
+        const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
     };
 
     entity.events.show.push(function() {
