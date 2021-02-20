@@ -1,0 +1,31 @@
+.dialog-item {
+    display: inline-block;
+
+    margin: 0 3px 3px 0;
+
+    position: relative;
+
+    background: #CBCBCB;
+
+    border: 1px solid #000;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    &.active {
+        &:after {
+            content: '';
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+
+            border: 2px solid #FFF;
+            border-radius: 5px;
+        }
+    }
+}

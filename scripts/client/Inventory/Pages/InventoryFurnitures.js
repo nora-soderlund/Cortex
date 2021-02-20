@@ -73,7 +73,7 @@ Client.inventory.pages.furnitures = async function($element) {
 
     for(let id in Client.inventory.furnitures) {
         Client.furnitures.get(id).then(function(furniture) {
-            const $furniture = $('<div class="inventory-furniture-icon"></div>').appendTo($content);
+            const $furniture = $('<div class="dialog-item inventory-furniture-icon"></div>').appendTo($content);
 
             const $canvas = $('<canvas class="inventory-furniture-icon-image"></canvas>').appendTo($furniture);
 

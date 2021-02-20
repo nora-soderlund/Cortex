@@ -139,14 +139,26 @@ Client.rooms.creation = new function() {
         const tabs = new Client.dialogs.tabs(243);
 
         tabs.add("default", "Default Maps", function($element) {
-            const $models = $('<div></div>').css({
-                "overflow": "scroll",
-                "height": "243px"
-            }).appendTo($element);
+            const $models = $('<div class="room-creation-models"></div>').appendTo($element);
 
             for(let index in models) {
-                
-                const $canvas = new Client.rooms.creation.map(models[index].map.split('|'), models[index].door).appendTo($models);
+                const map = models[index].map.split('|');
+
+                let tiles = 0;
+
+                for(let row in map)
+                for(let column in map[row]) {
+                    if(map[row][column] != 'X')
+                        tiles++;
+                }
+
+                const $element = $(
+                    '<div class="dialog-item room-creation-model">' +
+                        '<p class="room-creation-model-tiles">' + tiles + ' tiles</div>' +
+                    '</div>'
+                ).appendTo($models);
+
+                const $canvas = new Client.rooms.creation.map(map, models[index].door).prependTo($element);
             } 
         });
 

@@ -39,17 +39,6 @@
                 width: 40px;
                 height: 40px;
 
-                display: inline-block;
-
-                margin: 0 3px 3px 0;
-
-                position: relative;
-
-                background: #CBCBCB;
-
-                border: 1px solid #000;
-                border-radius: 6px;
-
                 .inventory-furniture-icon-image {
                     position: absolute;
 
@@ -57,25 +46,6 @@
                     top: 0; bottom: 0;
 
                     margin: auto;
-                }
-
-                cursor: pointer;
-
-                &.active {
-                    &:after {
-                        content: '';
-
-                        position: absolute;
-
-                        left: 0;
-                        top: 0;
-
-                        width: calc(100% - 4px);
-                        height: calc(100% - 4px);
-
-                        border: 2px solid #FFF;
-                        border-radius: 5px;
-                    }
                 }
             }
         }

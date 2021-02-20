@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:3683818e8ffad8c7cb1957c9a7ae09e8:f35a59dc03afd84e6a9820442b8c0279:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:208af533114709fd5f399bc7a9e14428:971a9b59e00d4870852ba903dee518ad:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,16 +19,17 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="64" height="132">
-@mixin sprite-arrow-big-left { background: $url -17px -16px; width: 44px; height: 29px; }
-@mixin sprite-dropdown { background: $url -16px -0px; width: 10px; height: 10px; }
-@mixin sprite-dropup { background: $url -26px -0px; width: 10px; height: 10px; }
-@mixin sprite-lock-big-password { background: $url -0px -88px; width: 36px; height: 44px; }
-@mixin sprite-lock-big-private { background: $url -0px -45px; width: 29px; height: 43px; }
-@mixin sprite-lock-big-public { background: $url -29px -45px; width: 29px; height: 43px; }
-@mixin sprite-lock { background: $url -51px -0px; width: 13px; height: 16px; }
-@mixin sprite-pen { background: $url -0px -16px; width: 17px; height: 18px; }
-@mixin sprite-plus { background: $url -36px -0px; width: 15px; height: 15px; }
-@mixin sprite-pointer-down { background: $url -0px -0px; width: 8px; height: 8px; }
-@mixin sprite-pointer-right { background: $url -8px -0px; width: 8px; height: 8px; }
+<TextureAtlas imagePath="Sprites.png" width="58" height="144">
+    <sprite n="arrow-big-left" x="0" y="28" w="44" h="29"/>
+    <sprite n="dropdown" x="16" y="0" w="10" h="10"/>
+    <sprite n="dropup" x="26" y="0" w="10" h="10"/>
+    <sprite n="lock-big-password" x="0" y="100" w="36" h="44"/>
+    <sprite n="lock-big-private" x="0" y="57" w="29" h="43"/>
+    <sprite n="lock-big-public" x="29" y="57" w="29" h="43"/>
+    <sprite n="lock" x="15" y="10" w="13" h="16"/>
+    <sprite n="pen" x="28" y="10" w="17" h="18"/>
+    <sprite n="plus" x="0" y="10" w="15" h="15"/>
+    <sprite n="pointer-down" x="0" y="0" w="8" h="8"/>
+    <sprite n="pointer-right" x="8" y="0" w="8" h="8"/>
+    <sprite n="tiles" x="36" y="0" w="18" h="10"/>
 </TextureAtlas>

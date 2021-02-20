@@ -85,4 +85,48 @@
             margin-left: 6px;
         }
     }
+
+    .room-creation-models {
+        height: 235px;
+
+        .room-creation-model {
+            width: 138px;
+            height: 100px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            canvas {
+                position: absolute;
+
+                left: -100%; right: -100%;
+                top: -100%; bottom: -100%;
+
+                margin: auto;
+            }
+
+            .room-creation-model-tiles {
+                position: absolute;
+
+                font-family: "Ubuntu Bold";
+
+                color: #111;
+
+                left: 24px;
+                bottom: 6px;
+
+                &:before {
+                    content: '';
+
+                    @include sprite-tiles();
+
+                    position: absolute;
+
+                    left: -20px;
+                    top: 3px;
+                }
+            }
+        }
+    }
 }
