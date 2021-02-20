@@ -154,7 +154,7 @@ Client.rooms.creation = new function() {
 
                 const $element = $(
                     '<div class="dialog-item room-creation-model">' +
-                        '<p class="room-creation-model-tiles">' + tiles + ' tiles</div>' +
+                        '<p class="room-creation-model-tiles">' + tiles + ' tiles (id ' + models[index].id + ')</div>' +
                     '</div>'
                 ).appendTo($models);
 
