@@ -201,4 +201,12 @@ Client.rooms.editor = function(settings, change) {
             down = false;
         });
     };
+
+    this.tools = new function() {
+        this.$add = $('<div class="room-editor-tile-add"></div>');
+        this.$remove = $('<div class="room-editor-tile-remove"></div>');
+        this.$up = $('<div class="room-editor-tile-up"></div>');
+        this.$down = $('<div class="room-editor-tile-down"></div>');
+        this.$door = $('<div class="room-editor-door"></div>');
+    };
 };

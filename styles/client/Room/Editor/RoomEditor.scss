@@ -35,3 +35,23 @@
         pointer-events: none;
     }
 }
+
+.room-editor-tile-add {
+    @include sprite-room-tile-add();
+}
+
+.room-editor-tile-remove {
+    @include sprite-room-tile-remove();
+}
+
+.room-editor-tile-up {
+    @include sprite-room-tile-up();
+}
+
+.room-editor-tile-down {
+    @include sprite-room-tile-down();
+}
+
+.room-editor-door {
+    @include sprite-room-door-plus();
+}

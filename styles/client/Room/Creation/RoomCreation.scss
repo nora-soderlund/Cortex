@@ -138,5 +138,15 @@
 
         height: 100%;
         width: 100%;
+
+        .room-creation-editor-tools {
+            text-align: center;
+
+            display: flex;
+
+            .dialog-item {
+                margin: 0 auto;
+            }
+        }
     }
 }

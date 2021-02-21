@@ -232,9 +232,10 @@ Client.loader.addStep(async function(finished) {
 
     await figure2.render();
 
-   const figure = new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91");
+    new Client.figures.entity("hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91").render();
 
-   await figure.render();
+    const figure = new Client.figures.entity("hd-180-1.ch-210-66.lg-270-82.sh-290-91");
+    await figure.render();
 
     const $canvas = $('<canvas width="256" height="256"></canvas>').prependTo(Client.development.$element);
 

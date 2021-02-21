@@ -319,6 +319,25 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/room-door-plus.png</key>
+            <key type="filename">Sprites/room-tile-add.png</key>
+            <key type="filename">Sprites/room-tile-down.png</key>
+            <key type="filename">Sprites/room-tile-remove.png</key>
+            <key type="filename">Sprites/room-tile-up.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>10,10,20,20</rect>
+                <key>scale9Paddings</key>
+                <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/tiles.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -331,6 +350,21 @@
                 <rect>5,3,9,5</rect>
                 <key>scale9Paddings</key>
                 <rect>5,3,9,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/zoom-plus.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,6,7,11</rect>
+                <key>scale9Paddings</key>
+                <rect>3,6,7,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -350,6 +384,12 @@
             <filename>Sprites/pointer-right.png</filename>
             <filename>Sprites/tiles.png</filename>
             <filename>Sprites/cursor-pointer.png</filename>
+            <filename>Sprites/room-door-plus.png</filename>
+            <filename>Sprites/room-tile-add.png</filename>
+            <filename>Sprites/room-tile-down.png</filename>
+            <filename>Sprites/room-tile-remove.png</filename>
+            <filename>Sprites/room-tile-up.png</filename>
+            <filename>Sprites/zoom-plus.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
