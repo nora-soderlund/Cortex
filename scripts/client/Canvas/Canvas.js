@@ -5,6 +5,12 @@ Client.canvas = new function() {
         const properties = {
             canvas,
 
+            offset: { left: 0, top: 0 },
+
+            draggable: true,
+            draggableEnabled: false,
+            draggableRate: 0,
+
             frame: 0,
             frameRate: 24,
             frameStamp: performance.now(),
@@ -15,6 +21,26 @@ Client.canvas = new function() {
 
         for(let key in settings)
             properties[key] = settings[key];
+
+        if(properties.draggable) {
+            let position = null;
+
+            $(properties.canvas).on("mousedown", function(event) {
+                properties.draggableEnabled = true;
+                
+                position = { left: event.offsetX, top: event.offsetY };
+            }).on("mouseup", function() {
+                properties.draggableEnabled = false;
+            }).on("mousemove", function(event) {
+                if(properties.draggableEnabled == false)
+                    return;
+        
+                properties.offset.left += (event.offsetX - position.left);
+                properties.offset.top += (event.offsetY - position.top);
+        
+                position = { left: event.offsetX, top: event.offsetY };
+            });
+        }
 
         properties.start = function() {
             properties.enabled = true;
@@ -39,36 +65,39 @@ Client.canvas = new function() {
             if(this.list[index].render == undefined)
                 continue;
 
-            const delta = timestamp - this.list[index].frameStamp;
+            if((this.list[index].draggableEnabled == false && this.list[index].frameRate != 0) || (this.list[index].draggableEnabled == true && this.list[index].draggableRate != 0)) {
+                const delta = timestamp - this.list[index].frameStamp;
 
-            const interval = (1000 / this.list[index].frameRate);
+                const interval = (1000 / this.list[index].frameRate);
 
-            if(delta > interval) {
+                if(delta < interval)
+                    continue;
+
                 this.list[index].frameStamp = timestamp - (delta % interval);
-
-                this.list[index].frame++;
-
-                if(this.list[index].frame == this.list[index].frameRate + 1)
-                    this.list[index].frame = 1;
-
-                for(let log in this.list[index].frameLogs)
-                    if(timestamp - this.list[index].frameLogs[log] >= 1000)
-                        this.list[index].frameLogs.splice(log, 1);
-        
-                this.list[index].frameLogs.push(timestamp);
-
-                this.list[index].render();
-                
-                const context = this.list[index].canvas.getContext("2d");
-
-                context.resetTransform();
-
-                context.font = "13px Ubuntu Regular";
-                context.fillStyle = "rgba(255, 255, 255, .5)";
-                context.textAlign = "right";
-
-                context.fillText(this.list[index].frameLogs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
             }
+
+            this.list[index].frame++;
+
+            if(this.list[index].frame == this.list[index].frameRate + 1)
+                this.list[index].frame = 1;
+
+            for(let log in this.list[index].frameLogs)
+                if(timestamp - this.list[index].frameLogs[log] >= 1000)
+                    this.list[index].frameLogs.splice(log, 1);
+    
+            this.list[index].frameLogs.push(timestamp);
+
+            this.list[index].render(this.list[index]);
+            
+            const context = this.list[index].canvas.getContext("2d");
+
+            context.resetTransform();
+
+            context.font = "13px Ubuntu Regular";
+            context.fillStyle = "rgba(255, 255, 255, .5)";
+            context.textAlign = "right";
+
+            context.fillText(this.list[index].frameLogs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
         }
 
         window.requestAnimationFrame(function() {

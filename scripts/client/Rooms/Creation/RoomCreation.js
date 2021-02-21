@@ -188,6 +188,21 @@ Client.rooms.creation = new function() {
             });
     
             editor.tiles.$element.appendTo($grid);
+
+            const $settings = $('<div class="room-creation-properties"></div>').appendTo($grid);
+
+            $(
+                '<div class="room-creation-property">' +
+                    '<p>' +
+                        '<b>Room Name</b>' +
+                        '<span>Give your room a fun and interesting title, this is what interests others!</span>' + 
+                    '</p>' +
+                    
+                    '<div class="input-pen">' +
+                        '<input type="text" class="room-creation-name" placeholder="Enter a room name...">' +
+                    '</div>' + 
+                '</div>'
+            ).appendTo($settings);
         });
 
         tabs.show("default");
