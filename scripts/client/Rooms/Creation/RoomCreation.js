@@ -264,7 +264,7 @@ Client.rooms.creation = new function() {
         const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
 
         $continue.on("click", function() {
-
+            Client.socket.messages.sendCall({ OnRoomCreate: entity.settings }, "OnRoomCreate");
         });
     };
 

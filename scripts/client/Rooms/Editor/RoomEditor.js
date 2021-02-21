@@ -37,7 +37,7 @@ Client.rooms.editor = function(settings, change) {
                     if(map[row][column] == 'X')
                         continue;
 
-                    context.fillStyle = "hsl(" + (360 - ((360 / 100) * (34 + (map[row][column] * 2)))) + ", 100%, 50%)";
+                    context.fillStyle = "hsl(" + (360 - ((360 / 100) * (34 + (map[row][column] * 2.5)))) + ", 100%, 50%)";
 
                     context.fillRect(parseInt(column) * 16, parseInt(row) * 16, 15.5, 15.5);
                 }
@@ -226,6 +226,21 @@ Client.rooms.editor = function(settings, change) {
                 settings.door.column = coordinate.column;
             }
 
+            rows = map.length, columns = 0;
+
+            for(let row in map)
+            for(let column in map[row]) {
+                if(column > columns)
+                    columns = column;
+            }
+
+            for(let row in map) {
+                for(let column = 0; column <= columns; column++) {
+                    if(map[row][column] == undefined)
+                        map[row][column] = 'X';
+                }
+            }
+
             let result = "";
 
             for(let row in map) {
@@ -233,7 +248,7 @@ Client.rooms.editor = function(settings, change) {
                     result += "|";
                     
                 for(let column in map[row]) {
-                    if(map[row][column] != 'X' && parseInt(map[row][column]) < 10)
+                    if(map[row][column] != 'X' && parseInt(map[row][column]) > 10)
                         result += Client.utils.charCode(parseInt(map[row][column]) - 10);
                     else
                         result += map[row][column];
@@ -268,7 +283,7 @@ Client.rooms.editor = function(settings, change) {
             const steps = 24, width = context.canvas.width / steps;
 
             for(let index = 0; index < steps; index++) {
-                context.fillStyle = "hsl(" + (360 - ((360 / 100) * (34 + (index * 2)))) + ", 100%, 50%)";
+                context.fillStyle = "hsl(" + (360 - ((360 / 100) * (34 + (index * 2.5)))) + ", 100%, 50%)";
 
                 const path = new Path2D();
 
