@@ -30,7 +30,7 @@ Client.rooms.editor = function(settings, change) {
            
             renderOffset = { left: canvas.offset.left, top: canvas.offset.top };
 
-            context.setTransform(1, .5, -1, .5, renderOffset.left + (rows * 16), renderOffset.top);
+            context.setTransform(1, .5, -1, .5, renderOffset.left, renderOffset.top);
             
             for(let row in map) {
                 for(let column in map[row]) {
@@ -44,15 +44,15 @@ Client.rooms.editor = function(settings, change) {
             }
         };
         
-        const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true });
+        const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
 
         $canvas.on("click", function(event) {
-            if((performance.now() - canvas.draggableTimestamp) > 250)
+            if((performance.now() - canvas.draggableTimestamp) > 200)
                 return;
 
             const innerPosition = {
-                left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top) - (rows * 16) / 2,
-                top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top) + (rows * 16) / 2
+                left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top),
+                top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top)
             };
 
             const coordinate = {
