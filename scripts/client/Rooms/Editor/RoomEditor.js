@@ -63,10 +63,7 @@ Client.rooms.editor = function(settings, change) {
             down = true;
         }).on("mouseup", function() {
             down = false;
-        }).on("mousemove", function(event) {
-            if(!down)
-                return;
-
+        }).on("mousemove click", function(event) {
             const innerPosition = {
                 left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top),
                 top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top)
@@ -77,15 +74,22 @@ Client.rooms.editor = function(settings, change) {
                 column: Math.floor(innerPosition.left / 16)
             };
 
-            if(performance.now() - timestamp < 10)
-                return;
-                
-            timestamp = performance.now();
+            if(event.type == "mousemove") {
+                if(!down)
+                    return;
 
-            if(lastCoordinate.row == coordinate.row && lastCoordinate.column == coordinate.column)
-                return;
+                if(performance.now() - timestamp < 10)
+                    return;
+                    
+                timestamp = performance.now();
 
-            lastCoordinate = coordinate;
+                if(lastCoordinate.row == coordinate.row && lastCoordinate.column == coordinate.column)
+                    return;
+
+                lastCoordinate = coordinate;
+            }
+            else if(!Client.keys.down["ShiftLeft"])
+                return;
                 
             if(editorTool == 0) {
                 if(map[coordinate.row] == undefined) {
