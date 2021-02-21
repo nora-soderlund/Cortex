@@ -63,9 +63,51 @@ Client.rooms.editor = function(settings, change) {
             if(map[coordinate.row] == undefined)
                 map[coordinate.row] = [];
 
-            for(let column = coordinate.column - 1; column != -1; column--) {
-                if(map[coordinate.row][column] == undefined)
-                    map[coordinate.row][column] = 'X';
+            if(coordinate.row >= 0) {
+                for(let row = coordinate.row - 1; row != -1; row--)
+                    if(map[row] == undefined)
+                        map[row] = [];
+            }
+            else {
+                const margin = coordinate.row * -1;
+
+                const newMap = [];
+
+                for(let row in map)
+                    newMap[parseInt(row) + margin] = map[row];
+                    
+                coordinate.row = 0;
+
+                for(let row = 0; row != margin; row++)
+                    if(newMap[row] == undefined)
+                        newMap[row] = [];
+
+                map = newMap;
+            }
+
+            if(coordinate.column >= 0) {
+                for(let column = coordinate.column - 1; column != -1; column--) {
+                    if(map[coordinate.row][column] == undefined)
+                        map[coordinate.row][column] = 'X';
+                }
+            }
+            else {
+                const margin = coordinate.column * -1;
+                
+                for(let row in map) {
+                    const newMap = [];
+
+                    for(let column in map[row])
+                        newMap[margin + parseInt(column)] = map[row][column];
+
+                    for(let column = 0; column != margin; column++)
+                        if(newMap[column] == undefined)
+                            newMap[column] = 'X';
+
+                    map[row] = newMap;
+                }
+
+                coordinate.column += margin;
             }
 
             map[coordinate.row][coordinate.column] = placeDepth;
