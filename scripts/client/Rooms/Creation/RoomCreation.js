@@ -180,29 +180,31 @@ Client.rooms.creation = new function() {
 
             const $grid = $('<div class="room-creation-map"></div>').appendTo($element);
 
-            const editor = new Client.rooms.editor(entity.settings.map);
-
-            editor.tiles.$element.css({
-                "height": "260px",
-                "width": "280px"
-            });
-    
-            editor.tiles.$element.appendTo($grid);
-
             const $settings = $('<div class="room-creation-properties"></div>').appendTo($grid);
 
-            $(
-                '<div class="room-creation-property">' +
-                    '<p>' +
-                        '<b>Room Name</b>' +
-                        '<span>Give your room a fun and interesting title, this is what interests others!</span>' + 
-                    '</p>' +
-                    
-                    '<div class="input-pen">' +
-                        '<input type="text" class="room-creation-name" placeholder="Enter a room name...">' +
-                    '</div>' + 
-                '</div>'
-            ).appendTo($settings);
+            const editor = new Client.rooms.editor(entity.settings.map, function(map) {
+                entity.settings.map.map = map;
+
+                const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
+
+                $settings.html($canvas);
+            });
+
+            editor.tiles.$element.css({
+                "width": "280px",
+                "height": "230px"
+            });
+    
+            editor.tiles.$element.prependTo($grid);
+
+            editor.depth.$element.css({
+                "width": "280px",
+                "height": "24px"
+            });
+
+            editor.depth.$element.appendTo(editor.tiles.$element);
+
+            editor.depth.render();
         });
 
         tabs.show("default");

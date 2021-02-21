@@ -133,6 +133,7 @@
     .room-creation-map {
         display: grid;
 
+        grid-gap: 6px;
         grid-template-columns: 280px auto;
 
         height: 100%;

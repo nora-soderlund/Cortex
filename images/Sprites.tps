@@ -26,15 +26,15 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>xml</string>
+        <string>sass-mixins</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>Sprites.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -78,7 +78,7 @@
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
-        <string></string>
+        <string>./../images/</string>
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -129,10 +129,10 @@
         </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
-            <key>data</key>
+            <key>sass</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>Sprites.xml</filename>
+                <filename>../styles/client/Sprites/Sprites.sass</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -163,7 +163,7 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>0</uint>
+            <uint>1</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
@@ -193,6 +193,21 @@
                 <rect>11,7,22,15</rect>
                 <key>scale9Paddings</key>
                 <rect>11,7,22,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/cursor-pointer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,9,12</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,9,12</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -334,6 +349,7 @@
             <filename>Sprites/pointer-down.png</filename>
             <filename>Sprites/pointer-right.png</filename>
             <filename>Sprites/tiles.png</filename>
+            <filename>Sprites/cursor-pointer.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

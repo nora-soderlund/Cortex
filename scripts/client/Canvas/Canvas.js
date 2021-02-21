@@ -10,6 +10,7 @@ Client.canvas = new function() {
             draggable: true,
             draggableEnabled: false,
             draggableRate: 0,
+            draggableTimestamp: 0,
 
             frame: 0,
             frameRate: 24,
@@ -27,6 +28,8 @@ Client.canvas = new function() {
 
             $(properties.canvas).on("mousedown", function(event) {
                 properties.draggableEnabled = true;
+
+                properties.draggableTimestamp = performance.now();
                 
                 position = { left: event.offsetX, top: event.offsetY };
             }).on("mouseup", function() {

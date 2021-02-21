@@ -1,7 +1,37 @@
 .room-editor-tiles {
     background: #111;
 
-    border-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
 
     width: 280px;
+}
+
+.room-editor-depth {
+    width: 280px;
+    height: 24px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    canvas {
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+
+        overflow: hidden;
+    }
+
+    .room-editor-depth-cursor {
+        position: absolute;
+
+        bottom: -14px;
+        left: 0;
+
+        margin-left: -7px;
+
+        @include sprite-cursor-pointer();
+
+        pointer-events: none;
+    }
 }
