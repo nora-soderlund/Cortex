@@ -2,15 +2,15 @@ Client.rooms.editor = function(settings) {
     this.tiles = new function() {
         this.$element = $('<div class="room-editor-tiles"></div>');
 
-        this.$canvas = $('<canvas></canvas>').appendTo(this.$element);
+        const $canvas = $('<canvas></canvas>').appendTo(this.$element);
 
         let columns = 0;
 
-        this.render = function() {
-            const context = this.$canvas[0].getContext("2d");
+        const render = function() {
+            const context = $canvas[0].getContext("2d");
 
-            context.canvas.width = this.$element.width();
-            context.canvas.height = this.$element.height();
+            context.canvas.width = $canvas.parent().width();
+            context.canvas.height = $canvas.parent().height();
 
             const map = settings.map.split('|');
 
@@ -44,7 +44,7 @@ Client.rooms.editor = function(settings) {
             }
         };
 
-        this.$canvas.on("click", function(event) {
+        $canvas.on("click", function(event) {
             const innerPosition = {
                 left: event.offsetX * 0.5 + event.offsetY - (columns * 16) / 2,
                 top: event.offsetX * -0.5 + event.offsetY + (columns * 16) / 2
@@ -54,8 +54,10 @@ Client.rooms.editor = function(settings) {
                 row: Math.floor(innerPosition.top / 16),
                 column: Math.floor(innerPosition.left / 16)
             };
+        });
 
-
+        this.canvas = Client.canvas.addCanvas($canvas[0], {
+            render
         });
     };
 };

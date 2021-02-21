@@ -186,8 +186,6 @@ Client.rooms.creation = new function() {
                 "height": "260px",
                 "width": "280px"
             });
-
-            editor.tiles.render();
     
             editor.tiles.$element.appendTo($grid);
         });
