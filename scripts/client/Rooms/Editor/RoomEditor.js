@@ -59,9 +59,35 @@ Client.rooms.editor = function(settings, change) {
                 row: Math.floor(innerPosition.top / 16),
                 column: Math.floor(innerPosition.left / 16)
             };
+                
 
-            if(map[coordinate.row] == undefined)
+            if(map[coordinate.row] == undefined) {
                 map[coordinate.row] = [];
+
+                if(coordinate.row >= 0) {
+                    canvas.offset.top -= 8;
+                    canvas.offset.left += 16;
+                }
+            }
+            else if(map[coordinate.row][coordinate.column] == undefined) {
+                let hasColumn = false;
+
+                for(let row in map)
+                for(let column in map[row]) {
+                    if(parseInt(column) == coordinate.column) {
+                        hasColumn = true;
+
+                        break;
+                    }
+                }
+
+                if(!hasColumn) {
+                    if(coordinate.column >= 0) {
+                        canvas.offset.top -= 8;
+                        canvas.offset.left -= 16;
+                    }
+                }
+            }
 
             if(coordinate.row >= 0) {
                 for(let row = coordinate.row - 1; row != -1; row--)
