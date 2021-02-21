@@ -234,16 +234,18 @@ Client.rooms.creation = new function() {
 
             editor.depth.render();
 
-            const $add = $('<div class="dialog-item"></div>').appendTo($tools).append(editor.tools.$add);
-            const $remove = $('<div class="dialog-item"></div>').appendTo($tools).append(editor.tools.$remove);
-            const $up = $('<div class="dialog-item"></div>').appendTo($tools).append(editor.tools.$up);
-            const $down = $('<div class="dialog-item"></div>').appendTo($tools).append(editor.tools.$down);
-            const $door = $('<div class="dialog-item"></div>').appendTo($tools).append(editor.tools.$door);
+            const $add = $('<div class="dialog-item" value="0"></div>').appendTo($tools).append(editor.tools.$add);
+            const $remove = $('<div class="dialog-item" value="1"></div>').appendTo($tools).append(editor.tools.$remove);
+            const $up = $('<div class="dialog-item" value="2"></div>').appendTo($tools).append(editor.tools.$up);
+            const $down = $('<div class="dialog-item" value="3"></div>').appendTo($tools).append(editor.tools.$down);
+            const $door = $('<div class="dialog-item" value="4"></div>').appendTo($tools).append(editor.tools.$door);
 
             $tools.on("click", ".dialog-item", function() {
                 $tools.find(".dialog-item.active").removeClass("active");
 
                 $(this).addClass("active");
+
+                editor.tools.setTool($(this).attr("value"));
             });
 
             $add.click();

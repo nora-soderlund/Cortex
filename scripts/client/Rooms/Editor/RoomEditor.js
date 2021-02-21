@@ -1,5 +1,5 @@
 Client.rooms.editor = function(settings, change) {
-    let placeDepth = 0;
+    let editorDepth = 0, editorTool = 0;
 
     this.tiles = new function() {
         this.$element = $('<div class="room-editor-tiles"></div>');
@@ -60,83 +60,123 @@ Client.rooms.editor = function(settings, change) {
                 column: Math.floor(innerPosition.left / 16)
             };
                 
+            if(editorTool == 0) {
+                if(map[coordinate.row] == undefined) {
+                    map[coordinate.row] = [];
 
-            if(map[coordinate.row] == undefined) {
-                map[coordinate.row] = [];
+                    if(coordinate.row >= 0) {
+                        canvas.offset.top -= 8;
+                        canvas.offset.left += 16;
+                    }
+                }
+                else if(map[coordinate.row][coordinate.column] == undefined) {
+                    let hasColumn = false;
+
+                    for(let row in map)
+                    for(let column in map[row]) {
+                        if(parseInt(column) == coordinate.column) {
+                            hasColumn = true;
+
+                            break;
+                        }
+                    }
+
+                    if(!hasColumn) {
+                        if(coordinate.column >= 0) {
+                            canvas.offset.top -= 8;
+                            canvas.offset.left -= 16;
+                        }
+                    }
+                }
 
                 if(coordinate.row >= 0) {
-                    canvas.offset.top -= 8;
-                    canvas.offset.left += 16;
+                    for(let row = coordinate.row - 1; row != -1; row--)
+                        if(map[row] == undefined)
+                            map[row] = [];
                 }
-            }
-            else if(map[coordinate.row][coordinate.column] == undefined) {
-                let hasColumn = false;
+                else {
+                    const margin = coordinate.row * -1;
 
-                for(let row in map)
-                for(let column in map[row]) {
-                    if(parseInt(column) == coordinate.column) {
-                        hasColumn = true;
-
-                        break;
-                    }
-                }
-
-                if(!hasColumn) {
-                    if(coordinate.column >= 0) {
-                        canvas.offset.top -= 8;
-                        canvas.offset.left -= 16;
-                    }
-                }
-            }
-
-            if(coordinate.row >= 0) {
-                for(let row = coordinate.row - 1; row != -1; row--)
-                    if(map[row] == undefined)
-                        map[row] = [];
-            }
-            else {
-                const margin = coordinate.row * -1;
-
-                const newMap = [];
-
-                for(let row in map)
-                    newMap[parseInt(row) + margin] = map[row];
-                    
-                coordinate.row = 0;
-
-                for(let row = 0; row != margin; row++)
-                    if(newMap[row] == undefined)
-                        newMap[row] = [];
-
-                map = newMap;
-            }
-
-            if(coordinate.column >= 0) {
-                for(let column = coordinate.column - 1; column != -1; column--) {
-                    if(map[coordinate.row][column] == undefined)
-                        map[coordinate.row][column] = 'X';
-                }
-            }
-            else {
-                const margin = coordinate.column * -1;
-                
-                for(let row in map) {
                     const newMap = [];
 
-                    for(let column in map[row])
-                        newMap[margin + parseInt(column)] = map[row][column];
+                    for(let row in map)
+                        newMap[parseInt(row) + margin] = map[row];
+                        
+                    coordinate.row = 0;
 
-                    for(let column = 0; column != margin; column++)
-                        if(newMap[column] == undefined)
-                            newMap[column] = 'X';
+                    for(let row = 0; row != margin; row++)
+                        if(newMap[row] == undefined)
+                            newMap[row] = [];
 
-                    map[row] = newMap;
+                    map = newMap;
                 }
 
-                coordinate.column += margin;
-            }
+                if(coordinate.column >= 0) {
+                    for(let column = coordinate.column - 1; column != -1; column--) {
+                        if(map[coordinate.row][column] == undefined)
+                            map[coordinate.row][column] = 'X';
+                    }
+                }
+                else {
+                    const margin = coordinate.column * -1;
+                    
+                    for(let row in map) {
+                        const newMap = [];
 
-            map[coordinate.row][coordinate.column] = placeDepth;
+                        for(let column in map[row])
+                            newMap[margin + parseInt(column)] = map[row][column];
+
+                        for(let column = 0; column != margin; column++)
+                            if(newMap[column] == undefined)
+                                newMap[column] = 'X';
+
+                        map[row] = newMap;
+                    }
+
+                    coordinate.column += margin;
+                }
+
+                map[coordinate.row][coordinate.column] = editorDepth;
+            }
+            else if(editorTool == 1) {
+                if(map[coordinate.row] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == undefined)
+                    return;
+
+                map[coordinate.row][coordinate.column] = 'X';
+            }
+            else if(editorTool == 2) {
+                if(map[coordinate.row] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == 24)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == 'X')
+                    return;
+                
+                map[coordinate.row][coordinate.column]++;
+            }
+            else if(editorTool == 3) {
+                if(map[coordinate.row] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == 0)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == 'X')
+                    return;
+                
+                map[coordinate.row][coordinate.column]--;
+            }
 
             let result = "";
 
@@ -168,7 +208,7 @@ Client.rooms.editor = function(settings, change) {
 
             $cursor.css("left", (width / 2) + (width * depth));
 
-            placeDepth = depth;
+            editorDepth = depth;
         };
 
         this.render = function() {
@@ -191,7 +231,7 @@ Client.rooms.editor = function(settings, change) {
                 context.fill(path);
             }
 
-            setCursor(placeDepth);
+            setCursor(editorDepth);
         }
 
         let paths = {}, down = false;
@@ -234,5 +274,9 @@ Client.rooms.editor = function(settings, change) {
         this.$up = $('<div class="room-editor-tile-up"></div>');
         this.$down = $('<div class="room-editor-tile-down"></div>');
         this.$door = $('<div class="room-editor-door"></div>');
+
+        this.setTool = function(tool) {
+            editorTool = tool;
+        };
     };
 };
