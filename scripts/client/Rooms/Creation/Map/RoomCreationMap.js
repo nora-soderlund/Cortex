@@ -1,18 +1,23 @@
-Client.rooms.creation.map = function(map, door) {
+Client.rooms.creation.map = function(input, door) {
     const $canvas = $('<canvas></canvas>');
     const context = $canvas[0].getContext("2d");
 
-    let rows = map.length, columns = 0, maxDepth = 0;
+    let map = [], rows = input.length, columns = 0, maxDepth = 0;
 
-    for(let row in map) {
-        if(map[row].length > columns)
-            columns = map[row].length;
+    for(let row in input) {
+        if(input[row].length > columns)
+            columns = input[row].length;
 
-        for(let column in map[row]) {
-            if(map[row][column] == 'X')
+        map[row] = [];
+
+        for(let column in input[row]) {
+            if(input[row][column] == 'X') {
+                map[row][column] = 'X';
+
                 continue;
+            }
 
-            map[row][column] = (!Client.utils.isLetter(map[row][column]))?(parseInt(map[row][column])):(Client.utils.fromCharCode(map[row][column]));
+            map[row][column] = (!Client.utils.isLetter(input[row][column]))?(parseInt(input[row][column])):(Client.utils.fromCharCode(input[row][column]));
 
             if(map[row][column] > maxDepth)
                 maxDepth = map[row][column];
