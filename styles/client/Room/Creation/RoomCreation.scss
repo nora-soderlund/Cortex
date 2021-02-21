@@ -113,7 +113,7 @@
 
                 color: #111;
 
-                left: 24px;
+                left: 26px;
                 bottom: 6px;
 
                 &:before {
@@ -128,5 +128,14 @@
                 }
             }
         }
+    }
+
+    .room-creation-map {
+        display: grid;
+
+        grid-template-columns: 280px auto;
+
+        height: 100%;
+        width: 100%;
     }
 }

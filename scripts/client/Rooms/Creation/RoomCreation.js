@@ -139,6 +139,8 @@ Client.rooms.creation = new function() {
         const tabs = new Client.dialogs.tabs(231);
 
         tabs.add("default", "Default Maps", function($element) {
+            $element.parent().css("overflow", "auto");
+
             const $models = $('<div class="room-creation-models"></div>').appendTo($element);
 
             for(let index in models) {
@@ -173,7 +175,22 @@ Client.rooms.creation = new function() {
             }
         });
 
-        tabs.add("editor", "Map Editor");
+        tabs.add("editor", "Map Editor", function($element) {
+            $element.parent().css("overflow", "visible");
+
+            const $grid = $('<div class="room-creation-map"></div>').appendTo($element);
+
+            const editor = new Client.rooms.editor(entity.settings.map);
+
+            editor.tiles.$element.css({
+                "height": "260px",
+                "width": "280px"
+            });
+
+            editor.tiles.render();
+    
+            editor.tiles.$element.appendTo($grid);
+        });
 
         tabs.show("default");
 
