@@ -47,7 +47,7 @@ Client.rooms.editor = function(settings, change) {
         const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true });
 
         $canvas.on("click", function(event) {
-            if(canvas.draggableEnabled == true && (performance.now() - canvas.draggableTimestamp) > 250)
+            if((performance.now() - canvas.draggableTimestamp) > 250)
                 return;
 
             const innerPosition = {
