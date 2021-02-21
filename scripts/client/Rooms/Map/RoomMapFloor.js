@@ -5,8 +5,13 @@ Client.rooms.map.floor = function() {
         map = map.split('|');
 
         this.rows = map.length;
-        this.columns = map[0].length;
+        this.columns = 0;
         this.depth = 0;
+
+        for(let row in map) {
+            if(map[row].length > this.columns)
+                this.columns = map[row].length;
+        }
 
         this.map = {};
 

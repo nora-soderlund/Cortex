@@ -262,8 +262,6 @@ Client.loader.load(function() {
     Client.loader.setText("Brewing coffee...");
 
     Client.socket.messages.send({ OnUserReady: null });
-    
-    Client.rooms.creation.show();
 
     Client.loader.hide();
 });
