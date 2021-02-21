@@ -27,6 +27,9 @@ Client.canvas = new function() {
             let position = null;
 
             $(properties.canvas).on("mousedown", function(event) {
+                if(Client.keys.down["ShiftLeft"])
+                    return;
+
                 properties.draggableEnabled = true;
 
                 properties.draggableTimestamp = performance.now();

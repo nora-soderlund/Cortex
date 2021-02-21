@@ -51,8 +51,20 @@ Client.rooms.editor = function(settings, change) {
         
         const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
 
-        $canvas.on("click", function(event) {
-            if((performance.now() - canvas.draggableTimestamp) > 200)
+        let down = false, lastCoordinate = { row: null, column: null }, timestamp = performance.now();
+
+        $canvas.on("mousedown", function() {
+            if(canvas.draggableEnabled && (performance.now() - canvas.draggableTimestamp) > 200)
+                return;
+
+            if(!Client.keys.down["ShiftLeft"])
+                return;
+                
+            down = true;
+        }).on("mouseup", function() {
+            down = false;
+        }).on("mousemove", function(event) {
+            if(!down)
                 return;
 
             const innerPosition = {
@@ -64,12 +76,22 @@ Client.rooms.editor = function(settings, change) {
                 row: Math.floor(innerPosition.top / 16),
                 column: Math.floor(innerPosition.left / 16)
             };
+
+            if(performance.now() - timestamp < 10)
+                return;
+                
+            timestamp = performance.now();
+
+            if(lastCoordinate.row == coordinate.row && lastCoordinate.column == coordinate.column)
+                return;
+
+            lastCoordinate = coordinate;
                 
             if(editorTool == 0) {
                 if(map[coordinate.row] == undefined) {
                     map[coordinate.row] = [];
 
-                    if(coordinate.row >= 0) {
+                    if(coordinate.row < 0) {
                         canvas.offset.top -= 8;
                         canvas.offset.left += 16;
                     }
@@ -87,7 +109,7 @@ Client.rooms.editor = function(settings, change) {
                     }
 
                     if(!hasColumn) {
-                        if(coordinate.column >= 0) {
+                        if(coordinate.column < 0) {
                             canvas.offset.top -= 8;
                             canvas.offset.left -= 16;
                         }
@@ -103,6 +125,8 @@ Client.rooms.editor = function(settings, change) {
                     const margin = coordinate.row * -1;
 
                     const newMap = [];
+
+                    settings.door.row += margin;
 
                     for(let row in map)
                         newMap[parseInt(row) + margin] = map[row];
@@ -124,6 +148,8 @@ Client.rooms.editor = function(settings, change) {
                 }
                 else {
                     const margin = coordinate.column * -1;
+
+                    settings.door.column += margin;
                     
                     for(let row in map) {
                         const newMap = [];
