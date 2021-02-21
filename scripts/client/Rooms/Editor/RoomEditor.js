@@ -42,6 +42,11 @@ Client.rooms.editor = function(settings, change) {
                     context.fillRect(parseInt(column) * 16, parseInt(row) * 16, 15.5, 15.5);
                 }
             }
+
+            context.strokeStyle = "white";
+            context.lineWidth++;
+
+            context.strokeRect(settings.door.column * 16, settings.door.row * 16, 15.5, 15.5);
         };
         
         const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
@@ -176,6 +181,19 @@ Client.rooms.editor = function(settings, change) {
                     return;
                 
                 map[coordinate.row][coordinate.column]--;
+            }
+            else if(editorTool == 4) {
+                if(map[coordinate.row] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == undefined)
+                    return;
+
+                if(map[coordinate.row][coordinate.column] == 'X')
+                    return;
+                
+                settings.door.row = coordinate.row;
+                settings.door.column = coordinate.column;
             }
 
             let result = "";
