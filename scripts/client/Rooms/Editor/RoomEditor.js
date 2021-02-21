@@ -31,7 +31,7 @@ Client.rooms.editor = function(settings, change) {
             renderOffset = { left: canvas.offset.left, top: canvas.offset.top };
 
             context.setTransform(1, .5, -1, .5, renderOffset.left, renderOffset.top);
-            
+
             for(let row in map) {
                 for(let column in map[row]) {
                     if(map[row][column] == 'X')
@@ -233,10 +233,10 @@ Client.rooms.editor = function(settings, change) {
                     result += "|";
                     
                 for(let column in map[row]) {
-                    if(map[row][column] != 'X' && map[row][column] > 9)
-                        map[row][column] = Client.utils.charCode(map[row][column] - 10);
-                    
-                    result += map[row][column];
+                    if(map[row][column] != 'X' && parseInt(map[row][column]) < 10)
+                        result += Client.utils.charCode(parseInt(map[row][column]) - 10);
+                    else
+                        result += map[row][column];
                 }
             }
 

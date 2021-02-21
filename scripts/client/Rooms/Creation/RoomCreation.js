@@ -262,6 +262,10 @@ Client.rooms.creation = new function() {
         });
 
         const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
+
+        $continue.on("click", function() {
+
+        });
     };
 
     entity.events.show.push(function() {
