@@ -1,6 +1,7 @@
 Client.rooms.interface.cursor = new function() {
     this.down = false;
     this.downTimestamp = 0;
+    this.downFrame = 0;
 
     this.position = null;
 
@@ -17,8 +18,14 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.cursor.downTimestamp = performance.now();
         
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
+
+        Client.rooms.interface.cursor.downFrame = Client.rooms.interface.frameLimit;
+
+        Client.rooms.interface.frameLimit = 0;
     }).on("mouseup", function() {
         Client.rooms.interface.cursor.down = false;
+
+        Client.rooms.interface.frameLimit = Client.rooms.interface.cursor.downFrame;
     }).on("mousemove", function(event) {
         if(!Client.rooms.interface.cursor.down) {
             Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
