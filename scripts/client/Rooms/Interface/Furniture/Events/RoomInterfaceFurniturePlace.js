@@ -66,7 +66,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         Client.rooms.interface.furniture.place.position = position;
 
-        Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, position.depth, 0);
+        Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, Client.rooms.interface.furniture.place.map[position.row][position.column], 0);
 
         Client.rooms.interface.furniture.place.entity.enable();
     };

@@ -41,7 +41,7 @@ Client.rooms.creation = new function() {
                 '</div>' + 
             '</div>'
         ).appendTo($information).find(".room-creation-name").on("change", function() {
-            entity.settings.properties.name = $(this).val();
+            entity.settings.properties.title = $(this).val();
         });
 
         $(
