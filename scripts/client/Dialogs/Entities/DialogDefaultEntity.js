@@ -115,6 +115,16 @@ Client.dialogs.default = function(settings = {}) {
         this.$element.hide();
     };
 
+    this.destroy = function() {
+        this.settings.active = false;
+
+        this.created = false;
+
+        this.$content.html("");
+
+        this.$element.hide();
+    };
+
     this.pause = function() {
         this.$overlay.show();
 
@@ -130,6 +140,12 @@ Client.dialogs.default = function(settings = {}) {
     this.timestamp = performance.now();
 
     this.set(settings);
+
+    const entity = this;
+
+    this.$element.find(".dialog-default-header-close").on("click", function() {
+        entity.destroy();
+    });
 
     Client.dialogs.add(this);
 };
