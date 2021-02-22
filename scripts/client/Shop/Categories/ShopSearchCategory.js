@@ -1,9 +1,9 @@
-Client.shop.categories.default = function(page) {
-    this.$element = $(
+Client.shop.categories.search = function(input) {
+    const $element = $(
         '<div class="shop-pages">' +
             '<div class="shop-pages-left">' +
                 '<div class="shop-pages-search input-pen">' +
-                    '<input class="shop-pages-search-input" type="text" placeholder="Search...">' +
+                    '<input class="shop-pages-search-input" type="text" placeholder="Search..." value="' + input + '">' +
                 '</div>' +
                 
                 '<div class="shop-pages-list dialog-container">' +
@@ -15,17 +15,17 @@ Client.shop.categories.default = function(page) {
         '</div>'
     );
 
-    this.$search = this.$element.find(".shop-pages-search-input");
+    const $search = $element.find(".shop-pages-search-input");
 
-    this.$search.on("change", function() {
+    $search.on("change", function() {
         Client.shop.category = new Client.shop.categories.search($(this).val());
     });
 
-    this.$list = this.$element.find(".shop-pages-list-container");
+    const $list = $element.find(".shop-pages-list-container");
 
-    this.$content = this.$element.find(".shop-pages-right");
+    this.$content = $element.find(".shop-pages-right");
 
-    this.addPage = function(page, $parent) {
+    const addPage = function(page, $parent) {
         const $element = $(
             '<div class="shop-pages-item">' +
                 '<div class="shop-pages-item-button">' +
@@ -57,26 +57,17 @@ Client.shop.categories.default = function(page) {
                 context.drawImage(spritesheet, Math.floor((context.canvas.width - spritesheet.width) / 2), Math.floor((context.canvas.height - spritesheet.height) / 2));
             });
         });
-
-        const subPages = Client.shop.pages.filter(x => x.parent == page.id);
-
-        if(subPages.length == 0)
-            return;
-
-        const $list = $('<div class="shop-pages-item-list"></div>').appendTo($element);
-
-        $button.addClass("shop-pages-item-drop").on("click", function() {
-            $element.toggleClass("active");
-        });
-
-        for(let index in subPages)
-            this.addPage(subPages[index], $list);
     };
 
-    const subPages = Client.shop.pages.filter(x => x.parent == page.id);
+    Client.socket.messages.sendCall({ OnShopSearch: input }, "OnShopSearch").then(function(response) {
+        for(let index in response.pages)
+            addPage(response.pages[index], $list);
 
-    for(let index in subPages)
-        this.addPage(subPages[index], this.$list);
+        Client.shop.page = Client.shop.types.default({
+            id: null,
+            furnitures: response.furnitures
+        });
+    });
 
-    Client.shop.tabs.$content.html(this.$element);
+    Client.shop.tabs.$content.html($element);
 };
