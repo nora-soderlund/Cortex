@@ -22,12 +22,13 @@ Client.rooms.interface.furniture.move = new function() {
                         direction: result.entity.furniture.settings.direction
                     }
                 }
-            }, "OnRoomFurnitureMove", x => x == entity.data.id).then(function(response) {
+            }, "OnRoomFurnitureMove").then(function(response) {
                 result.stop();
 
                 entity.enable();
 
-                entity.setCoordinates(result.position.row, result.position.column, result.position.depth);
+                if(response != null)
+                    entity.setCoordinates(result.position.row, result.position.column, result.position.depth);
             });
         }, entity.furniture.settings.direction);
     };
