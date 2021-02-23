@@ -273,6 +273,23 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/menu-pointer-right.png</key>
+            <key type="filename">Sprites/pointer-down.png</key>
+            <key type="filename">Sprites/pointer-right.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,4,4</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/pen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -303,22 +320,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/pointer-down.png</key>
-            <key type="filename">Sprites/pointer-right.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9Paddings</key>
-                <rect>2,2,4,4</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Sprites/room-door-plus.png</key>
             <key type="filename">Sprites/room-tile-add.png</key>
             <key type="filename">Sprites/room-tile-down.png</key>
@@ -335,6 +336,21 @@
                 <rect>10,10,20,20</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/settings.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,11,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,11,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -390,6 +406,8 @@
             <filename>Sprites/room-tile-remove.png</filename>
             <filename>Sprites/room-tile-up.png</filename>
             <filename>Sprites/zoom-plus.png</filename>
+            <filename>Sprites/menu-pointer-right.png</filename>
+            <filename>Sprites/settings.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
