@@ -24,6 +24,6 @@ Client.rooms.interface.information = new function() {
     };
 
     this.link("settings", "Settings", function() {
-
+        Client.rooms.settings.toggle();
     });
 };

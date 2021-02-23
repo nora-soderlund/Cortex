@@ -189,7 +189,7 @@ Client.rooms.creation = new function() {
             $(
                 '<div class="room-creation-property">' +
                     '<p>' +
-                        '<b>Map Editor Help</b>' +
+                        '<b>Map Editor</b>' +
                         '<span>Use your mouse on the renderer to the left!</span><br><br>' +
                         '<span>Hold shift and left click to use the current selected tool on the editor.</span><br><br>' +
                         '<span>Press right click to copy the depth of an existing tile on the editor.</span>' + 
