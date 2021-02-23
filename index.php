@@ -20,7 +20,7 @@
             </section>
         </section>
 
-        <section id="client-development">
+        <section id="client-development" style="display: none">
             <div class="client-development">
                 DEVELOPER PLAYGROUND
             </div>
