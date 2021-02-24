@@ -118,6 +118,17 @@ Client.rooms.interface.furniture.place = new function() {
         await Client.rooms.interface.furniture.place.entity.furniture.render();
     };
 
+    this.bind = function() {
+        Client.rooms.interface.furniture.place.showIcon();
+
+        Client.rooms.interface.cursor.events.hover.push(Client.rooms.interface.furniture.place.hover);
+        Client.rooms.interface.cursor.events.unhover.push(Client.rooms.interface.furniture.place.unhover);
+   
+        Client.rooms.interface.entity.$canvas.bind("wheel", Client.rooms.interface.furniture.place.scroll);
+
+        Client.rooms.interface.furniture.place.$icon.appendTo(Client.rooms.interface.$element);
+    };
+
     this.unbind = function() {
         Client.rooms.interface.furniture.place.hideIcon();
 

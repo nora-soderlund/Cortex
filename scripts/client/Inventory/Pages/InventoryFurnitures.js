@@ -58,9 +58,27 @@ Client.inventory.pages.furnitures = async function($element) {
                             }
                         }
                     }, "OnRoomFurniturePlace").then(function(response) {
-                        result.stop();
-                        
-                        Client.inventory.show();
+                        if(response == null) {
+                            result.stop();
+
+                            Client.inventory.show();
+
+                            return;
+                        }
+
+                        Client.inventory.furnitures[furniture.id]--;
+
+                        if(Client.inventory.furnitures[furniture.id] == 0) {
+                            result.stop();
+                            
+                            delete Client.inventory.furnitures[furniture.id];
+                            
+                            Client.inventory.show();
+
+                            return;
+                        }
+
+                        result.bind();
                     });
                 });
             });
