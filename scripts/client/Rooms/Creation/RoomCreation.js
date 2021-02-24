@@ -139,6 +139,12 @@ Client.rooms.creation = new function() {
         const tabs = new Client.dialogs.tabs(231);
 
         tabs.add("default", "Default Maps", function($element) {
+            if(Client.rooms.creation.editor != undefined) {
+                Client.rooms.creation.editor.destroy();
+
+                Client.rooms.creation.editor = undefined;
+            }
+
             $element.parent().css("overflow", "auto");
 
             const $models = $('<div class="room-creation-models"></div>').appendTo($element);
@@ -218,6 +224,8 @@ Client.rooms.creation = new function() {
                 //$settings.html($canvas);
             });
 
+            Client.rooms.creation.editor = editor;
+
             editor.tiles.$element.css({
                 "width": "280px",
                 "height": "230px"
@@ -276,6 +284,14 @@ Client.rooms.creation = new function() {
         entity.settings = {};
         
         entity.showProperties();
+    });
+
+    entity.events.destroy.push(function() {
+        if(Client.rooms.creation.editor != undefined) {
+            Client.rooms.creation.editor.destroy();
+
+            Client.rooms.creation.editor = undefined;
+        }
     });
 
     return entity;

@@ -51,6 +51,8 @@ Client.rooms.editor = function(settings, change) {
         
         const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
 
+        this.canvas = canvas;
+
         let down = false, lastCoordinate = { row: null, column: null }, timestamp = performance.now();
 
         $canvas.on("mousedown", function() {
@@ -360,5 +362,9 @@ Client.rooms.editor = function(settings, change) {
         this.setTool = function(tool) {
             editorTool = tool;
         };
+    };
+
+    this.destroy = function() {
+        this.tiles.canvas.destroy();
     };
 };

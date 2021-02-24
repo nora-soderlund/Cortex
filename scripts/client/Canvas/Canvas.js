@@ -52,6 +52,10 @@ Client.canvas = new function() {
             properties.enabled = true;
         };
 
+        properties.destroy = function() {
+            properties.enabled = false;
+        };
+
         properties.stop = function() {
             properties.enabled = false;
         };

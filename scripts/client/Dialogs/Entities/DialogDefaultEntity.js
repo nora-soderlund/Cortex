@@ -6,6 +6,7 @@ Client.dialogs.default = function(settings = {}) {
         this.hide = [];
 
         this.create = [];
+        this.destroy = [];
     };
 
     this.$element = $(
@@ -123,6 +124,9 @@ Client.dialogs.default = function(settings = {}) {
         this.$content.html("");
 
         this.$element.hide();
+        
+        for(let index in this.events.destroy)
+            this.events.destroy[index]();
     };
 
     this.pause = function() {

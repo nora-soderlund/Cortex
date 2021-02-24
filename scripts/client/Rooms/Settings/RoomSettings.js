@@ -64,7 +64,7 @@ Client.rooms.settings = new function() {
             for(let row in Client.rooms.interface.data.map.floor)
                 data.map[row] = Client.rooms.interface.data.map.floor[row];
 
-            const editor = new Client.rooms.editor(data, async function(map, extra) {
+            entity.editor = new Client.rooms.editor(data, async function(map, extra) {
                 //entity.settings.map.map = map;
 
                 //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
@@ -89,34 +89,34 @@ Client.rooms.settings = new function() {
                 });
             });
 
-            editor.tiles.$element.css({
+            entity.editor.tiles.$element.css({
                 "width": "280px",
                 "height": "230px"
             });
     
-            editor.tiles.$element.prependTo($grid);
+            entity.editor.tiles.$element.prependTo($grid);
 
-            editor.depth.$element.css({
+            entity.editor.depth.$element.css({
                 "width": "280px",
                 "height": "24px"
             });
 
-            editor.depth.$element.appendTo(editor.tiles.$element);
+            entity.editor.depth.$element.appendTo(entity.editor.tiles.$element);
 
-            editor.depth.render();
+            entity.editor.depth.render();
 
-            const $add = $('<div class="dialog-item" value="0"></div>').appendTo($tools).append(editor.tools.$add);
-            const $remove = $('<div class="dialog-item" value="1"></div>').appendTo($tools).append(editor.tools.$remove);
-            const $up = $('<div class="dialog-item" value="2"></div>').appendTo($tools).append(editor.tools.$up);
-            const $down = $('<div class="dialog-item" value="3"></div>').appendTo($tools).append(editor.tools.$down);
-            const $door = $('<div class="dialog-item" value="4"></div>').appendTo($tools).append(editor.tools.$door);
+            const $add = $('<div class="dialog-item" value="0"></div>').appendTo($tools).append(entity.editor.tools.$add);
+            const $remove = $('<div class="dialog-item" value="1"></div>').appendTo($tools).append(entity.editor.tools.$remove);
+            const $up = $('<div class="dialog-item" value="2"></div>').appendTo($tools).append(entity.editor.tools.$up);
+            const $down = $('<div class="dialog-item" value="3"></div>').appendTo($tools).append(entity.editor.tools.$down);
+            const $door = $('<div class="dialog-item" value="4"></div>').appendTo($tools).append(entity.editor.tools.$door);
 
             $tools.on("click", ".dialog-item", function() {
                 $tools.find(".dialog-item.active").removeClass("active");
 
                 $(this).addClass("active");
 
-                editor.tools.setTool($(this).attr("value"));
+                entity.editor.tools.setTool($(this).attr("value"));
             });
 
             $add.click();
@@ -135,6 +135,10 @@ Client.rooms.settings = new function() {
 
     entity.events.show.push(function() {
         
+    });
+
+    entity.events.destroy.push(function() {
+        entity.editor.destroy();
     });
 
     return entity;
