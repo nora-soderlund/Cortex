@@ -121,6 +121,11 @@ Client.rooms.editor = function(settings, change) {
                 }
 
                 if(coordinate.row >= 0) {
+                    if(coordinate.column >= 0) {
+                        if(map[coordinate.row][coordinate.column] == editorDepth)
+                            return;
+                    }
+
                     for(let row = coordinate.row - 1; row != -1; row--)
                         if(map[row] == undefined)
                             map[row] = [];
@@ -180,6 +185,9 @@ Client.rooms.editor = function(settings, change) {
                 if(map[coordinate.row][coordinate.column] == undefined)
                     return;
 
+                if(map[coordinate.row][coordinate.column] == 'X')
+                    return;
+
                 map[coordinate.row][coordinate.column] = 'X';
             }
             else if(editorTool == 2) {
@@ -220,6 +228,9 @@ Client.rooms.editor = function(settings, change) {
                     return;
 
                 if(map[coordinate.row][coordinate.column] == 'X')
+                    return;
+
+                if(coordinate.row == settings.door.row && coordinate.column == settings.door.column)
                     return;
                 
                 settings.door.row = coordinate.row;
