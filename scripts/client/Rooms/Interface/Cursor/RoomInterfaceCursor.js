@@ -95,7 +95,7 @@ Client.rooms.interface.cursor = new function() {
                 }
             }
             else {
-                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Client.rooms.interface.data.map.height[row][column];
+                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Client.rooms.interface.data.map.floor[row][column];
 
                 cursor.setCoordinates(row, column, depth, -2000);
 

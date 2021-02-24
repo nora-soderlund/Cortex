@@ -2,8 +2,6 @@ Client.rooms.map.floor = function() {
     this.patterns = [];
 
     this.setMap = function(map) {
-        map = map.split('|');
-
         this.rows = map.length;
         this.columns = 0;
         this.depth = 0;

@@ -67,6 +67,12 @@ Client.rooms.settings = new function() {
                 //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
 
                 //$settings.html($canvas);
+
+                Client.socket.messages.sendCall({
+                    OnRoomSettingsUpdate: {
+                        map
+                    }
+                }, "OnRoomSettingsUpdate");
             });
 
             editor.tiles.$element.css({
