@@ -39,6 +39,21 @@
                 width: 40px;
                 height: 40px;
 
+                position: relative;
+
+                .inventory-furniture-icon-quantity {
+                    position: absolute;
+
+                    right: 3px;
+                    top: 0;
+
+                    font-size: 10px;
+
+                    font-family: "Volter Regular";
+
+                    text-shadow: 1px 1px 0 #FFF, 1px -1px 0 #FFF, -1px 1px 0 #FFF, -1px -1px 0 #FFF, 1px 0px 0 #FFF, 0px 1px 0 #FFF, -1px 0px 0 #FFF, 0px -1px 0 #FFF;
+                }
+
                 .inventory-furniture-icon-image {
                     position: absolute;
 

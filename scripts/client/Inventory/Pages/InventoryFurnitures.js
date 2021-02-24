@@ -95,6 +95,9 @@ Client.inventory.pages.furnitures = async function($element) {
 
             const $canvas = $('<canvas class="inventory-furniture-icon-image"></canvas>').appendTo($furniture);
 
+            if(Client.inventory.furnitures[id] > 1)
+                $('<div class="inventory-furniture-icon-quantity">' + Client.inventory.furnitures[id] + '</div>').appendTo($furniture);
+
             const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, $canvas);
         
             $furniture.click(function() {
