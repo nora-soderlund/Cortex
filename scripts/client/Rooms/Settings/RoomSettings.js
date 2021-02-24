@@ -71,21 +71,10 @@ Client.rooms.settings = new function() {
 
                 //$settings.html($canvas);
 
-                const response = await Client.socket.messages.sendCall({
+                Client.socket.messages.send({
                     OnRoomSettingsUpdate: {
                         map: { floor: map, extra }
                     }
-                }, "OnRoomSettingsUpdate");
-
-                if(response != true)
-                    return;
-
-                Client.rooms.interface.entity.removeEntity(Client.rooms.interface.map);
-
-                Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, map.split('|'), "301", 8);
-    
-                Client.rooms.interface.map.render().then(function() {
-                    Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
                 });
             });
 

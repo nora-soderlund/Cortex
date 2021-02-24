@@ -12,7 +12,7 @@ Client.rooms.interface.display = new function() {
 
     this.addButton = function(text, click) {
         const $element = $('<div class="room-interface-display-button">' + text + '</div>').appendTo(this.$buttons);
-
++
         $element.click(click);
     };
 
