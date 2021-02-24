@@ -64,7 +64,7 @@ Client.rooms.settings = new function() {
             for(let row in Client.rooms.interface.data.map.floor)
                 data.map[row] = Client.rooms.interface.data.map.floor[row];
 
-            const editor = new Client.rooms.editor(data, async function(map) {
+            const editor = new Client.rooms.editor(data, async function(map, extra) {
                 //entity.settings.map.map = map;
 
                 //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
@@ -73,7 +73,7 @@ Client.rooms.settings = new function() {
 
                 const response = await Client.socket.messages.sendCall({
                     OnRoomSettingsUpdate: {
-                        map
+                        map: { floor: map, extra }
                     }
                 }, "OnRoomSettingsUpdate");
 

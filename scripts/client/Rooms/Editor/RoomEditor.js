@@ -90,6 +90,8 @@ Client.rooms.editor = function(settings, change) {
             }
             else if(!Client.keys.down["ShiftLeft"])
                 return;
+
+            let extra = null;
                 
             if(editorTool == 0) {
                 if(map[coordinate.row] == undefined) {
@@ -120,6 +122,8 @@ Client.rooms.editor = function(settings, change) {
                     }
                 }
 
+                extra = { rows: 0, columns: 0 };
+
                 if(coordinate.row >= 0) {
                     if(coordinate.column >= 0) {
                         if(map[coordinate.row][coordinate.column] == editorDepth)
@@ -132,6 +136,8 @@ Client.rooms.editor = function(settings, change) {
                 }
                 else {
                     const margin = coordinate.row * -1;
+
+                    extra.rows = margin;
 
                     const newMap = [];
 
@@ -157,6 +163,8 @@ Client.rooms.editor = function(settings, change) {
                 }
                 else {
                     const margin = coordinate.column * -1;
+
+                    extra.columns = margin;
 
                     settings.door.column += margin;
                     
@@ -266,7 +274,7 @@ Client.rooms.editor = function(settings, change) {
                 }
             }
 
-            change(result);
+            change(result, extra);
         });
     };
 
