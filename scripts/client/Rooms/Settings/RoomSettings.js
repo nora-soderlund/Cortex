@@ -53,13 +53,16 @@ Client.rooms.settings = new function() {
             const $tools = $toolsProperty.find(".room-creation-editor-tools");
 
             const data = {
-                map: Client.rooms.interface.data.map.floor,
+                map: [],
 
                 door: {
                     row: Client.rooms.interface.data.map.door.row,
                     column: Client.rooms.interface.data.map.door.column
                 }
             };
+
+            for(let row in Client.rooms.interface.data.map.floor)
+                data.map[row] = Client.rooms.interface.data.map.floor[row];
 
             const editor = new Client.rooms.editor(data, async function(map) {
                 //entity.settings.map.map = map;
