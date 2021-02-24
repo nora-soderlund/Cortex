@@ -267,7 +267,7 @@ Client.rooms.editor = function(settings, change) {
         const $cursor = $('<div class="room-editor-depth-cursor"></div>').appendTo(this.$element);
 
         const setCursor = function(depth) {
-            const width = $canvas.width() / 24;
+            const width = $canvas.parent().width() / 24;
 
             $cursor.css("left", (width / 2) + (width * depth));
 

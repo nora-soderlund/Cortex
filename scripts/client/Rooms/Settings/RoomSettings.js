@@ -61,18 +61,29 @@ Client.rooms.settings = new function() {
                 }
             };
 
-            const editor = new Client.rooms.editor(data, function(map) {
+            const editor = new Client.rooms.editor(data, async function(map) {
                 //entity.settings.map.map = map;
 
                 //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
 
                 //$settings.html($canvas);
 
-                Client.socket.messages.sendCall({
+                const response = await Client.socket.messages.sendCall({
                     OnRoomSettingsUpdate: {
                         map
                     }
                 }, "OnRoomSettingsUpdate");
+
+                if(response != true)
+                    return;
+
+                Client.rooms.interface.entity.removeEntity(Client.rooms.interface.map);
+
+                Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, map.split('|'), "301", 8);
+    
+                Client.rooms.interface.map.render().then(function() {
+                    Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
+                });
             });
 
             editor.tiles.$element.css({
