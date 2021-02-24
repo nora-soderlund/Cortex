@@ -56,8 +56,8 @@ Client.rooms.settings = new function() {
                 map: Client.rooms.interface.data.map.floor,
 
                 door: {
-                    row: Client.rooms.interface.data.door.row,
-                    column: Client.rooms.interface.data.door.column
+                    row: Client.rooms.interface.data.map.door.row,
+                    column: Client.rooms.interface.data.map.door.column
                 }
             };
 

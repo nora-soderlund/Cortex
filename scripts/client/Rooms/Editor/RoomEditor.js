@@ -6,7 +6,7 @@ Client.rooms.editor = function(settings, change) {
 
         const $canvas = $('<canvas></canvas>').appendTo(this.$element);
 
-        let map = settings.map.split('|'), rows = map.length, columns = 0, renderOffset = { left: 0, top: 0 };
+        let map = settings.map, rows = map.length, columns = 0, renderOffset = { left: 0, top: 0 };
 
         for(let row in map) {
             map[row] = map[row].split('');
