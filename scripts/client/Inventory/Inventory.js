@@ -26,7 +26,11 @@ Client.inventory = new function() {
 
         entity.tabs.click(async function(identifier, $content) {
             try {
+                entity.$furnitures = {};
+                
                 await Client.inventory.pages[identifier]($content);
+
+                entity.page = identifier;
             }
             catch(exception) {
                 $content.html(exception);

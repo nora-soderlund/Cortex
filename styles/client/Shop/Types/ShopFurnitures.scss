@@ -23,6 +23,13 @@
 
             left: 0;
             bottom: 0;
+
+            p {
+                max-width: 256px;
+                max-height: 30px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
 
         .shop-furnitures-display-button {

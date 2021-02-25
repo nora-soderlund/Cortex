@@ -60,7 +60,7 @@ Client.inventory.pages.furnitures = async function($element) {
 
                         Client.user.furnitures[furniture.id].inventory--;
 
-                        const $quantity = Client.user.furnitures[furniture.id].$inventory.find(".inventory-furniture-icon-quantity").text(Client.user.furnitures[furniture.id].inventory);
+                        const $quantity = Client.inventory.$furnitures[furniture.id].find(".inventory-furniture-icon-quantity").text(Client.user.furnitures[furniture.id].inventory);
 
                         if(Client.user.furnitures[furniture.id].inventory == 1)
                             $quantity.hide();
@@ -76,8 +76,8 @@ Client.inventory.pages.furnitures = async function($element) {
 
                             delete Client.user.furnitures[furniture.id].inventory;
 
-                            Client.user.furnitures[furniture.id].$inventory.remove();
-                            Client.user.furnitures[furniture.id].$inventory = undefined;
+                            Client.inventory.$furnitures[furniture.id].remove();
+                            Client.inventory.$furnitures[furniture.id] = undefined;
                             
                             Client.inventory.show();
 
@@ -99,11 +99,11 @@ Client.inventory.pages.furnitures = async function($element) {
         if(Client.user.furnitures[id].inventory == undefined)
             continue;
 
-        Client.user.furnitures[id].$inventory = $('<div class="dialog-item inventory-furniture-icon"></div>').appendTo($content);
+        Client.inventory.$furnitures[id] = $('<div class="dialog-item inventory-furniture-icon"></div>').appendTo($content);
 
-        const $canvas = $('<canvas class="inventory-furniture-icon-image"></canvas>').appendTo(Client.user.furnitures[id].$inventory);
+        const $canvas = $('<canvas class="inventory-furniture-icon-image"></canvas>').appendTo(Client.inventory.$furnitures[id]);
 
-        const $quantity = $('<div class="inventory-furniture-icon-quantity">' + Client.user.furnitures[id].inventory + '</div>').appendTo(Client.user.furnitures[id].$inventory);
+        const $quantity = $('<div class="inventory-furniture-icon-quantity">' + Client.user.furnitures[id].inventory + '</div>').appendTo(Client.inventory.$furnitures[id]);
 
         if(Client.user.furnitures[id].inventory == 1)
             $quantity.hide();
@@ -111,10 +111,10 @@ Client.inventory.pages.furnitures = async function($element) {
         Client.furnitures.get(id).then(function(furniture) {
             const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, $canvas);
         
-            Client.user.furnitures[id].$inventory.click(function() {
-                Client.user.furnitures[id].$inventory.parent().find(".active").removeClass("active");
+            Client.inventory.$furnitures[id].click(function() {
+                Client.inventory.$furnitures[id].parent().find(".active").removeClass("active");
 
-                Client.user.furnitures[id].$inventory.addClass("active");
+                Client.inventory.$furnitures[id].addClass("active");
                 
                 setDisplay(furniture);
             });
