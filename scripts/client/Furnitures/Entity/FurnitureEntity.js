@@ -277,7 +277,7 @@ Client.furnitures.entity = function(settings = {}) {
         if(data.y != undefined) result.column = parseFloat(data.y);
         if(data.z != undefined) result.depth = parseFloat(data.z);
 
-        if(this.direction == 0 || this.direction == 4) {
+        if(this.settings.direction == 0 || this.settings.direction == 4) {
             const spare = result.row;
          
             result.row = result.column;
