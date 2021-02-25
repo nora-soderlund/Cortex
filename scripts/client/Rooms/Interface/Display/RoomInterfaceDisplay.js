@@ -48,7 +48,7 @@ Client.rooms.interface.display = new function() {
             Client.rooms.interface.furniture.move.start(entity);
         });
 
-        if(entity.furniture.types.logic == "furniture_multistate") {
+        if(Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) {
             this.addButton("Use", function() {
                 Client.rooms.interface.furniture.use.start(entity);
             });
