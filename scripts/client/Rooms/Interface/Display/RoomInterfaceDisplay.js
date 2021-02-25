@@ -30,9 +30,11 @@ Client.rooms.interface.display = new function() {
 
         const $canvas = $('<canvas class="room-interface-display-canvas"></canvas>').appendTo(this.$content);
 
-        $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+        if(furniture.description.length != 0) {
+            $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
 
-        $('<div class="room-interface-display-description">' + furniture.description + '</div>').appendTo(this.$content);
+            $('<div class="room-interface-display-description">' + furniture.description + '</div>').appendTo(this.$content);
+        }
 
         new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
