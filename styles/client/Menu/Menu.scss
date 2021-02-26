@@ -68,6 +68,10 @@
             background-position: 0px -67px;
         }
 
+        .menu-camera {
+            @include sprite-menu-camera();
+        }
+
         &:hover {
             .menu-sprite {
                 transform: translate(-1px, -1px);

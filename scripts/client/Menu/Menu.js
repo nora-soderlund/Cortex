@@ -11,6 +11,8 @@ Client.menu = new function() {
         ).on("click", function() {
             callback();
         }).appendTo(this.$element);
+
+        return $element;
     };
 
     this.addItem("navigator", function() {
@@ -21,7 +23,21 @@ Client.menu = new function() {
         Client.shop.toggle();
     });
 
-    this.addItem("inventory", function() {
+    const $inventory = this.addItem("inventory", function() {
         Client.inventory.toggle();
+    });
+
+    const $camera = this.addItem("camera", function() {
+        Client.rooms.interface.camera.toggle();
+    });
+
+    Client.interface.events.start.push(function() {
+        $inventory.show();
+        $camera.show();
+    });
+
+    Client.interface.events.stop.push(function() {
+        $camera.hide();
+        $inventory.hide();
     });
 };
