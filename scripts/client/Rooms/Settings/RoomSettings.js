@@ -17,6 +17,38 @@ Client.rooms.settings = new function() {
 
         const tabs = new Client.dialogs.tabs(231);
 
+        tabs.add("information", "Room Information", async function($element) {
+            const $grid = $('<div class="room-creation-grid"></div>').appendTo($element);
+
+            const $information = $('<div class="room-creation-information"></div>').appendTo($grid);
+
+            $(
+                '<div class="room-creation-property">' +
+                    '<p>' +
+                        '<b>Room Name</b>' +
+                        '<span>Give your room a fun and interesting title, this is what interests others!</span>' + 
+                    '</p>' +
+                    
+                    '<div class="input-pen">' +
+                        '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + Client.rooms.interface.data.title + '">' +
+                    '</div>' + 
+                '</div>'
+            ).appendTo($information);
+
+            $(
+                '<div class="room-creation-property">' +
+                    '<p>' +
+                        '<b>Room Description</b>' +
+                        '<span>Describe what your room is, what can others do in your room, let them know what it is!</span>' + 
+                    '</p>' +
+                    
+                    '<div class="textarea-pen">' +
+                        '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + Client.rooms.interface.data.description + '</textarea>' +
+                    '</div>' + 
+                '</div>'
+            ).appendTo($information);
+        });
+
         tabs.add("map", "Map Editor", function($element) {
             $element.parent().css("overflow", "visible");
 
