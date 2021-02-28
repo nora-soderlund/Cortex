@@ -1,0 +1,37 @@
+.dialog-camera {
+	border: none;
+
+    @include sprite-camera-frame();
+
+    .dialog-default-header {
+        background: none;
+
+		border: none;
+
+        margin-top: 4px;
+
+		&:after {
+			background: none;
+		}
+
+        .dialog-default-header-buttons {
+            margin-right: 6px;
+        }
+    }
+
+    .dialog-default-content {
+        background: none !important;
+
+        border: none !important;
+
+        .dialog-camera-grid {
+            @include sprite-camera-grid();
+
+            top: 2px;
+            
+            left: 10px;
+
+            position: absolute;
+        }
+    }
+}

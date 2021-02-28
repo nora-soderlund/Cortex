@@ -31,12 +31,12 @@ Client.menu = new function() {
         Client.rooms.interface.camera.toggle();
     });
 
-    Client.interface.events.start.push(function() {
+    Client.rooms.interface.events.start.push(function() {
         $inventory.show();
         $camera.show();
     });
 
-    Client.interface.events.stop.push(function() {
+    Client.rooms.interface.events.stop.push(function() {
         $camera.hide();
         $inventory.hide();
     });
