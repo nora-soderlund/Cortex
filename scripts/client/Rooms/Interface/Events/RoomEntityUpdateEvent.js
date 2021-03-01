@@ -56,11 +56,11 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
 
             if(data.furnitures[index].position != undefined) {
                 if(data.furnitures[index].position.direction != undefined) {
-                    Client.rooms.interface.furnitures[data.furnitures[index].id].furniture.setDirection(data.furnitures[index].position.direction);
+                    Client.rooms.interface.furnitures[index].furniture.setDirection(data.furnitures[index].position.direction);
                 }
             }
 
-            Client.rooms.interface.furnitures[data.furnitures[index].id].furniture.render();
+            Client.rooms.interface.furnitures[index].furniture.render();
         }
     }
 });
