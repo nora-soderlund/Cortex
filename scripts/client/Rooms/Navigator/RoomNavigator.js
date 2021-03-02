@@ -87,6 +87,8 @@ Client.rooms.navigator = new function() {
             entity.$home.hide();
         //else
         //    entity.$home.show();
+
+        entity.tabs.show();
     });
 
     return entity;
