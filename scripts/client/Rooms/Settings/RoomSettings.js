@@ -17,7 +17,7 @@ Client.rooms.settings = new function() {
 
         const tabs = new Client.dialogs.tabs(231);
 
-        tabs.add("information", "Room Information", async function($element) {
+        tabs.add("information", "Information", async function($element) {
             const $grid = $('<div class="room-creation-grid"></div>').appendTo($element);
 
             const $information = $('<div class="room-creation-information"></div>').appendTo($grid);
@@ -33,7 +33,13 @@ Client.rooms.settings = new function() {
                         '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + Client.rooms.interface.data.title + '">' +
                     '</div>' + 
                 '</div>'
-            ).appendTo($information);
+            ).appendTo($information).find(".room-creation-name").on("change", function() {
+                Client.socket.messages.send({
+                    OnRoomSettingsUpdate: {
+                        title: $(this).val()
+                    }
+                });
+            });
 
             $(
                 '<div class="room-creation-property">' +
@@ -46,7 +52,13 @@ Client.rooms.settings = new function() {
                         '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + Client.rooms.interface.data.description + '</textarea>' +
                     '</div>' + 
                 '</div>'
-            ).appendTo($information);
+            ).appendTo($information).find(".room-creation-description").on("change", function() {
+                Client.socket.messages.send({
+                    OnRoomSettingsUpdate: {
+                        description: $(this).val()
+                    }
+                });
+            });
         });
 
         tabs.add("map", "Map Editor", function($element) {
@@ -143,15 +155,9 @@ Client.rooms.settings = new function() {
             $add.click();
         });
 
-        tabs.show("map");
+        tabs.show("information");
 
         tabs.$element.appendTo(entity.$content);
-
-        const $buttons = $('<div class="room-creation-buttons"></div>').appendTo(entity.$content);
-            
-        $('<div class="dialog-button">Save Map</div>').appendTo($buttons).on("click", function() {
-            
-        });
     });
 
     entity.events.show.push(function() {
@@ -159,8 +165,13 @@ Client.rooms.settings = new function() {
     });
 
     entity.events.destroy.push(function() {
-        entity.editor.destroy();
+        if(entity.editor != undefined)
+            entity.editor.destroy();
     });
 
     return entity;
 };
+
+Client.rooms.interface.events.stop.push(function() {
+    Client.rooms.settings.destroy();
+});
