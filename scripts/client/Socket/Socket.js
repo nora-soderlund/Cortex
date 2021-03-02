@@ -1,4 +1,6 @@
 Client.socket = new function() {
+    this.connected = false;
+
     this.open = function(url = "ws://127.0.0.1:81/" + key) {
         return new Promise(function(resolve, failure) {
             console.log("[%cSocket%c]%c Connecting to the server at " + url + "...", "color: orange", "color: inherit", "color: lightblue");
@@ -8,6 +10,8 @@ Client.socket = new function() {
             const server = new WebSocket(url);
 
             server.onopen = function() {
+                Client.socket.connected = true;
+
                 console.log("[%cSocket%c]%c Connected to the server after " + Math.floor(performance.now() - timestamp) + "ms!", "color: orange", "color: inherit", "color: lightblue");
 
                 server.onopen = function() {
@@ -15,6 +19,11 @@ Client.socket = new function() {
                 };
 
                 server.onclose = function() {
+                    if(!Client.socket.connected)
+                        return;
+
+                    Client.socket.connected = false;
+
                     Client.loader.setError("Lost connection with the server...");
 
                     Client.loader.show();

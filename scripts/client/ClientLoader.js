@@ -133,6 +133,8 @@ Client.loader.addStep(async function(finished) {
     });
     
     Client.socket.messages.register("OnSocketClose", function(data) {
+        Client.socket.connected = false;
+        
         switch(data) {
             case "USER_KEY_INVALID": {
                 Client.loader.setError("Your user key does not exist!");
