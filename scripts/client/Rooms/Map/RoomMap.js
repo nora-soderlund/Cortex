@@ -1,59 +1,65 @@
-Client.rooms.map = function(settings = {}) {
-    this.map = "";
-    
-    this.floorThickness = 8;
-    this.floorMaterial  = "default";
+Client.rooms.map = new function() {
+    this.getIndex = function(data, id) {
+        const array = Client.rooms.asset.room_visualization.visualizationData[data + "Data"][data + "s"][data];
 
-    this.wallThickness  = 8;
-    this.wallMaterial   = "401";
+        let index = 0;
 
-    for(let key in settings)
-        this[key] = settings[key];
+        for(index in array) {
+            if(array[index].id != id)
+                continue;
 
-    this.$wall = $('<canvas></canvas>');
+            break;
+        }
 
-    this.wall = new Client.rooms.map.wall({
-        map: this.map,
-        thickness: this.wallThickness
-    });
+        return index;
+    };
 
-    this.$floor = $('<canvas></canvas>');
+    this.getSizes = function(data, index) {
+        const array = Client.rooms.asset.room_visualization.visualizationData[data + "Data"][data + "s"][data];
 
-    this.floor = new Client.rooms.map.floor({
-        map: this.map,
-        thickness: this.floorThickness
-    });
+        return array[index].visualization;
+    };
 
-    this.render = async function() {
-        const $canvas = $('<canvas></canvas>');
-        let context = $canvas[0].getContext("2d");
+    this.getVisualization = function(data, size) {
+        let index = 0;
         
-        await this.floor.renderAsync(context, {
-            map: this.map,
-            thickness: this.floorThickness,
-            material: "102"
-        });
+        for(index in data) {
+            if(data[index].size != size)
+                continue;
 
-        context = this.$floor[0].getContext("2d");
-        context.canvas.width = $canvas[0].width;
-        context.canvas.height = $canvas[0].height;
+            break;
+        }
 
-        //context.filter = "blur(5px) brightness(0%) opacity(50%)";
-        //context.drawImage($canvas[0], 0, 5);
+        return data[index].visualizationLayer;
+    };
 
-        //context.filter = "blur(0) brightness(100%) opacity(100%)";
-        context.drawImage($canvas[0], 0, 0);
-        
-        await this.wall.renderAsync(this.$wall[0].getContext("2d"), {
-            map: this.floor.map,
-            thickness: this.wallThickness,
-            material: this.wallMaterial,
+    this.getMaterial = function(data, material) {
+        const materials = Client.rooms.asset.room_visualization.visualizationData[data + "Data"].materials.material;
 
-            floor: this.floorThickness,
+        let index = 0;
 
-            rows: this.floor.rows,
-            columns: this.floor.columns,
-            depth: this.floor.depth
-        });
+        for(index in materials) {
+            if(materials[index].id != material)
+                continue;
+
+            break;
+        }
+
+        return materials[index].materialCellMatrix.materialCellColumn;
+    };
+
+    this.getTexture = function(data, texture) {
+        const textures = Client.rooms.asset.room_visualization.visualizationData[data + "Data"].textures.texture;
+
+        let index = 0;
+
+        for(index in textures) {
+            if(textures[index].id != texture)
+                continue;
+
+            break;
+        }
+
+        return "HabboRoomContent_" + textures[index].bitmap.assetName;
     };
 };

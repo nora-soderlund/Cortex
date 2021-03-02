@@ -3,33 +3,29 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
     entity.index = -4000;
 
-    entity.map = new Client.rooms.map({ map, floorMaterial, floorThickness });
+    entity.map = new Client.rooms.map.entity(map);
 
     entity.render = async function() {
         await entity.map.render();
 
-        entity.sprites.length = 0;
-
-        entity.parent.center = entity.map.floor.rows * 32;
-
-
+        entity.parent.center = entity.map.rows * 32;
 
         const floor = new Client.rooms.items.sprite(entity, entity.map.$floor[0]);
 
         floor.index = 2;
         
-        floor.setOffset(-entity.parent.center, -(entity.map.floor.depth * 16));
+        floor.setOffset(-entity.parent.center, -(entity.map.depth * 16));
 
         floor.mouseover = function(position, center) {
             const context = entity.parent.$canvas[0].getContext("2d");
 
-            context.setTransform(1, .5, -1, .5, entity.map.floor.rows * 32 - center, 0);
+            context.setTransform(1, .5, -1, .5, entity.map.rows * 32 - center, 0);
 
-            for(let path in entity.map.floor.floorPaths) {
-                if(!context.isPointInPath(entity.map.floor.floorPaths[path].path, position[0], position[1]))
+            for(let path in entity.map.floor) {
+                if(!context.isPointInPath(entity.map.floor[path].path, position[0], position[1]))
                     continue;
 
-                return entity.map.floor.floorPaths[path];
+                return entity.map.floor[path];
             }
 
             return false;
@@ -50,7 +46,7 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
         shadow.index = 0;
         
-        shadow.setOffset(-entity.parent.center, -(entity.map.floor.depth * 16));
+        shadow.setOffset(-entity.parent.center, -(entity.map.depth * 16));
 
         shadow.mouseover = function(position) {
             return false;
@@ -64,7 +60,7 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
         wall.index = 1;
         
-        wall.setOffset(-entity.parent.center, entity.map.wall.top);
+        wall.setOffset(-entity.parent.center, entity.map.offset);
 
         wall.mouseover = function(position) {
             return false;
