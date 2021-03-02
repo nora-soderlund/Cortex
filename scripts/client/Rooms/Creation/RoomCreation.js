@@ -216,7 +216,18 @@ Client.rooms.creation = new function() {
 
             const $tools = $toolsProperty.find(".room-creation-editor-tools");
 
-            const editor = new Client.rooms.editor(entity.settings.map, function(map) {
+            console.log(entity.settings.map);
+
+            const data = {
+                map: entity.settings.map.map.split('|'),
+
+                door: {
+                    row: entity.settings.map.door.row,
+                    column: entity.settings.map.door.column
+                }
+            };
+
+            const editor = new Client.rooms.editor(data, function(map) {
                 entity.settings.map.map = map;
 
                 //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
