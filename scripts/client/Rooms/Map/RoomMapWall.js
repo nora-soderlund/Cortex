@@ -142,7 +142,7 @@ Client.rooms.map.wall = function() {
             const rectangle = rectangles[index];
 
             let width = 32;
-            let height = (this.depth + 3.5) * 32;
+            let height = ((3.5 + (this.depth - rectangle.depth)) * 32);
 
             let row = rectangle.row;
             let column = rectangle.column;
@@ -163,7 +163,7 @@ Client.rooms.map.wall = function() {
                 continue;
 
             const left = -(row * 32) + (column * 32);
-            const top = (column * 32) - (rectangle.depth * 32);
+            const top = (column * 32) - (this.depth * 16);
             
             context.rect(left, top, width, height);
         }
@@ -184,7 +184,7 @@ Client.rooms.map.wall = function() {
             let column = rectangle.column;  
 
             let width = 32;
-            let height = (this.depth + 3.5) * 32;
+            let height = ((3.5 + (this.depth - rectangle.depth)) * 32);
 
             if(rectangle.direction == 4) {
 
@@ -202,7 +202,7 @@ Client.rooms.map.wall = function() {
                 continue;
 
             let left = (column * 32) - (row * 32);
-            let top = (row * 32) - (rectangle.depth * 32);
+            let top = (row * 32) - (this.depth * 16);
             
             context.rect(left - ((width == 32)?(0):(8)), top, width, height);
         }
@@ -225,8 +225,8 @@ Client.rooms.map.wall = function() {
             let width = 32;
             let height = 32;
 
-            let left = column * 32 - (rectangle.depth * 32);
-            let top = row * 32 - (rectangle.depth * 32);
+            let left = column * 32 - (this.depth * 16);
+            let top = row * 32 - (this.depth * 16);
            
             if(rectangle.direction == 1) {
                 width = this.floor;
