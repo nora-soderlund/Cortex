@@ -155,6 +155,11 @@ Client.rooms.settings = new function() {
             $add.click();
         });
 
+        tabs.click(function() {
+            if(entity.editor != undefined)
+                entity.editor.destroy();
+        }); 
+
         tabs.show("information");
 
         tabs.$element.appendTo(entity.$content);
