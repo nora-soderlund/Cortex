@@ -37,6 +37,9 @@ Client.dialogs.tabs = function(height) {
     };
 
     this.show = async function(identifier = this.selected) {
+        if(identifier == undefined)
+            return;
+            
         this.hide();
             
         this.buttons[identifier].element.attr("active", "");
