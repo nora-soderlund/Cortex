@@ -38,8 +38,7 @@ Client.rooms.interface.cursor = new function() {
 
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
     }).on("touchstart", function(event) {
-        if(Client.rooms.interface.cursor.position == null)
-            Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+        Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
         Client.rooms.interface.cursor.down = true;
     }).on("touchmove", function(event) {
