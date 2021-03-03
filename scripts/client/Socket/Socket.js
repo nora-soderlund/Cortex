@@ -1,7 +1,7 @@
 Client.socket = new function() {
     this.connected = false;
 
-    this.open = function(url = "ws://127.0.0.1:81/" + key) {
+    this.open = function(url = "ws://" + Client.loader.data.socket.address + ":" + Client.loader.data.socket.port + "/" + key) {
         return new Promise(function(resolve, failure) {
             console.log("[%cSocket%c]%c Connecting to the server at " + url + "...", "color: orange", "color: inherit", "color: lightblue");
 
