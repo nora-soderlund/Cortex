@@ -59,25 +59,16 @@ Client.inventory.pages.furnitures = function($element) {
                         }
 
                         Client.user.furnitures[furniture.id].inventory--;
-
-                        const $quantity = Client.inventory.$furnitures[furniture.id].find(".inventory-furniture-icon-quantity").text(Client.user.furnitures[furniture.id].inventory);
-
-                        if(Client.user.furnitures[furniture.id].inventory == 1)
-                            $quantity.hide();
-
                         
                         if(Client.user.furnitures[furniture.id].rooms == undefined)
                             Client.user.furnitures[furniture.id].rooms = 0;
 
                         Client.user.furnitures[furniture.id].rooms++;
 
+                        Client.inventory.page.setFurniture(furniture.id);
+
                         if(Client.user.furnitures[furniture.id].inventory == 0) {
                             result.stop();
-
-                            delete Client.user.furnitures[furniture.id].inventory;
-
-                            Client.inventory.$furnitures[furniture.id].remove();
-                            Client.inventory.$furnitures[furniture.id] = undefined;
                             
                             Client.inventory.show();
 
