@@ -5,20 +5,29 @@ Client.rooms.items.sprite = function(parent, image) {
 
     this.composite = "source-over";
 
-    this.render = function(context, offset) {
-        const parentOffset = this.parent.getOffset();
-
+    this.render = function(context, room) {
         context.globalAlpha = this.getAlpha();
 
         context.globalCompositeOperation = this.composite;
 
-        context.drawImage(this.image, Math.floor(offset[0] + this.offset[0] + parentOffset[0]), Math.floor(offset[1] + this.offset[1] + parentOffset[1]));
+        const offset = this.getOffset();
+
+        context.drawImage(this.image, Math.floor(room[0] + offset[0]), Math.floor(room[1] + offset[1]));
     };
 
     this.offset = [ 0, 0 ];
 
     this.setOffset = function(left, top) {
         this.offset = [ left, top ];
+    };
+
+    this.getOffset = function() {
+        const parentOffset = this.parent.getOffset();
+
+        return [
+            this.offset[0] + parentOffset[0],
+            this.offset[1] + parentOffset[1]
+        ];
     };
 
     this.index = 0;

@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>5.2.0</string>
+        <string>5.5.0</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -56,7 +56,7 @@
         <key>jxrCompressionLevel</key>
         <uint>0</uint>
         <key>ditherType</key>
-        <enum type="SettingsBase::DitherType">NearestNeighbour</enum>
+        <enum type="SettingsBase::DitherType">PngQuantLow</enum>
         <key>backgroundColor</key>
         <uint>0</uint>
         <key>libGdx</key>
@@ -82,7 +82,7 @@
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png</enum>
+        <enum type="SettingsBase::TextureFormat">png8</enum>
         <key>borderPadding</key>
         <uint>0</uint>
         <key>maxTextureSize</key>
@@ -384,6 +384,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/user-menu-arrow.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,2,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/zoom-plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -424,6 +439,7 @@
             <filename>Sprites/menu-pointer-right.png</filename>
             <filename>Sprites/settings.png</filename>
             <filename>Sprites/menu-camera.png</filename>
+            <filename>Sprites/user-menu-arrow.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

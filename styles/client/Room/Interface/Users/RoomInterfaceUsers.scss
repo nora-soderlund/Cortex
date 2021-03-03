@@ -1,0 +1,54 @@
+.room-interface-user {
+    position: absolute;
+
+    text-align: center;
+
+    width: 120px;
+
+    margin-left: 68px;
+    margin-bottom: -64px;
+
+    background: #4F4C48;
+
+    border: 1px solid #000;
+    border-radius: 6px;
+    border-bottom-width: 2px;
+
+    .room-interface-user-title {
+        font-family: "Ubuntu Bold";
+
+        position: relative;
+
+        width: 100%;
+        height: 26px;
+
+        line-height: 26px;
+
+        &:after {
+            content: '';
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: calc(100% - 2px);
+            height: calc(100% - 2px);
+
+            border: 1px solid #6D6A66;
+            border-radius: 6px;
+        }
+    }
+
+    .room-interface-user-arrow {
+        position: absolute;
+
+        top: 100%;
+
+        @include sprite-user-menu-arrow();
+
+        left: 0; right: 0;
+
+        margin: -1px auto 0;
+    }
+}
