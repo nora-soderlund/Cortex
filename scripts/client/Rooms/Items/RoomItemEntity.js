@@ -99,7 +99,7 @@ Client.rooms.items.entity = function(parent, name) {
         this.index = (position.row * 1000) + (position.column * 1000) + (position.depth * 100) + index;
 
         if(parent.door != undefined && parent.door.row == Math.round(position.row) && parent.door.column == Math.round(position.column))
-            this.index = -3000 + index;
+            this.index = -11000 + index;
     };
 
     this.setCoordinates = function(row, column, depth, index = 0) {
@@ -114,7 +114,7 @@ Client.rooms.items.entity = function(parent, name) {
         this.index = (row * 1000) + (column * 1000) + (depth * 100) + index;
 
         if(parent.door != undefined && parent.door.row == Math.round(row) && parent.door.column == Math.round(column))
-            this.index = -3000 + index;
+            this.index = -11000 + index;
     };
     
     this.process = function(timestamp, frame) {

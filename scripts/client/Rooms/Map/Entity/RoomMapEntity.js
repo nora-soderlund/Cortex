@@ -96,7 +96,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
         for(let row in this.map) {
             for(let column in this.map[row]) {
-                const tile = this.getCoordinate(row, column);
+                const tile = this.getCoordinate(row, column, true);
     
                 if(tile == 'X')
                     continue;
