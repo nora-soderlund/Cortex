@@ -5,7 +5,7 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
 
     Client.rooms.interface.data = data;
 
-    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, "301", 8);
+    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door);
     
     Client.rooms.interface.map.render().then(function() {
         Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);

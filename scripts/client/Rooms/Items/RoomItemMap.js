@@ -1,9 +1,9 @@
-Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", floorThickness = 8) {
+Client.rooms.items.map = function(parent, map = "", door = {}) {
     const entity = new Client.rooms.items.entity(parent, "map");
 
     entity.index = -4000;
 
-    entity.map = new Client.rooms.map.entity(map);
+    entity.map = new Client.rooms.map.entity(map, door);
 
     entity.render = async function() {
         await entity.map.render();
@@ -12,7 +12,7 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
         const floor = new Client.rooms.items.sprite(entity, entity.map.$floor[0]);
 
-        floor.index = 2;
+        floor.index = 0;
         
         floor.setOffset(-entity.parent.center, -(entity.map.depth * 16));
 
@@ -60,7 +60,7 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
 
         const wall = new Client.rooms.items.sprite(entity, entity.map.$wall[0]);
 
-        wall.index = 1;
+        wall.index = 4000;
         
         wall.setOffset(-entity.parent.center, entity.map.offset);
 

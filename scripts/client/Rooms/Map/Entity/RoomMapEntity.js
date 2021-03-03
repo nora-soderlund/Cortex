@@ -1,6 +1,11 @@
-Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
+Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
     this.settings = {
         map: map,
+
+        door: {
+            row: null,
+            column: null
+        },
         
         floor: {
             material: "default",
@@ -44,6 +49,9 @@ Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
                     this.depth = this.map[row][column];
             }
         }
+
+        if(this.getCoordinate(door.row + 1, door.column) == 'X' && this.getCoordinate(door.row - 1, door.column) == 'X')
+            this.settings.door = door;
 
         await this.renderFloor();
         await this.renderWall();
@@ -214,17 +222,20 @@ Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
 
         for(let row in this.map) {
             for(let column in this.map[row]) {
-                const depth = this.getCoordinate(row, column);
+                const depth = this.getCoordinate(row, column, true);
 
-                if(depth == 'X')
+                if(depth == 'X') 
+                    continue;
+
+                if(this.settings.door.row == row && this.settings.door.column == column)
                     continue;
 
                 let hasPrevious = false;
 
                 for(let previousRow = row - 1; previousRow >= 0; previousRow--) {
-                    if(this.getCoordinate(previousRow, column) == 'X') {
+                    if(this.getCoordinate(previousRow, column, true) == 'X') {
                         for(let previousColumn = column - 1; previousColumn >= 0; previousColumn--) {
-                            if(this.getCoordinate(previousRow, previousColumn) == 'X')
+                            if(this.getCoordinate(previousRow, previousColumn, true) == 'X')
                                 continue;
         
                             hasPrevious = true;
@@ -252,7 +263,7 @@ Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
 
         for(let row in this.map) {
             for(let column in this.map[row]) {
-                const depth = this.getCoordinate(row, column);
+                const depth = this.getCoordinate(row, column, true);
 
                 if(depth == 'X')
                     continue;
@@ -260,14 +271,14 @@ Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
                 let hasPrevious = false;
 
                 for(let previousColumn = column - 1; previousColumn >= 0; previousColumn--) {
-                    if(this.getCoordinate(row, previousColumn) != 'X') {
+                    if(this.getCoordinate(row, previousColumn, true) != 'X') {
                         hasPrevious = true;
 
                         break;
                     }
 
                     for(let previousRow = row - 1; previousRow >= 0; previousRow--) {
-                        if(this.getCoordinate(previousRow, previousColumn) != 'X') {
+                        if(this.getCoordinate(previousRow, previousColumn, true) != 'X') {
                             hasPrevious = true;
     
                             break;
@@ -412,7 +423,12 @@ Client.rooms.map.entity = function(map, floor = {}, wall = {}) {
         context.closePath();
     };
 
-    this.getCoordinate = function(row, column) {
+    this.getCoordinate = function(row, column, door = false) {
+        if(door && this.settings.door.row == row && this.settings.door.column == column) {
+            if(this.getCoordinate(row, column + 1) != 'X' && this.getCoordinate(row + 1, column) == 'X')
+                return 'X';
+        }
+            
         if(this.map[row] == undefined || this.map[row][column] == undefined)
             return 'X';
 
