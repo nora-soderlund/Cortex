@@ -112,7 +112,7 @@ Client.rooms.interface.cursor = new function() {
                 }
             }
             else {
-                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Client.rooms.interface.data.map.floor[row][column];
+                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Math.round(Client.rooms.interface.entity.currentMapEntity.result.depth);
 
                 cursor.setCoordinates(row, column, depth, -2000);
 
