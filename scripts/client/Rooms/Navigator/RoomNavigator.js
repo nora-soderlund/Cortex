@@ -60,6 +60,8 @@ Client.rooms.navigator = new function() {
             for(let key in rooms) {
                 const list = new Client.rooms.navigator.list({ title: key, active: true });
 
+                rooms[key] = rooms[key].sort(function(a, b) { if(a.users == undefined) return 1; if(b.users == undefined) return -1; return b.users - a.users; });
+
                 for(let index in rooms[key])
                     list.add(rooms[key][index]);
                 
