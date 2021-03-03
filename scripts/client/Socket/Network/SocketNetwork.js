@@ -5,6 +5,9 @@ Client.socket.network = new function() {
     Client.socket.messages.block("OnSocketPing");
 
     setInterval(async function() {
+        if(Client.socket.server == undefined)
+            return;
+
         if(Client.socket.server.readyState != 1)
             return;
 
