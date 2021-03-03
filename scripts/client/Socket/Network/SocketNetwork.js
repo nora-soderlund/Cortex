@@ -27,4 +27,11 @@ Client.socket.network = new function() {
     
         Client.development.$network.text("Ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms");
     }, 1000);
+
+    Client.socket.messages.block("OnSocketUpdate");
+
+    Client.socket.messages.register("OnSocketUpdate", function(data) {
+        Client.development.$uptime.html("Uptime: " + data.uptime + "");
+        Client.development.$players.html("(" + data.users + " users)");
+    });
 };

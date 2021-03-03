@@ -6,9 +6,25 @@ Client.development = new function() {
             'PROJECT CORTEX DEVELOPMENT' +
             '' +
         '</div>'
+    ).css({ "left": 0, "right": "initial" }).appendTo(Client.$element);
+
+    this.$server = $('<p></p>').appendTo(this.$info);
+
+    this.$uptime = $('<span></span>').appendTo(this.$server);
+
+    this.$players = $('<span></span>').appendTo(this.$server).css({
+        "margin-left": "6px",
+        "float": "right"
+    });
+    
+
+    this.$stats = $(
+        '<div class="client-development">' +
+            'PROJECT CORTEX HOBBA ACCESS' +
+        '</div>'
     ).appendTo(Client.$element);
 
-    this.$debug = $('<p></p>').appendTo(this.$info);
+    this.$debug = $('<p></p>').appendTo(this.$stats);
 
     this.$frames = $('<span></span>').appendTo(this.$debug);
 
