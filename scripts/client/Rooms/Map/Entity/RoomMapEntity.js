@@ -431,10 +431,12 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
 
+            const depth = this.getCoordinate(this.settings.door.row, this.settings.door.column);
+
             const left = -(this.settings.door.row * 32) + (this.settings.door.column * 32);
-            const top = (this.settings.door.column * 32) - ((this.settings.door.depth - 3.5) * 16);
-            
-            context.drawImage(sprite, left, top);
+            const top = (this.settings.door.column * 32) - (this.depth * 32) + (depth * 32) - 32;
+
+            context.drawImage(sprite, left, top + sprite.height);
         }
     };
 
