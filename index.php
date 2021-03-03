@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Client</title>
+        <title>Project Cortex</title>
 
         <link rel="stylesheet" href="styles/fonts.min.css">
         <link rel="stylesheet" href="styles/client.min.css">
