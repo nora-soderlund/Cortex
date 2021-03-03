@@ -16,6 +16,21 @@ Client.rooms.interface.display = new function() {
         $element.click(click);
     };
 
+    this.figure = async function(entity) {
+        this.$element.hide();
+
+        this.$content.html("");
+        this.$buttons.html("");
+
+        const $header = $('<div class="room-interface-display-title">' + entity.data.name + '</div>').appendTo(this.$content);
+
+        $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+
+        $('<div class="room-interface-display-description">You clicked on ' + entity.data.name + '</div>').appendTo(this.$content);
+
+        this.$element.show();
+    };
+
     this.furniture = async function(entity) {
         this.$element.hide();
 
@@ -69,6 +84,11 @@ Client.rooms.interface.display = new function() {
         switch(entity.entity.name) {
             case "furniture":
                 Client.rooms.interface.display.furniture(entity.entity);
+
+                break;
+
+            case "figure":
+                Client.rooms.interface.display.figure(entity.entity);
 
                 break;
         }
