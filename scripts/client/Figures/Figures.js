@@ -3,6 +3,12 @@ Client.figures = new function() {
         missingSprite: false
     };
 
+    this.data = {};
+
+    this.getData = function() {
+
+    };
+
     this.getLibrary = async function(id, type) {
         const map = await Client.assets.getManifest("HabboFigureMap");
 

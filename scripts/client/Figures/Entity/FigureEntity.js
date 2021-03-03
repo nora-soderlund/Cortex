@@ -3,6 +3,8 @@ Client.figures.entity = function(figure) {
         this.render = [];
     };
 
+    this.data = {};
+
     this.set = function(figure) {
         this.parts = {};
 
@@ -158,9 +160,11 @@ Client.figures.entity = function(figure) {
             }
         }
 
-        let offset = map.offsets["std"];
+        let offset = map.offsets["std"], offsetName = "std";
 
         if(map.offsets[this.stance] != undefined) {
+            offsetName = this.stance;
+
             if(map.offsets[this.stance].link != undefined)
                 offset = map.offsets[map.offsets[this.stance].link];
             else
@@ -182,11 +186,17 @@ Client.figures.entity = function(figure) {
                 context.drawImage(layers[type][index].image, 128 + offset.left + layers[type][index].left, 128 + offset.top + layers[type][index].top);
             }
         }
+        
+        if(this.data[offsetName] == undefined)
+            this.data[offsetName] = {};
+
+        if(this.data[offsetName][this.direction] == undefined)
+            this.data[offsetName][this.direction] = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
 
         const sprites = [];
 
         sprites.push({
-            image: context.canvas,
+            image: context.canvas, imageData: this.data[offsetName][this.direction],
             left: 0, top: 0,
             index: 0
         });
@@ -243,10 +253,12 @@ Client.figures.entity = function(figure) {
         if(color != undefined && type != "ey")
             image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
 
+        const imageData = await Client.assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
+
         const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
 
         return {
-            image,
+            image, imageData,
             left: (parseInt(spriteData[0]) * -1),
             top: (parseInt(spriteData[1]) * -1)
         };
