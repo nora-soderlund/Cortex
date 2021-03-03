@@ -10,6 +10,6 @@ Client.user = new function() {
     
     Client.socket.messages.register("OnUserFurnitureUpdate", function(data) {
         for(let key in data)
-            Client.user.furnitures[key] = data.furnitures[key];
+            Client.user.furnitures = data;
     });
 };

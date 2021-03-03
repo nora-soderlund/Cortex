@@ -46,6 +46,8 @@ Client.inventory = new function() {
         if(Client.rooms.interface.furniture.place.enabled == true) {
             Client.rooms.interface.furniture.place.stop();
         }
+
+        entity.tabs.show();
     });
 
     return entity;
