@@ -421,11 +421,26 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
         context.fill();
         context.closePath();
+
+        if(this.settings.door.row != null && this.settings.door.column != null) {
+            const mask = Client.rooms.map.getMask("door_64");
+
+            const sprite = await Client.assets.getSprite("HabboRoomContent", "HabboRoomContent_" + mask.asset.name);
+
+            context.globalCompositeOperation = "destination-out";
+
+            context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+
+            const left = -(this.settings.door.row * 32) + (this.settings.door.column * 32);
+            const top = (this.settings.door.column * 32) - ((this.settings.door.depth - 3.5) * 16);
+            
+            context.drawImage(sprite, left, top);
+        }
     };
 
     this.getCoordinate = function(row, column, door = false) {
         if(door && this.settings.door.row == row && this.settings.door.column == column) {
-            if(this.getCoordinate(row, column + 1) != 'X' && this.getCoordinate(row + 1, column) == 'X')
+            if(this.getCoordinate(row + 1, column) == 'X')
                 return 'X';
         }
             

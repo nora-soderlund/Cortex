@@ -1,4 +1,9 @@
 Client.socket.messages.register("OnRoomEnter", async function(data) {
+    Client.rooms.interface.entity.door = undefined;
+
+    if(data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X')
+        Client.rooms.interface.entity.door = data.map.door;
+
     Client.rooms.navigator.hide();
 
     await Client.rooms.interface.clear();

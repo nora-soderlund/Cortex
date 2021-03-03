@@ -1,7 +1,7 @@
 Client.rooms.items.map = function(parent, map = "", door = {}) {
     const entity = new Client.rooms.items.entity(parent, "map");
 
-    entity.index = -4000;
+    entity.index = -10000;
 
     entity.map = new Client.rooms.map.entity(map, door);
 
@@ -60,7 +60,7 @@ Client.rooms.items.map = function(parent, map = "", door = {}) {
 
         const wall = new Client.rooms.items.sprite(entity, entity.map.$wall[0]);
 
-        wall.index = 4000;
+        wall.index = 10000;
         
         wall.setOffset(-entity.parent.center, entity.map.offset);
 

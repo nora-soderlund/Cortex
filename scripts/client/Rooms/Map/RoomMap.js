@@ -62,4 +62,33 @@ Client.rooms.map = new function() {
 
         return "HabboRoomContent_" + textures[index].bitmap.assetName;
     };
+
+    this.getAsset = function(name) {
+        const assets = Client.rooms.asset.room_assets.assets.asset;
+
+        let index = 0;
+
+        for(index in assets) {
+            if(assets[index].name == name)
+                break;
+        }
+
+        const asset = JSON.parse(JSON.stringify(assets[index]));
+
+        if(asset.source != undefined) {
+            const source = this.getAsset(asset.source);
+
+            for(let key in source)
+                if(asset[key] == undefined)
+                    asset[key] = source[key];
+        }
+
+        return asset;
+    };
+
+    this.getMask = function(name) {
+        const asset = this.getAsset(name);
+
+        return { asset };
+    };
 };
