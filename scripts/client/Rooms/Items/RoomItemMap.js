@@ -36,23 +36,25 @@ Client.rooms.items.map = function(parent, map = "", floorMaterial = "default", f
         const $shadowCanvas = $('<canvas width="' + floor.image.width + '" height="' + (floor.image.height + 10) + '"></canvas>');
         const shadowCanvas = $shadowCanvas[0].getContext("2d");
 
-        shadowCanvas.filter = "blur(10px) brightness(0%) opacity(50%)";
-        shadowCanvas.drawImage(floor.image, 0, 10);
+        if(shadowCanvas.filter != undefined) {
+            shadowCanvas.filter = "blur(10px) brightness(0%) opacity(50%)";
+            shadowCanvas.drawImage(floor.image, 0, 10);
 
-        shadowCanvas.filter = "blur(0) brightness(100%) opacity(100%)";
-        shadowCanvas.drawImage(floor.image, 0, 0);
+            shadowCanvas.filter = "blur(0) brightness(100%) opacity(100%)";
+            shadowCanvas.drawImage(floor.image, 0, 0);
 
-        const shadow = new Client.rooms.items.sprite(entity, shadowCanvas.canvas);
+            const shadow = new Client.rooms.items.sprite(entity, shadowCanvas.canvas);
 
-        shadow.index = 0;
-        
-        shadow.setOffset(-entity.parent.center, -(entity.map.depth * 16));
+            shadow.index = 0;
+            
+            shadow.setOffset(-entity.parent.center, -(entity.map.depth * 16));
 
-        shadow.mouseover = function(position) {
-            return false;
-        };
+            shadow.mouseover = function(position) {
+                return false;
+            };
 
-        entity.sprites.push(shadow);
+            entity.sprites.push(shadow);
+        }
 
         
 
