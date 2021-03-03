@@ -40,16 +40,21 @@ Client.rooms.interface.cursor = new function() {
     }).on("touchstart", function(event) {
         if(Client.rooms.interface.cursor.position == null)
             Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+
+        Client.rooms.interface.cursor.down = true;
     }).on("touchmove", function(event) {
         if(Client.rooms.interface.cursor.position == null)
+            Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+
+        if(!Client.rooms.interface.cursor.down)
             return;
-            
+
         Client.rooms.interface.entity.offset[0] += (event.touches[0].clientX - Client.rooms.interface.cursor.position[0]);
         Client.rooms.interface.entity.offset[1] += (event.touches[0].clientY - Client.rooms.interface.cursor.position[1]);
 
         Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
     }).on("touchend", function(event) {
-        Client.rooms.interface.cursor.position = null;
+        Client.rooms.interface.cursor.down = false;
     }).on("dblclick", function(event) {
         if(Client.rooms.interface.furniture.place.enabled)
             return;
