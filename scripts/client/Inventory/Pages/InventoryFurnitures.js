@@ -87,7 +87,7 @@ Client.inventory.pages.furnitures = function($element) {
     };
 
     this.setFurniture = function(id) {
-        if(Client.user.furnitures[id].inventory == undefined) {
+        if(!(Client.user.furnitures[id].inventory > 0)) {
             if(Client.inventory.$furnitures[id] != undefined) {
                 Client.inventory.$furnitures[id].$element.remove();
 
