@@ -83,15 +83,16 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
     this.renderFloor = async function() {
         const patterns = await this.renderPatterns("floor", this.settings.floor.material);
-        
-        const context = this.$floor[0].getContext("2d");
 
         // TODO: check if the +10 is actually needed
-        
-        context.canvas.width = (this.rows * 32) + (this.columns * 32);
-        context.canvas.height = (this.rows * 16) + (this.columns * 16) + this.settings.floor.thickness + (this.depth * 16) + 10;
 
-        const rectangles = [];
+        const width = (this.rows * 32) + (this.columns * 32);
+        const height = (this.rows * 16) + (this.columns * 16) + this.settings.floor.thickness + (this.depth * 16) + 10;
+
+        this.floor = [];
+        this.$floor = $('<canvas width="' + width + '" height="' + height + '"></canvas>');
+
+        const allRectangles = [];
 
         for(let row in this.map) {
             for(let column in this.map[row]) {
@@ -102,7 +103,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
                 if(this.getCoordinate(row, parseInt(column) - 1) == tile + 1) {
                     for(let step = 0; step < 4; step++) {
-                        rectangles.push({
+                        allRectangles.push({
                             row,
                             column: parseInt(column) + (step * .25),
                             depth: tile + 0.75 - (step * .25),
@@ -116,7 +117,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
                 if(this.getCoordinate(parseInt(row) - 1, column) == tile + 1) {
                     for(let step = 0; step < 4; step++) {
-                        rectangles.push({
+                        allRectangles.push({
                             row: parseInt(row) + (step * .25),
                             column,
                             depth: tile + 0.75 - (step * .25),
@@ -128,7 +129,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
                     continue;
                 }
 
-                rectangles.push({
+                allRectangles.push({
                     row, column, depth: tile,
 
                     width: 32, height: 32
@@ -136,78 +137,83 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
             }
         }
 
-        context.beginPath();
+        const context = this.$floor[0].getContext("2d");
 
-        context.setTransform(1, .5, 0, 1, this.rows * 32, this.depth * 16);
-                
-        context.fillStyle = patterns[1];
+        for(let _depth = 0; _depth <= this.depth; _depth++) {
+            const rectangles = allRectangles.filter(x => Math.ceil(x.depth) == _depth);
 
-        for(let index in rectangles) {
-            const rectangle = rectangles[index];
-
-            if(rectangles.find(x => (parseInt(x.row) == parseInt(rectangle.row) + 1 && x.column == rectangle.column && x.depth == rectangle.depth)) != null)
+            if(rectangles.length == 0)
                 continue;
 
-            const left = (rectangle.column * 32) - (rectangle.row * 32) - rectangle.height;
-            const top = (rectangle.row * 32) - (rectangle.depth * 32) + rectangle.height;
+            context.beginPath();
 
-            context.rect(left, top, rectangle.width, this.settings.floor.thickness);
-        }
+            context.setTransform(1, .5, 0, 1, this.rows * 32, this.depth * 16);
+                    
+            context.fillStyle = patterns[1];
 
-        context.fill();
+            for(let index in rectangles) {
+                const rectangle = rectangles[index];
 
-        context.beginPath();
+                if(rectangles.find(x => (parseInt(x.row) == parseInt(rectangle.row) + 1 && x.column == rectangle.column && x.depth == rectangle.depth)) != null)
+                    continue;
 
-        context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+                const left = (rectangle.column * 32) - (rectangle.row * 32) - rectangle.height;
+                const top = (rectangle.row * 32) - (rectangle.depth * 32) + rectangle.height;
+
+                context.rect(left, top, rectangle.width, this.settings.floor.thickness);
+            }
+
+            context.fill();
+
+            context.beginPath();
+
+            context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+                    
+            context.fillStyle = patterns[2];
+
+            for(let index in rectangles) {
+                const rectangle = rectangles[index];
+
+                if(rectangles.find(x => (x.row == rectangle.row && parseInt(x.column) == parseInt(rectangle.column) + 1 && x.depth == rectangle.depth)) != null)
+                    continue;
+
+                const row = parseFloat(rectangle.row);
+
+                const column = parseFloat(rectangle.column);
+
+                const left = -(row * 32) + (column * 32) + rectangle.width - rectangle.height;
+                const top = (column * 32) - (rectangle.depth * 32) + rectangle.width;
+
+                context.rect(left, top, rectangle.height, this.settings.floor.thickness);
+            }
+
+            context.fill();
+
+            context.beginPath();
+
+            context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);
+                    
+            context.fillStyle = patterns[0];
+
+            const tiles = new Path2D();
+
+            for(let index in rectangles) {
+                const rectangle = rectangles[index];
+
+                const left = rectangle.column * 32 - (rectangle.depth * 32);
+                const top = rectangle.row * 32 - (rectangle.depth * 32);
+
+                const path = new Path2D();
+
+                path.rect(left, top, rectangle.width, rectangle.height);
+
+                this.floor.push({ row: rectangle.row, column: rectangle.column, depth: rectangle.depth, path });
                 
-        context.fillStyle = patterns[2];
+                tiles.addPath(path);
+            }
 
-        for(let index in rectangles) {
-            const rectangle = rectangles[index];
-
-            if(rectangles.find(x => (x.row == rectangle.row && parseInt(x.column) == parseInt(rectangle.column) + 1 && x.depth == rectangle.depth)) != null)
-                continue;
-
-            const row = parseFloat(rectangle.row);
-
-            const column = parseFloat(rectangle.column);
-
-            const left = -(row * 32) + (column * 32) + rectangle.width - rectangle.height;
-            const top = (column * 32) - (rectangle.depth * 32) + rectangle.width;
-
-            context.rect(left, top, rectangle.height, this.settings.floor.thickness);
+            context.fill(tiles);
         }
-
-        context.fill();
-
-        context.beginPath();
-
-        context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);
-                
-        context.fillStyle = patterns[0];
-
-        const tiles = new Path2D();
-
-        this.floor = [];
-
-        for(let index in rectangles) {
-            const rectangle = rectangles[index];
-
-            const left = rectangle.column * 32 - (rectangle.depth * 32);
-            const top = rectangle.row * 32 - (rectangle.depth * 32);
-
-            const path = new Path2D();
-
-            path.rect(left, top, rectangle.width, rectangle.height);
-
-            this.floor.push({ row: rectangle.row, column: rectangle.column, depth: rectangle.depth, path });
-            
-            tiles.addPath(path);
-        }
-
-        context.fill(tiles);
-
-        console.log(this);
     };
 
     this.renderWall = async function() {
@@ -454,8 +460,6 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
     for(let key in floor)
         this.settings.floor[key] = floor[key];
-
-    this.$floor = $('<canvas></canvas>');
 
     for(let key in wall)
         this.settings.wall[key] = wall[key];

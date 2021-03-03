@@ -21,7 +21,7 @@ Client.rooms.items.map = function(parent, map = "", door = {}) {
 
             context.setTransform(1, .5, -1, .5, entity.map.rows * 32 - center, 0);
 
-            for(let path in entity.map.floor) {
+            for(let path = entity.map.floor.length - 1; path != -1; path--) {
                 if(!context.isPointInPath(entity.map.floor[path].path, position[0], position[1]))
                     continue;
 
@@ -35,7 +35,7 @@ Client.rooms.items.map = function(parent, map = "", door = {}) {
 
         const $shadowCanvas = $('<canvas width="' + floor.image.width + '" height="' + (floor.image.height + 10) + '"></canvas>');
         const shadowCanvas = $shadowCanvas[0].getContext("2d");
-
+        
         if(shadowCanvas.filter != undefined) {
             shadowCanvas.filter = "blur(10px) brightness(0%) opacity(50%)";
             shadowCanvas.drawImage(floor.image, 0, 10);
