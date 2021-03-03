@@ -10,6 +10,10 @@ Client.user = new function() {
     
     Client.socket.messages.register("OnUserFurnitureUpdate", function(data) {
         for(let key in data)
-            Client.user.furnitures = data;
+            Client.user.furnitures[key] = data[key];
+
+        if(Client.inventory.active() && Client.inventory.tabs.selected == "furnitures")
+            for(let key in data)
+                Client.inventory.page.setFurniture(key);
     });
 };

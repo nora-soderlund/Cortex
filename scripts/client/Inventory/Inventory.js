@@ -28,9 +28,7 @@ Client.inventory = new function() {
             try {
                 entity.$furnitures = {};
                 
-                await Client.inventory.pages[identifier]($content);
-
-                entity.page = identifier;
+                entity.page = new Client.inventory.pages[identifier]($content);
             }
             catch(exception) {
                 $content.html(exception);

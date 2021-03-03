@@ -82,6 +82,10 @@ Client.dialogs.default = function(settings = {}) {
         }
     };
 
+    this.active = function() {
+        return this.settings.active;
+    };
+
     this.show = function() {
         this.settings.active = true;
 
