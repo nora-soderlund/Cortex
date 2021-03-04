@@ -228,6 +228,8 @@ Client.furnitures.entity = function(settings = {}) {
             if(this.visualization.animations.animation[index].id != this.settings.animation)
                 continue;
 
+            const animationProperties = this.visualization.animations.animation[index];
+
             const animationLayers = this.visualization.animations.animation[index].animationLayer;
 
             const layers = {};
@@ -243,8 +245,9 @@ Client.furnitures.entity = function(settings = {}) {
 
                 layers[layer] = {
                     frameSequence: [],
-                    frameRepeat: (animationLayers[index].frameRepeat != undefined)?(parseInt(animationLayers[index].frameRepeat)):(0),
-                    frameLoop: (animationLayers[index].loopCount != undefined)?(parseInt(animationLayers[index].loopCount)):(0),
+                    frameRepeat: (animationProperties.frameRepeat != undefined)?(parseInt(animationProperties.frameRepeat)):(0),
+                    frameLoop: (animationProperties.loopCount != undefined)?(parseInt(animationProperties.loopCount)):(0),
+                    frameTransition: (animationProperties.transitionTo != undefined)?(parseInt(animationProperties.transitionTo)):(undefined),
 
                     timestamp: performance.now(),
                     frame: 0
@@ -373,8 +376,15 @@ Client.furnitures.entity = function(settings = {}) {
 
             this.animations[index].frame++;
 
-            if(this.animations[index].frame >= this.animations[index].frameSequence.length)
+            if(this.animations[index].frame >= this.animations[index].frameSequence.length) {
                 this.animations[index].frame = 0;
+
+                if(this.animations[index].frameTransition != undefined) {
+                    this.setAnimation(this.animations[index].frameTransition);
+
+                    return true;
+                }
+            }
 
             this.animations[index].timestamp = timestamp;
 
