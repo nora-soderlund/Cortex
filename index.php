@@ -15,7 +15,7 @@
         </script>
     </head>
     <body>
-        <section id="client">
+        <section id="client" class="<?= (isset($_GET["theme"])?($_GET["theme"]):("default")) ?>">
             <section id="client-loader">
                 <div class="client-loader-container">
                     <div class="client-loader-logo"></div>
