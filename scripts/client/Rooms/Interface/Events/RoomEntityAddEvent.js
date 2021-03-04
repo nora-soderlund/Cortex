@@ -33,6 +33,12 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
             entity.setPosition(data.users[index].position);
             
             entity.render();
+                
+            if(data.users[index].actions != undefined) {
+                await entity.figure.setActions(data.users[index].actions);
+
+                entity.figure.render();
+            }
 
             entity.data = data.users[index];
 
