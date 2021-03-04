@@ -204,11 +204,11 @@ Client.furnitures.entity = function(settings = {}) {
 
                 layers[layer.id] = {};
 
-                for(let key in layers) {
+                for(let key in layer) {
                     if(key == "id")
                         continue;
 
-                    layers[layer.id][key] = layers[key];
+                    layers[layer.id][key] = layer[key];
                 }
             }
 
