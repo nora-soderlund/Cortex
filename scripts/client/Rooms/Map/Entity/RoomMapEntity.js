@@ -437,12 +437,14 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
 
-            const depth = this.getCoordinate(this.settings.door.row, this.settings.door.column);
+            const row = this.settings.door.row;
+            const column = this.settings.door.column;
+            const depth = this.getCoordinate(row, column);
 
-            const left = -(this.settings.door.row * 32) + (this.settings.door.column * 32);
-            const top = (this.settings.door.column * 32) - (this.depth * 32) + (depth * 32) - 32;
+            const left = -(row * 32) + (column * 32);
+            const top = (column * 32) - (this.depth * 16) + ((3.5 + (this.depth - depth)) * 32) + 32 - sprite.height;
 
-            context.drawImage(sprite, left, top + sprite.height);
+            context.drawImage(sprite, left, top);
         }
     };
 
