@@ -21,6 +21,7 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                 const sprite = new Client.rooms.items.sprite(entity, layer.sprite);
 
                 sprite.composite = layer.ink;
+                sprite.alpha = layer.alpha;
 
                 sprite.mouseover = function(position) {
                     if(layer.ignoreMouse == 1)

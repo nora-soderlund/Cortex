@@ -51,6 +51,8 @@ Client.furnitures.entity = function(settings = {}) {
 
                 layer.ink = (layer.ink == undefined)?("source-over"):(this.getLayerInk(layer.ink));
 
+                layer.alpha = (layer.alpha == undefined)?(1.0):(parseInt(layer.alpha) / 100);
+
                 layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
                 layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
                 
