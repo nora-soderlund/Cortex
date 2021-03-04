@@ -7,6 +7,8 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
 
             if(item.position != undefined) {
                 if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined) {
+                    entity.stopPath(true);
+
                     if(item.position.speed != 0)
                         entity.setPath(entity.data.position, item.position, item.position.speed);
                     else
@@ -29,17 +31,10 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
 
                     render = true;
                 }
-            }
+                
+                if(data.users[index].position.actions != undefined) {
+                    await Client.rooms.interface.users[index].figure.setActions(data.users[index].position.actions);
 
-            if(data.users[index].action != undefined) {
-                if(data.users[index].action[0].length != undefined) {
-                    await Client.rooms.interface.users[index].figure.addAction(data.users[index].action);
-                    
-                    render = true;
-                }
-                else {
-                    await Client.rooms.interface.users[index].figure.setActions(data.users[index].action);
-                    
                     render = true;
                 }
             }

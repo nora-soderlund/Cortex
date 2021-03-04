@@ -103,11 +103,36 @@ Client.figures.entity = function(figure) {
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
 
+        let offset = map.offsets["std"], offsetName = "std";
+
         let priorities = map.priorities["std"][direction];
 
-        if(map.priorities[this.stance] != undefined) {
-            if(map.priorities[this.stance][direction] != undefined) {
-                priorities = map.priorities[this.stance][direction];
+        let prioritiesChanged = false, offsetChanged = false;
+
+        for(let index in this.actions) {
+            const stance = this.actions[index].assetpartdefinition;
+
+            if(prioritiesChanged == false) {
+                if(map.priorities[stance] != undefined) {
+                    if(map.priorities[stance][direction] != undefined) {
+                        priorities = map.priorities[stance][direction];
+
+                        prioritiesChanged = true;
+                    }
+                }
+            }
+
+            if(offsetChanged == false) {
+                if(map.offsets[stance] != undefined) {
+                    offsetName = stance;
+
+                    if(map.offsets[stance].link != undefined)
+                        offset = map.offsets[map.offsets[stance].link];
+                    else
+                        offset = map.offsets[stance];
+
+                    offsetChanged = true;
+                }
             }
         }
 
@@ -158,17 +183,6 @@ Client.figures.entity = function(figure) {
 
                 layers[type].push(sprite);
             }
-        }
-
-        let offset = map.offsets["std"], offsetName = "std";
-
-        if(map.offsets[this.stance] != undefined) {
-            offsetName = this.stance;
-
-            if(map.offsets[this.stance].link != undefined)
-                offset = map.offsets[map.offsets[this.stance].link];
-            else
-                offset = map.offsets[this.stance];
         }
 
         context.clearRect(0, 0, 256, 256);

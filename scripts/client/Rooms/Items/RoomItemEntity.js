@@ -53,6 +53,19 @@ Client.rooms.items.entity = function(parent, name) {
             this.events.path.start[index]();
     };
 
+    this.stopPath = function(finish = true) {
+        if(this.path == false)
+            return;
+            
+        this.path = false;
+
+        if(finish)
+            this.setCoordinates(this.pathTo.row, this.pathTo.column, this.pathTo.depth);
+
+        for(let index in this.events.path.finish)
+            this.events.path.finish[index]();
+    };
+
     this.updatePath = function(frame) {
         if(!this.path)
             return;
