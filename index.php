@@ -5,6 +5,11 @@
         <link rel="stylesheet" href="styles/fonts.min.css">
         <link rel="stylesheet" href="styles/client.min.css">
 
+        <?php
+            if(isset($_GET["theme"]))
+                echo '<link rel="stylesheet" href="styles/themes/' . $_GET["theme"] . '.min.css">';
+        ?>
+
         <script type="text/javascript">
             const key = "<?= (isset($_GET["key"])?($_GET["key"]):("Cake")) ?>";
         </script>
