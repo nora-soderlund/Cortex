@@ -1,17 +1,16 @@
 Client.socket.messages.register("OnRoomEnter", async function(data) {
     Client.rooms.interface.entity.door = undefined;
 
-    if(data.room.map.floor[data.room.map.door.row + 1] == undefined || data.room.map.floor[data.room.map.door.row + 1][data.room.map.door.column] == 'X')
-        Client.rooms.interface.entity.door = data.room.map.door;
+    if(data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X')
+        Client.rooms.interface.entity.door = data.map.door;
 
     Client.rooms.navigator.hide();
 
     await Client.rooms.interface.clear();
 
-    Client.rooms.interface.data = data.room;
-    Client.rooms.interface.data.user = data.user;
+    Client.rooms.interface.data = data;
 
-    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.room.map.floor, data.room.map.door);
+    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door);
     
     Client.rooms.interface.map.render().then(function() {
         Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);

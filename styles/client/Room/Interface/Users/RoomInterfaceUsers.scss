@@ -14,7 +14,7 @@
     border-radius: 6px;
     border-bottom-width: 2px;
 
-    .room-interface-user-title {
+    .room-interface-user-title, .room-interface-user-header, .room-interface-user-footer {
         font-family: "Ubuntu Bold";
 
         position: relative;
@@ -37,6 +37,52 @@
 
             border: 1px solid #6D6A66;
             border-radius: 6px;
+        }
+
+        &.room-interface-user-header {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+
+            &:after {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        &.room-interface-user-footer {
+            height: 24px;
+
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+
+            &:after {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+            }
+        }
+    }
+
+    .room-interface-user-item {
+        position: relative;
+
+        width: 100%;
+        height: 28px;
+
+        line-height: 28px;
+
+        background: #262321 linear-gradient(180deg, #2A2725 50%, #262321 50%);;
+        border: 1px solid #262321;
+
+        font-size: 13px;
+
+        cursor: pointer;
+
+        &:hover {
+            filter: brightness(125%);
+        }
+
+        &:active {
+            filter: brightness(75%);
         }
     }
 

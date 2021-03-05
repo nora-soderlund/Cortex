@@ -65,7 +65,7 @@ Client.rooms.interface.display = new function() {
             Client.rooms.interface.furniture.move.start(entity);
         });
 
-        if(Client.rooms.interface.data.user.rights) {
+        if(Client.rooms.interface.data.rights.includes(Client.user.id)) {
             if(Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) {
                 this.addButton("Use", function() {
                     Client.rooms.interface.furniture.use.start(entity);
