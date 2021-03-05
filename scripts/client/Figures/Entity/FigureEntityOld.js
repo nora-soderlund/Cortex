@@ -1,74 +1,23 @@
-Client.figures.entity = function(figure, properties) {
-    this.$canvas = $('<canvas width="256" height="256"></canvas>');
-    
-    this.events = {
-        render: []
+Client.figures.entity = function(figure) {
+    this.events = new function() {
+        this.render = [];
     };
-
-    this.direction = 2;
-    
-    this.actions = [];
-
-    this.frames = {};
 
     this.data = {};
 
-    this.getSprite = async function(library, type, id, direction, color) {
-        const manifest = await Client.assets.getManifest("HabboFigures/" + library);
-
-        let frame = 0, sprite;
-
-        for(let index in this.actions) {
-            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-
-            if(manifest.sprites[library + "_" + sprite] == undefined)
-                continue;
-
-            if(this.frames[this.actions[index].id] != undefined) {
-                frame = this.frames[this.actions[index].id];
-                
-                sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-
-                if(manifest.sprites[library + "_" + sprite] == undefined) {
-                    frame = 0;
-
-                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
-                }
-            }
-
-            break;
-        }
-
-        if(manifest.sprites[library + "_" + sprite] == undefined) {
-            if(Client.figures.logging.missingSprite)
-                console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
-
-            return null;
-        }
-
-        let image = await Client.assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
-
-        if(color != undefined && type != "ey")
-            image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
-
-        const imageData = await Client.assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
-
-        const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
-
-        return {
-            image, imageData,
-            left: (parseInt(spriteData[0]) * -1),
-            top: (parseInt(spriteData[1]) * -1)
-        };
-    };
-
-    this.setFigure = function(figure) {
+    this.set = function(figure) {
         this.parts = {};
-        
-        this.figure = figure.split('.');
 
-        for(let index = 0; index < this.figure.length; index++) {
-            const parts = this.figure[index].split('-');
+        // hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91
+
+        figure = figure.split('.');
+
+        // hr-100   hd-180-1    ch-210-66  lg-270-82    sh-290-91
+
+        for(let index = 0; index < figure.length; index++) {
+            const parts = figure[index].split('-');
+
+            // hd 180 1
 
             const part = parts[0];
 
@@ -82,20 +31,30 @@ Client.figures.entity = function(figure, properties) {
             this.parts[part].id = parseInt(parts[0]);
 
             parts.shift();
-
+            
             if(parts.length == 0)
                 continue;
 
-            this.parts[part].color = [];
-
-            for(let index in parts)
-                this.parts[part].color[index] = parseInt(parts[index]);
+            this.parts[part].color = parseInt(parts[0]);
         }
     };
 
-    this.setFigure(figure);
+    this.$canvas = $('<canvas width="256" height="256"></canvas>').appendTo(Client.development.$element);
 
-    this.setAction = async function(id) {
+    this.direction = 2;
+
+    this.actions = [];
+
+    this.setActions = async function(actions) {
+        this.actions.length = 0;
+
+        for(let key in actions)
+            await this.addAction(actions[key]);
+    }
+
+    this.frames = {};
+
+    this.addAction = async function(id) {
         if(this.actions.findIndex(x => x.id == id) != -1)
             return;
 
@@ -108,11 +67,11 @@ Client.figures.entity = function(figure, properties) {
         });
     };
 
-    this.setActions = async function(actions) {
-        this.actions.length = 0;
+    this.hasAction = function(id) {
+        if(this.actions.findIndex(x => x.id == id) != -1)
+            return true;
 
-        for(let key in actions)
-            await this.setAction(actions[key]);
+        return false;
     }
 
     this.removeAction = function(id) {
@@ -122,30 +81,31 @@ Client.figures.entity = function(figure, properties) {
             return;
 
         this.actions.splice(index, 1);
-    };
-
-    this.process = async function() {
-        await this.addAction("Default");
-        
-        for(let key in properties)
-            this[key] = properties[key];
-    };
+    }
 
     this.render = async function() {
+        //let timestamp = performance.now();
+
+        //const $canvas = $('<canvas width="256" height="256"></canvas>');
+
         const context = this.$canvas[0].getContext("2d");
 
         context.save();
 
+        //context.canvas.width = context.canvas.width;
+
+        const map = await Client.assets.getManifest("HabboFigureMap");
+
         const layers = {};
 
-        await this.setAction("Default");
+        await this.addAction("Default");
         //await this.addAction("GestureSmile");
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
 
-        let offset = Client.figures.map.offsets["std"], offsetName = "std";
+        let offset = map.offsets["std"], offsetName = "std";
 
-        let priorities = Client.figures.map.priorities["std"][direction];
+        let priorities = map.priorities["std"][direction];
 
         let prioritiesChanged = false, offsetChanged = false;
 
@@ -153,9 +113,9 @@ Client.figures.entity = function(figure, properties) {
             const stance = this.actions[index].assetpartdefinition;
 
             if(prioritiesChanged == false) {
-                if(Client.figures.map.priorities[stance] != undefined) {
-                    if(Client.figures.map.priorities[stance][direction] != undefined) {
-                        priorities = Client.figures.map.priorities[stance][direction];
+                if(map.priorities[stance] != undefined) {
+                    if(map.priorities[stance][direction] != undefined) {
+                        priorities = map.priorities[stance][direction];
 
                         prioritiesChanged = true;
                     }
@@ -163,13 +123,13 @@ Client.figures.entity = function(figure, properties) {
             }
 
             if(offsetChanged == false) {
-                if(Client.figures.map.offsets[stance] != undefined) {
+                if(map.offsets[stance] != undefined) {
                     offsetName = stance;
 
-                    if(Client.figures.map.offsets[stance].link != undefined)
-                        offset = Client.figures.map.offsets[Client.figures.map.offsets[stance].link];
+                    if(map.offsets[stance].link != undefined)
+                        offset = map.offsets[map.offsets[stance].link];
                     else
-                        offset = Client.figures.map.offsets[stance];
+                        offset = map.offsets[stance];
 
                     offsetChanged = true;
                 }
@@ -266,4 +226,55 @@ Client.figures.entity = function(figure, properties) {
 
         //Client.utils.warn("FigureEntity", "After math render processes took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms to execute!");
     };
+
+    this.getSprite = async function(library, type, id, direction, color) {
+        const manifest = await Client.assets.getManifest("HabboFigures/" + library);
+
+        let frame = 0, sprite;
+
+        for(let index in this.actions) {
+            sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+
+            if(manifest.sprites[library + "_" + sprite] == undefined)
+                continue;
+
+            if(this.frames[this.actions[index].id] != undefined) {
+                frame = this.frames[this.actions[index].id];
+                
+                sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+
+                if(manifest.sprites[library + "_" + sprite] == undefined) {
+                    frame = 0;
+
+                    sprite = "h_" + this.actions[index].assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
+                }
+            }
+
+            break;
+        }
+
+        if(manifest.sprites[library + "_" + sprite] == undefined) {
+            if(Client.figures.logging.missingSprite)
+                console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
+
+            return null;
+        }
+
+        let image = await Client.assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
+
+        if(color != undefined && type != "ey")
+            image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
+
+        const imageData = await Client.assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
+
+        const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
+
+        return {
+            image, imageData,
+            left: (parseInt(spriteData[0]) * -1),
+            top: (parseInt(spriteData[1]) * -1)
+        };
+    };
+
+    this.set(figure);
 };

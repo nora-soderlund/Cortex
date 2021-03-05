@@ -5,6 +5,8 @@ Client.loader = new function() {
 
     this.$scripts = $('<scripts id="client-scripts"></scripts>').appendTo(this.$element);
 
+    this.assets = [];
+
     this.show = function() {
         this.$element.fadeIn();
     };
@@ -25,6 +27,10 @@ Client.loader = new function() {
 
     this.addStep = function(step) {
         this.steps.push(step);
+    };
+
+    this.addAsset = function(asset) {
+        this.assets.push(asset);
     };
 
     this.load = function(finished) {
@@ -171,6 +177,13 @@ Client.loader.addStep(async function(finished) {
 
 Client.loader.addStep(async function(finished) {
     Client.rooms.navigator.show();
+    
+    finished();
+});
+
+Client.loader.addStep(async function(finished) {
+    for(let index in Client.loader.assets)
+        await Client.loader.assets[index]();
     
     finished();
 });

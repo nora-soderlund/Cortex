@@ -3,16 +3,8 @@ Client.figures = new function() {
         missingSprite: false
     };
 
-    this.data = {};
-
-    this.getData = function() {
-
-    };
-
     this.getLibrary = async function(id, type) {
-        const map = await Client.assets.getManifest("HabboFigureMap");
-
-        const libraries = map.map.lib;
+        const libraries = this.map.map.lib;
 
         let index = 0;
 
@@ -34,9 +26,7 @@ Client.figures = new function() {
     };
 
     this.getSetType = async function(type) {
-        const figures = await Client.assets.getManifest("HabboFigureData");
-
-        const sets = figures.figuredata.sets.settype;
+        const sets = this.data.figuredata.sets.settype;
 
         let index = 0;
 
@@ -79,9 +69,7 @@ Client.figures = new function() {
     }
 
     this.getPalette = async function(palette) {
-        const figures = await Client.assets.getManifest("HabboFigureData");
-
-        const palettes = figures.figuredata.colors.palette;
+        const palettes = this.data.figuredata.colors.palette;
 
         let index = 0;
 
@@ -109,17 +97,21 @@ Client.figures = new function() {
     };
 
     this.getAction = async function(id) {
-        const actions = await Client.assets.getManifest("HabboFigureActions");
-
         let index = 0;
 
-        for(index in actions.actions.action) {
-            if(actions.actions.action[index].id != id)
+        for(index in this.actions.actions.action) {
+            if(this.actions.actions.action[index].id != id)
                 continue;
 
             break;
         }
 
-        return actions.actions.action[index];
+        return this.actions.actions.action[index];
     };
 };
+
+Client.loader.addAsset(async function() {
+    Client.figures.data = await Client.assets.getManifest("HabboFigureData");
+    Client.figures.map = await Client.assets.getManifest("HabboFigureMap");
+    Client.figures.actions = await Client.assets.getManifest("HabboFigureActions");
+});

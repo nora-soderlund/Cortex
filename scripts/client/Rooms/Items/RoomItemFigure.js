@@ -2,9 +2,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
     const entity = new Client.rooms.items.entity(parent, "figure");
 
     entity.render = async function() {
-        entity.figure = new Client.figures.entity(figure);
-
-        entity.figure.direction = direction;
+        entity.figure = new Client.figures.entity(figure, { direction });
 
         entity.figure.events.render.push(function(sprites) {
             entity.sprites.length = 0;
@@ -50,7 +48,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
     };
 
     entity.events.path.start.push(async function() {
-        await entity.figure.addAction("Move");
+        await entity.figure.setAction("Move");
 
         await entity.figure.render();
     });
