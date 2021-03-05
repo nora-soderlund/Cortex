@@ -116,7 +116,7 @@ Client.rooms.items.entity = function(parent, name) {
         this.index = (Math.round(row) * 1000) + (Math.round(column) * 1000) + depth + index;
 
         if(parent.door != undefined && parent.door.row == Math.round(row) && parent.door.column == Math.round(column))
-            this.index = -2000 + index;
+            this.index = -4000 + index;
     };
     
     this.process = function(timestamp, frame) {
