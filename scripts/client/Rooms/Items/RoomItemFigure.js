@@ -44,7 +44,10 @@ Client.rooms.items.figure = function(parent, figure, direction) {
             }
         });
 
-        entity.figure.render();
+
+        entity.figure.process().then(function() {
+            entity.figure.render();
+        });
     };
 
     entity.events.path.start.push(async function() {

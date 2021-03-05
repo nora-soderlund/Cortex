@@ -113,6 +113,8 @@ Client.figures.entity = function(figure, properties) {
 
         for(let key in actions)
             await this.setAction(actions[key]);
+            
+        await this.setAction("Default");
     }
 
     this.removeAction = function(id) {
@@ -125,7 +127,7 @@ Client.figures.entity = function(figure, properties) {
     };
 
     this.process = async function() {
-        await this.addAction("Default");
+        await this.setAction("Default");
         
         for(let key in properties)
             this[key] = properties[key];
@@ -138,7 +140,6 @@ Client.figures.entity = function(figure, properties) {
 
         const layers = {};
 
-        await this.setAction("Default");
         //await this.addAction("GestureSmile");
 
         let direction = (this.direction > 3 && this.direction < 7)?(6 - this.direction):(this.direction);
