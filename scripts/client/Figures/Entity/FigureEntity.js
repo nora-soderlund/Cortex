@@ -195,12 +195,6 @@ Client.figures.entity = function(figure, properties = {}) {
 
             let palette = undefined, color = undefined;
 
-            if(this.parts[set].color != undefined) {
-                palette = await Client.figures.getPalette(setType.paletteid);
-
-                color = Client.figures.getPaletteColor(palette, this.parts[set].color)["#text"];
-            }
-
             if(setData.part.length == undefined)
                 setData.part = [ setData.part ];
 
@@ -208,6 +202,16 @@ Client.figures.entity = function(figure, properties = {}) {
                 const id = parseInt(setData.part[index].id);
 
                 const type = setData.part[index].type;
+
+                let color = undefined;
+
+                const colorIndex = parseInt(setData.part[index].colorindex) - 1;
+
+                if(this.parts[set].color != undefined && this.parts[set].color[colorIndex] != undefined) {
+                    palette = await Client.figures.getPalette(setType.paletteid);
+    
+                    color = Client.figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
+                }
 
                 if(layers[type] == undefined) {
                     console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
