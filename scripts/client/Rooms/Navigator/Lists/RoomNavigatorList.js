@@ -58,7 +58,11 @@ Client.rooms.navigator.list = function(settings) {
         
         const $element = $(
             '<div class="room-navigator-list-item">' +
-                '<p class="room-navigator-list-users" style="background: ' + color + '"><i></i>' + room.users + '</p>' +
+                '<div class="room-navigator-list-users" style="background: ' + color + '">' +
+                    '<p class="room-navigator-list-users-count">' +
+                        '<i></i>' + room.users +
+                    '</p>' +
+                '</div>' +
                 room.title +
             '</div>'
         ).appendTo(this.$table);
