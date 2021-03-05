@@ -38,6 +38,16 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
                     render = true;
                 }
             }
+                
+            if(data.users[index].action != undefined) {
+                await Client.rooms.interface.users[index].figure.setAction(data.users[index].action.action);
+
+                setTimeout(async function() {
+                    await Client.rooms.interface.users[index].figure.removeAction(data.users[index].action.action);
+
+                    Client.rooms.interface.users[index].figure.render();
+                }, data.users[index].action.time);
+            }
 
             Client.rooms.interface.users[index].figure.render();
         }

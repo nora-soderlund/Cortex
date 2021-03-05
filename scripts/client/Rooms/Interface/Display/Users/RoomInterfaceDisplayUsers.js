@@ -25,11 +25,22 @@ Client.rooms.interface.display.users = new function() {
 
             switch(page) {
                 case "default": {
-                    this.add("Wave", function() {
-                        Client.socket.messages.sendCall("OnRoomUserAction", "Wave");
+                    if(Client.user.id == 1) {
+                        this.add("VERY Cool Person", function() {
+                            
+                        });
+                    }
+                    else {
+                        this.add("Cool Person", function() {
+                            
+                        });
+                    }
 
-                        this.hide();
-                    });
+                    if(Client.user.id == this.entity.entity.data.id) {
+                        this.add("Gestures", function() {
+                            Client.rooms.interface.display.users.tabs.show("gestures", "default");
+                        });
+                    }
 
                     if(Client.rooms.interface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
                         this.add("Moderate", function() {
@@ -40,14 +51,24 @@ Client.rooms.interface.display.users = new function() {
                     break;
                 }
 
+                case "gestures": {
+                    for(let index in Client.figures.actions.actions.action) {
+                        this.add(Client.figures.actions.actions.action[index].id, function() {
+                            Client.socket.messages.sendCall({ OnRoomUserAction: Client.figures.actions.actions.action[index].id }, "OnRoomUserAction");
+
+                            Client.rooms.interface.display.users.tabs.hide();
+                        });
+                    }
+
+                    break;
+                }
+
                 case "moderate": {
                     if(Client.user.id == Client.rooms.interface.data.user) {
-                        Client.rooms.interface.data.rights = await Client.socket.messages.sendCall("OnRoomRightsUpdate", null);
+                        Client.rooms.interface.data.rights = await Client.socket.messages.sendCall({ OnRoomRightsUpdate: null }, "OnRoomRightsUpdate");
 
                         this.add((Client.rooms.interface.data.rights.includes(this.entity.entity.data.id)?("Revoke"):("Grant")) + " Rights", async function() {
-                            await Client.socket.messages.sendCall("OnRoomRightsUpdate", {
-                                user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
-                            });
+                            await Client.socket.messages.sendCall({ OnRoomRightsUpdate: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnRoomRightsUpdate");
 
                             Client.rooms.interface.display.users.tabs.show("moderate", "default");
                         });
@@ -96,7 +117,7 @@ Client.rooms.interface.display.users = new function() {
         };
 
         Client.rooms.interface.cursor.events.click.push(function(entity) {
-            if(entity == undefined) {
+            if(entity == undefined || entity.entity.name != "figure") {
                 Client.rooms.interface.display.users.tabs.hide();
                 
                 return;
