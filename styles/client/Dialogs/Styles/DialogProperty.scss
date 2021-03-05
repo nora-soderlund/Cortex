@@ -1,0 +1,25 @@
+.dialog-property {
+    p {
+        b {
+            display: block;
+        }
+
+        margin-bottom: 6px;
+    }
+
+    input, textarea {
+        width: 100%;
+    }
+
+    textarea {
+        height: 64px;
+
+        min-height: 64px;
+        max-height: 64px;
+
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    margin-bottom: 12px;
+}
