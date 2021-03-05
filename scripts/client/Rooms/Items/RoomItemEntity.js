@@ -104,32 +104,6 @@ Client.rooms.items.entity = function(parent, name) {
         }
     };
 
-    /*this.setPosition = function(position, index = 0) {
-        this.data.position = position;
-
-        this.offset = [ Math.floor(-(position.row * 32) + (position.column * 32) - 64), Math.floor((position.column * 16) + (position.row * 16) - (position.depth * 32)) ];
-
-        this.index = (position.row * 1000) + (position.column * 1000) + (position.depth * 100) + index;
-
-        if(parent.door != undefined && parent.door.row == Math.round(position.row) && parent.door.column == Math.round(position.column))
-            this.index = -11000 + index;
-    };
-
-    this.setCoordinates = function(row, column, depth, index = 0) {
-        this.data.position = { row, column, depth };
-
-        //this.offset = [ Math.floor(-(row * 32) + (column * 32)), Math.floor((column * 16) + (row * 16) - (depth * 16)) ];
-
-        this.offset = [ Math.floor(-(row * 32) + (column * 32) - 64), Math.floor((column * 16) + (row * 16) - (depth * 32)) ];
-
-        //this.index = ((row + column + Math.trunc(index / 1000)) * 500) + depth;
-
-        this.index = (row * 1000) + (column * 1000) + (depth * 100) + index;
-
-        if(parent.door != undefined && parent.door.row == Math.round(row) && parent.door.column == Math.round(column))
-            this.index = -11000 + index;
-    };*/
-
     this.setPosition = function(position, index = 0) {
         this.setCoordinates(position.row, position.column, position.depth, index);
     };
