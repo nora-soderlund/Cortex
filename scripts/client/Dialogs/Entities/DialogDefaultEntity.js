@@ -22,7 +22,7 @@ Client.dialogs.default = function(settings = {}) {
 
             '<div class="dialog-default-container"></div>' +
         '</div>'
-    ).appendTo(Client.$element);
+    ).appendTo(Client.dialogs.$element);
 
     this.$content = $('<div class="dialog-default-content"></div>').appendTo(this.$element.find(".dialog-default-container"));
     
