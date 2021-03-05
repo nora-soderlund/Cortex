@@ -213,7 +213,9 @@ Client.figures.entity = function(figure, properties = {}) {
                     color = Client.figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
                 }
 
-                if(layers[type] == undefined) {
+                const priorityType = (layers[priorityType] != undefined)?(type):(type[0] + 'h');
+
+                if(layers[priorityType] == undefined) {
                     console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
 
                     continue;
@@ -226,7 +228,7 @@ Client.figures.entity = function(figure, properties = {}) {
                 if(sprite == null)
                     continue;
 
-                layers[type].push(sprite);
+                layers[priorityType].push(sprite);
             }
         }
 

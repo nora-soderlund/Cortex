@@ -3,6 +3,12 @@ Client.figures = new function() {
         missingSprite: false
     };
 
+    this.parts = {
+        "cc": "ch",
+        "lc": "lh",
+        "rc": "rh"
+    };
+
     this.getLibrary = async function(id, type) {
         const libraries = this.map.map.lib;
 
