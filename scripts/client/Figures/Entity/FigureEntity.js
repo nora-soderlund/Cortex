@@ -228,7 +228,11 @@ Client.figures.entity = function(figure, properties = {}) {
                 if(sprite == null)
                     continue;
 
-                layers[priorityType].push(sprite);
+                
+                if(priorityType != type)
+                    layers[priorityType].unshift(sprite);
+                else
+                    layers[priorityType].push(sprite);
             }
         }
 
