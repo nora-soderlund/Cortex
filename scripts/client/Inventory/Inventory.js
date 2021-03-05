@@ -10,7 +10,9 @@ Client.inventory = new function() {
         offset: {
             type: "center",
             top: -130
-        }
+        },
+
+        resizable: true
     });
 
     entity.pages = {};
