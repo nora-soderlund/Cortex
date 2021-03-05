@@ -55,6 +55,8 @@ Client.shop = new function() {
         if(!page.data)
             page.data = await Client.socket.messages.sendCall({ OnShopPageUpdate: id }, "OnShopPageUpdate");
 
+        Client.development.shop.set(page);
+
         entity.header.setTitle(page.title);
 
         entity.header.setDescription((page.data.description)?(page.data.description):(""));

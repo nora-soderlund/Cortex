@@ -61,8 +61,8 @@ Client.loader.ready(function() {
             offset: {
                 type: "absolute",
 
-                left: "12.5%",
-                top: "12.5%"
+                left: "10px",
+                top: "50px"
             }
         });
 
@@ -114,4 +114,63 @@ Client.loader.ready(function() {
         
         Client.development.furni.set(entity.entity);
     });
+});
+
+Client.loader.ready(function() {
+    Client.development.shop = new function() {
+        const entity = new Client.dialogs.default({
+            title: "Loading",
+            
+            size: {
+                width: 340,
+                height: 80
+            },
+
+            offset: {
+                type: "absolute",
+
+                left: "10px",
+                top: "170px"
+            }
+        });
+
+        entity.events.create.push(function() {
+        });
+
+        entity.set = async function(page) {
+            entity.$content.html("");
+
+            $(
+                '<div class="dialog-property">' +
+                    '<p>' +
+                        '<b>Shop Icon</b>' +
+                        '<span>What icon identifier the page uses!</span>' + 
+                    '</p>' +
+                    
+                    '<div class="input-pen">' +
+                        '<input class="page-icon" type="text" placeholder="Enter a page icon..." value="' + page.icon + '">' +
+                    '</div>' + 
+                '</div>'
+            ).appendTo(entity.$content).find(".page-icon").on("change", async function() {
+                const icon = parseInt($(this).val());
+
+                await Client.socket.messages.sendCall({ Temp_DevShopUpdate: { id: page.id, icon: icon } }, "Temp_DevShopUpdate");
+
+                page.icon = icon;
+
+                Client.shop.setPage(page.parent);
+                Client.shop.setPage(page.id);
+            });
+
+            Client.development.shop.unpause();
+
+            entity.setTitle('HabboShopPages/' + page.title);
+        };
+
+        entity.show();
+        
+        entity.pause();
+
+        return entity;
+    };
 });
