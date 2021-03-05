@@ -41,3 +41,31 @@ Client.menu = new function() {
         $inventory.hide();
     });
 };
+
+Client.loader.ready(function() {
+    const $user = Client.menu.addItem("user", function() {
+    });
+
+    const $canvas = $('<div class="menu-sprite menu-user"></div>');
+
+    $user.html($canvas);
+    
+    const entity = new Client.figures.entity(Client.user.figure);
+    
+    Client.socket.messages.register("OnUserUpdate", function(data) {
+        if(data.figure == undefined)
+            return;
+
+        entity.setFigure(data.figure);
+
+        entity.render();
+    });
+
+    entity.events.render.push(function() {
+        $canvas.html(entity.$canvas);
+    });
+
+    entity.process().then(function() {
+        entity.render();
+    });
+});

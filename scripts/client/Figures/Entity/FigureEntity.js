@@ -1,4 +1,4 @@
-Client.figures.entity = function(figure, properties) {
+Client.figures.entity = function(figure, properties = {}) {
     this.$canvas = $('<canvas width="256" height="256"></canvas>');
     
     this.events = {

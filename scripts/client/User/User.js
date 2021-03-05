@@ -2,6 +2,8 @@ Client.user = new function() {
     this.home = null;
 
     this.furnitures = {};
+
+    this.figure = "hr-100.hd-180-1.ch-210-66.lg-270-82.sh-290-91";
     
     Client.socket.messages.register("OnUserUpdate", function(data) {
         for(let key in data)

@@ -72,6 +72,24 @@
             @include sprite-menu-camera();
         }
 
+        .menu-user {
+            background: none;
+            
+            position: relative;
+
+            width: 45px;
+            height: 45px;
+
+            overflow: hidden;
+
+            canvas {
+                position: absolute;
+
+                left: -102px;
+                top: -94px;
+            }
+        }
+
         &:hover {
             .menu-sprite {
                 transform: translate(-1px, -1px);

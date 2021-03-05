@@ -6,6 +6,7 @@ Client.loader = new function() {
     this.$scripts = $('<scripts id="client-scripts"></scripts>').appendTo(this.$element);
 
     this.assets = [];
+    this.readySteps = [];
 
     this.show = function() {
         this.$element.fadeIn();
@@ -31,6 +32,10 @@ Client.loader = new function() {
 
     this.addAsset = function(asset) {
         this.assets.push(asset);
+    };
+
+    this.ready = function(step) {
+        this.readySteps.push(step);
     };
 
     this.load = function(finished) {
@@ -194,4 +199,7 @@ Client.loader.load(function() {
     Client.socket.messages.send({ OnUserReady: null });
 
     Client.loader.hide();
+
+    for(let index in Client.loader.readySteps)
+        Client.loader.readySteps[index]();
 });
