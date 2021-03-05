@@ -5,8 +5,8 @@ Client.figures = new function() {
 
     this.parts = {
         "cc": "ch",
-        "lc": "lh",
-        "rc": "rh"
+        "lc": "ls",
+        "rc": "rs"
     };
 
     this.getLibrary = async function(id, type) {

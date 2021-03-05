@@ -213,10 +213,7 @@ Client.figures.entity = function(figure, properties = {}) {
                     color = Client.figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
                 }
 
-                const priorityType = (layers[type] != undefined)?(type):(type[0] + 'h');
-
-                if(layers[type] == undefined && layers[type[0] + 'h'] != undefined);
-                    layers[type[0] + 'h'] = [];
+                const priorityType = (Client.figures.parts[type] != undefined)?(Client.figures.parts[type]):(type);
 
                 if(layers[priorityType] == undefined) {
                     console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
@@ -226,7 +223,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
                 const library = await Client.figures.getLibrary(id, type);
 
-                const sprite = await this.getSprite(library, type, id, direction, color);
+                const sprite = await this.getSprite(library, type, id, direction, color, priorityType);
 
                 if(sprite == null)
                     continue;
