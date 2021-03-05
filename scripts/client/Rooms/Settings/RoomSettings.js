@@ -9,7 +9,9 @@ Client.rooms.settings = new function() {
 
         offset: {
             type: "center"
-        }
+        },
+
+        resizable: true
     });
 
     entity.events.create.push(function() {

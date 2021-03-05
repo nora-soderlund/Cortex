@@ -163,5 +163,19 @@
 		}
 	}
 
+	.dialog-default-resizable {
+		width: 19px;
+		height: 19px;
+
+		background: url(./../images/dialogs/resizable.png);
+
+		position: absolute;
+
+		right: 1px;
+		bottom: 1px;
+
+		cursor: pointer;
+	}
+
 	overflow: hidden;
 }

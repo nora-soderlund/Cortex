@@ -48,6 +48,9 @@ Client.dialogs.default = function(settings = {}) {
         if(settings.title != undefined)
             this.setTitle(settings.title);
 
+        if(settings.resizable == true)
+            this.setResizable();
+
         for(let key in settings)
             this.settings[key] = settings[key];
     };
@@ -59,7 +62,47 @@ Client.dialogs.default = function(settings = {}) {
     this.setSize = function(width, height) {
         this.$element.find(".dialog-default-container").css({
             "width": width,
-            "height": height
+            "height": height,
+            
+            "min-width": width,
+            "min-height": height
+        });
+    };
+
+    this.setResizable = function() {
+        const $resizable = $('<div class="dialog-default-resizable"></div>').appendTo(this.$element);
+
+        let mouseDown = false, mousePosition = null, mousePositionStart = null;
+
+        const $container = this.$element.find(".dialog-default-container");
+
+        const minWidth = $container.width(), minHeight = $container.height();
+
+        const mouseMove = function(event) {
+            if($container.width() > minWidth || event.clientX >= mousePositionStart.left)
+                $container.css({ "width": "+=" + (event.clientX - mousePosition.left) });
+                
+            if($container.height() > minHeight || event.clientY >= mousePositionStart.top)
+                $container.css({ "height": "+=" + (event.clientY - mousePosition.top) });
+
+            mousePosition = { left: event.clientX, top: event.clientY };
+        };
+
+        const mouseUp = function(event) {
+            mouseDown = false;
+
+            $(window).unbind("mousemove", mouseMove);
+            $(window).unbind("mouseup", mouseUp);
+        };
+
+        $resizable.on("mousedown", function(event) {
+            mouseDown = true;
+
+            mousePositionStart = { left: event.clientX, top: event.clientY };
+            mousePosition = { left: event.clientX, top: event.clientY };
+
+            $(window).bind("mousemove", mouseMove);
+            $(window).bind("mouseup", mouseUp);
         });
     };
 

@@ -10,7 +10,9 @@ Client.rooms.navigator = new function() {
         offset: {
             type: "center",
             top: -250
-        }
+        },
+
+        resizable: true
     });
 
     entity.events.create.push(function() {
