@@ -213,7 +213,7 @@ Client.figures.entity = function(figure, properties = {}) {
                     color = Client.figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
                 }
 
-                const priorityType = (layers[priorityType] != undefined)?(type):(type[0] + 'h');
+                const priorityType = (layers[type] != undefined)?(type):(type[0] + 'h');
 
                 if(layers[priorityType] == undefined) {
                     console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
