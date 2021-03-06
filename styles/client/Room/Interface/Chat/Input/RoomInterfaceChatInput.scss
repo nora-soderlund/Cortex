@@ -1,0 +1,29 @@
+.room-interface-chat-input {
+    width: 440px;
+    height: 36px;
+
+    background: #E4E4E4;
+
+    border: 2px solid #000;
+    border-radius: 8px;
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+
+    margin: 0 auto;
+
+    bottom: 56px;
+
+    input {
+        background: none;
+
+        border: none;
+
+        height: 100%;
+        width: 100%;
+
+        font-size: 17px;
+    }
+}
