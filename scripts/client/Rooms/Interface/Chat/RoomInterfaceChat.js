@@ -51,8 +51,18 @@ Client.rooms.interface.chat = new function() {
             messageWidth += parts[index].width;
         }
 
-        context.canvas.width = visualization.left + messageWidth + visualization.width;
-        context.canvas.height = sprite.height;
+        const width = visualization.left + messageWidth + visualization.width;
+        const height = sprite.height;
+
+        context.canvas.style.width = width + "px";
+        context.canvas.style.height = height + "px";
+
+        const scale = window.devicePixelRatio;
+
+        context.canvas.width = Math.floor(width * scale);
+        context.canvas.height = Math.floor(height * scale);
+
+        context.scale(scale, scale);
 
         context.font = "13px " + visualization.font;
 
