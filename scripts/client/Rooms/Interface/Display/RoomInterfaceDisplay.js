@@ -53,19 +53,21 @@ Client.rooms.interface.display = new function() {
 
         new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
-        this.addButton("Pickup", function() {
-            Client.rooms.interface.furniture.pickup.start(entity);
-        });
-
-        this.addButton("Rotate", function() {
-
-        });
-        
-        this.addButton("Move", function() {
-            Client.rooms.interface.furniture.move.start(entity);
-        });
+        if(Client.rooms.interface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
+            this.addButton("Pickup", function() {
+                Client.rooms.interface.furniture.pickup.start(entity);
+            });
+        }
 
         if(Client.rooms.interface.data.rights.includes(Client.user.id)) {
+            this.addButton("Rotate", function() {
+
+            });
+            
+            this.addButton("Move", function() {
+                Client.rooms.interface.furniture.move.start(entity);
+            });
+
             if(Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) {
                 this.addButton("Use", function() {
                     Client.rooms.interface.furniture.use.start(entity);
