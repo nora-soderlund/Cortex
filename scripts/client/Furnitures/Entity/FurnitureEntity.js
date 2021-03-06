@@ -123,7 +123,7 @@ Client.furnitures.entity = function(settings = {}) {
             if(asset.name != name)
                 continue;
 
-            if(asset.source != undefined) {
+            if(asset.source != undefined && asset.source != asset.name) {
                 const sourceAsset = this.getLayerAsset(asset.source);
 
                 delete asset.source;
