@@ -147,7 +147,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.beginPath();
 
-            context.setTransform(1, .5, 0, 1, this.rows * 32, this.depth * 16);
+            context.setTransform(1, .5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
                     
             context.fillStyle = patterns[1];
 
@@ -167,7 +167,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.beginPath();
 
-            context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+            context.setTransform(1, -.5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
                     
             context.fillStyle = patterns[2];
 
@@ -191,7 +191,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.beginPath();
 
-            context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);
+            context.setTransform(1, .5, -1, .5, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
                     
             context.fillStyle = patterns[0];
 
@@ -222,7 +222,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         const context = this.$wall[0].getContext("2d");
 
         context.canvas.width = (this.rows * 32) + (this.columns * 32) + (2 * this.settings.floor.thickness);
-        context.canvas.height = (this.rows * 16) + (this.columns * 16) + (this.depth * 16) + this.settings.floor.thickness;
+        context.canvas.height = (this.rows * 32) + (this.columns * 16) + (this.depth * 16) + this.settings.floor.thickness;
 
         const rectangles = [];
 
@@ -313,7 +313,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         this.offset = -((this.depth + 3.5) * 32);
 
         context.beginPath();
-        context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+        context.setTransform(1, -.5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
         context.fillStyle = patterns[1];
 
         for(let index in rectangles) {
@@ -350,7 +350,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         context.closePath();
 
         context.beginPath();
-        context.setTransform(1, .5, 0, 1, this.rows * 32, this.depth * 16);        
+        context.setTransform(1, .5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);        
         context.fillStyle = patterns[2];
 
         for(let index in rectangles) {
@@ -387,7 +387,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         context.closePath();
 
         context.beginPath();
-        context.setTransform(1, .5, -1, .5, this.rows * 32, this.depth * 16);     
+        context.setTransform(1, .5, -1, .5, this.settings.wall.thickness + this.rows * 32, this.depth * 16);     
         context.fillStyle = patterns[0];
 
         for(let index in rectangles) {

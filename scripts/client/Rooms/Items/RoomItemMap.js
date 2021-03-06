@@ -8,7 +8,7 @@ Client.rooms.items.map = function(parent, map = "", door = {}) {
     entity.render = async function() {
         await entity.map.render();
 
-        entity.parent.center = entity.map.rows * 32;
+        entity.parent.center = entity.map.settings.wall.thickness + entity.map.rows * 32;
 
         const floor = new Client.rooms.items.sprite(entity, entity.map.$floor[0]);
 
