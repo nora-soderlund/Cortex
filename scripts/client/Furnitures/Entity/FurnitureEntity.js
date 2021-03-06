@@ -232,6 +232,9 @@ Client.furnitures.entity = function(settings = {}) {
 
             let animationLayers = this.visualization.animations.animation[index].animationLayer;
 
+            if(animationLayers == undefined)
+                return {};
+
             if(animationLayers.length == undefined)
                 animationLayers = [ animationLayers ];
 
