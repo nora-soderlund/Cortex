@@ -93,7 +93,7 @@ Client.rooms.interface.chat = new function() {
             left += parts[index].width;
         }
 
-        $canvas.css("left", center - ($canvas.width() / 2));
+        $canvas.css("left", center - (context.canvas.width / 2));
 
         this.messages.push($canvas);
 
