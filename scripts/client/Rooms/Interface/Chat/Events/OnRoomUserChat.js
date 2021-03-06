@@ -5,5 +5,5 @@ Client.socket.messages.register("OnRoomUserChat", function(data) {
     const position = Client.rooms.interface.entity.offset;
     const offset = user.getOffset();
 
-    Client.rooms.interface.chat.addMessage("bot_a", "**" + user.data.name + ":** " + data.message, center + position[0] + offset[0] + 64);
+    Client.rooms.interface.chat.addMessage("bot_a", "**" + user.data.name + ":** " + data.message, center + offset[0] + 64);
 });

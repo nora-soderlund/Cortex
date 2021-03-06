@@ -122,6 +122,22 @@ Client.rooms.interface.chat = new function() {
         if(this.messages.length == 0)
             this.stopInterval();
     };
+
+    this.render = function() {        
+        if(this.messages.length == 0)
+            return;
+
+        if(this.margin == Client.rooms.interface.entity.offset[0])
+            return;
+
+        this.margin = Client.rooms.interface.entity.offset[0];
+
+        this.$element.css("margin-left", Client.rooms.interface.entity.offset[0] + "px");
+    };
+
+    Client.rooms.interface.entity.events.render.push(function() {
+        Client.rooms.interface.chat.render();
+    });
 };
 
 Client.loader.addAsset(async function() {
