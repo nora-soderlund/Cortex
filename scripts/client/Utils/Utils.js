@@ -62,5 +62,78 @@ Client.utils = new function() {
         var i = newArray.length / 2;
 
         return i % 1 == 0 ? (newArray[i - 1] + newArray[i]) / 2 : newArray[Math.floor(i)];
-    }
+    };
+
+    this.getStringMarkup = function(string) {
+        const parts = [
+            {
+                type: "Regular",
+                message: ""
+            }
+        ];
+
+        let currentPart = 0;
+
+        for(let character = 0, length = string.length; character < length; character++) {
+            let occurances = 0;
+
+            for(let index in string) {
+                if(string[index] == '*')
+                    occurances++;
+            }
+
+            if(string[character] != '*' || occurances == 1) {
+                parts[currentPart].message += string[character];
+
+                string = string.substring(character, length);
+                
+                character = 0;
+                length = string.length;
+
+                continue;
+            }
+
+            if(string[character] == '*') {
+                if(string[character + 1] == '*') {
+                    if(character + 2 == length)
+                        break;
+
+                    if(parts[currentPart].type == "Bold") {
+                        parts.push({ type: "Regular", message: "" });
+
+                        currentPart++;
+                    }
+                    else if(parts[currentPart].type != "Bold") {
+                        parts.push({ type: "Bold", message: "" });
+
+                        currentPart++;
+                    }
+
+                    character++;
+                }
+                else {
+                    if(character + 1 == length)
+                        break;
+
+                    if(parts[currentPart].type == "Italic") {
+                        parts.push({ type: "Regular", message: "" });
+
+                        currentPart++;
+                    }
+                    else if(parts[currentPart].type != "Italic") {
+                        parts.push({ type: "Italic", message: "" });
+
+                        currentPart++;
+                    }
+                }
+
+                string = string.substring(character, length);
+                
+                character = 0;
+                length = string.length;
+            }
+        }
+
+        return parts;
+    };
 };
