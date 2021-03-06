@@ -230,7 +230,10 @@ Client.furnitures.entity = function(settings = {}) {
 
             const animationProperties = this.visualization.animations.animation[index];
 
-            const animationLayers = this.visualization.animations.animation[index].animationLayer;
+            let animationLayers = this.visualization.animations.animation[index].animationLayer;
+
+            if(animationLayers.length == undefined)
+                animationLayers = [ animationLayers ];
 
             const layers = {};
 
@@ -245,7 +248,10 @@ Client.furnitures.entity = function(settings = {}) {
 
                 layers[layer] = {
                     frameSequence: [],
-                    frameRepeat: (animationProperties.frameRepeat != undefined)?(parseInt(animationProperties.frameRepeat)):(0),
+                    
+                    frameRepeat: (animationLayers[index].frameRepeat != undefined)?(parseInt(animationLayers[index].frameRepeat)):(0),
+                    frameRepeatSequence: 0,
+
                     frameLoop: (animationProperties.loopCount != undefined)?(parseInt(animationProperties.loopCount)):(0),
                     frameTransition: (animationProperties.transitionTo != undefined)?(parseInt(animationProperties.transitionTo)):(undefined),
 
@@ -374,7 +380,15 @@ Client.furnitures.entity = function(settings = {}) {
             if(!((timestamp - this.animations[index].timestamp) > (1000 / 12)))
                 continue;
 
+            if(this.animations[index].frameRepeatSequence != this.animations[index].frameRepeat) {
+                this.animations[index].frameRepeatSequence++;
+
+                continue;
+            }
+
             this.animations[index].frame++;
+
+            this.animations[index].frameRepeatSequence = 0;
 
             if(this.animations[index].frame >= this.animations[index].frameSequence.length) {
                 this.animations[index].frame = 0;
