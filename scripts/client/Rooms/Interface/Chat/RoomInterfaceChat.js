@@ -85,8 +85,6 @@ Client.rooms.interface.chat = new function() {
 
         for(let index in parts) {
             context.font = "13px " + visualization.font + " " + parts[index].type;
-
-            console.log(context.font);
             
             context.fillText(parts[index].message, visualization.left + left, context.canvas.height - visualization.offset);
 
