@@ -51,7 +51,7 @@ Client.rooms.interface.chat = new function() {
             messageWidth += parts[index].width;
         }
 
-        context.canvas.width = sprite.width + messageWidth;
+        context.canvas.width = visualization.left + messageWidth + visualization.width;
         context.canvas.height = sprite.height;
 
         context.font = "13px " + visualization.font;
@@ -92,6 +92,8 @@ Client.rooms.interface.chat = new function() {
 
             left += parts[index].width;
         }
+
+        $canvas.css("left", center - ($canvas.width() / 2));
 
         this.messages.push($canvas);
 
