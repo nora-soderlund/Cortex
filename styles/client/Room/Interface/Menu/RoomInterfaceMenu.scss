@@ -1,4 +1,4 @@
-.room-interface-information {
+.room-interface-menu {
     position: absolute;
 
     left: 0px;
@@ -7,7 +7,7 @@
     height: 160px;
     width: 150px;
 
-    .room-interface-information-toggle {
+    .room-interface-menu-toggle {
         background: #3A3832;
 
         width: 14px;
@@ -40,7 +40,7 @@
         }
     }
 
-    .room-interface-information-content {
+    .room-interface-menu-content {
         display: none;
 
         background: rgba(28, 28, 26, .9);
@@ -59,7 +59,7 @@
         padding-top: 12px;
         padding-left: 24px;
 
-        .room-interface-information-link {
+        .room-interface-menu-link {
             position: relative;
 
             font-size: 13px;
@@ -88,7 +88,7 @@
             }
         }
 
-        .room-interface-information-settings {
+        .room-interface-menu-information {
             &:before {
                 @include sprite-settings;
             }
@@ -96,13 +96,13 @@
     }
 
     &.active {
-        .room-interface-information-toggle {
+        .room-interface-menu-toggle {
             &:after {
                 transform: rotateZ(180deg);
             }
         }
         
-        .room-interface-information-content {
+        .room-interface-menu-content {
             display: block;
         }
     }
