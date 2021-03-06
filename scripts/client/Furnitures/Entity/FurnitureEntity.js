@@ -272,6 +272,14 @@ Client.furnitures.entity = function(settings = {}) {
             return layers;
         }
 
+        if(this.settings.animation >= 100) {
+            this.settings.animation -= 100;
+
+            this.animations = this.getVisualizationAnimation();
+
+            return this.animations;
+        }
+
         return {};
     };
 
