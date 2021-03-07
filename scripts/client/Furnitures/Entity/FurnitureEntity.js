@@ -15,9 +15,9 @@ Client.furnitures.entity = function(settings = {}) {
     };
 
     this.render = async function() {
-        const layerName = this.types.type + "_" + this.settings.size + "_" + this.settings.animation + "_" + this.settings.direction;
+        const layerName = this.types.type + "_" + this.settings.size + "_" + this.settings.animation + "_" + this.settings.direction + "_" + JSON.stringify(this.animations);
 
-        if(this.types.visualization == "furniture_animated" || Client.furnitures.layers[layerName] == undefined) {
+        if(Client.furnitures.layers[layerName] == undefined) {
             const layers = this.getLayers();
 
             const sprites = [];
@@ -222,7 +222,7 @@ Client.furnitures.entity = function(settings = {}) {
 
     this.getVisualizationAnimation = function() {
         if(this.visualization.animations == null || this.visualization.animations == undefined)
-            return {};
+            return undefined;
 
         for(let index in this.visualization.animations.animation) {
             if(this.visualization.animations.animation[index].id != this.settings.animation)
@@ -233,12 +233,13 @@ Client.furnitures.entity = function(settings = {}) {
             let animationLayers = this.visualization.animations.animation[index].animationLayer;
 
             if(animationLayers == undefined)
-                return {};
+                return undefined;
 
             if(animationLayers.length == undefined)
                 animationLayers = [ animationLayers ];
 
             const layers = {};
+            let layerCount = 0;
 
             for(let index in animationLayers) {
                 const layer = animationLayers[index].id;
@@ -255,7 +256,7 @@ Client.furnitures.entity = function(settings = {}) {
                     frameRepeat: (animationLayers[index].frameRepeat != undefined)?(parseInt(animationLayers[index].frameRepeat)):(0),
                     frameRepeatSequence: 0,
 
-                    frameLoop: (animationProperties.loopCount != undefined)?(parseInt(animationProperties.loopCount)):(0),
+                    frameLoop: (animationLayers[index].loopCount != undefined)?(parseInt(animationLayers[index].loopCount)):(0),
                     frameTransition: (animationProperties.transitionTo != undefined)?(parseInt(animationProperties.transitionTo)):(undefined),
 
                     timestamp: performance.now(),
@@ -267,7 +268,12 @@ Client.furnitures.entity = function(settings = {}) {
 
                 for(let frame in animationLayers[index].frameSequence.frame)
                     layers[layer].frameSequence.push(animationLayers[index].frameSequence.frame[frame].id);
+
+                layerCount++;
             }
+
+            if(layerCount == 0)
+                return undefined;
 
             return layers;
         }
@@ -280,7 +286,7 @@ Client.furnitures.entity = function(settings = {}) {
             return this.animations;
         }
 
-        return {};
+        return undefined;
     };
 
     this.getVisualizationAnimationLayer = function(layer) {
@@ -386,6 +392,9 @@ Client.furnitures.entity = function(settings = {}) {
 
     this.updateAnimations = function(timestamp = performance.now()) {
         let updated = false;
+        
+        if(this.animations == undefined)
+            return false;
 
         for(let index in this.animations) {
             if(!((timestamp - this.animations[index].timestamp) > (1000 / 12)))
@@ -397,9 +406,9 @@ Client.furnitures.entity = function(settings = {}) {
                 continue;
             }
 
-            this.animations[index].frame++;
-
             this.animations[index].frameRepeatSequence = 0;
+
+            this.animations[index].frame++;
 
             if(this.animations[index].frame >= this.animations[index].frameSequence.length) {
                 this.animations[index].frame = 0;
@@ -444,7 +453,7 @@ Client.furnitures.entity = function(settings = {}) {
 
         this.types = this.manifest.index.object;
         
-        if(this.types.visualization == "furniture_animated")
+        if(this.settings.animation != undefined)
             this.setAnimation(this.settings.animation);
 
         this.settings.direction = this.getDirection();
