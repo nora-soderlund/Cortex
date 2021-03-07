@@ -17,6 +17,8 @@ Client.rooms.interface.display = new function() {
     };
 
     this.figure = async function(entity) {
+        this.figure = entity;
+
         this.$element.hide();
 
         this.$content.html("");
@@ -32,6 +34,8 @@ Client.rooms.interface.display = new function() {
     };
 
     this.furniture = async function(entity) {
+        this.furniture = entity;
+
         this.$element.hide();
 
         this.$content.html("");
@@ -78,9 +82,16 @@ Client.rooms.interface.display = new function() {
         this.$element.show();
     };
 
+    this.hide = function() {
+        Client.rooms.interface.display.figure = undefined;
+        Client.rooms.interface.display.furniture = undefined;
+        
+        Client.rooms.interface.display.$element.hide();
+    };
+
     Client.rooms.interface.cursor.events.click.push(function(entity) {
         if(entity == undefined) {
-            Client.rooms.interface.display.$element.hide();
+            Client.rooms.interface.display.hide();
             
             return;
         }
