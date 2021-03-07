@@ -23,6 +23,8 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                 sprite.composite = layer.ink;
                 sprite.alpha = layer.alpha;
 
+                sprite.tag = layer.tag;
+
                 sprite.mouseover = function(position) {
                     if(layer.ignoreMouse == 1)
                         return false;
@@ -58,7 +60,7 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                 };
 
                 sprite.mousedoubleclick = function(event) {
-                    Client.rooms.interface.furniture.use.start(entity);
+                    Client.rooms.interface.furniture.use.start(entity, sprite);
                 };
 
                 sprite.setOffset(64 - sprites[index].asset.x, 16 - sprites[index].asset.y);
