@@ -21,9 +21,22 @@ Client.rooms.interface.menu = new function() {
         $element.on("click", function() {
             click();
         });
+
+        return $element;
     };
     
-    this.link("settings", "Settings", function() {
+    this.link("information", "Information", function() {
+        Client.rooms.interface.information.toggle();
+    });
+    
+    const $settings = this.link("settings", "Settings", function() {
         Client.rooms.settings.toggle();
+    });
+
+    Client.rooms.interface.events.start.push(function() {
+        if(Client.rooms.interface.data.user == Client.user.id)
+            $settings.show();
+        else
+            $settings.hide();
     });
 };

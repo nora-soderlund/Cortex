@@ -227,6 +227,22 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/information.png</key>
+            <key type="filename">Sprites/pen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,5,9,9</rect>
+                <key>scale9Paddings</key>
+                <rect>4,5,9,9</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/lock-big-password.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -305,21 +321,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/pen.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>4,5,9,9</rect>
-                <key>scale9Paddings</key>
-                <rect>4,5,9,9</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">Sprites/plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -351,6 +352,21 @@
                 <rect>10,10,20,20</rect>
                 <key>scale9Paddings</key>
                 <rect>10,10,20,20</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/room-thumbnail.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,14,35,27</rect>
+                <key>scale9Paddings</key>
+                <rect>18,14,35,27</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -440,6 +456,8 @@
             <filename>Sprites/settings.png</filename>
             <filename>Sprites/menu-camera.png</filename>
             <filename>Sprites/user-menu-arrow.png</filename>
+            <filename>Sprites/information.png</filename>
+            <filename>Sprites/room-thumbnail.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

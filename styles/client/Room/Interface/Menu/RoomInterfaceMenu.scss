@@ -65,6 +65,7 @@
             font-size: 13px;
 
             margin-left: 24px;
+            margin-bottom: 12px;
 
             cursor: pointer;
 
@@ -91,6 +92,15 @@
         .room-interface-menu-settings {
             &:before {
                 @include sprite-settings;
+            }
+        }
+
+        .room-interface-menu-information {
+            &:before {
+                @include sprite-information;
+
+                left: -24px;
+                top: -2px;
             }
         }
     }

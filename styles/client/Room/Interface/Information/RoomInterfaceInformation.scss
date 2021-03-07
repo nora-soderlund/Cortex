@@ -1,0 +1,43 @@
+.room-interface-information {
+    .room-interface-information-title {
+        font-family: "Ubuntu Bold";
+    }
+
+    .room-interface-information-owner {
+        font-family: "Ubuntu Bold";
+
+        color: #7A7A7A;
+    }
+
+    .room-interface-information-description {
+        margin-top: 6px;
+    }
+
+    .room-interface-information-thumbnail {
+        width: 110px;
+        height: 110px;
+
+        box-sizing: content-box;
+
+        background: #B4B3AA;
+
+        border: 1px solid #000;
+
+        margin: 12px auto;
+
+        position: relative;
+
+        &:before {
+            content: '';
+
+            position: absolute;
+
+            left: 0; right: 0;
+            top: 0; bottom: 0;
+
+            @include sprite-room-thumbnail();
+
+            margin: auto;
+        }
+    }
+}
