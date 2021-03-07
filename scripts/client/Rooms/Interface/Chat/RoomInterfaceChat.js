@@ -6,9 +6,10 @@ Client.rooms.interface.chat = new function() {
     this.messages = [];
 
     this.startInterval = function() {
-        this.stopInterval();
+        if(this.interval != null)
+            return;
 
-        Client.rooms.interface.chat.updateMessages();
+        this.stopInterval();
 
         this.interval = setInterval(function() {
             Client.rooms.interface.chat.updateMessages();
@@ -103,6 +104,8 @@ Client.rooms.interface.chat = new function() {
         this.messages.push($canvas);
 
         $canvas.appendTo(this.$element);
+
+        this.updateMessages();
 
         this.startInterval();
     };
