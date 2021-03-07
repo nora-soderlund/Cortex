@@ -51,13 +51,17 @@ Client.rooms.items.figure = function(parent, figure, direction) {
     };
 
     entity.events.path.start.push(async function() {
+        if(!entity.data.walk)
+            return;
+
         await entity.figure.setAction("Move");
 
         await entity.figure.render();
     });
 
     entity.events.path.frame.push(async function(frame) {
-        //const newFrame = Math.floor((24 / 3) * frame);
+        if(!entity.data.walk)
+            return;
 
         let newFrame = Math.floor(frame / 3);
 
@@ -69,6 +73,9 @@ Client.rooms.items.figure = function(parent, figure, direction) {
     });
 
     entity.events.path.finish.push(async function() {
+        if(!entity.data.walk)
+            return;
+            
         await entity.figure.removeAction("Move");
 
         await entity.figure.render();

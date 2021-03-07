@@ -9,8 +9,12 @@ Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
                 if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined) {
                     entity.stopPath(true);
 
-                    if(item.position.speed != 0)
+                    if(item.position.speed != 0) {
+                        if(key == "users")
+                            entity.data.walk = (item.position.walk == undefined)?(false):(item.position.walk);
+
                         entity.setPath(entity.data.position, item.position, item.position.speed);
+                    }
                     else
                         entity.setCoordinates(item.position.row, item.position.column, item.position.depth);
                 }
