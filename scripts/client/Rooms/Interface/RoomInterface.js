@@ -69,6 +69,8 @@ Client.rooms.interface = new function() {
     };
 
     this.clear = async function() {
+        this.chat.clear();
+
         this.entity.entities.length = 0;
         
         if(this.active)

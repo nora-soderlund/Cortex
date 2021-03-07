@@ -22,6 +22,13 @@ Client.rooms.interface.chat = new function() {
         this.interval = null;
     };
 
+    this.clear = function() {
+        for(let index in this.messages)
+            this.messages[index].remove();
+
+        this.messages.length = 0;
+    };
+
     this.addMessage = async function(style, message, center = 0, color = undefined) {
         let sprite = await Client.assets.getSprite("HabboRoomChat", "HabboRoomChat_" + style);
         
