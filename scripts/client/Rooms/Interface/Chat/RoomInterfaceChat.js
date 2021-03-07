@@ -72,10 +72,10 @@ Client.rooms.interface.chat = new function() {
 
         context.drawImage(sprite,
             visualization.left + visualization.width, 0,
-            visualization.left, context.canvas.height,
+            sprite.width - (visualization.left + visualization.width), context.canvas.height,
             
             visualization.left + messageWidth, 0,
-            visualization.left, context.canvas.height);
+            sprite.width - (visualization.left + visualization.width), context.canvas.height);
             
 
         let left = 0;
