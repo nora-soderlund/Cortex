@@ -61,7 +61,7 @@ Client.rooms.interface.display = new function() {
 
         if(Client.rooms.interface.data.rights.includes(Client.user.id)) {
             this.addButton("Rotate", function() {
-
+                Client.rooms.interface.furniture.rotate.start(entity);
             });
             
             this.addButton("Move", function() {

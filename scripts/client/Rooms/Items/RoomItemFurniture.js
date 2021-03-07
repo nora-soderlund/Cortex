@@ -53,8 +53,8 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                         Client.rooms.interface.furniture.pickup.start(entity);
                     else if(Client.keys.down["AltLeft"])
                         Client.rooms.interface.furniture.move.start(entity);
-                    //else if(Client.keys.down["ShiftLeft"])
-                    //    Client.rooms.interface.chat.addMessage("info", entity.furniture.settings.id + " was clicked on to rotate!");
+                    else if(Client.keys.down["ShiftLeft"])
+                        Client.rooms.interface.furniture.rotate.start(entity);
                 };
 
                 sprite.mousedoubleclick = function(event) {
