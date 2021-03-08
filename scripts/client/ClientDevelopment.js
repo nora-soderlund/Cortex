@@ -54,8 +54,8 @@ Client.loader.ready(function() {
             title: "Loading",
             
             size: {
-                width: 340,
-                height: 80
+                width: 400,
+                height: 160
             },
 
             offset: {
@@ -91,7 +91,23 @@ Client.loader.ready(function() {
                 await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, depth: parseFloat($(this).val()) } }, "Temp_DevFurniUpdate");
             });
 
-            console.log(data);
+            const logic = await Client.socket.messages.sendCall({ OnFurnitureLogicRequest: data.id }, "OnFurnitureLogicRequest");
+            
+            $(
+                '<div class="dialog-property">' +
+                    '<p>' +
+                        '<b>Furniture Logic</b>' +
+                        '<span>What logic does the use on the server?</span><br>' + 
+                        '<i>Changing this can cause unwanted alterations!</i>' + 
+                    '</p>' +
+                    
+                    '<div class="input-pen">' +
+                        '<input class="furniture-logic" type="text" placeholder="Enter a furniture logic..." value="' + logic + '">' +
+                    '</div>' + 
+                '</div>'
+            ).appendTo(entity.$content).find(".furniture-logic").on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, logic: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
 
             Client.development.furni.unpause();
 
@@ -122,7 +138,7 @@ Client.loader.ready(function() {
             title: "Loading",
             
             size: {
-                width: 340,
+                width: 400,
                 height: 80
             },
 
@@ -130,7 +146,7 @@ Client.loader.ready(function() {
                 type: "absolute",
 
                 left: "10px",
-                top: "170px"
+                top: "250px"
             }
         });
 
