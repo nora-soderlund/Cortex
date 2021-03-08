@@ -25,26 +25,57 @@ Client.rooms.interface.display.users = new function() {
 
             switch(page) {
                 case "default": {
-                    if(Client.user.id == 1) {
-                        this.add("VERY Cool Person", function() {
-                            
-                        });
-                    }
-                    else {
-                        this.add("Cool Person", function() {
-                            
-                        });
-                    }
-
                     if(Client.user.id == this.entity.entity.data.id) {
                         this.add("Gestures", function() {
                             Client.rooms.interface.display.users.tabs.show("gestures", "default");
+                        });
+                    }
+                    else {
+                        this.add("Manage", function() {
+                            Client.rooms.interface.display.users.tabs.show("manage", "default");
                         });
                     }
 
                     if(Client.rooms.interface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
                         this.add("Moderate", function() {
                             Client.rooms.interface.display.users.tabs.show("moderate", "default");
+                        });
+                    }
+
+                    break;
+                }
+
+                case "manage": {
+                    const friend = Client.user.friends.find(x => x.friend == this.entity.entity.data.id);
+
+                    if(friend != null) {
+                        if(friend.status == -1) {
+                            this.add("Cancel Friend Invite", async function() {
+                                await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+    
+                                Client.rooms.interface.display.users.tabs.hide();
+                            });
+                        }
+                        else if(friend.status == 0) {
+                            this.add("Accept Friend Invite", async function() {
+                                await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+    
+                                Client.rooms.interface.display.users.tabs.hide();
+                            });
+                        }
+                        else {
+                            this.add("Remove Friend Invite", async function() {
+                                await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+    
+                                Client.rooms.interface.display.users.tabs.hide();
+                            });
+                        }
+                    }
+                    else {
+                        this.add("Send Friend Invite", async function() {
+                            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+
+                            Client.rooms.interface.display.users.tabs.hide();
                         });
                     }
 
@@ -150,11 +181,15 @@ Client.rooms.interface.display.users = new function() {
             destroy();
         });
 
-        $element.find(".room-interface-user-request-decline").on("click", function() {
+        $element.find(".room-interface-user-request-decline").on("click", async function() {
+            await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: entity.data.id } }, "OnUserFriendRemove");
+
             destroy();
         });
 
-        $element.find(".room-interface-user-request-accept").on("click", function() {
+        $element.find(".room-interface-user-request-accept").on("click", async function() {
+            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendAdd");
+
             destroy();
         });
 
