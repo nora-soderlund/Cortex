@@ -1,0 +1,123 @@
+{
+    "scripts": [
+        "ClientDevelopment.js",
+
+        "Keys/Keys.js",
+        
+        "Socket/Socket.js",
+        "Socket/Messages/SocketMessages.js",
+        "Socket/Network/SocketNetwork.js",
+
+        "Assets/Assets.js",
+        
+        "Game/Game.js",
+
+        "Dialogs/Dialogs.js",
+        "Dialogs/Entities/DialogDefaultEntity.js",
+        "Dialogs/Entities/DialogHeaderEntity.js",
+        "Dialogs/Entities/DialogTabsEntity.js",
+        "Dialogs/Entities/DialogSelectionEntity.js",
+        "Dialogs/Entities/DialogCameraEntity.js",
+
+        "Figures/Figures.js",
+        "Figures/Entity/FigureEntity.js",
+
+        "Furnitures/Furnitures.js",
+        
+        "Furnitures/Entity/FurnitureEntity.js",
+
+        "Furnitures/Renderer/FurnitureRenderer.js",
+
+        "Canvas/Canvas.js",
+        
+        "Rooms/Rooms.js",
+        "Rooms/Entity/RoomEntity.js",
+        
+        "Rooms/Categories/RoomCategories.js",
+
+        "Rooms/Map/RoomMap.js",
+        "Rooms/Map/Entity/RoomMapEntity.js",
+
+        "Rooms/Items/RoomItemEntity.js",
+        "Rooms/Items/RoomItemSprite.js",
+        "Rooms/Items/RoomItemCursor.js",
+        "Rooms/Items/RoomItemFigure.js",
+        "Rooms/Items/RoomItemMap.js",
+        "Rooms/Items/RoomItemFurniture.js",
+
+        "Rooms/Interface/RoomInterface.js",
+
+        "Rooms/Interface/Chat/RoomInterfaceChat.js",
+        "Rooms/Interface/Chat/Input/RoomInterfaceChatInput.js",
+        "Rooms/Interface/Chat/Events/OnRoomUserChat.js",
+
+        "Rooms/Interface/Cursor/RoomInterfaceCursor.js",
+        
+        "Rooms/Interface/Display/RoomInterfaceDisplay.js",
+        "Rooms/Interface/Display/Users/RoomInterfaceDisplayUsers.js",
+        "Rooms/Interface/Menu/RoomInterfaceMenu.js",
+        "Rooms/Interface/Information/RoomInterfaceInformation.js",
+
+        "Rooms/Interface/Events/RoomEnterEvent.js",
+        "Rooms/Interface/Events/RoomEntityAddEvent.js",
+        "Rooms/Interface/Events/RoomEntityUpdateEvent.js",
+        "Rooms/Interface/Events/RoomEntityRemoveEvent.js",
+        
+        "Rooms/Interface/Events/RoomSettingsUpdateEvent.js",
+
+        "Rooms/Interface/Furniture/RoomInterfaceFurniture.js",
+        "Rooms/Interface/Furniture/Events/RoomInterfaceFurniturePlace.js",
+        "Rooms/Interface/Furniture/Events/RoomInterfaceFurniturePickup.js",
+        "Rooms/Interface/Furniture/Events/RoomInterfaceFurnitureMove.js",
+        "Rooms/Interface/Furniture/Events/RoomInterfaceFurnitureRotate.js",
+        "Rooms/Interface/Furniture/Events/RoomInterfaceFurnitureUse.js",
+        
+        "Rooms/Interface/Furniture/Logics/RoomFurnitureMultistate.js",
+        "Rooms/Interface/Furniture/Logics/RoomFurnitureCustomStackHeight.js",
+        "Rooms/Interface/Furniture/Logics/RoomFurnitureDice.js",
+
+        "Rooms/Interface/Camera/RoomInterfaceCamera.js",
+
+        "Rooms/Navigator/RoomNavigator.js",
+        "Rooms/Navigator/Lists/RoomNavigatorList.js",
+        "Rooms/Navigator/Events/RoomNavigatorEvents.js",
+        
+        "Rooms/Creation/RoomCreation.js",
+        "Rooms/Creation/Map/RoomCreationMap.js",
+        
+        "Rooms/Editor/RoomEditor.js",
+
+        "Rooms/Settings/RoomSettings.js",
+
+        "Menu/Menu.js",
+        "Menu/Friends/MenuFriends.js",
+
+        "Shop/Shop.js",
+        "Shop/Categories/ShopDefaultCategory.js",
+        "Shop/Categories/ShopSearchCategory.js",
+        "Shop/Types/ShopDefaultPage.js",
+
+        "Inventory/Inventory.js",
+        "Inventory/Pages/InventoryFurnitures.js",
+
+        "User/User.js",
+        "User/Friends/OnUserFriendAdd.js",
+        "User/Friends/OnUserFriendRemove.js",
+        
+        "Utils/Utils.js"
+    ],
+
+    "fonts": [
+        "Ubuntu Regular",
+        "Ubuntu Italic",
+
+        "Ubuntu Bold",
+        "Ubuntu Bold Italic",
+
+        "Ubuntu Light",
+        "Ubuntu Light Italic",
+
+        "Ubuntu Medium",
+        "Ubuntu Medium Italic"
+    ]
+}

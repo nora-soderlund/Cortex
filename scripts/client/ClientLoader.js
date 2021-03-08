@@ -74,10 +74,14 @@ Client.loader = new function() {
 Client.loader.addStep(function(finished) {
     Client.loader.setText("Loading configuration...");
 
-    $.getJSON("assets/client.json", function(data) {
+    $.getJSON("scripts/Client.json", function(data) {
         Client.loader.data = data;
         
-        finished();
+        $.getJSON("index.json", function(data) {
+            Client.loader.settings = data;
+            
+            finished();
+        });
     });
 });
 
