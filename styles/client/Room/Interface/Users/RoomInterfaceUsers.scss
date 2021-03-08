@@ -7,8 +7,8 @@
 
     width: 120px;
 
-    margin-left: 68px;
-    margin-bottom: -64px;
+    margin-left: 0;
+    margin-bottom: 72px;
 
     background: #4F4C48;
 
@@ -100,3 +100,5 @@
         margin: -1px auto 0;
     }
 }
+
+@import "Request/RoomInterfaceUserRequest";

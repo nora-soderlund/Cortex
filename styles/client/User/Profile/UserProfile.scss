@@ -1,0 +1,11 @@
+.user-profile {
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(125%);
+    }
+
+    &:active {
+        filter: brightness(75%);
+    }
+}

@@ -1,10 +1,11 @@
 @import "Sprites/Sprites.sass";
 
 @import "development/development.scss";
+@import "Dialogs/Dialogs.scss";
 @import "Room/Room.scss";
 @import "Loader/Loader.scss";
-@import "Dialogs/Dialogs.scss";
 @import "Menu/Menu.scss";
+@import "User/User.scss";
 @import "Shop/Shop.scss";
 @import "Inventory/Inventory.scss";
 @import "Interface/Interface.scss";
@@ -39,4 +40,36 @@ body {
     height: 100%;
 
     transform: translate3d(0, 0, 0);
+}
+
+.sprite-user-profile {
+    position: relative;
+
+    margin-right: 16px;
+    
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        @include sprite-user-profile();
+
+        top: 3px;
+    }
+}
+
+.sprite-success {
+    position: relative;
+
+    margin-right: 16px;
+    
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        @include sprite-success();
+
+        top: 2px;
+    }
 }

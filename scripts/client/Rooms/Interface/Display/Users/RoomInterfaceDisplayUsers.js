@@ -108,7 +108,7 @@ Client.rooms.interface.display.users = new function() {
             const center = Client.rooms.interface.entity.center;
             const position = Client.rooms.interface.entity.offset;
     
-            const offset = this.entity.sprite.getOffset();
+            const offset = this.entity.entity.getOffset();
     
             this.$element.css({
                 "left": center + position[0] + offset[0],
@@ -129,6 +129,56 @@ Client.rooms.interface.display.users = new function() {
         Client.rooms.interface.entity.events.render.push(function() {
             Client.rooms.interface.display.users.tabs.hover();
         });
+    };
+
+    this.request = function(entity) {
+        const $element = $(
+            '<div class="room-interface-user room-interface-user-request">' +
+                '<div class="user-profile" data-user="' + entity.data.id + '"><i class="sprite-user-profile"></i> <b>Friend request from ' + entity.data.name + '</b></div>' +
+
+                '<div class="room-interface-user-request-close"></div>' +
+
+                '<div class="room-interface-user-request-buttons">' +
+                    '<div class="room-interface-user-request-decline dialog-button">Decline</div>' +
+                    '<div class="room-interface-user-request-accept dialog-button"><i class="sprite-success"></i> Accept</div>' +
+                '</div>' +
+
+                '<div class="room-interface-user-arrow"></div>' +
+            '</div>').appendTo(Client.rooms.interface.$element);
+
+        $element.find(".room-interface-user-request-close").on("click", function() {
+            destroy();
+        });
+
+        $element.find(".room-interface-user-request-decline").on("click", function() {
+            destroy();
+        });
+
+        $element.find(".room-interface-user-request-accept").on("click", function() {
+            destroy();
+        });
+
+        function destroy() {
+            const index = Client.rooms.interface.entity.events.render.indexOf(hover);
+            
+            Client.rooms.interface.entity.events.render.splice(index, 1);
+
+            $element.remove();
+        };
+
+        function hover() {
+            const center = Client.rooms.interface.entity.center;
+            const position = Client.rooms.interface.entity.offset;
+    
+            const offset = entity.getOffset();
+    
+            $element.css({
+                "left": center + position[0] + offset[0],
+                "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+            }).show();
+        };
+    
+        Client.rooms.interface.entity.events.render.push(hover);
     };
 
     this.$name = $('<div class="room-interface-user"></div>').appendTo(Client.rooms.interface.$element);
@@ -155,7 +205,7 @@ Client.rooms.interface.display.users = new function() {
         const center = Client.rooms.interface.entity.center;
         const position = Client.rooms.interface.entity.offset;
 
-        const offset = entity.sprite.getOffset();
+        const offset = entity.entity.getOffset();
 
         this.$name.css({
             "left": center + position[0] + offset[0],

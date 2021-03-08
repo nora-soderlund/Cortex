@@ -385,6 +385,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/success.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,3,8,7</rect>
+                <key>scale9Paddings</key>
+                <rect>4,3,8,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">Sprites/tiles.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -400,6 +415,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">Sprites/user-menu-arrow-request.png</key>
             <key type="filename">Sprites/user-menu-arrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -412,6 +428,21 @@
                 <rect>3,2,7,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,2,7,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/user-profile.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -458,6 +489,9 @@
             <filename>Sprites/user-menu-arrow.png</filename>
             <filename>Sprites/information.png</filename>
             <filename>Sprites/room-thumbnail.png</filename>
+            <filename>Sprites/success.png</filename>
+            <filename>Sprites/user-menu-arrow-request.png</filename>
+            <filename>Sprites/user-profile.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

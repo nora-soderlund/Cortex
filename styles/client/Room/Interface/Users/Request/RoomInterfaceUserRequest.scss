@@ -1,0 +1,77 @@
+.room-interface-user-request {
+    width: 200px;
+    height: 80px;
+
+    background: #B59011;
+
+    margin-left: -40px;
+
+    text-align: left;
+
+    padding: 8px 6px;
+
+    &:before {
+        content: '';
+
+        position: absolute;
+
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+
+        left: 0;
+        top: 0;
+
+        border: 1px solid #F9C818;
+        border-radius: 5px;
+    }
+
+    b {
+        color: #FFF;
+
+        padding-right: 24px;
+    }
+
+    .room-interface-user-request-close {
+        position: absolute;
+
+        @include sprite-dialog-close();
+
+        right: 6px;
+        top: 6px;
+
+        cursor: pointer;
+
+        &:hover {
+            @include sprite-dialog-close-hover();
+        }
+
+        &:active {
+            @include sprite-dialog-close-active();
+        }
+    }
+
+    .room-interface-user-request-buttons {
+        position: absolute;
+        width: calc(100% - 12px);
+        
+        bottom: 6px;
+
+        display: grid;
+
+        grid-template-columns: calc(50% - 3px) calc(50% - 3px);
+
+        grid-gap: 6px;
+
+        color: #000;
+
+        .dialog-button {
+            padding-top: 3px;
+            
+            padding-bottom: 4px;
+        }
+    }
+
+    .room-interface-user-arrow {
+        @include sprite-user-menu-arrow-request();
+    }
+}
