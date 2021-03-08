@@ -259,7 +259,6 @@ Client.furnitures.entity = function(settings = {}) {
                     frameLoop: (animationLayers[index].loopCount != undefined)?(parseInt(animationLayers[index].loopCount)):(0),
                     frameTransition: (animationProperties.transitionTo != undefined)?(parseInt(animationProperties.transitionTo)):(undefined),
 
-                    timestamp: performance.now(),
                     frame: 0
                 };
 
@@ -397,7 +396,7 @@ Client.furnitures.entity = function(settings = {}) {
             return false;
 
         for(let index in this.animations) {
-            if(!((timestamp - this.animations[index].timestamp) > (1000 / 12)))
+            if(!((timestamp - this.animationTimestamps[index]) > (1000 / 12)))
                 continue;
 
             if(this.animations[index].frameRepeatSequence != this.animations[index].frameRepeat) {
@@ -407,6 +406,8 @@ Client.furnitures.entity = function(settings = {}) {
             }
 
             this.animations[index].frameRepeatSequence = 0;
+
+            const previousFrame = this.animations[index].frame;
 
             this.animations[index].frame++;
 
@@ -420,7 +421,10 @@ Client.furnitures.entity = function(settings = {}) {
                 }
             }
 
-            this.animations[index].timestamp = timestamp;
+            this.animationTimestamps[index] = timestamp;
+
+            if(this.animations[index].frameSequence[previousFrame] == this.animations[index].frameSequence[this.animations[index].frame])
+                return false;
 
             updated = true;
         }
@@ -432,6 +436,11 @@ Client.furnitures.entity = function(settings = {}) {
         this.settings.animation = animation;
 
         this.animations = this.getVisualizationAnimation();
+
+        this.animationTimestamps = {};
+
+        for(let index in this.animations)
+            this.animationTimestamps[index] = 0;
 
         this.render();
     };
