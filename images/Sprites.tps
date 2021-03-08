@@ -371,6 +371,8 @@
                 <false/>
             </struct>
             <key type="filename">Sprites/settings.png</key>
+            <key type="filename">Sprites/user-follow.png</key>
+            <key type="filename">Sprites/user-profile-big.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -412,6 +414,21 @@
                 <rect>5,3,9,5</rect>
                 <key>scale9Paddings</key>
                 <rect>5,3,9,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">Sprites/user-chat.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,5,10,11</rect>
+                <key>scale9Paddings</key>
+                <rect>5,5,10,11</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -492,6 +509,9 @@
             <filename>Sprites/success.png</filename>
             <filename>Sprites/user-menu-arrow-request.png</filename>
             <filename>Sprites/user-profile.png</filename>
+            <filename>Sprites/user-chat.png</filename>
+            <filename>Sprites/user-follow.png</filename>
+            <filename>Sprites/user-profile-big.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -104,6 +104,18 @@
                 left: 42px;
                 top: 11px;
             }
+
+            .menu-friend-buttons {
+                position: absolute;
+
+                left: 42px;
+                top: 38px;
+
+                display: grid;
+
+                grid-gap: 12px;
+                grid-template-columns: auto auto auto;
+            }
         }
     }
 }

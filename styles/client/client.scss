@@ -73,3 +73,51 @@ body {
         top: 2px;
     }
 }
+
+.sprite-user-follow {
+    position: relative;
+
+    margin-right: 16px;
+    
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        @include sprite-user-follow();
+
+        top: 2px;
+    }
+}
+
+.sprite-user-chat {
+    position: relative;
+
+    margin-right: 16px;
+    
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        @include sprite-user-chat();
+
+        top: 2px;
+    }
+}
+
+.sprite-user-profile-big {
+    position: relative;
+
+    margin-right: 16px;
+    
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        @include sprite-user-profile-big();
+
+        top: 2px;
+    }
+}

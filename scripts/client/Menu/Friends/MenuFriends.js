@@ -13,6 +13,12 @@ Client.menu.friends = new function() {
         if(friend.status == -1)
             return;
 
+        const $content = $('<div class="menu-friend-content"></div>').appendTo($element);
+
+        const $name = $('<p class="menu-friend-name">' + user.name + '</p>').appendTo($content);
+
+        const $buttons = $('<p class="menu-friend-buttons"></p>').appendTo($content);
+
         if(friend.status == 0) {
             $element.addClass("menu-friend-request");
         }
@@ -20,11 +26,11 @@ Client.menu.friends = new function() {
             $element.click(function() {
                 $element.toggleClass("active");
             });
+
+            $('<i class="sprite-user-chat"></i>').appendTo($buttons);
+            $('<i class="sprite-user-follow"></i>').appendTo($buttons);
+            $('<div class="user-profile" data-user="' + user.id + '"><i class="sprite-user-profile-big"></i></div>').appendTo($buttons);
         }
-
-        const $content = $('<div class="menu-friend-content"></div>').appendTo($element);
-
-        const $name = $('<p class="menu-friend-name">' + user.name + '</p>').appendTo($content);
 
         const $figure = $('<div class="menu-friend-figure"></div>').appendTo($content);
 
