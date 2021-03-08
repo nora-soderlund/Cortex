@@ -1,4 +1,6 @@
 Client.rooms.entity = function($parent) {
+    this.background = "#111";
+
     this.offset = [ 0, 0 ];
 
     this.center = 0;
@@ -96,7 +98,9 @@ Client.rooms.entity = function($parent) {
         
         const context = this.$canvas[0].getContext("2d");
 
-        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+        context.fillStyle = this.background;
+
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
         context.save();
 
