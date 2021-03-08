@@ -423,10 +423,8 @@ Client.furnitures.entity = function(settings = {}) {
 
             this.animationTimestamps[index] = timestamp;
 
-            if(this.animations[index].frameSequence[previousFrame] == this.animations[index].frameSequence[this.animations[index].frame])
-                return false;
-
-            updated = true;
+            if(this.animations[index].frameSequence[previousFrame] != this.animations[index].frameSequence[this.animations[index].frame])
+                updated = true;
         }
 
         return updated;
