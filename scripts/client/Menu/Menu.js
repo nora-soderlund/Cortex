@@ -3,6 +3,8 @@ Client.menu = new function() {
         '<div id="menu"></div>'
     ).appendTo(Client.$element);
 
+    this.$icons = $('<div class="menu-items"></div>').appendTo(this.$element);
+
     this.addItem = function(identifier, callback) {
         const $element = $(
             '<div class="menu-item">' +
@@ -10,7 +12,7 @@ Client.menu = new function() {
             '</div>'
         ).on("click", function() {
             callback();
-        }).appendTo(this.$element);
+        }).appendTo(this.$icons);
 
         return $element;
     };

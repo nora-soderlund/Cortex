@@ -1,0 +1,109 @@
+.menu-friends {
+    margin-top: 3px;
+
+    .menu-friend {
+        display: inline-block;
+        
+        height: 40px;
+        width: 128px;
+
+        margin: 0 3px;
+
+        position: relative;
+
+        &.menu-friend-request {
+            .menu-friend-content {
+                background: #b59011;
+            
+                &:before {
+                    border-color: #f9c818;
+                }
+            }
+        }
+
+        &.active {
+            .menu-friend-content {
+                height: 70px;
+
+                cursor: default;
+
+                &:hover, &:active {
+                    filter: brightness(100%);
+                }
+            }
+        }
+
+        .menu-friend-content {
+            position: absolute;
+
+            bottom: 0;
+
+            height: 40px;
+            width: 128px;
+
+            border: 1px solid #000;
+            border-bottom-width: 2px;
+            border-radius: 6px;
+
+            background: #72893F;
+
+            cursor: pointer;
+
+            z-index: 1;
+
+            overflow: hidden;
+
+            &:before {
+                content: '';
+
+                position: absolute;
+
+                left: 0;
+                top: 0;
+
+                width: calc(100% - 4px);
+                height: calc(100% - 4px);
+
+                border: 2px solid #9CBE59;
+                border-radius: 6px;
+            }
+
+            &:hover {
+                filter: brightness(125%);
+            }
+
+            &:active {
+                filter: brightness(75%);
+            }
+
+            .menu-friend-figure {
+                position: absolute;
+
+                overflow: hidden;
+
+                width: 64px;
+                height: 100px;
+
+                top: 0;
+
+                pointer-events: none;
+
+                .menu-friend-figure-canvas {
+                    position: absolute;
+
+                    left: -100px;
+                    top: -90px;
+                }
+            }
+
+            .menu-friend-name {
+                font-family: "Ubuntu Bold";
+
+                position: absolute;
+
+                left: 42px;
+                top: 11px;
+            }
+        }
+    }
+}
