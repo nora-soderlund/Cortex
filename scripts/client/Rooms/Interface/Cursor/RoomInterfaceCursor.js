@@ -90,39 +90,56 @@ Client.rooms.interface.cursor = new function() {
     });
 
     const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
-
     cursor.name = "cursor";
+    cursor.render();
+    cursor.disable();
 
-    cursor.render().then(function() {
-        cursor.disable();
+    const depthCursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
+    depthCursor.name = "cursor";
+    
+    depthCursor.render().then(function() {
+        depthCursor.furniture.setAnimation(2);
 
-        Client.rooms.interface.events.start.push(function() {
-            Client.rooms.interface.entity.addEntity(cursor);
-        });
+        depthCursor.furniture.render();
+    });
 
-        Client.rooms.interface.entity.events.render.push(function() {
-            Client.rooms.interface.entity.currentMapEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
-            
-            if(Client.rooms.interface.entity.currentMapEntity == undefined) {
-                if(cursor.enabled) {
-                    cursor.disable();
+    depthCursor.disable();
 
-                    for(let index in Client.rooms.interface.cursor.events.unhover)
-                        Client.rooms.interface.cursor.events.unhover[index]();
-                }
+    Client.rooms.interface.events.start.push(function() {
+        Client.rooms.interface.entity.addEntity(cursor);
+        Client.rooms.interface.entity.addEntity(depthCursor);
+    });
+
+    Client.rooms.interface.entity.events.render.push(function() {
+        Client.rooms.interface.entity.currentMapEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
+        
+        if(Client.rooms.interface.entity.currentMapEntity == undefined) {
+            if(cursor.enabled) {
+                cursor.disable();
+                depthCursor.disable();
+
+                for(let index in Client.rooms.interface.cursor.events.unhover)
+                    Client.rooms.interface.cursor.events.unhover[index]();
             }
-            else {
-                const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Math.round(Client.rooms.interface.entity.currentMapEntity.result.depth);
+        }
+        else {
+            const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Math.round(Client.rooms.interface.entity.currentMapEntity.result.depth);
 
-                cursor.setCoordinates(row, column, depth, -2000);
+            cursor.setCoordinates(row, column, depth, -2000);
+            cursor.enable();
 
-                cursor.enable();
+            if(Client.rooms.interface.data.map.stack[row] != undefined && Client.rooms.interface.data.map.stack[row][column] != undefined && Client.rooms.interface.data.map.stack[row][column] != depth) {
+                depthCursor.setCoordinates(row, column, Client.rooms.interface.data.map.stack[row][column], 3000);
 
-                for(let index in Client.rooms.interface.cursor.events.hover)
-                    Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
+                depthCursor.enable();
             }
+            else
+                depthCursor.disable();
 
-            Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
-        });
+            for(let index in Client.rooms.interface.cursor.events.hover)
+                Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
+        }
+
+        Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
     });
 };

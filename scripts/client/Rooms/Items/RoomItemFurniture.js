@@ -73,9 +73,9 @@ Client.rooms.items.furniture = function(parent, id, direction) {
             }
         });
 
-        entity.furniture.process().then(function() {
-            entity.furniture.render()
-        });
+        await entity.furniture.process();
+        
+        await entity.furniture.render();
     };
 
     entity.process = function(timestamp, frame) {

@@ -10,6 +10,10 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
 
     Client.rooms.interface.data = data;
 
+    Client.socket.messages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate").then(function(result) {
+        Client.rooms.interface.data.map.stack = result;
+    });
+
     Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door);
     
     Client.rooms.interface.map.render().then(function() {
