@@ -108,13 +108,15 @@
             .menu-friend-buttons {
                 position: absolute;
 
-                left: 42px;
+                left: 48px;
                 top: 38px;
 
-                display: grid;
+                .menu-friend-follow {
+                    cursor: pointer;
 
-                grid-gap: 12px;
-                grid-template-columns: auto auto auto;
+                    width: 20px;
+                    height: 20px;
+                }
             }
         }
     }
