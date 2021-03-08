@@ -17,7 +17,7 @@ Client.rooms.interface.display = new function() {
     };
 
     this.figure = async function(entity) {
-        this.figure = entity;
+        this.entity = entity;
 
         this.$element.hide();
 
@@ -34,7 +34,7 @@ Client.rooms.interface.display = new function() {
     };
 
     this.furniture = async function(entity) {
-        this.furniture = entity;
+        this.entity = entity;
 
         this.$element.hide();
 
@@ -83,8 +83,7 @@ Client.rooms.interface.display = new function() {
     };
 
     this.hide = function() {
-        Client.rooms.interface.display.figure = undefined;
-        Client.rooms.interface.display.furniture = undefined;
+        Client.rooms.interface.display.entity = undefined;
         
         Client.rooms.interface.display.$element.hide();
     };

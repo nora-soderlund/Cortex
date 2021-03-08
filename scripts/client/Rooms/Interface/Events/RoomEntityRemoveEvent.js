@@ -6,10 +6,10 @@ Client.socket.messages.register("OnRoomEntityRemove", async function(data) {
         for(let index in data.furnitures) {
             const id = data.furnitures[index];
 
-            if(Client.rooms.interface.display.furniture != undefined && Client.rooms.interface.display.furniture.data.id == id)
-                Client.rooms.interface.display.hide();
-
             const entity = Client.rooms.interface.furnitures[id];
+
+            if(Client.rooms.interface.display.entity == entity)
+                Client.rooms.interface.display.hide();
 
             Client.rooms.interface.entity.removeEntity(entity);
 
@@ -24,10 +24,10 @@ Client.socket.messages.register("OnRoomEntityRemove", async function(data) {
         for(let index in data.users) {
             const id = data.users[index];
 
-            if(Client.rooms.interface.display.figure != undefined && Client.rooms.interface.display.figure.data.id == id)
-                Client.rooms.interface.display.hide();
-
             const entity = Client.rooms.interface.users[id];
+
+            if(Client.rooms.interface.display.entity == entity)
+                Client.rooms.interface.display.hide();
 
             Client.rooms.interface.entity.removeEntity(entity);
 
