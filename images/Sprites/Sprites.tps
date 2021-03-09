@@ -26,13 +26,13 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <false/>
+        <true/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
         <uint>72</uint>
         <key>dataFormat</key>
-        <string>sass-mixins</string>
+        <string>xml</string>
         <key>textureFileName</key>
         <filename>Sprites.png</filename>
         <key>flipPVR</key>
@@ -78,11 +78,11 @@
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
-        <string>./../images/</string>
+        <string></string>
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
-        <enum type="SettingsBase::TextureFormat">png8</enum>
+        <enum type="SettingsBase::TextureFormat">png</enum>
         <key>borderPadding</key>
         <uint>0</uint>
         <key>maxTextureSize</key>
@@ -102,7 +102,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -129,10 +129,10 @@
         </struct>
         <key>dataFileNames</key>
         <map type="GFileNameMap">
-            <key>sass</key>
+            <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../styles/client/Sprites/Sprites.sass</filename>
+                <filename>Sprites.xml</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -163,7 +163,7 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>1</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
@@ -181,7 +181,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">Sprites/arrow-big-left.png</key>
+            <key type="filename">images/arrow-big-left.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -196,7 +196,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/cursor-pointer.png</key>
+            <key type="filename">images/cursor-pointer.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -211,8 +211,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/dropdown.png</key>
-            <key type="filename">Sprites/dropup.png</key>
+            <key type="filename">images/dropdown.png</key>
+            <key type="filename">images/dropup.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -227,8 +227,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/information.png</key>
-            <key type="filename">Sprites/pen.png</key>
+            <key type="filename">images/information.png</key>
+            <key type="filename">images/pen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -243,7 +243,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/lock-big-password.png</key>
+            <key type="filename">images/lock-big-password.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -258,8 +258,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/lock-big-private.png</key>
-            <key type="filename">Sprites/lock-big-public.png</key>
+            <key type="filename">images/lock-big-private.png</key>
+            <key type="filename">images/lock-big-public.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -274,7 +274,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/lock.png</key>
+            <key type="filename">images/lock.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -289,7 +289,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/menu-camera.png</key>
+            <key type="filename">images/menu-camera.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -304,9 +304,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/menu-pointer-right.png</key>
-            <key type="filename">Sprites/pointer-down.png</key>
-            <key type="filename">Sprites/pointer-right.png</key>
+            <key type="filename">images/menu-pointer-right.png</key>
+            <key type="filename">images/pointer-down.png</key>
+            <key type="filename">images/pointer-right.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -321,7 +321,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/plus.png</key>
+            <key type="filename">images/plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -336,11 +336,11 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/room-door-plus.png</key>
-            <key type="filename">Sprites/room-tile-add.png</key>
-            <key type="filename">Sprites/room-tile-down.png</key>
-            <key type="filename">Sprites/room-tile-remove.png</key>
-            <key type="filename">Sprites/room-tile-up.png</key>
+            <key type="filename">images/room-door-plus.png</key>
+            <key type="filename">images/room-tile-add.png</key>
+            <key type="filename">images/room-tile-down.png</key>
+            <key type="filename">images/room-tile-remove.png</key>
+            <key type="filename">images/room-tile-up.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -355,7 +355,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/room-thumbnail.png</key>
+            <key type="filename">images/room-thumbnail.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -370,9 +370,9 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/settings.png</key>
-            <key type="filename">Sprites/user-follow.png</key>
-            <key type="filename">Sprites/user-profile-big.png</key>
+            <key type="filename">images/settings.png</key>
+            <key type="filename">images/user-follow.png</key>
+            <key type="filename">images/user-profile-big.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -387,7 +387,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/success.png</key>
+            <key type="filename">images/success.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -402,7 +402,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/tiles.png</key>
+            <key type="filename">images/tiles.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -417,7 +417,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/user-chat.png</key>
+            <key type="filename">images/user-chat.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -432,8 +432,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/user-menu-arrow-request.png</key>
-            <key type="filename">Sprites/user-menu-arrow.png</key>
+            <key type="filename">images/user-menu-arrow-request.png</key>
+            <key type="filename">images/user-menu-arrow.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -448,7 +448,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/user-profile.png</key>
+            <key type="filename">images/user-profile.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -463,7 +463,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">Sprites/zoom-plus.png</key>
+            <key type="filename">images/zoom-plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -481,37 +481,37 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>Sprites/dropdown.png</filename>
-            <filename>Sprites/dropup.png</filename>
-            <filename>Sprites/pen.png</filename>
-            <filename>Sprites/plus.png</filename>
-            <filename>Sprites/arrow-big-left.png</filename>
-            <filename>Sprites/lock.png</filename>
-            <filename>Sprites/lock-big-password.png</filename>
-            <filename>Sprites/lock-big-private.png</filename>
-            <filename>Sprites/lock-big-public.png</filename>
-            <filename>Sprites/pointer-down.png</filename>
-            <filename>Sprites/pointer-right.png</filename>
-            <filename>Sprites/tiles.png</filename>
-            <filename>Sprites/cursor-pointer.png</filename>
-            <filename>Sprites/room-door-plus.png</filename>
-            <filename>Sprites/room-tile-add.png</filename>
-            <filename>Sprites/room-tile-down.png</filename>
-            <filename>Sprites/room-tile-remove.png</filename>
-            <filename>Sprites/room-tile-up.png</filename>
-            <filename>Sprites/zoom-plus.png</filename>
-            <filename>Sprites/menu-pointer-right.png</filename>
-            <filename>Sprites/settings.png</filename>
-            <filename>Sprites/menu-camera.png</filename>
-            <filename>Sprites/user-menu-arrow.png</filename>
-            <filename>Sprites/information.png</filename>
-            <filename>Sprites/room-thumbnail.png</filename>
-            <filename>Sprites/success.png</filename>
-            <filename>Sprites/user-menu-arrow-request.png</filename>
-            <filename>Sprites/user-profile.png</filename>
-            <filename>Sprites/user-chat.png</filename>
-            <filename>Sprites/user-follow.png</filename>
-            <filename>Sprites/user-profile-big.png</filename>
+            <filename>images/arrow-big-left.png</filename>
+            <filename>images/cursor-pointer.png</filename>
+            <filename>images/dropdown.png</filename>
+            <filename>images/dropup.png</filename>
+            <filename>images/information.png</filename>
+            <filename>images/lock-big-password.png</filename>
+            <filename>images/lock-big-private.png</filename>
+            <filename>images/lock-big-public.png</filename>
+            <filename>images/lock.png</filename>
+            <filename>images/menu-camera.png</filename>
+            <filename>images/menu-pointer-right.png</filename>
+            <filename>images/pen.png</filename>
+            <filename>images/plus.png</filename>
+            <filename>images/pointer-down.png</filename>
+            <filename>images/pointer-right.png</filename>
+            <filename>images/room-door-plus.png</filename>
+            <filename>images/room-thumbnail.png</filename>
+            <filename>images/room-tile-add.png</filename>
+            <filename>images/room-tile-down.png</filename>
+            <filename>images/room-tile-remove.png</filename>
+            <filename>images/room-tile-up.png</filename>
+            <filename>images/settings.png</filename>
+            <filename>images/success.png</filename>
+            <filename>images/tiles.png</filename>
+            <filename>images/user-chat.png</filename>
+            <filename>images/user-follow.png</filename>
+            <filename>images/user-menu-arrow-request.png</filename>
+            <filename>images/user-menu-arrow.png</filename>
+            <filename>images/user-profile-big.png</filename>
+            <filename>images/user-profile.png</filename>
+            <filename>images/zoom-plus.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:7d04db490463877c0796cf2aae231e91:bb1bc1d4308d0141f7ca5e489c496ba8:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Sprites.png" width="256" height="116">
+    <sprite n="arrow-big-left" x="52" y="21" w="44" h="29"/>
+    <sprite n="cursor-pointer" x="34" y="21" w="18" h="24"/>
+    <sprite n="dropdown" x="50" y="0" w="10" h="10"/>
+    <sprite n="dropup" x="60" y="0" w="10" h="10"/>
+    <sprite n="information" x="145" y="0" w="17" h="18"/>
+    <sprite n="lock-big-password" x="98" y="61" w="36" h="44"/>
+    <sprite n="lock-big-private" x="40" y="61" w="29" h="43"/>
+    <sprite n="lock-big-public" x="69" y="61" w="29" h="43"/>
+    <sprite n="lock" x="132" y="0" w="13" h="16"/>
+    <sprite n="menu-camera" x="134" y="61" w="38" h="45"/>
+    <sprite n="menu-pointer-right" x="0" y="0" w="8" h="8"/>
+    <sprite n="pen" x="162" y="0" w="17" h="18"/>
+    <sprite n="plus" x="117" y="0" w="15" h="15"/>
+    <sprite n="pointer-down" x="8" y="0" w="8" h="8"/>
+    <sprite n="pointer-right" x="16" y="0" w="8" h="8"/>
+    <sprite n="room-door-plus" x="96" y="21" w="40" h="40"/>
+    <sprite n="room-thumbnail" x="172" y="61" w="71" h="55"/>
+    <sprite n="room-tile-add" x="136" y="21" w="40" h="40"/>
+    <sprite n="room-tile-down" x="176" y="21" w="40" h="40"/>
+    <sprite n="room-tile-remove" x="216" y="21" w="40" h="40"/>
+    <sprite n="room-tile-up" x="0" y="61" w="40" h="40"/>
+    <sprite n="settings" x="179" y="0" w="21" h="21"/>
+    <sprite n="success" x="101" y="0" w="16" h="13"/>
+    <sprite n="tiles" x="70" y="0" w="18" h="10"/>
+    <sprite n="user-chat" x="200" y="0" w="20" h="21"/>
+    <sprite n="user-follow" x="220" y="0" w="21" h="21"/>
+    <sprite n="user-menu-arrow-request" x="24" y="0" w="13" h="9"/>
+    <sprite n="user-menu-arrow" x="37" y="0" w="13" h="9"/>
+    <sprite n="user-profile-big" x="0" y="21" w="21" h="21"/>
+    <sprite n="user-profile" x="88" y="0" w="13" h="11"/>
+    <sprite n="zoom-plus" x="21" y="21" w="13" h="22"/>
+</TextureAtlas>
