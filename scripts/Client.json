@@ -101,7 +101,7 @@
         "Inventory/Pages/InventoryFurnitures.js",
 
         "User/User.js",
-        "User/Friends/OnUserFriendAdd.js",
+        "User/Friends/OnUserFriendUpdate.js",
         "User/Friends/OnUserFriendRemove.js",
         
         "Utils/Utils.js"

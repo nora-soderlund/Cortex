@@ -46,9 +46,9 @@ Client.rooms.interface.display.users = new function() {
                 }
 
                 case "manage": {
-                    const friend = Client.user.friends.find(x => x.friend == this.entity.entity.data.id);
+                    const friend = Client.user.friends[this.entity.entity.data.id];
 
-                    if(friend != null) {
+                    if(friend != undefined) {
                         if(friend.status == -1) {
                             this.add("Cancel Friend Invite", async function() {
                                 await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
@@ -188,7 +188,7 @@ Client.rooms.interface.display.users = new function() {
         });
 
         $element.find(".room-interface-user-request-accept").on("click", async function() {
-            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendAdd");
+            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendUpdate");
 
             destroy();
         });
@@ -200,6 +200,8 @@ Client.rooms.interface.display.users = new function() {
 
             $element.remove();
         };
+
+        this.destroy = destroy;
 
         function hover() {
             const center = Client.rooms.interface.entity.center;

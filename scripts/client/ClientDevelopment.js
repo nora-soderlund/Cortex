@@ -70,6 +70,10 @@ Client.loader.ready(function() {
         });
 
         entity.set = async function(furniture) {
+            entity.show();
+            
+            entity.pause();
+            
             entity.$content.html("");
 
             const data = await Client.furnitures.get(furniture.data.furniture);
@@ -114,10 +118,6 @@ Client.loader.ready(function() {
             entity.setTitle('HabboFurnitures/' + data.line + '/' + data.id);
         };
 
-        entity.show();
-        
-        entity.pause();
-
         return entity;
     };
 
@@ -154,6 +154,10 @@ Client.loader.ready(function() {
         });
 
         entity.set = async function(page) {
+            entity.show();
+            
+            entity.pause();
+
             entity.$content.html("");
 
             $(
@@ -182,10 +186,6 @@ Client.loader.ready(function() {
 
             entity.setTitle('HabboShopPages/' + page.title);
         };
-
-        entity.show();
-        
-        entity.pause();
 
         return entity;
     };

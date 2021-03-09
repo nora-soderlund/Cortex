@@ -32,13 +32,13 @@ Client.rooms.interface = new function() {
 
     this.stop = async function() {
         Client.rooms.interface.active = false;
+        
+        for(let index in Client.rooms.interface.events.stop)
+            Client.rooms.interface.events.stop[index]();
 
         return new Promise(function(resolve) {
             window.requestAnimationFrame(function() {
                 window.requestAnimationFrame(function() {
-                    for(let index in Client.rooms.interface.events.stop)
-                        Client.rooms.interface.events.stop[index]();
-    
                     resolve();
                 });
             });

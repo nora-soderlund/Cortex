@@ -3,81 +3,59 @@ Client.menu.friends = new function() {
 
     this.friends = {};
 
-    this.add = async function(id) {
-        const user = await Client.game.getUser(id);
-
-        const friend = Client.user.friends.find(x => x.friend == id);
-
+    this.add = function(id) {
         const $element = $('<div class="menu-friend"></div>').appendTo(this.$element);
 
-        if(friend.status == -1)
-            return;
+        Client.game.getUser(id).then(async function(user) {
+            const friend = Client.user.friends[id];
 
-        const $content = $('<div class="menu-friend-content"></div>').appendTo($element);
+            const $content = $('<div class="menu-friend-content"></div>').appendTo($element);
 
-        const $name = $('<p class="menu-friend-name">' + user.name + '</p>').appendTo($content);
+            const $name = $('<p class="menu-friend-name">' + user.name + '</p>').appendTo($content);
 
-        const $buttons = $('<div class="menu-friend-buttons"></div>').appendTo($content);
+            const $buttons = $('<div class="menu-friend-buttons"></div>').appendTo($content);
 
-        if(friend.status == 0) {
-            $element.addClass("menu-friend-request");
-        }
-        else {
-            $element.click(function(e) {
-                if($(e.target).hasClass("menu-friend-content"))
-                    $element.toggleClass("active");
+            if(friend.status == 0) {
+                $element.addClass("menu-friend-request");
+            }
+            else {
+                $element.click(function(e) {
+                    if($(e.target).hasClass("menu-friend-content"))
+                        $element.toggleClass("active");
+                });
+
+                $('<div class="menu-friend-follow sprite-user-follow"></div>').appendTo($buttons);
+            }
+
+            const $figure = $('<div class="menu-friend-figure"></div>').appendTo($content);
+
+            const $canvas = $('<canvas class="menu-friend-figure-canvas" width="256" height="256"></canvas>').appendTo($figure);
+            const context = $canvas[0].getContext("2d");
+
+            const entity = new Client.figures.entity(user.figure);
+
+            entity.events.render.push(function(sprites) {
+                context.clearRect(0, 0, 256, 256);
+
+                for(let index in sprites)
+                    context.drawImage(sprites[index].image, sprites[index].left, sprites[index].top);
             });
 
-            $('<div class="menu-friend-follow sprite-user-follow"></div>').appendTo($buttons);
-        }
-
-        const $figure = $('<div class="menu-friend-figure"></div>').appendTo($content);
-
-        const $canvas = $('<canvas class="menu-friend-figure-canvas" width="256" height="256"></canvas>').appendTo($figure);
-        const context = $canvas[0].getContext("2d");
-
-        const entity = new Client.figures.entity(user.figure);
-
-        entity.events.render.push(function(sprites) {
-            context.clearRect(0, 0, 256, 256);
-
-            for(let index in sprites)
-                context.drawImage(sprites[index].image, sprites[index].left, sprites[index].top);
+            await entity.process();
+            await entity.render();
         });
 
-        this.friends[id] = $element;
-
-        await entity.process();
-        await entity.render();
+        return $element;
     };
+
+    Client.rooms.interface.events.stop.push(function() {
+        for(let id in Client.user.friends) {
+            if(Client.user.friends[id].request == undefined)
+                continue;
+
+            Client.user.friends[id].request.destroy();
+            
+            delete Client.user.friends[id].request;
+        }
+    });
 };
-    
-Client.socket.messages.register("OnUserUpdate", function(data) {
-    if(data.friends == undefined)
-        return;
-
-    for(let id in Client.menu.friends.friends)
-        Client.menu.friends.friends[id].remove();
-
-    for(let index in data.friends)
-        Client.menu.friends.add(data.friends[index].friend);
-});
-    
-Client.socket.messages.register("OnUserFriendAdd", function(data) {
-    if(Client.menu.friends.friends[data.friend] != undefined) {
-        Client.menu.friends.friends[data.friend].remove();
-        
-        delete Client.menu.friends.friends[data.friend];
-    }
-
-    Client.menu.friends.add(data.friend);
-});
-    
-Client.socket.messages.register("OnUserFriendRemove", function(data) {
-    if(Client.menu.friends.friends[data] == undefined)
-        return;
-
-    Client.menu.friends.friends[data].remove();
-    
-    delete Client.menu.friends.friends[data];
-});

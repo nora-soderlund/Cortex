@@ -1,13 +1,12 @@
 Client.socket.messages.register("OnUserFriendRemove", function(data) {
-    const previous = Client.user.friends.findIndex(x => x.friend == parseInt(data));
-    
-    if(previous == -1)
+    if(Client.user.friends[data] == undefined)
         return;
 
-    console.log(Client.user.friends[previous]);
+    if(Client.user.friends[data].request != undefined)
+        Client.user.friends[data].request.destroy();
 
-    if(Client.user.friends[previous].request != undefined)
-        Client.user.friends[previous].request.destroy();
+    if(Client.user.friends[data].menu != undefined)
+        Client.user.friends[data].menu.remove();
 
-    Client.user.friends.splice(previous, 1);
+    delete Client.user.friends[data];
 });

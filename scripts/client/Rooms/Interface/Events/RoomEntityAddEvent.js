@@ -45,6 +45,13 @@ Client.socket.messages.register("OnRoomEntityAdd", async function(data) {
             Client.rooms.interface.entity.addEntity(entity);
 
             Client.rooms.interface.users[data.users[index].id] = entity;
+
+            const friend = Client.user.friends[data.users[index].id];
+
+            if(friend != undefined) {
+                if(friend.status == 0 && friend.request == undefined)
+                    friend.request = new Client.rooms.interface.display.users.request(Client.rooms.interface.users[data.users[index].id]);
+            }
         }
     }
 });
