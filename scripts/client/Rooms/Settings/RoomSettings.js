@@ -9,13 +9,17 @@ Client.rooms.settings = new function() {
 
         offset: {
             type: "center"
-        }
+        },
+
+        resizable: true
     });
 
     entity.events.create.push(function() {
         entity.$content.addClass("room-creation");
 
-        const tabs = new Client.dialogs.tabs(231);
+        const tabs = new Client.dialogs.tabs("100%");
+
+        tabs.$element.addClass("room-creation-tabs");
 
         tabs.add("information", "Information", async function($element) {
             const $grid = $('<div class="room-creation-grid"></div>').appendTo($element);
@@ -123,7 +127,7 @@ Client.rooms.settings = new function() {
             });
 
             entity.editor.tiles.$element.css({
-                "width": "280px",
+                "width": "auto",
                 "height": "230px"
             });
     

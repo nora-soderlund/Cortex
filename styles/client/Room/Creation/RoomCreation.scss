@@ -1,4 +1,12 @@
 .room-creation {
+    .room-creation-tabs {
+        display: grid;
+
+        grid-template-rows: 34px auto;
+
+        height: 100%;
+    }
+
     .room-creation-grid {
         display: grid;
 
@@ -134,7 +142,7 @@
         display: grid;
 
         grid-gap: 6px;
-        grid-template-columns: 280px auto;
+        grid-template-columns: auto 280px;
 
         height: 100%;
         width: 100%;
@@ -147,6 +155,12 @@
             .dialog-item {
                 margin: 0 auto;
             }
+        }
+    }
+
+    .room-editor-tiles {
+        canvas {
+            width: 100%;
         }
     }
 }

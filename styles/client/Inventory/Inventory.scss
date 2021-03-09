@@ -1,1 +1,9 @@
 @import "Tabs/InventoryFurnitures.scss";
+
+.inventory-tabs {
+    display: grid;
+
+    grid-template-rows: 34px auto;
+
+    height: 100%;
+}

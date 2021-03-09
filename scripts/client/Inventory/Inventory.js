@@ -4,12 +4,11 @@ Client.inventory = new function() {
         
         size: {
             width: 480,
-            height: "inherit"
+            height: 280
         },
 
         offset: {
-            type: "center",
-            top: -130
+            type: "center"
         },
 
         resizable: true
@@ -18,7 +17,9 @@ Client.inventory = new function() {
     entity.pages = {};
 
     entity.events.create.push(async function() {
-        entity.tabs = new Client.dialogs.tabs(260);
+        entity.tabs = new Client.dialogs.tabs("100%");
+
+        entity.tabs.$element.addClass("inventory-tabs");
 
         entity.tabs.add("furnitures", "Furnitures");
 
