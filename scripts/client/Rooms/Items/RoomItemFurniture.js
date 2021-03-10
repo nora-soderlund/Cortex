@@ -11,6 +11,9 @@ Client.rooms.items.furniture = function(parent, id, direction) {
     
     entity.furniture = new Client.furnitures.entity({ id, direction });
 
+    if(id == "ads_mtv_bigtv2")
+        entity.video = new Client.rooms.items.video(entity, "0jerrSms3KI");
+
     entity.render = async function() {
         entity.furniture.events.render.push(function(sprites) {
             entity.sprites.length = 0;
@@ -71,6 +74,9 @@ Client.rooms.items.furniture = function(parent, id, direction) {
 
                 entity.sprites.push(sprite);
             }
+        
+            if(entity.furniture.types != undefined && entity.video != undefined)
+                entity.sprites.push(entity.video);
         });
 
         await entity.furniture.process();
@@ -81,10 +87,8 @@ Client.rooms.items.furniture = function(parent, id, direction) {
     entity.process = function(timestamp, frame) {
         entity.updatePath(frame);
 
-        if(!entity.furniture.updateAnimations(timestamp))
-            return;
-
-        entity.furniture.render();
+        if(entity.furniture.updateAnimations(timestamp))
+            entity.furniture.render();
     };
 
     return entity;
