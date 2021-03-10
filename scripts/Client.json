@@ -63,6 +63,8 @@
         "Rooms/Interface/Events/RoomEntityAddEvent.js",
         "Rooms/Interface/Events/RoomEntityUpdateEvent.js",
         "Rooms/Interface/Events/RoomEntityRemoveEvent.js",
+
+        "Rooms/Interface/Events/Furniture/RoomFurnitureVideo.js",
         
         "Rooms/Interface/Events/RoomSettingsUpdateEvent.js",
 
