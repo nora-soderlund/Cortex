@@ -4,7 +4,15 @@ Client.socket.messages.register("OnRoomFurnitureVideoStart", function(data) {
     if(entity == undefined)
         return;
 
-    entity.video = new Client.rooms.items.video(entity, data.link);
+    if(entity.video != undefined) {
+        entity.video.image.pause();
+    
+        $(entity.video.image).remove();
+    
+        delete entity.video;
+    }
+
+    entity.video = new Client.rooms.items.video(entity, Client.loader.settings.api.youtube + data.link + ".mp4");
 
     entity.sprites.push(entity.video);
 });
@@ -16,11 +24,5 @@ Client.socket.messages.register("OnRoomFurnitureVideoStop", function(data) {
         return;
 
     if(entity.video == undefined)
-        return;
-
-    entity.video.image.pause();
-
-    $(entity.video.image).remove();
-
-    delete entity.video;
+        return; 
 });

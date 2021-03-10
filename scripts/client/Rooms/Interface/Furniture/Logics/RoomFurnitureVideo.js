@@ -1,0 +1,85 @@
+Client.rooms.interface.furniture.logics.furniture_video = new function() {
+    const entity = new Client.dialogs.default({
+        title: "Inventory",
+        
+        size: {
+            width: 800,
+            height: 256
+        },
+
+        offset: {
+            type: "center"
+        },
+
+        resizable: true
+    });
+
+    entity.events.create.push(function() {
+        entity.$content.addClass("room-interface-furniture-video");
+
+        entity.$frame = $('<iframe frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>').appendTo(entity.$content);
+    
+        entity.$controls = $('<div class="room-interface-furniture-controls"></div>').appendTo(entity.$content);
+        
+
+        const $input = $('<div class="room-interface-furniture-input"></div>').appendTo(entity.$controls);
+        
+        $('<input type="text" placeholder="Enter YouTube link...">').appendTo($input);
+        $('<div class="sprite-plus"></div>').appendTo($input);
+
+        entity.$videos = $('<div class="room-interface-furniture-videos"></div>').appendTo(entity.$controls);
+
+        entity.$buttons = $('<div class="room-interface-furniture-buttons"></div>').appendTo(entity.$controls);
+
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-previous"></i></div>').appendTo(entity.$buttons);
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-stop"></i></div>').appendTo(entity.$buttons);
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-pause"></i></div>').appendTo(entity.$buttons);
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-next"></i></div>').appendTo(entity.$buttons);
+    });
+
+    entity.events.show.push(function() {
+        const furniture = Client.rooms.interface.furnitures[entity.data.id];
+
+        Client.furnitures.get(furniture.data.furniture).then(function(info) {
+            entity.setTitle(info.title);
+        });
+
+        for(let index in entity.data.videos) {
+            const minutes = Math.floor(entity.data.videos[index].length / 60);
+            const seconds = entity.data.videos[index].length - (minutes * 60);
+
+            const $video = $(
+                '<div class="room-interface-furniture-video-item">' +
+                    '<div class="room-interface-furniture-video-item-title"><b>' + entity.data.videos[index].title + '</b></div>' +
+                    '<p class="room-interface-furniture-video-item-user">By ' + entity.data.videos[index].author + '</p>' +
+
+                    '<div class="room-interface-furniture-video-item-length">' + minutes + ':' + ((seconds < 10)?("0" + seconds):(seconds)) + '</div>' +
+                '</div>'
+            ).appendTo(entity.$videos);
+
+            const $reference = $('<div class="sprite-reference"></div>').appendTo($video.find(".room-interface-furniture-video-item-title"));
+
+            $reference.on("click", function() {
+                window.open("https://www.youtube.com/watch?v=" + entity.data.videos[index].id);
+            });
+
+            $video.on("click", function() {
+                $video.parent().find(".room-interface-furniture-video-item.active").removeClass("active");
+
+                $video.addClass("active");
+
+                entity.$frame[0].src = "https://www.youtube.com/embed/" + entity.data.videos[index].id;
+            });
+        }
+
+        entity.$videos.find(".room-interface-furniture-video-item").first().click();
+    });
+
+    return entity;
+};
+
+Client.socket.messages.register("OnRoomFurnitureVideoUse", function(data) {
+    Client.rooms.interface.furniture.logics.furniture_video.data = data;
+
+    Client.rooms.interface.furniture.logics.furniture_video.show();
+});

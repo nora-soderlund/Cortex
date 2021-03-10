@@ -196,21 +196,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">images/cursor-pointer.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>5,6,9,12</rect>
-                <key>scale9Paddings</key>
-                <rect>5,6,9,12</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
+            <key type="filename">images/cross.png</key>
             <key type="filename">images/dropdown.png</key>
             <key type="filename">images/dropup.png</key>
             <struct type="IndividualSpriteSettings">
@@ -224,6 +210,21 @@
                 <rect>3,3,5,5</rect>
                 <key>scale9Paddings</key>
                 <rect>3,3,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/cursor-pointer.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,6,9,12</rect>
+                <key>scale9Paddings</key>
+                <rect>5,6,9,12</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -321,6 +322,39 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/player-next.png</key>
+            <key type="filename">images/player-previous.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,4,11,8</rect>
+                <key>scale9Paddings</key>
+                <rect>5,4,11,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/player-pause.png</key>
+            <key type="filename">images/player-play.png</key>
+            <key type="filename">images/player-stop.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -333,6 +367,22 @@
                 <rect>4,4,7,7</rect>
                 <key>scale9Paddings</key>
                 <rect>4,4,7,7</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/reference.png</key>
+            <key type="filename">images/user-profile.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>3,3,7,5</rect>
+                <key>scale9Paddings</key>
+                <rect>3,3,7,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -448,21 +498,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">images/user-profile.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,3,7,5</rect>
-                <key>scale9Paddings</key>
-                <rect>3,3,7,5</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">images/zoom-plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -512,6 +547,13 @@
             <filename>images/user-profile-big.png</filename>
             <filename>images/user-profile.png</filename>
             <filename>images/zoom-plus.png</filename>
+            <filename>images/cross.png</filename>
+            <filename>images/player-next.png</filename>
+            <filename>images/player-pause.png</filename>
+            <filename>images/player-play.png</filename>
+            <filename>images/player-previous.png</filename>
+            <filename>images/player-stop.png</filename>
+            <filename>images/reference.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

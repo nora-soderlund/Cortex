@@ -78,6 +78,7 @@
         "Rooms/Interface/Furniture/Logics/RoomFurnitureMultistate.js",
         "Rooms/Interface/Furniture/Logics/RoomFurnitureCustomStackHeight.js",
         "Rooms/Interface/Furniture/Logics/RoomFurnitureDice.js",
+        "Rooms/Interface/Furniture/Logics/RoomFurnitureVideo.js",
 
         "Rooms/Interface/Camera/RoomInterfaceCamera.js",
 
