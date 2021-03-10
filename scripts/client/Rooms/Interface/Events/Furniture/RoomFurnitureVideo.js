@@ -5,6 +5,8 @@ Client.socket.messages.register("OnRoomFurnitureVideoStart", function(data) {
         return;
 
     entity.video = new Client.rooms.items.video(entity, data.link);
+
+    entity.sprites.push(entity.video);
 });
 
 Client.socket.messages.register("OnRoomFurnitureVideoStop", function(data) {

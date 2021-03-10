@@ -1,7 +1,7 @@
 Client.rooms.items.video = function(parent, link) {
     const sprite = new Client.rooms.items.sprite(parent, new Image());
 
-    sprite.image = $('<video muted="muted"></video>').css("display", "none").appendTo(Client.rooms.interface.$element)[0];
+    sprite.image = $('<video muted="muted"></video>').css({ "display": "none" }).appendTo(Client.rooms.interface.$element)[0];
 
     sprite.image.addEventListener("loadeddata", function() {
         sprite.image.play();
