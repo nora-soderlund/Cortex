@@ -10,6 +10,8 @@ Client.rooms.items.video = function(parent, link, time) {
             if(sprite.visualization == undefined)
                 return;
 
+            sprite.alpha = (sprite.visualization.alpha == undefined)?(1.0):(sprite.visualization.alpha);
+
             sprite.image.currentTime = time;
 
             const $canvas = $('<canvas width="480" height="360"></canvas>');
@@ -28,7 +30,7 @@ Client.rooms.items.video = function(parent, link, time) {
 
                 canvas.clearRect(0, 0, canvas.canvas.width, canvas.canvas.height);
                 
-                if(parent.furniture.settings.direction == 4)
+                if(parent.furniture.settings.direction == 0 || parent.furniture.settings.direction == 4)
                     canvas.setTransform(1, .5, 0, 1, 0, 0);
                 else if(parent.furniture.settings.direction == 2)
                     canvas.setTransform(1, -.5, 0, 1, 0, sprite.visualization.width / 16 * 9);
