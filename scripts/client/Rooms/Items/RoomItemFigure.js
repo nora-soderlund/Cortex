@@ -63,7 +63,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
         if(!entity.data.walk)
             return;
 
-        let newFrame = Math.floor(frame / 3);
+        newFrame = Math.floor(frame / 2);
 
         if(entity.figure.frames["Move"] != newFrame) {
             entity.figure.frames["Move"] = newFrame;
