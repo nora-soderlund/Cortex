@@ -442,7 +442,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
             const depth = this.getCoordinate(row, column);
 
             const left = -(row * 32) + (column * 32);
-            const top = (column * 32) - (this.depth * 16) + ((3.5 + (this.depth - depth)) * 32) + 32 - sprite.height;
+            const top = (this.settings.wall.thickness / 2) + (column * 32) - (this.depth * 16) + ((3.5 + (this.depth - depth)) * 32) + 32 - sprite.height;
 
             context.drawImage(sprite, left, top);
         }
