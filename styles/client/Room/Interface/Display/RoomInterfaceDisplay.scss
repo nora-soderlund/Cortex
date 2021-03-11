@@ -2,12 +2,11 @@
     position: absolute;
 
     right: 6px;
-    bottom: 62px;
+    bottom: 56px;
 
     display: grid;
 
-    grid-gap: 6px;
-    grid-template-rows: auto 24px;
+    grid-template-rows: auto auto;
 
     .room-interface-display-content {
         background: rgb(28, 28, 26);
@@ -46,6 +45,8 @@
     .room-interface-display-buttons {
         .room-interface-display-button {
             float: right;
+
+            margin-top: 6px;
 
             background: rgba(28, 28, 26, .9);
             

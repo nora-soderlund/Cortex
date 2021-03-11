@@ -435,7 +435,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.globalCompositeOperation = "destination-out";
 
-            context.setTransform(1, -.5, 0, 1, this.rows * 32, this.depth * 16);
+            context.setTransform(1, -.5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
 
             const row = this.settings.door.row;
             const column = this.settings.door.column;
