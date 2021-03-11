@@ -25,4 +25,10 @@ Client.socket.messages.register("OnRoomFurnitureVideoStop", function(data) {
 
     if(entity.video == undefined)
         return; 
+        
+    entity.video.image.pause();
+
+    $(entity.video.image).remove();
+
+    delete entity.video;
 });

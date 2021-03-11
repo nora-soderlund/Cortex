@@ -1,6 +1,6 @@
 Client.rooms.interface.furniture.logics.furniture_video = new function() {
     const entity = new Client.dialogs.default({
-        title: "Inventory",
+        title: "Room Furniture Video",
         
         size: {
             width: 800,
@@ -22,26 +22,108 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
         entity.$controls = $('<div class="room-interface-furniture-controls"></div>').appendTo(entity.$content);
         
 
-        const $input = $('<div class="room-interface-furniture-input"></div>').appendTo(entity.$controls);
+        const $input = $(
+            '<div class="room-interface-furniture-input">' +
+                '<p class="room-interface-furniture-input-text">https://www.youtube.com/watch?v=</p>' +
+            '</div>'
+        ).appendTo(entity.$controls);
         
-        $('<input type="text" placeholder="Enter YouTube link...">').appendTo($input);
-        $('<div class="sprite-plus"></div>').appendTo($input);
+        const $link = $('<input type="text" placeholder="dQw4w9WgXcQ">').appendTo($input);
+
+        $('<div class="sprite-plus"></div>').appendTo($input).on("click", async function() {
+            const value = $link.val();
+
+            if(value.length == 0)
+                return;
+
+            entity.pause();
+
+            const result = await Client.socket.messages.sendCall({
+                OnRoomFurnitureUse: {
+                    id: entity.data.id,
+
+                    video: value,
+
+                    action: "add"
+                }
+            }, "OnRoomFurnitureUse");
+
+            entity.unpause();
+
+            $link.val("");
+
+            if(result)
+                Client.socket.messages.send({ OnRoomFurnitureUse: { id: entity.data.id } });
+        });
 
         entity.$videos = $('<div class="room-interface-furniture-videos"></div>').appendTo(entity.$controls);
 
         entity.$buttons = $('<div class="room-interface-furniture-buttons"></div>').appendTo(entity.$controls);
 
-        $('<div class="room-interface-furniture-player"><i class="sprite-player-previous"></i></div>').appendTo(entity.$buttons);
-        $('<div class="room-interface-furniture-player"><i class="sprite-player-stop"></i></div>').appendTo(entity.$buttons);
-        $('<div class="room-interface-furniture-player"><i class="sprite-player-pause"></i></div>').appendTo(entity.$buttons);
-        $('<div class="room-interface-furniture-player"><i class="sprite-player-next"></i></div>').appendTo(entity.$buttons);
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-previous"></i></div>').appendTo(entity.$buttons).on("click", async function() {
+            entity.pause();
+
+            await Client.socket.messages.sendCall({
+                OnRoomFurnitureUse: {
+                    id: entity.data.id,
+
+                    action: "previous"
+                }
+            }, "OnRoomFurnitureUse");
+
+            entity.unpause();
+        });
+
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-stop"></i></div>').appendTo(entity.$buttons).on("click", async function() {
+            entity.pause();
+
+            await Client.socket.messages.sendCall({
+                OnRoomFurnitureUse: {
+                    id: entity.data.id,
+
+                    action: "stop"
+                }
+            }, "OnRoomFurnitureUse");
+
+            entity.unpause();
+        });
+
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-pause"></i></div>').appendTo(entity.$buttons).on("click", async function() {
+            entity.pause();
+
+            await Client.socket.messages.sendCall({
+                OnRoomFurnitureUse: {
+                    id: entity.data.id,
+
+                    action: "pause"
+                }
+            }, "OnRoomFurnitureUse");
+
+            entity.unpause();
+        });
+
+        $('<div class="room-interface-furniture-player"><i class="sprite-player-next"></i></div>').appendTo(entity.$buttons).on("click", async function() {
+            entity.pause();
+
+            await Client.socket.messages.sendCall({
+                OnRoomFurnitureUse: {
+                    id: entity.data.id,
+
+                    action: "next"
+                }
+            }, "OnRoomFurnitureUse");
+
+            entity.unpause();
+        });
     });
 
     entity.events.show.push(function() {
+        entity.$videos.html("");
+
         const furniture = Client.rooms.interface.furnitures[entity.data.id];
 
         Client.furnitures.get(furniture.data.furniture).then(function(info) {
-            entity.setTitle(info.title);
+            //entity.setTitle(info.title);
         });
 
         for(let index in entity.data.videos) {
@@ -63,12 +145,37 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
                 window.open("https://www.youtube.com/watch?v=" + entity.data.videos[index].id);
             });
 
-            $video.on("click", function() {
+            $video.on("click", function(e) {
+                if(!$(e.target).hasClass("room-interface-furniture-video-item"))
+                    return;
+
                 $video.parent().find(".room-interface-furniture-video-item.active").removeClass("active");
 
                 $video.addClass("active");
 
                 entity.$frame[0].src = "https://www.youtube.com/embed/" + entity.data.videos[index].id;
+            });
+
+            const $cross = $('<div class="sprite-cross"></div>').appendTo($video);
+
+            $cross.on("click", async function() {
+                entity.pause();
+
+                await Client.socket.messages.sendCall({
+                    OnRoomFurnitureUse: {
+                        id: entity.data.id,
+
+                        video: entity.data.videos[index].id,
+
+                        action: "remove"
+                    }
+                }, "OnRoomFurnitureUse");
+
+                entity.$frame[0].src = "";
+
+                $video.remove();
+
+                entity.unpause();
             });
         }
 
