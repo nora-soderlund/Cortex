@@ -60,7 +60,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
     });
 
     entity.events.path.frame.push(async function(frame) {
-        if(!entity.data.walk)
+        /*if(!entity.data.walk)
             return;
 
         newFrame = Math.floor(frame / 2);
@@ -69,7 +69,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
             entity.figure.frames["Move"] = newFrame;
 
             await entity.figure.render();
-        }
+        }*/
     });
 
     entity.events.path.finish.push(async function() {
@@ -80,6 +80,13 @@ Client.rooms.items.figure = function(parent, figure, direction) {
 
         await entity.figure.render();
     });
+    
+    entity.process = function(timestamp, frame) {
+        entity.updatePath(frame);
+
+        if(entity.figure.updateActions())
+            entity.figure.render();
+    };
 
     return entity;
 };

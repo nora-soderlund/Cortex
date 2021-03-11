@@ -8,6 +8,7 @@ Client.figures.entity = function(figure, properties = {}) {
     this.direction = 2;
     
     this.actions = [];
+    this.actionTimestamp = performance.now();
 
     this.frames = {};
 
@@ -116,6 +117,39 @@ Client.figures.entity = function(figure, properties = {}) {
             
         await this.setAction("Default");
     }
+
+    this.updateActions = function() {
+        const timestamp = performance.now();
+
+        if((timestamp - this.actionTimestamp) < (1000 / 12))
+            return false;
+
+        this.actionTimestamp = timestamp;
+            
+        let changed = false;
+
+        for(let index in this.actions) {
+            const id = this.actions[index].id;
+
+            if(Client.figures.actionFrames[id] == undefined)
+                continue;
+
+            if(this.frames[id] != undefined) {
+                this.frames[id]++;
+
+                if(this.frames[id] > Client.figures.actionFrames[id])
+                    this.frames[id] = 0;
+            }
+            else
+                this.frames[id] = 0;
+
+            console.log(this.frames[id]);
+
+            changed = true;
+        }
+
+        return changed;
+    };
 
     this.removeAction = function(id) {
         const index = this.actions.findIndex(x => x.id == id);

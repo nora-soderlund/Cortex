@@ -9,6 +9,13 @@ Client.figures = new function() {
         "rc": "rs"
     };
 
+    this.actionFrames = {
+        "Move": 4,
+        "Talk": 2,
+
+        "Wave": 1
+    };
+
     this.getLibrary = async function(id, type) {
         const libraries = this.map.map.lib;
 
