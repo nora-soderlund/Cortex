@@ -1,7 +1,7 @@
 Client.rooms.items.map = function(parent, map = "", door = {}) {
     const entity = new Client.rooms.items.entity(parent, "map");
 
-    entity.index = -2000;
+    entity.index = -100000;
 
     entity.map = new Client.rooms.map.entity(map, door);
 
