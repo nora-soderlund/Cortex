@@ -26,8 +26,8 @@ Client.rooms.interface.display.users = new function() {
             switch(page) {
                 case "default": {
                     if(Client.user.id == this.entity.entity.data.id) {
-                        this.add("Gestures", function() {
-                            Client.rooms.interface.display.users.tabs.show("gestures", "default");
+                        this.add("Actions", function() {
+                            Client.rooms.interface.display.users.tabs.show("actions", "default");
                         });
                     }
                     else {
@@ -82,14 +82,30 @@ Client.rooms.interface.display.users = new function() {
                     break;
                 }
 
-                case "gestures": {
-                    for(let index in Client.figures.actions.actions.action) {
-                        this.add(Client.figures.actions.actions.action[index].id, function() {
-                            Client.socket.messages.sendCall({ OnRoomUserAction: Client.figures.actions.actions.action[index].id }, "OnRoomUserAction");
+                case "actions": {
+                    this.add("Wave", function() {
+                        Client.socket.messages.sendCall({ OnRoomUserAction: "Wave" }, "OnRoomUserAction");
 
-                            Client.rooms.interface.display.users.tabs.hide();
-                        });
-                    }
+                        Client.rooms.interface.display.users.tabs.hide();
+                    });
+                    
+                    this.add("Blow", function() {
+                        Client.socket.messages.sendCall({ OnRoomUserAction: "Blow" }, "OnRoomUserAction");
+
+                        Client.rooms.interface.display.users.tabs.hide();
+                    });
+
+                    this.add("Laugh", function() {
+                        Client.socket.messages.sendCall({ OnRoomUserAction: "Laugh" }, "OnRoomUserAction");
+
+                        Client.rooms.interface.display.users.tabs.hide();
+                    });
+
+                    this.add("Idle", function() {
+                        Client.socket.messages.sendCall({ OnRoomUserAction: "Idle" }, "OnRoomUserAction");
+
+                        Client.rooms.interface.display.users.tabs.hide();
+                    });
 
                     break;
                 }
