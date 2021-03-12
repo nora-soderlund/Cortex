@@ -99,6 +99,14 @@
 
         margin: -1px auto 0;
     }
+
+    .room-interface-user-figure {
+        position: absolute;
+
+        pointer-events: none;
+
+        left: 0; top: 0;
+    }
 }
 
 @import "Request/RoomInterfaceUserRequest";

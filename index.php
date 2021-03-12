@@ -12,6 +12,8 @@
 
         <script type="text/javascript">
             const key = "<?= (isset($_GET["key"])?($_GET["key"]):("Cake")) ?>";
+            
+            const theme = <?= (isset($_GET["theme"])?('"' . $_GET["theme"] . '"'):("null")) ?>;
         </script>
     </head>
     <body>

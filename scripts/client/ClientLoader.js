@@ -197,6 +197,18 @@ Client.loader.addStep(async function(finished) {
     finished();
 });
 
+if(theme != null) {
+    Client.loader.addStep(function(finished) {
+        Client.loader.setText("Loading theme configuration...");
+
+        $.getJSON("styles/themes/" + theme + "/" + theme + ".json", function(data) {
+            Client.theme.data = data;
+
+            finished();
+        });
+    });
+}
+
 Client.loader.load(function() {
     Client.loader.setText("Brewing coffee...");
 

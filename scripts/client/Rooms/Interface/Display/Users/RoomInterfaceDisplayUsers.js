@@ -13,11 +13,28 @@ Client.rooms.interface.display.users = new function() {
                 '<div class="room-interface-user-arrow"></div>'
             );
 
+            if(Client.theme.get("rooms/interface/tabs/figure", false) == true) {
+                this.$canvas = $('<canvas class="room-interface-user-figure" width="256" height="256"></canvas>').appendTo(this.$element);
+
+                entity.entity.figure.events.render.push(this.render);
+            }
+
             this.$content = this.$element.find(".room-interface-user-content");
 
             this.entity = entity;
 
             this.show("default");
+        };
+
+        this.render = function(sprites) {
+            const entity = Client.rooms.interface.display.users.tabs;
+
+            const context = entity.$canvas[0].getContext("2d");
+
+            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+            for(let index in sprites)
+                context.drawImage(sprites[index].image, sprites[index].left, sprites[index].top);
         };
 
         this.show = async function(page, previous = "default") {
@@ -143,6 +160,16 @@ Client.rooms.interface.display.users = new function() {
         };
 
         this.hide = function() {
+            if(this.$canvas != undefined) {
+                const index = this.entity.entity.figure.events.render.indexOf(this.render);
+
+                this.entity.entity.figure.events.render.splice(index, 1);
+
+                this.$canvas.remove();
+
+                delete this.$canvas;
+            }
+
             this.entity = undefined;
 
             this.$element.hide();
@@ -170,6 +197,7 @@ Client.rooms.interface.display.users = new function() {
                 return;
             }
     
+            Client.rooms.interface.display.users.tabs.hide();
             Client.rooms.interface.display.users.tabs.click(entity);
         });
     

@@ -107,6 +107,8 @@
         "User/User.js",
         "User/Friends/OnUserFriendUpdate.js",
         "User/Friends/OnUserFriendRemove.js",
+
+        "Theme/Theme.js",
         
         "Utils/Utils.js"
     ],
