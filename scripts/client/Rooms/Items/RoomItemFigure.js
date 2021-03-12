@@ -10,7 +10,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
             for(let index in sprites) {
                 let sprite = new Client.rooms.items.sprite(entity, sprites[index].image);
 
-                if(sprite.imageData != undefined) {
+                if(sprites[index].imageData != undefined) {
                     sprite.mouseover = function(position) {
                         const entityOffset = sprite.parent.getOffset();
                     
