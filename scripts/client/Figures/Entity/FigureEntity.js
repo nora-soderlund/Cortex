@@ -7,7 +7,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
     this.direction = 2;
 
-    this.effect = 7;
+    this.effect = 0;
     this.effectFrame = 0;
     this.effectFrames = {};
     this.effectDirection = 0;
@@ -180,6 +180,13 @@ Client.figures.entity = function(figure, properties = {}) {
             return;
 
         this.actions.splice(index, 1);
+    };
+
+    this.setEffect = function(id) {
+        this.effect = id;
+        this.effectFrame = 0;
+        this.effectFrames = {};
+        this.effectDirection = 0;
     };
 
     this.process = async function() {
