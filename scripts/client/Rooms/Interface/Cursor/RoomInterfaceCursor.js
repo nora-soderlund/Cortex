@@ -19,9 +19,11 @@ Client.rooms.interface.cursor = new function() {
         
         Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
 
-        Client.rooms.interface.cursor.downFrame = Client.rooms.interface.frameLimit;
+        if(Client.rooms.interface.frameLimit != 0) {
+            Client.rooms.interface.cursor.downFrame = Client.rooms.interface.frameLimit;
 
-        Client.rooms.interface.frameLimit = 0;
+            Client.rooms.interface.frameLimit = 0;
+        }
     }).on("mouseup", function() {
         Client.rooms.interface.cursor.down = false;
 
