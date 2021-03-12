@@ -56,9 +56,8 @@ Client.furnitures.entity = function(settings = {}) {
                 layer.asset.x = (layer.asset.x == undefined)?(0):(parseInt(layer.asset.x));
                 layer.asset.y = (layer.asset.y == undefined)?(0):(parseInt(layer.asset.y));
                 
-                if(layer.asset.flipH == 1) {
+                if(layer.asset.flipH == 1)
                     layer.asset.x = (layer.asset.x * -1) + layer.sprite.width;
-                }
 
                 sprites.push(layer);
             }

@@ -9,6 +9,29 @@ Client.figures = new function() {
         "rc": "rs"
     };
 
+    this.getPartName = function(part) {
+
+        // "bd","sh","lg","ch","wa","ca","hd","fc","ey","hr","hrb","fa","ea","ha","he"
+
+        switch(part) {
+            case "li":
+            case "lh":
+            case "ls":
+                return "LeftArm";
+
+            case "ri":
+            case "rh":
+            case "rs":
+                return "RightArm";
+
+            case "bd":
+            case "lg":
+                return "Torso";
+        }
+
+        return "Body";
+    };
+
     this.actionFrames = {
         "Move": 4,
         "Talk": 2,
@@ -154,7 +177,7 @@ Client.figures = new function() {
             break;
         }
 
-        if(manifest.manifest.manifest.library.aliases != null) {
+        /*if(manifest.manifest.manifest.library.aliases != null) {
             const aliases = manifest.manifest.manifest.library.aliases.alias;
 
             for(let index in aliases) {
@@ -170,7 +193,7 @@ Client.figures = new function() {
 
                 break;
             }
-        }
+        }*/
         
         return result;
     };
