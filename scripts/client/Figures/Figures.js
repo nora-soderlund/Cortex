@@ -121,10 +121,81 @@ Client.figures = new function() {
 
         return this.actions.actions.action[index];
     };
+
+    this.getEffect = function(id) {
+        for(let index in this.effects.map.effect) {
+            if(this.effects.map.effect[index].id != id)
+                continue;
+
+            return this.effects.map.effect[index];
+        }
+
+        return null;
+    };
+
+    this.getEffectAsset = function(manifest, sprite) {
+        let result = null;
+
+        const assets = manifest.manifest.manifest.library.assets.asset;
+
+        for(let index in assets) {
+            if(assets[index].name != sprite)
+                continue;
+
+            const offsets = assets[index].param.value.split(',');
+
+            result = {
+                offset: {
+                    left: parseInt(offsets[0]),
+                    top: parseInt(offsets[1])
+                }
+            };
+
+            break;
+        }
+
+        if(manifest.manifest.manifest.library.aliases != null) {
+            const aliases = manifest.manifest.manifest.library.aliases.alias;
+
+            for(let index in aliases) {
+                if(aliases[index].name != sprite)
+                    continue;
+
+                const alias = this.getEffectAsset(manifest, aliases[index].link);
+
+                for(let key in alias) {
+                    if(result[key] == undefined)
+                        result[key] = alias;
+                }
+
+                break;
+            }
+        }
+        
+        return result;
+    };
+
+    this.getEffectComposite = function(ink) {
+        switch(ink) {
+            case "33": return "lighter";
+        }
+
+        return "source-over";
+    };
+
+    this.getEffectIndex = function(align) {
+        switch(align) {
+            case "bottom": return -1;
+            case "top": return 1;
+        }
+
+        return 0;
+    };
 };
 
 Client.loader.addAsset(async function() {
     Client.figures.data = await Client.assets.getManifest("HabboFigureData");
     Client.figures.map = await Client.assets.getManifest("HabboFigureMap");
     Client.figures.actions = await Client.assets.getManifest("HabboFigureActions");
+    Client.figures.effects = await Client.assets.getManifest("HabboFigureEffects");
 });

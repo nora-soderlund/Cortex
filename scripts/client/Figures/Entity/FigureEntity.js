@@ -6,6 +6,8 @@ Client.figures.entity = function(figure, properties = {}) {
     };
 
     this.direction = 2;
+
+    this.effect = 18;
     
     this.actions = [];
     this.actionTimestamp = performance.now();
@@ -288,7 +290,7 @@ Client.figures.entity = function(figure, properties = {}) {
         if(this.data[offsetName][this.direction] == undefined)
             this.data[offsetName][this.direction] = context.getImageData(0, 0, context.canvas.width, context.canvas.height);
 
-        const sprites = [];
+        let sprites = [];
 
         sprites.push({
             image: context.canvas, imageData: this.data[offsetName][this.direction],
@@ -297,6 +299,9 @@ Client.figures.entity = function(figure, properties = {}) {
         });
 
         context.restore();
+
+        if(this.effect != undefined)
+            sprites = await this.renderEffect(sprites);
 
         //Client.utils.warn("FigureEntity", "Render process took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms to execute...");
 
@@ -307,4 +312,66 @@ Client.figures.entity = function(figure, properties = {}) {
 
         //Client.utils.warn("FigureEntity", "After math render processes took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms to execute!");
     };
+
+    this.renderEffect = async function(sprites) {
+        const map = Client.figures.getEffect(this.effect);
+    
+        const manifest = await Client.assets.getManifest("HabboFigures/" + map.lib);
+
+        const manifestSprites = manifest.animation.animation.sprite;
+
+        if(manifestSprites != undefined) {
+            for(let index in manifestSprites) {
+                const name = map.lib + "_h_" + manifestSprites[index].member + "_0_0";
+
+                const sprite = await Client.assets.getSprite("HabboFigures/" + map.lib, name);
+
+                let direction = null;
+
+                for(let directionIndex in manifestSprites[index].direction) {
+                    if(manifestSprites[index].direction[directionIndex].id != this.direction)
+                        continue;
+
+                    direction = manifestSprites[index].direction[directionIndex];
+
+                    break;
+                }
+
+                if(direction == null)
+                    continue;
+
+                let asset = Client.figures.getEffectAsset(manifest, "h_" + manifestSprites[index].member + "_0_0");
+
+                sprites.push({
+                    image: sprite,
+                    left: asset.offset.left * -1 + 96, top: asset.offset.top * -1 + 170,
+                    composite: Client.figures.getEffectComposite(manifestSprites[index].ink),
+                    index: (direction.dz != undefined)?(parseInt(direction.dz)):(0)
+                });
+            }
+        }
+
+        if(manifest.animation.animation.add != undefined) {
+            for(let index in manifest.animation.animation.add) {
+                const add = manifest.animation.animation.add[index];
+
+                console.log(add);
+
+                const name = "h_std_" + add.id + "_1_" + this.direction + "_0";
+                
+                const sprite = await Client.assets.getSprite("HabboFigures/" + map.lib, map.lib + "_" + name);
+
+                const asset = Client.figures.getEffectAsset(manifest, name);
+
+                sprites.push({
+                    image: sprite,
+                    left: asset.offset.left * -1 + 96, top: asset.offset.top * -1 + 170,
+                    index: Client.figures.getEffectIndex(add.align)
+                });
+            }
+        }
+
+        
+        return sprites;
+    }
 };

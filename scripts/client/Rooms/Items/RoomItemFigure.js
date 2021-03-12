@@ -10,27 +10,29 @@ Client.rooms.items.figure = function(parent, figure, direction) {
             for(let index in sprites) {
                 let sprite = new Client.rooms.items.sprite(entity, sprites[index].image);
 
-                sprite.mouseover = function(position) {
-                    const entityOffset = sprite.parent.getOffset();
-                   
-                    const offset = [
-                        Math.floor(position[0] - (entityOffset[0] + sprite.offset[0])),
-                        Math.floor(position[1] - (entityOffset[1] + sprite.offset[1]))
-                    ];
+                if(sprite.imageData != undefined) {
+                    sprite.mouseover = function(position) {
+                        const entityOffset = sprite.parent.getOffset();
+                    
+                        const offset = [
+                            Math.floor(position[0] - (entityOffset[0] + sprite.offset[0])),
+                            Math.floor(position[1] - (entityOffset[1] + sprite.offset[1]))
+                        ];
 
-                    if(offset[0] < 0 || offset[1] < 0)
-                        return false;
+                        if(offset[0] < 0 || offset[1] < 0)
+                            return false;
 
-                    if(offset[0] > sprites[index].image.width || offset[1] > sprites[index].image.height)
-                        return false;
+                        if(offset[0] > sprites[index].image.width || offset[1] > sprites[index].image.height)
+                            return false;
 
-                    const pixel = ((offset[0] + offset[1] * sprites[index].imageData.width) * 4) + 3;
+                        const pixel = ((offset[0] + offset[1] * sprites[index].imageData.width) * 4) + 3;
 
-                    if(sprites[index].imageData.data[pixel] < 50)
-                        return false;
+                        if(sprites[index].imageData.data[pixel] < 50)
+                            return false;
 
-                    return true;
-                };
+                        return true;
+                    };
+                }
 
                 sprite.mouseclick = function(event) {
                     
@@ -39,6 +41,7 @@ Client.rooms.items.figure = function(parent, figure, direction) {
                 sprite.setOffset(sprites[index].left - 64, sprites[index].top - (128 + 32) + 8);
 
                 sprite.index = sprites[index].index;
+                sprite.composite = (sprites[index].composite == undefined)?("source-over"):(sprites[index].composite);
                 
                 entity.sprites.push(sprite);
             }
