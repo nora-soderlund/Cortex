@@ -11,6 +11,7 @@ Client.figures.entity = function(figure, properties = {}) {
     this.effectFrame = 0;
     this.effectFrames = {};
     this.effectDirection = 0;
+    this.effectRemovals = {};
     
     this.actions = [];
     this.actionTimestamp = performance.now();
@@ -187,6 +188,7 @@ Client.figures.entity = function(figure, properties = {}) {
         this.effectFrame = 0;
         this.effectFrames = {};
         this.effectDirection = 0;
+        this.effectRemovals = {};
     };
 
     this.process = async function() {
@@ -265,6 +267,9 @@ Client.figures.entity = function(figure, properties = {}) {
                 const id = parseInt(setData.part[index].id);
 
                 const type = setData.part[index].type;
+
+                if(this.effectRemovals[type] == true)
+                    continue;
 
                 let color = undefined;
 
@@ -356,6 +361,7 @@ Client.figures.entity = function(figure, properties = {}) {
         const sprites = [];
 
         this.effectFrames = {};
+        this.effectRemovals = {};
 
         if(this.effect == 0)
             return sprites;
@@ -456,6 +462,14 @@ Client.figures.entity = function(figure, properties = {}) {
                     index: (directionData.dz != undefined)?(parseInt(directionData.dz)):(0)
                 });
             }
+        }
+
+        if(manifest.animation.animation.remove != undefined) {
+            if(manifest.animation.animation.remove.length == undefined)
+                manifest.animation.animation.remove = [ manifest.animation.animation.remove ];
+
+            for(let index in manifest.animation.animation.remove)
+                this.effectRemovals[manifest.animation.animation.remove[index].id] = true;
         }
 
         if(manifest.animation.animation.add != undefined) {
