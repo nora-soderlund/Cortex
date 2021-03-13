@@ -225,9 +225,11 @@ Client.furnitures.entity = function(settings = {}) {
 
         if(this.types.logic == "furniture_score" && this.settings.animation != 0) {
             const layers = {};
+
+            let layer = 2;
             
-            for(let index = 1; index < 30; index += 10) {
-                layers["" + (2 + Math.floor(index / 10))] = {
+            for(let index = 1; index <= 100; index *= 10) {
+                layers["" + layer] = {
                     frameSequence: [ Math.floor((this.settings.animation / index) % 10) ],
                     
                     frameRepeat: 0,
@@ -238,9 +240,8 @@ Client.furnitures.entity = function(settings = {}) {
 
                     frame: 0
                 };
-
-                if(index == 1)
-                    index--;
+                
+                layer++;
             }
 
             return layers;
