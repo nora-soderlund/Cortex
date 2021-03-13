@@ -29,7 +29,10 @@ Client.rooms.interface.cursor = new function() {
 
         Client.rooms.interface.frameLimit = Client.rooms.interface.cursor.downFrame;
     }).on("mousemove", function(event) {
-        if(!Client.rooms.interface.cursor.down) {
+        if(Client.rooms.interface.entity.currentEntity != undefined && Client.rooms.interface.cursor.down)
+            Client.rooms.interface.entity.currentEntity.sprite.mousedown(event);
+
+        if(!Client.rooms.interface.cursor.down || (Client.keys.down["ControlLeft"] || Client.keys.down["ShiftLeft"] || Client.keys.down["AltLeft"])) {
             Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
 
             return;

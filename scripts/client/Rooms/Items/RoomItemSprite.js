@@ -50,6 +50,10 @@ Client.rooms.items.sprite = function(parent, image) {
 
     };
 
+    this.mousedown = function(event) {
+
+    };
+
     this.mousedoubleclick = function(event) {
 
     };

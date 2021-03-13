@@ -59,6 +59,11 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                         Client.rooms.interface.furniture.rotate.start(entity);
                 };
 
+                sprite.mousedown = function(event) {
+                    if(Client.keys.down["ControlLeft"])
+                        Client.rooms.interface.furniture.pickup.start(entity);
+                };
+
                 sprite.mousedoubleclick = function(event) {
                     Client.rooms.interface.furniture.use.start(entity, sprite);
                 };
