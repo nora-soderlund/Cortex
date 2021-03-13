@@ -208,8 +208,9 @@ Client.figures = new function() {
 
     this.getEffectIndex = function(align) {
         switch(align) {
-            case "bottom": return -1;
-            case "top": return 1;
+            case "bottom": return -100;
+            case "middle": return 1;
+            case "top": return 100;
         }
 
         return 0;

@@ -459,27 +459,33 @@ Client.figures.entity = function(figure, properties = {}) {
         }
 
         if(manifest.animation.animation.add != undefined) {
+            if(manifest.animation.animation.add.length == undefined)
+                manifest.animation.animation.add = [ manifest.animation.animation.add ];
+
             for(let index in manifest.animation.animation.add) {
                 const add = manifest.animation.animation.add[index];
                     
-                let frame = 0, left = 0, top = 0;
+                let frame = 0, left = 0, top = 0, base = add.id;
+
+                if(add.base != undefined)
+                    base = add.base;
 
                 if(this.effectFrames["fx"] != undefined) {
-                    if(this.effectFrames["fx"][add.id] != undefined) {
-                        console.log(this.effectFrames["fx"][add.id]);
+                    if(this.effectFrames["fx"][base] != undefined) {
+                        console.log(this.effectFrames["fx"][base]);
                         
-                        if(this.effectFrames["fx"][add.id].frame != undefined)
-                            frame = parseInt(this.effectFrames["fx"][add.id].frame);
+                        if(this.effectFrames["fx"][base].frame != undefined)
+                            frame = parseInt(this.effectFrames["fx"][base].frame);
                             
-                        if(this.effectFrames["fx"][add.id].dx != undefined)
-                            left = parseInt(this.effectFrames["fx"][add.id].dx);
+                        if(this.effectFrames["fx"][base].dx != undefined)
+                            left = parseInt(this.effectFrames["fx"][base].dx);
                             
-                        if(this.effectFrames["fx"][add.id].dy != undefined)
-                            top = parseInt(this.effectFrames["fx"][add.id].dy);
+                        if(this.effectFrames["fx"][base].dy != undefined)
+                            top = parseInt(this.effectFrames["fx"][base].dy);
                     }
                 }
 
-                const name = "h_std_" + add.id + "_1_" + direction + "_" + frame;
+                const name = "h_std_" + base + "_1_" + direction + "_" + frame;
                 
                 const sprite = await Client.assets.getSprite("HabboFigures/" + map.lib, map.lib + "_" + name, flipped);
 
