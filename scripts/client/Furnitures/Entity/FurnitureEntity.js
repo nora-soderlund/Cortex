@@ -223,6 +223,29 @@ Client.furnitures.entity = function(settings = {}) {
         if(this.visualization.animations == null || this.visualization.animations == undefined)
             return undefined;
 
+        if(this.types.logic == "furniture_score" && this.settings.animation != 0) {
+            const layers = {};
+            
+            for(let index = 1; index < 30; index += 10) {
+                layers["" + (2 + Math.floor(index / 10))] = {
+                    frameSequence: [ Math.floor((this.settings.animation / index) % 10) ],
+                    
+                    frameRepeat: 0,
+                    frameRepeatSequence: 0,
+
+                    frameLoop: 0,
+                    frameTransition: undefined,
+
+                    frame: 0
+                };
+
+                if(index == 1)
+                    index--;
+            }
+
+            return layers;
+        }
+
         for(let index in this.visualization.animations.animation) {
             if(this.visualization.animations.animation[index].id != this.settings.animation)
                 continue;
@@ -431,6 +454,11 @@ Client.furnitures.entity = function(settings = {}) {
 
     this.setAnimation = function(animation) {
         this.settings.animation = animation;
+
+        if(this.types.logic == "furniture_score") {
+
+
+        }
 
         this.animations = this.getVisualizationAnimation();
 
