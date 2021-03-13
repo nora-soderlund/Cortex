@@ -341,8 +341,17 @@ Client.figures.entity = function(figure, properties = {}) {
                     top = parseInt(this.effectFrames["fx"]["avatar"].dy);
 
                 for(let index in sprites) {
-                    sprites[index].left += left;
-                    sprites[index].top += top;
+                    if(this.effectFrames["fx"][sprites[index].base] != undefined) {
+                        if(this.effectFrames["fx"][sprites[index].base].dx == undefined)
+                            sprites[index].left += left;
+                            
+                        if(this.effectFrames["fx"][sprites[index].base].dy == undefined)
+                            sprites[index].top += top;
+                    }
+                    else {
+                        sprites[index].left += left;
+                        sprites[index].top += top;
+                    }
                 }
             }
         }
@@ -456,6 +465,8 @@ Client.figures.entity = function(figure, properties = {}) {
                     left += asset.offset.left - sprite.width + 64;
 
                 sprites.push({
+                    base: manifest.animation.animation.sprite[index].id,
+
                     image: sprite,
                     left: left + 96, top: top + 170,
                     composite: Client.figures.getEffectComposite(manifest.animation.animation.sprite[index].ink),
@@ -486,8 +497,6 @@ Client.figures.entity = function(figure, properties = {}) {
 
                 if(this.effectFrames["fx"] != undefined) {
                     if(this.effectFrames["fx"][base] != undefined) {
-                        console.log(this.effectFrames["fx"][base]);
-                        
                         if(this.effectFrames["fx"][base].frame != undefined)
                             frame = parseInt(this.effectFrames["fx"][base].frame);
                             
@@ -517,6 +526,7 @@ Client.figures.entity = function(figure, properties = {}) {
                     left += asset.offset.left - sprite.width + 64;
 
                 sprites.push({
+                    base,
                     image: sprite,
                     left: left + 96, top: top + 170,
                     index: Client.figures.getEffectIndex(add.align)
