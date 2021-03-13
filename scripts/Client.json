@@ -24,6 +24,7 @@
 
         "Furnitures/Furnitures.js",
         
+        "Furnitures/Flags/FurnitureFlags.js",
         "Furnitures/Entity/FurnitureEntity.js",
 
         "Furnitures/Renderer/FurnitureRenderer.js",
@@ -79,7 +80,7 @@
         
         "Rooms/Interface/Furniture/Logics/RoomFurnitureMultistate.js",
         "Rooms/Interface/Furniture/Logics/RoomFurnitureCustomStackHeight.js",
-        "Rooms/Interface/Furniture/Logics/RoomFurnitureDice.js",
+        "Rooms/Interface/Furniture/Logics/RoomFurnitureBasic.js",
         "Rooms/Interface/Furniture/Logics/RoomFurnitureVideo.js",
 
         "Rooms/Interface/Camera/RoomInterfaceCamera.js",

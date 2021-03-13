@@ -54,8 +54,7 @@ Client.loader.ready(function() {
             title: "Loading",
             
             size: {
-                width: 400,
-                height: 160
+                width: 400
             },
 
             offset: {
@@ -111,6 +110,53 @@ Client.loader.ready(function() {
                 '</div>'
             ).appendTo(entity.$content).find(".furniture-logic").on("change", async function() {
                 await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, logic: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
+
+            const flags = await Client.socket.messages.sendCall({ OnFurnitureFlagsRequest: data.id }, "OnFurnitureFlagsRequest");
+            
+            const $flags = $(
+                '<div class="dialog-property">' +
+                    '<p>' +
+                        '<b>Furniture Flags</b>' +
+                    '</p>' +
+                '</div>'
+            ).appendTo(entity.$content);
+
+            const $checkboxes = $('<div></div>').appendTo($flags);
+
+            $(
+                '<input type="checkbox" id="stackable" style="width: auto"' + ((flags & Client.furnitures.flags.stackable)?(" checked"):("")) + '>' +
+                '<label for="stackable"> Stackable</label>'
+            ).appendTo($checkboxes).on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, stackable: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
+
+            $(
+                '<input type="checkbox" id="sitable" style="width: auto"' + ((flags & Client.furnitures.flags.sitable)?(" checked"):("")) + '>' +
+                '<label for="sitable"> Sitable</label>'
+            ).appendTo($checkboxes).on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sitable: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
+
+            $(
+                '<input type="checkbox" id="standable" style="width: auto"' + ((flags & Client.furnitures.flags.standable)?(" checked"):("")) + '>' +
+                '<label for="standable"> Standable</label>'
+            ).appendTo($checkboxes).on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, standable: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
+
+            $(
+                '<input type="checkbox" id="walkable" style="width: auto"' + ((flags & Client.furnitures.flags.walkable)?(" checked"):("")) + '>' +
+                '<label for="walkable"> Walkable</label>'
+            ).appendTo($checkboxes).on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, walkable: $(this).val() } }, "Temp_DevFurniUpdate");
+            });
+
+            $(
+                '<input type="checkbox" id="sleepable" style="width: auto"' + ((flags & Client.furnitures.flags.sleepable)?(" checked"):("")) + '>' +
+                '<label for="sleepable"> Sleep</label>'
+            ).appendTo($checkboxes).on("change", async function() {
+                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sleepable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             Client.development.furni.unpause();
