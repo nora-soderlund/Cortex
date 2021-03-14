@@ -66,6 +66,7 @@
         "Rooms/Interface/Events/RoomEntityRemoveEvent.js",
 
         "Rooms/Interface/Events/Furniture/RoomFurnitureVideo.js",
+        "Rooms/Interface/Events/Furniture/OnRoomFurnitureFlash.js",
 
         "Rooms/Interface/Events/User/OnRoomUserEffect.js",
         

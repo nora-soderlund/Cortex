@@ -223,14 +223,39 @@ Client.furnitures.entity = function(settings = {}) {
         if(this.visualization.animations == null || this.visualization.animations == undefined)
             return undefined;
 
-        if(this.types.logic == "furniture_score" && this.settings.animation != 0) {
-            const layers = {};
+        if(this.settings.animation != 0) {
+            if(this.types.logic == "furniture_score") {
+                const layers = {};
 
-            let layer = 2;
-            
-            for(let index = 1; index <= 100; index *= 10) {
-                layers["" + layer] = {
-                    frameSequence: [ Math.floor((this.settings.animation / index) % 10) ],
+                let layer = 2;
+                
+                for(let index = 1; index <= 100; index *= 10) {
+                    layers["" + layer] = {
+                        frameSequence: [ Math.floor((this.settings.animation / index) % 10) ],
+                        
+                        frameRepeat: 0,
+                        frameRepeatSequence: 0,
+
+                        frameLoop: 0,
+                        frameTransition: undefined,
+
+                        frame: 0
+                    };
+                    
+                    layer++;
+                }
+
+                return layers;
+            }
+            else if(this.types.logic == "furniture_counter_clock") {
+                const layers = {};
+                
+                const minutes = Math.floor(this.settings.animation / 60);
+
+                const seconds = this.settings.animation - (minutes * 60);
+
+                layers["" + 6] = {
+                    frameSequence: [ Math.floor((seconds / 1) % 10) ],
                     
                     frameRepeat: 0,
                     frameRepeatSequence: 0,
@@ -240,11 +265,45 @@ Client.furnitures.entity = function(settings = {}) {
 
                     frame: 0
                 };
-                
-                layer++;
-            }
 
-            return layers;
+                layers["" + 7] = {
+                    frameSequence: [ Math.floor((seconds / 10) % 10) ],
+                    
+                    frameRepeat: 0,
+                    frameRepeatSequence: 0,
+
+                    frameLoop: 0,
+                    frameTransition: undefined,
+
+                    frame: 0
+                };
+
+                layers["" + 8] = {
+                    frameSequence: [ Math.floor((minutes / 1) % 10) ],
+                    
+                    frameRepeat: 0,
+                    frameRepeatSequence: 0,
+
+                    frameLoop: 0,
+                    frameTransition: undefined,
+
+                    frame: 0
+                };
+
+                layers["" + 9] = {
+                    frameSequence: [ Math.floor((minutes / 10) % 10) ],
+                    
+                    frameRepeat: 0,
+                    frameRepeatSequence: 0,
+
+                    frameLoop: 0,
+                    frameTransition: undefined,
+
+                    frame: 0
+                };
+
+                return layers;
+            }
         }
 
         for(let index in this.visualization.animations.animation) {
