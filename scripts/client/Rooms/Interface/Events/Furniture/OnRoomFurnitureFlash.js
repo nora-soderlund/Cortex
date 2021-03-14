@@ -28,6 +28,10 @@ Client.socket.messages.register("OnRoomFurnitureFlash", function(data) {
         
                 setTimeout(function() {
                     setAnimation(data.animation);
+
+                    setTimeout(function() {
+                        setAnimation(0);
+                    }, 500);
                 }, 500);
             }, 500);
         }, 500);
