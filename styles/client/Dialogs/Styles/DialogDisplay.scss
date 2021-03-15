@@ -1,0 +1,76 @@
+.dialog-display {
+    .dialog-display-header {
+        margin: -7px -8px;
+
+        height: 150px;
+        width: calc(100% + 16px);
+
+        background: #8899A2;
+
+        position: relative;
+
+        padding: 0 24px;
+
+        border-bottom: 1px solid #FFF;
+    }
+        
+    .dialog-display-content {
+        width: 96px;
+        height: 96px;
+
+        position: absolute;
+
+        top: 0;
+        bottom: 0;
+
+        margin: auto 0;
+
+        .dialog-display-content-star {
+            position: absolute;
+
+            left: -32px;
+            top: -32px;
+
+            width: calc(100% + 64px);
+            height: calc(100% + 64px);
+
+            background: radial-gradient(white, transparent, transparent);
+
+            &:before {
+                content: '';
+
+                position: absolute;
+
+                left: 32px;
+                top: 32px;
+                
+                @include sprite-display-star();
+            }
+        }
+
+        .dialog-display-content-effects {
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            .dialog-display-content-effect {
+                position: absolute;
+
+                display: none;
+            }
+        }
+    }
+
+    .dialog-button {
+        position: absolute;
+
+        width: 100px;
+
+        bottom: 6px;
+        right: 6px;
+    }
+}

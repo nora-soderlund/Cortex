@@ -218,4 +218,8 @@ Client.loader.load(function() {
 
     for(let index in Client.loader.readySteps)
         Client.loader.readySteps[index]();
+
+    new Client.dialogs.display({
+        title: "Achievement Unlocked"
+    }).show();
 });

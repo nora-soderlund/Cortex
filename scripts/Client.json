@@ -18,6 +18,7 @@
         "Dialogs/Entities/DialogTabsEntity.js",
         "Dialogs/Entities/DialogSelectionEntity.js",
         "Dialogs/Entities/DialogCameraEntity.js",
+        "Dialogs/Entities/DialogDisplayEntity.js",
 
         "Figures/Figures.js",
         "Figures/Entity/FigureEntity.js",

@@ -228,6 +228,52 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/display-effect-big.png</key>
+            <key type="filename">images/display-effect-medium.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9Paddings</key>
+                <rect>2,2,5,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/display-effect-small.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9Paddings</key>
+                <rect>1,1,3,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/display-star.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>24,24,48,48</rect>
+                <key>scale9Paddings</key>
+                <rect>24,24,48,48</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/information.png</key>
             <key type="filename">images/pen.png</key>
             <struct type="IndividualSpriteSettings">
@@ -570,6 +616,10 @@
             <filename>images/player-stop.png</filename>
             <filename>images/reference.png</filename>
             <filename>images/user-profile-bot.png</filename>
+            <filename>images/display-effect-big.png</filename>
+            <filename>images/display-effect-medium.png</filename>
+            <filename>images/display-effect-small.png</filename>
+            <filename>images/display-star.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
