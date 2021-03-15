@@ -225,5 +225,5 @@ Client.loader.load(function() {
     
     entity.show();
 
-    Client.badges.renderer("ACH_BattleBallTilesLocked9").css("margin", "auto").appendTo(entity.$display);
+    Client.badges.renderer("Cortex/BETA").css("margin", "auto").appendTo(entity.$display);
 });
