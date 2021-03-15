@@ -219,7 +219,11 @@ Client.loader.load(function() {
     for(let index in Client.loader.readySteps)
         Client.loader.readySteps[index]();
 
-    new Client.dialogs.display({
+    const entity = new Client.dialogs.display({
         title: "Achievement Unlocked"
-    }).show();
+    });
+    
+    entity.show();
+
+    Client.badges.renderer("ACH_BattleBallTilesLocked9").css("margin", "auto").appendTo(entity.$display);
 });

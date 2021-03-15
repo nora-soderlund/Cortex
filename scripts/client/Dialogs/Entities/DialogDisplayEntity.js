@@ -37,15 +37,15 @@ Client.dialogs.display = function(settings = {}) {
 
         entity.$effects = $('<div class="dialog-display-content-effects"></div>').appendTo(entity.$display);
 
-        const sizes = ["small", "medium", "big"];
+        const sizes = ["small", "small", "medium", "big"];
         
         for(let index = 0; index < 20; index++) {
             setTimeout(function() {
                 const $effect = $('<div class="dialog-display-content-effect"></div>').appendTo(entity.$effects);
 
                 $effect.css({
-                    "left": (16 + Math.floor(Math.random() * 64)) + "px",
-                    "top": (16 + Math.floor(Math.random() * 64)) + "px"
+                    "left": (3 + (Math.floor((Math.random() * 9)) * 10)) + "px",
+                    "top": (3 + (Math.floor((Math.random() * 9)) * 10)) + "px"
                 });
 
                 $effect.addClass("sprite-display-effect-" + sizes[Math.floor(Math.random() * sizes.length)]);

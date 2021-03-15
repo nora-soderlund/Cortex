@@ -63,6 +63,15 @@
                 display: none;
             }
         }
+
+        .dialog-display-content-item {
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+        }
     }
 
     .dialog-button {
