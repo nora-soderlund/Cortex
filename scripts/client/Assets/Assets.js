@@ -70,7 +70,10 @@ Client.assets = new function() {
     this.downloadSpritesheet = async function(asset, library = true) {
         const name = asset.substring(asset.lastIndexOf('/') + 1);
 
-        const path = (library)?("assets/" + asset + "/" + name + ".png"):("assets/" + asset + ".png");
+        let path = (library)?("assets/" + asset + "/" + name):("assets/" + asset);
+
+        if(library == true || asset.indexOf('.') == -1)
+            path += ".png";
 
         if(this.promises[asset] == undefined)
             this.promises[asset] = [];

@@ -28,7 +28,29 @@ Client.rooms.interface.display = new function() {
 
         $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
 
-        $('<div class="room-interface-display-description">You clicked on ' + entity.data.name + '</div>').appendTo(this.$content);
+        const $grid = $('<div class="room-interface-display-grid"></div>').appendTo(this.$content);
+
+        const $figure = $('<div class="room-interface-display-figure room-interface-display-bot"></div>').appendTo($grid);
+
+        const $canvas = $('<canvas width="256" height="256"></canvas>').appendTo($figure);
+
+        new Client.figures.renderer(entity.data.figure, { direction: 4 }, $canvas);
+
+        const $badges = $('<div class="room-interface-display-badges"></div>').appendTo($grid);
+
+        const $badge = [];
+
+        $badge[0] = $('<div class="room-interface-display-badge"></div>').appendTo($badges);
+
+        $('<div class="room-interface-display-group"></div>').appendTo($badges);
+
+        for(let index = 1; index < 5; index++)
+            $badge[index] = $('<div class="room-interface-display-badge"></div>').appendTo($badges);
+
+        Client.socket.messages.sendCall({ OnUserBadgeRequest: entity.data.id }, "OnUserBadgeRequest").then(function(badges) {
+            for(let index in badges)
+                Client.badges.renderer(badges[index].badge).appendTo($badge[index]);
+        });
 
         this.$element.show();
     };

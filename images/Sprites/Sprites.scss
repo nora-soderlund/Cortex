@@ -108,6 +108,9 @@ $url: url('./../images/Sprites/Sprites.png');
 @mixin sprite-user-profile-big { background: $url -21px -48px; width: 21px; height: 21px; }
 .sprite-user-profile-big { position: relative; width: 21px; height: 21px; margin-right: 21px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-user-profile-big(); } }
 
+@mixin sprite-user-profile-bot { background: $url -0px -260px; width: 67px; height: 130px; }
+.sprite-user-profile-bot { position: relative; width: 67px; height: 130px; margin-right: 67px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-user-profile-bot(); } }
+
 @mixin sprite-user-profile { background: $url -0px -11px; width: 13px; height: 11px; }
 .sprite-user-profile { position: relative; width: 13px; height: 11px; margin-right: 13px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-user-profile(); } }
 

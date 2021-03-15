@@ -40,6 +40,66 @@
             display: flex;
             margin: 0 auto;
         }
+
+        .room-interface-display-grid {
+            display: grid;
+
+            height: 130px;
+
+            grid-gap: 6px;
+
+            grid-template-columns: 67px auto;
+
+            .room-interface-display-figure {
+                background: rgba(100, 100, 100, .25); 
+
+                border: 1px solid rgba(24, 24, 24, .5);
+                border-radius: 6px;
+                
+                position: relative;
+
+                canvas {
+                    position: absolute;
+
+                    left: -100px;
+                    top: -64px;
+
+                    margin: auto;
+                }
+
+                &.room-interface-display-bot {
+                    &:before {
+                        content: '';
+
+                        @include sprite-user-profile-bot();
+
+                        position: absolute;
+
+                        left: 0;
+                        top: 0;
+
+                        opacity: .15;
+                    }
+                }
+            }
+
+            .room-interface-display-badges {
+                display: grid;
+
+                grid-gap: 6px;
+
+                grid-template-columns: 40px 40px;
+                grid-template-rows: repeat(3, 40px);
+                
+                .room-interface-display-badge {
+                    
+                }
+
+                .room-interface-display-group {
+                    
+                }
+            }
+        }
     }
 
     .room-interface-display-buttons {

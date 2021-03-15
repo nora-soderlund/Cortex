@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:d68301e3b5dda4a78233bc6dcadb747e:6e62bd44b19e7db5e19b5bd572120041:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:b75516309fe7eff17c61d705ae3de080:929249b618539f506e7920572a83fd20:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,7 +19,7 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="120" height="260">
+<TextureAtlas imagePath="Sprites.png" width="120" height="390">
     <sprite n="arrow-big-left" x="73" y="48" w="44" h="29"/>
     <sprite n="cross" x="88" y="0" w="11" h="11"/>
     <sprite n="cursor-pointer" x="55" y="48" w="18" h="24"/>
@@ -56,6 +56,7 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="user-menu-arrow-request" x="24" y="0" w="13" h="9"/>
     <sprite n="user-menu-arrow" x="37" y="0" w="13" h="9"/>
     <sprite n="user-profile-big" x="21" y="48" w="21" h="21"/>
+    <sprite n="user-profile-bot" x="0" y="260" w="67" h="130"/>
     <sprite n="user-profile" x="0" y="11" w="13" h="11"/>
     <sprite n="zoom-plus" x="42" y="48" w="13" h="22"/>
 </TextureAtlas>

@@ -21,6 +21,10 @@
 
         "Figures/Figures.js",
         "Figures/Entity/FigureEntity.js",
+        "Figures/Renderer/FigureRenderer.js",
+
+        "Badges/Badges.js",
+        "Badges/Renderer/BadgeRenderer.js",
 
         "Furnitures/Furnitures.js",
         

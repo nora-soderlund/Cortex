@@ -498,6 +498,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/user-profile-bot.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>17,33,33,65</rect>
+                <key>scale9Paddings</key>
+                <rect>17,33,33,65</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/zoom-plus.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -554,6 +569,7 @@
             <filename>images/player-previous.png</filename>
             <filename>images/player-stop.png</filename>
             <filename>images/reference.png</filename>
+            <filename>images/user-profile-bot.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
