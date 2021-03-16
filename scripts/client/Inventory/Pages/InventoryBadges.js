@@ -51,7 +51,7 @@ Client.inventory.pages.badges = async function($element) {
             $('<div class="dialog-button">' + ((badges[index].equipped)?("Unequip"):("Equip")) + '</div>').appendTo($infoButton).on("click", async function() {
                 Client.inventory.pause();
 
-                const result = await Client.socket.messages.sendCall({ OnUserInventoryBadges: { id: badges[index].badge } }, "OnUserInventoryBadges");
+                const result =  await Client.socket.messages.sendCall({ OnUserInventoryBadges: { id: badges[index].badge } }, "OnUserInventoryBadges");
 
                 Client.inventory.unpause();
 

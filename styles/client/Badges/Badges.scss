@@ -1,0 +1,17 @@
+.badge {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    .badge-image {
+        position: absolute;
+
+        left: -40px;
+        top: -40px;
+        right: -40px;
+        bottom: -40px;
+
+        margin: auto;
+    }
+}
