@@ -112,6 +112,7 @@
 
         "Inventory/Inventory.js",
         "Inventory/Pages/InventoryFurnitures.js",
+        "Inventory/Pages/InventoryBadges.js",
 
         "User/User.js",
         "User/Friends/OnUserFriendUpdate.js",

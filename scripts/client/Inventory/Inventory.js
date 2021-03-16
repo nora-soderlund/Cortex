@@ -22,10 +22,10 @@ Client.inventory = new function() {
         entity.tabs.$element.addClass("inventory-tabs");
 
         entity.tabs.add("furnitures", "Furnitures");
+        entity.tabs.add("badges", "Badges");
 
         entity.tabs.add("pets", "Pets", undefined, true);
         entity.tabs.add("bots", "Bots", undefined, true);
-        entity.tabs.add("badges", "Badges", undefined, true);
 
         entity.tabs.click(async function(identifier, $content) {
             try {
