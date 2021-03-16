@@ -1,0 +1,72 @@
+.inventory-badges {
+    display: grid;
+
+    grid-gap: 6px;
+
+    grid-template-rows: auto 64px;
+
+    height: 100%;
+
+    .inventory-badges-grid {
+        display: grid;
+
+        grid-gap: 6px;
+        grid-template-columns: auto 200px;
+    }
+
+    .inventory-badges-container {
+        overflow: auto;
+    }
+
+    .inventory-badges-unequipped,
+    .inventory-badges-equipped {
+        .inventory-badges-icon {
+            width: 40px;
+            height: 40px;
+
+            position: relative;
+
+            .inventory-badges-icon-image {
+                position: absolute;
+
+                top: -40px;
+                left: -40px;
+                right: -40px;
+                bottom: -40px;
+
+                margin: auto;
+
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .inventory-badges-info {
+        background: white;
+
+        border-radius: 6px;
+
+        display: grid;
+
+        grid-template-columns: 64px auto 102px;
+
+        .inventory-badges-info-badge {
+            margin: auto;
+        }
+
+        .inventory-badges-info-content {
+            margin: auto 0;
+        }
+
+        .inventory-badges-info-button {
+            margin: auto;
+
+            .dialog-button {
+                width: 90px;
+
+                margin-right: 12px;
+            }
+        }
+    }
+}

@@ -86,7 +86,7 @@ Client.inventory.pages.furnitures = function($element) {
         new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
     };
 
-    this.setFurniture = function(id) {
+    function setFurniture(id) {
         if(!(Client.user.furnitures[id].inventory > 0)) {
             if(Client.inventory.$furnitures[id] != undefined) {
                 Client.inventory.$furnitures[id].$element.remove();
@@ -131,5 +131,5 @@ Client.inventory.pages.furnitures = function($element) {
     };
 
     for(let id in Client.user.furnitures)
-       this.setFurniture(id);
+       setFurniture(id);
 };
