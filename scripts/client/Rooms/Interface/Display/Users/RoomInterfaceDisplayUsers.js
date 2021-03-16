@@ -299,4 +299,12 @@ Client.rooms.interface.display.users = new function() {
 
         Client.rooms.interface.display.users.hover(entity);
     });
+
+    Client.rooms.interface.events.stop.push(function() {
+        Client.rooms.interface.display.users.tabs.hide();
+
+        for(let id in Client.rooms.interface.users)
+            if(Client.rooms.interface.users[id].request != undefined)
+                Client.rooms.interface.users[id].request.destroy();
+    });
 };
