@@ -12,6 +12,28 @@
         padding: 0 24px;
 
         border-bottom: 1px solid #FFF;
+        
+        .dialog-display-header-info {
+            position: absolute;
+
+            left: 128px;
+
+            padding: 24px 0;
+
+            color: #FFF;
+
+            h1 {
+                font-size: 20px;
+            }
+
+            b {
+                color: #FFF;
+            }
+
+            p {
+                margin-top: 6px;
+            }
+        }
     }
         
     .dialog-display-content {

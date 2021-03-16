@@ -218,12 +218,4 @@ Client.loader.load(function() {
 
     for(let index in Client.loader.readySteps)
         Client.loader.readySteps[index]();
-
-    const entity = new Client.dialogs.display({
-        title: "Achievement Unlocked"
-    });
-    
-    entity.show();
-
-    Client.badges.renderer("Cortex/BETA").css("margin", "auto").appendTo(entity.$display);
 });

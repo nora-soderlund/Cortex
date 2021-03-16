@@ -116,6 +116,8 @@
         "User/User.js",
         "User/Friends/OnUserFriendUpdate.js",
         "User/Friends/OnUserFriendRemove.js",
+        
+        "User/Badges/Events/OnUserBadgeAdd.js",
 
         "Theme/Theme.js",
         
