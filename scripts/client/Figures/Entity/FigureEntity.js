@@ -312,7 +312,7 @@ Client.figures.entity = function(figure, properties = {}) {
             for(let index in layers[type]) {
                 context.globalAlpha = (layers[type][index].alpha == undefined)?(1.0):(layers[type][index].alpha);
 
-                context.drawImage(layers[type][index].image, 128 - 4 + offset.left + layers[type][index].left, 128 + offset.top + layers[type][index].top);
+                context.drawImage(layers[type][index].image, 128 + offset.left + layers[type][index].left, 128 + offset.top + layers[type][index].top);
             }
         }
         
