@@ -11,7 +11,7 @@
         display: grid;
 
         grid-gap: 6px;
-        grid-template-columns: auto 200px;
+        grid-template-columns: auto 86px;
     }
 
     .inventory-badges-container {
@@ -25,6 +25,8 @@
             height: 40px;
 
             position: relative;
+
+            overflow: hidden;
 
             .inventory-badges-icon-image {
                 position: absolute;
