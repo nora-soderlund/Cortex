@@ -65,7 +65,7 @@ Client.inventory.pages.furnitures = function($element) {
 
                         Client.user.furnitures[furniture.id].rooms++;
 
-                        Client.inventory.page.setFurniture(furniture.id);
+                        setFurniture(furniture.id);
 
                         if(Client.user.furnitures[furniture.id].inventory == 0) {
                             result.stop();
