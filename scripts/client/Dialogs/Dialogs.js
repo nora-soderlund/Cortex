@@ -29,4 +29,34 @@ Client.dialogs = new function() {
             Client.dialogs.sort();
         });
     };
+
+    $(window).on("keyup", function(event) {
+        if(event.code != "Escape")
+            return;
+
+        let current = -1;
+
+        for(let index = Client.dialogs.entities.length - 1; index != -1; index--) {
+            if(!Client.dialogs.entities[index].active())
+                continue;
+
+            current = index;
+
+            break;
+        }
+
+        if(current == -1)
+            return;
+
+        Client.dialogs.entities[current].hide();
+
+        for(let index = current - 1; index != -1; index--) {
+            if(!Client.dialogs.entities[index].active())
+                continue;
+
+            Client.dialogs.entities[index].show();
+
+            break;
+        }
+    });
 };
