@@ -103,6 +103,8 @@ Client.rooms.interface.chat = new function() {
 
         this.messages.push($canvas);
 
+        this.history.addMessage(context.canvas, center - (context.canvas.width / 2));
+
         $canvas.appendTo(this.$element);
 
         this.updateMessages();

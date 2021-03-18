@@ -432,6 +432,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/room-chat-history.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,5,49,11</rect>
+                <key>scale9Paddings</key>
+                <rect>25,5,49,11</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/room-door-plus.png</key>
             <key type="filename">images/room-tile-add.png</key>
             <key type="filename">images/room-tile-down.png</key>
@@ -620,6 +635,7 @@
             <filename>images/display-effect-medium.png</filename>
             <filename>images/display-effect-small.png</filename>
             <filename>images/display-star.png</filename>
+            <filename>images/room-chat-history.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

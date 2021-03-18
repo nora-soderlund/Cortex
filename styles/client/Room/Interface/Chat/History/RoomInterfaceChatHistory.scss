@@ -1,0 +1,61 @@
+.room-interface-chat-history {
+    width: 100%;
+    height: 30px;
+    
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    .room-interface-chat-history-messages {
+        width: 100%;
+        height: calc(100% - 30px);
+
+        background: rgba(0, 0, 0, .75);
+
+        border-bottom: 1px solid rgba(#848484, .25);
+
+        overflow: hidden;
+
+        .room-interface-chat-history-messages-content {
+            height: 100%;
+            width: 100%;
+
+            overflow: scroll;
+
+            .room-interface-chat-message {
+                margin-top: 6px;
+                margin-bottom: 6px;
+
+                display: block;
+            }
+        }
+    }
+
+    .room-interface-chat-history-handle {
+        position: absolute;
+
+        bottom: 0;
+
+        width: 100%;
+        height: 30px;
+
+        background: rgba(0, 0, 0, .5);
+
+        border-bottom: 1px solid rgba(#848484, .25);
+
+        .room-interface-chat-history-button {
+            position: absolute;
+
+            @include sprite-room-chat-history();
+
+            left: 0; right: 0;
+            
+            top: 4px;
+
+            margin: 0 auto;
+
+            cursor: pointer;
+        }
+    }
+}
