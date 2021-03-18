@@ -16,6 +16,280 @@ Client.development = new function() {
         "margin-left": "6px",
         "float": "right"
     });
+
+    const $stress = $('<br><p>Perform stress test</p>').css({
+        "cursor": "pointer"
+    }).appendTo(this.$info);
+
+    $stress.on("click", async function() {
+        const $content = $("<p>Performing a stress test on the client...<br><br></p>");
+
+        Client.loader.setText($content);
+        Client.loader.show();
+
+        const room = Client.rooms.interface.active;
+
+        if(room)
+            Client.rooms.interface.stop();
+
+        const start = performance.now();
+
+
+
+        let assetStart = 0, assetSpritesStart = 0;
+
+        for(let key in Client.assets.cache) {
+            assetStart++;
+
+            if(Client.assets.cache[key].sprites == undefined)
+                continue;
+
+            for(let sprite in Client.assets.cache[key].sprites)
+                assetSpritesStart++;
+        }
+
+
+
+        let assetPromisesStart = 0;
+
+        for(let key in Client.assets.promises) {
+            if(Client.assets.cache[key].spritesheet != undefined)
+                assetPromisesStart++;
+
+            if(Client.assets.cache[key].manifest != undefined)
+                assetPromisesStart++;
+        }
+
+
+
+        const $figures = $('<p></p>').appendTo($content);
+
+        const figureStart = performance.now();
+
+        const figures = [ "hr", "hd", "ch", "lg", "sh" ];
+
+        let slowestFigure = null, fastestFigure = 100000;
+
+        const figureRates = {};
+
+        for(let index = 1; index < 1001; index++) {
+            let string = [];
+
+            for(let part in figures)
+                string.push(figures[part] + "-" + Math.round(Math.random() * 100) + Math.round(Math.random() * 100));
+
+            string = string.join('.');
+
+            const figureRenderStart = performance.now();
+
+            const figure = new Client.figures.entity(string, {
+                direction: Math.round(Math.random() * 6)
+            });
+
+            await figure.process();
+            await figure.render();
+
+            const figureRenderEnd = performance.now();
+
+            if(figureRates[string] == undefined)
+                figureRates[string] = figureRenderEnd - figureRenderStart;
+
+            if(figureRenderEnd - figureRenderStart > slowestFigure)
+                slowestFigure = figureRenderEnd - figureRenderStart;
+
+            if(figureRenderEnd - figureRenderStart < fastestFigure)
+                fastestFigure = figureRenderEnd - figureRenderStart;
+
+            $figures.html("Figure ticks: " + Math.round(performance.now() - figureStart) + ", renders: " + index + ", ~" + Math.round((performance.now() - figureStart) / index) + "ms/render, fastest ~" + Math.round(fastestFigure) + "ms, slowest ~" + Math.round(slowestFigure) + "ms");
+        }
+
+        const figureEnd = performance.now();
+
+        const $furnitures = $('<p></p>').appendTo($content);
+
+        const furnitureStart = performance.now();
+
+        const furnitures = [
+            "sound_set_5",
+            "clothing_crookedhat",
+            "limo_b_mid3",
+            "ads_mirror",
+            "hween_c16_floor2",
+            "usva3_wallrug",
+            "scifi_ltd17_mech",
+            "santorini_c17_dividerend",
+            "usva2_shelf2",
+            "pixel_couch_black",
+            "coco_sofa_c4",
+            "school_stuff_02",
+            "ny2015_chocfountain",
+            "rainyday_c20_woodenfloor",
+            "clothing_nt_moviestarmakeup",
+            "highscore_perteam",
+            "hc21_12",
+            "ads_spang_sleep",
+            "gld_gate",
+            "summer_c17_merchstall",
+            "hween13_thorndiv1",
+            "bolly_desk",
+            "statue_elk",
+            "clothing_h20th",
+            "wf_cnd_furnis_hv_avtrs",
+            "hween13_castleturret1",
+            "pet_waterbottle",
+            "pirate_stage3_g",
+            "xmas_c16_elf9",
+            "ads_mtvtrophy_gold",
+            "diamond_painting33",
+            "xmas13_snowflake7",
+            "bonusbag20_3",
+            "val13_lamp",
+            "jungle_c16_bkcase2",
+            "horse_dye_16",
+            "hween12_orb",
+            "arabian_bigtb",
+            "hblooza14_duckhook",
+            "anc_waterfall",
+            "neonpunk_c20_lights",
+            "rare_colourable_pillar",
+            "xmas14_gate2",
+            "usva5_lamble",
+            "hosptl_cab2",
+            "paris_c15_pavement",
+            "usva4_table",
+            "ads_idol_l_carpet",
+            "hotel_c18_cypress",
+            "pixel_carpet_green",
+            "mystics_rfountain",
+            "wildwest_bank",
+            "plant_pineapple",
+            "clothing_demoneyes",
+            "es_icestar",
+            "usva4_rug",
+            "room_gh15_cab5",
+            "garden_chair",
+            "newbie_present",
+            "hween09_curt",
+            "xm09_bauble_27",
+            "lt_lava",
+            "table_plasto4_bigsq",
+            "xmas_c16_woodtile",
+            "army15_poster",
+            "easter_r16_squid",
+            "hween_c19_bewitchedskull",
+            "cland_c15_light",
+            "attic15_clock",
+            "sound_set_53",
+            "market_c19_basket",
+            "sf_wall",
+            "bazaar_c17_dyepurple",
+            "tray_cake",
+            "garden_staringbush",
+            "bb_apparatus",
+            "classic8_disco",
+            "chair_plasty4",
+            "es_score_b",
+            "wf_act_mute_triggerer",
+            "cmp_fish_s",
+            "vikings_wallshield_g",
+            "room_wl15_deskfront",
+            "tiki_gate",
+            "sfx_dubstep3_2",
+            "hs_applause",
+            "cloud_throne",
+            "pcnc_wall1",
+            "cpunk_c15_neoarrowup",
+            "bb_robo",
+            "coralking_c18_angelfish",
+            "room_wlof15_chair",
+            "suncity_c19_wateroutlet",
+            "val15_lilys",
+            "classic7_stage",
+            "cland15_ltd4",
+            "elegant_c17_floor",
+            "ads_ob_pillow",
+            "val13_easel_4",
+            "cland_c15_wall"
+        ];
+
+        let slowestFurniture = null, fastestFurniture = 100000;
+
+        const furnitureRates = {};
+
+        for(let index = 1; index < 1001; index++) {
+            const furnitureRenderStart = performance.now();
+
+            let id = furnitures[Math.round(Math.random() * (furnitures.length - 1))];
+
+            const furniture = new Client.furnitures.entity({ id, direction: Math.round(Math.random() * 6), animation: Math.round(Math.random()) });
+
+            await furniture.process();
+            await furniture.render();
+
+            const furnitureRenderEnd = performance.now();
+
+            if(furnitureRates[id] == undefined)
+                furnitureRates[id] = furnitureRenderEnd - furnitureRenderStart;
+
+            if(furnitureRenderEnd - furnitureRenderStart > slowestFurniture)
+                slowestFurniture = furnitureRenderEnd - furnitureRenderStart;
+
+            if(furnitureRenderEnd - furnitureRenderStart < fastestFurniture)
+                fastestFurniture = furnitureRenderEnd - furnitureRenderStart;
+
+            $furnitures.html("Furniture ticks: " + Math.round(performance.now() - furnitureStart) + ", renders: " + index + ", ~" + Math.round((performance.now() - furnitureStart) / index) + "ms/render, fastest ~" + Math.round(fastestFurniture) + "ms, slowest ~" + Math.round(slowestFurniture) + "ms");
+        }
+
+        const furnitureEnd = performance.now();
+
+        const end = performance.now();
+
+        let assetEnd = 0, assetSpritesEnd = 0;
+
+        for(let key in Client.assets.cache) {
+            assetEnd++;
+
+            if(Client.assets.cache[key].sprites == undefined)
+                continue;
+
+            for(let sprite in Client.assets.cache[key].sprites)
+                assetSpritesEnd++;
+        }
+
+
+
+        let assetPromisesEnd = 0;
+
+        for(let key in Client.assets.promises) {
+            if(Client.assets.cache[key].spritesheet != undefined)
+                assetPromisesEnd++;
+
+            if(Client.assets.cache[key].manifest != undefined)
+                assetPromisesEnd++;
+        }
+
+        $("<p><br>" + (assetEnd - assetStart) + " new assets, " + (assetPromisesEnd - assetPromisesStart) + " new downloads, " + (assetSpritesEnd - assetSpritesStart) + " new sprites...</p>").appendTo($content);
+
+        $("<p><br>Finished stress test after " + Math.round(end - start) + "ms!</p>").appendTo($content);
+
+        await Client.socket.messages.sendCall({
+            OnStressTest: {
+                count: end - start,
+
+                figures: { count: figureEnd - figureStart, rates: figureRates },
+                furnitures: { count: furnitureEnd - furnitureStart, rates: furnitureRates },
+
+                assets: { count: assetEnd - assetStart, downloads: assetPromisesEnd - assetPromisesStart, sprites: assetSpritesEnd - assetSpritesStart }
+            }
+        }, "OnStressTest");
+
+        if(room)
+            Client.rooms.interface.start();
+
+        setTimeout(function() {
+            Client.loader.hide();
+        }, 1000);
+    });
     
 
     this.$stats = $(
