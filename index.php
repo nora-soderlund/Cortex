@@ -39,6 +39,7 @@
         <script src="scripts/Client.js"></script>
 
         <script src="scripts/Client/Utils/Utils.js"></script>
+        <script src="scripts/Client/Exceptions/Exceptions.js"></script>
         
         <script src="scripts/Client/ClientLoader.js"></script>
     </body>
