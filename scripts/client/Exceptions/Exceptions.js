@@ -3,6 +3,8 @@ window.onerror = async function(exception, file, line, column, error) {
         return;
 
     Client.loader.setError("Reporting the error to the server...");
+    
+    Client.loader.show();
 
     await Client.socket.messages.sendCall({
         OnUnhandledException: {
