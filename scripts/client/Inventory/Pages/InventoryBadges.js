@@ -65,4 +65,11 @@ Client.inventory.pages.badges = async function($element) {
 
         $badge.on("click", click);
     }
+
+    let $first = $equipped.find(".inventory-badges-icon");
+    
+    if(!$first.length)
+        $first = $uneqipped.find(".inventory-badges-icon");
+
+    $first.first().click();
 };
