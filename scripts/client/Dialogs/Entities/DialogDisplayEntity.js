@@ -17,7 +17,9 @@ Client.dialogs.display = function(settings = {}) {
 
         const $display = $('<div class="dialog-display-content"></div>').appendTo(entity.$header);
 
-        entity.$info = $('<div class="dialog-display-header-info"></div>').appendTo(entity.$header);
+        const $container = $('<div class="dialog-display-header-info"></div>').appendTo(entity.$header)
+
+        entity.$info = $('<div class="dialog-display-header-info-content"></div>').appendTo($container);
 
         $('<div class="dialog-display-content-star"></div>').appendTo($display);
 

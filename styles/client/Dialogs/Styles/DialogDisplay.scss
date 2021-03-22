@@ -18,20 +18,26 @@
 
             left: 128px;
 
-            padding: 24px 0;
+            display: flex;
 
-            color: #FFF;
+            height: 100%;
 
-            h1 {
-                font-size: 20px;
-            }
+            .dialog-display-header-info-content {
+                margin: auto 6px;
 
-            b {
                 color: #FFF;
-            }
 
-            p {
-                margin-top: 6px;
+                h1 {
+                    font-size: 20px;
+                }
+
+                b {
+                    color: #FFF;
+                }
+
+                p {
+                    margin-top: 6px;
+                }
             }
         }
     }
