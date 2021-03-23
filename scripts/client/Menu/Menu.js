@@ -46,6 +46,7 @@ Client.menu = new function() {
 
 Client.loader.ready(function() {
     const $user = Client.menu.addItem("user", function() {
+        Client.menu.sub.$element.toggle();
     });
 
     const $canvas = $('<div class="menu-sprite menu-user"></div>');

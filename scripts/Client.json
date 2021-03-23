@@ -104,6 +104,7 @@
         "Rooms/Settings/RoomSettings.js",
 
         "Menu/Menu.js",
+        "Menu/Sub/MenuSub.js",
         "Menu/Friends/MenuFriends.js",
 
         "Shop/Shop.js",

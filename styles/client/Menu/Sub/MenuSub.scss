@@ -1,0 +1,45 @@
+.menu-sub {
+    display: none;
+    
+    height: 50px;
+    width: auto;
+
+    position: absolute;
+
+    bottom: 56px;
+    left: 6px;
+
+    background: rgba(28, 28, 26, .9);
+
+    border: 1px solid rgba(64, 64, 64, .75);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+
+    padding: 0 12px;
+
+    .menu-sub-item {
+        display: flex;
+
+        height: 100%;
+
+        cursor: pointer;
+        
+        &:hover {
+            .menu-sub-sprite {
+                transform: translate(-1px, -1px);
+            }
+        }
+
+        &:active {
+            .menu-sub-sprite {
+                opacity: .5;
+
+                transform: translate(1px, 1px);
+            }
+        }
+
+        .menu-sub-sprite {
+            margin: auto;
+        }
+    }
+}

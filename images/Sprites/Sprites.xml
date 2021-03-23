@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:897e08e719e4874f54a384c97aab36fa:6820efae0266478829768ef461e5e122:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:6c0b7f934907f066a3a2080523310e0c:69b45eced617d91a95126bfe3c9e9d56:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,49 +19,50 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="124" height="495">
-    <sprite n="arrow-big-left" x="0" y="90" w="44" h="29"/>
+<TextureAtlas imagePath="Sprites.png" width="247" height="252">
+    <sprite n="arrow-big-left" x="52" y="37" w="44" h="29"/>
     <sprite n="cross" x="111" y="0" w="11" h="11"/>
-    <sprite n="cursor-pointer" x="75" y="66" w="18" h="24"/>
+    <sprite n="cursor-pointer" x="34" y="37" w="18" h="24"/>
     <sprite n="display-effect-big" x="29" y="0" w="9" h="9"/>
     <sprite n="display-effect-medium" x="38" y="0" w="9" h="9"/>
     <sprite n="display-effect-small" x="0" y="0" w="5" h="5"/>
-    <sprite n="display-star" x="0" y="269" w="96" h="96"/>
+    <sprite n="display-star" x="71" y="122" w="96" h="96"/>
     <sprite n="dropdown" x="73" y="0" w="10" h="10"/>
     <sprite n="dropup" x="83" y="0" w="10" h="10"/>
-    <sprite n="information" x="37" y="27" w="17" h="18"/>
-    <sprite n="lock-big-password" x="58" y="170" w="36" h="44"/>
-    <sprite n="lock-big-private" x="0" y="170" w="29" h="43"/>
-    <sprite n="lock-big-public" x="29" y="170" w="29" h="43"/>
-    <sprite n="lock" x="57" y="11" w="13" h="16"/>
-    <sprite n="menu-camera" x="0" y="214" w="38" h="45"/>
+    <sprite n="information" x="37" y="16" w="17" h="18"/>
+    <sprite n="lock-big-password" x="138" y="77" w="36" h="44"/>
+    <sprite n="lock-big-private" x="80" y="77" w="29" h="43"/>
+    <sprite n="lock-big-public" x="109" y="77" w="29" h="43"/>
+    <sprite n="lock" x="179" y="0" w="13" h="16"/>
+    <sprite n="menu-camera" x="174" y="77" w="38" h="45"/>
     <sprite n="menu-pointer-right" x="5" y="0" w="8" h="8"/>
-    <sprite n="pen" x="54" y="27" w="17" h="18"/>
-    <sprite n="player-next" x="70" y="11" w="21" h="16"/>
-    <sprite n="player-pause" x="91" y="11" w="16" h="16"/>
-    <sprite n="player-play" x="107" y="11" w="16" h="16"/>
-    <sprite n="player-previous" x="0" y="27" w="21" h="16"/>
-    <sprite n="player-stop" x="21" y="27" w="16" h="16"/>
-    <sprite n="plus" x="42" y="11" w="15" h="15"/>
+    <sprite n="menu-sub-achievements" x="96" y="37" w="31" h="30"/>
+    <sprite n="pen" x="54" y="16" w="17" h="18"/>
+    <sprite n="player-next" x="192" y="0" w="21" h="16"/>
+    <sprite n="player-pause" x="213" y="0" w="16" h="16"/>
+    <sprite n="player-play" x="229" y="0" w="16" h="16"/>
+    <sprite n="player-previous" x="0" y="16" w="21" h="16"/>
+    <sprite n="player-stop" x="21" y="16" w="16" h="16"/>
+    <sprite n="plus" x="164" y="0" w="15" h="15"/>
     <sprite n="pointer-down" x="13" y="0" w="8" h="8"/>
     <sprite n="pointer-right" x="21" y="0" w="8" h="8"/>
-    <sprite n="reference" x="0" y="11" w="13" h="11"/>
-    <sprite n="room-chat-history" x="0" y="45" w="98" h="21"/>
-    <sprite n="room-door-plus" x="44" y="90" w="40" h="40"/>
-    <sprite n="room-thumbnail" x="38" y="214" w="71" h="55"/>
-    <sprite n="room-tile-add" x="84" y="90" w="40" h="40"/>
-    <sprite n="room-tile-down" x="0" y="130" w="40" h="40"/>
-    <sprite n="room-tile-remove" x="40" y="130" w="40" h="40"/>
-    <sprite n="room-tile-up" x="80" y="130" w="40" h="40"/>
-    <sprite n="settings" x="98" y="45" w="21" h="21"/>
-    <sprite n="success" x="26" y="11" w="16" h="13"/>
+    <sprite n="reference" x="122" y="0" w="13" h="11"/>
+    <sprite n="room-chat-history" x="71" y="16" w="98" h="21"/>
+    <sprite n="room-door-plus" x="127" y="37" w="40" h="40"/>
+    <sprite n="room-thumbnail" x="0" y="122" w="71" h="55"/>
+    <sprite n="room-tile-add" x="167" y="37" w="40" h="40"/>
+    <sprite n="room-tile-down" x="207" y="37" w="40" h="40"/>
+    <sprite n="room-tile-remove" x="0" y="77" w="40" h="40"/>
+    <sprite n="room-tile-up" x="40" y="77" w="40" h="40"/>
+    <sprite n="settings" x="169" y="16" w="21" h="21"/>
+    <sprite n="success" x="148" y="0" w="16" h="13"/>
     <sprite n="tiles" x="93" y="0" w="18" h="10"/>
-    <sprite n="user-chat" x="0" y="66" w="20" h="21"/>
-    <sprite n="user-follow" x="20" y="66" w="21" h="21"/>
+    <sprite n="user-chat" x="190" y="16" w="20" h="21"/>
+    <sprite n="user-follow" x="210" y="16" w="21" h="21"/>
     <sprite n="user-menu-arrow-request" x="47" y="0" w="13" h="9"/>
     <sprite n="user-menu-arrow" x="60" y="0" w="13" h="9"/>
-    <sprite n="user-profile-big" x="41" y="66" w="21" h="21"/>
-    <sprite n="user-profile-bot" x="0" y="365" w="67" h="130"/>
-    <sprite n="user-profile" x="13" y="11" w="13" h="11"/>
-    <sprite n="zoom-plus" x="62" y="66" w="13" h="22"/>
+    <sprite n="user-profile-big" x="0" y="37" w="21" h="21"/>
+    <sprite n="user-profile-bot" x="167" y="122" w="67" h="130"/>
+    <sprite n="user-profile" x="135" y="0" w="13" h="11"/>
+    <sprite n="zoom-plus" x="21" y="37" w="13" h="22"/>
 </TextureAtlas>

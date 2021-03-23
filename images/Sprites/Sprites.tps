@@ -368,6 +368,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/menu-sub-achievements.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9Paddings</key>
+                <rect>8,8,15,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/player-next.png</key>
             <key type="filename">images/player-previous.png</key>
             <struct type="IndividualSpriteSettings">
@@ -636,6 +651,7 @@
             <filename>images/display-effect-small.png</filename>
             <filename>images/display-star.png</filename>
             <filename>images/room-chat-history.png</filename>
+            <filename>images/menu-sub-achievements.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
