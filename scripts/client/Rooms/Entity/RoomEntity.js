@@ -140,10 +140,10 @@ Client.rooms.entity = function($parent) {
 
         const median = Client.utils.getArrayMedian(this.framePerformance);
         
-        if(median > 6 || milliseconds > (1000 / 75)) {
-            console.warn("[RoomEntity]%c Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!", "color: lightblue");
+        if(median > 6) {
+            //console.warn("[RoomEntity]%c Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!", "color: lightblue");
 
-            this.framePerformance.length = 0;
+            //this.framePerformance.length = 0;
         }
 
         timestamp = performance.now();
@@ -157,6 +157,8 @@ Client.rooms.entity = function($parent) {
         this.frameRates.push(timestamp);
 
         Client.development.$frames.text(this.frameRates.length + " FPS");
+
+        return { median, milliseconds, frames: this.frameRates.length };
     };
 
     this.events = new function() {

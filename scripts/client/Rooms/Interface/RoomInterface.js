@@ -11,6 +11,10 @@ Client.rooms.interface = new function() {
     this.frameLimit = 60;
     this.frameLimitStamp = null;
 
+    this.frameAdjust = 2;
+    this.frameAdjustTimestamp = performance.now();
+    this.frameAdjustCounts = [];    
+
     this.events = {
         start: [],
         stop: []
@@ -52,7 +56,7 @@ Client.rooms.interface = new function() {
         window.requestAnimationFrame(Client.rooms.interface.render);
 
         if(Client.rooms.interface.frameLimit != 0) {
-            const timestamp = performance.now();
+            let timestamp = performance.now();
 
             const delta = timestamp - Client.rooms.interface.frameLimitStamp;
 
@@ -61,7 +65,38 @@ Client.rooms.interface = new function() {
             if(delta > interval) {
                 Client.rooms.interface.frameLimitStamp = timestamp - (delta % interval);
 
-                Client.rooms.interface.entity.render();
+                timestamp = performance.now();
+
+                const { median, milliseconds, frames } = Client.rooms.interface.entity.render();
+
+                if(timestamp - Client.rooms.interface.frameAdjustTimestamp > 1000) {
+                    Client.rooms.interface.frameAdjustTimestamp = timestamp;
+
+                    Client.rooms.interface.frameAdjustCounts.push(frames);
+
+                    if(Client.rooms.interface.frameAdjustCounts.length == 5) {
+                        Client.rooms.interface.frameAdjustCounts.splice(0, 1);
+                        
+                        //console.log("median of frames per seconds in 5 seconds is " + Client.utils.getArrayMedian(Client.rooms.interface.frameAdjustCounts));
+                    }
+
+                    //console.log("we have rendered " + frames + " frames and we wanted " + Client.rooms.interface.frameLimit + ", render took " + Math.round(performance.now() - timestamp) + "ms, we can afford " + Math.floor(1000 / (performance.now() - timestamp)) + " frames");
+                
+                }
+
+                /*if((Client.rooms.interface.frameLimit - frames) > 3) {
+                    console.warn("[RoomInterface]%c We're detecting an urge for more frames (" + frames + "/" + Client.rooms.interface.frameLimit + ") than we can deliver, render took " + median + "/" + interval + "!", "color: lightblue");
+
+                    if(Client.rooms.interface.frameLimit > 12) {
+                        Client.rooms.interface.frameLimit -= 2;
+
+                        if(Client.rooms.interface.frameLimit < 12)
+                            Client.rooms.interface.frameLimit = 12;
+
+                        console.warn("[RoomInterface]%c Lowered expected frame count down to " + Client.rooms.interface.frameLimit + "!", "color: lightblue");
+                    }
+                    
+                }*/
             }
         }
         else
