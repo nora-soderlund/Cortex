@@ -67,4 +67,17 @@ Client.rooms.interface.chat.history = new function() {
         
         this.messages.push($canvas);
     };
+
+    this.reset = function() {
+        for(let index in this.messages)
+            this.messages[index].remove();
+
+        this.messages.length = 0;
+
+        this.$element.css({ "height": "30px" });
+    };
 };
+
+Client.rooms.interface.events.stop.push(function() {
+    Client.rooms.interface.chat.history.reset();
+});
