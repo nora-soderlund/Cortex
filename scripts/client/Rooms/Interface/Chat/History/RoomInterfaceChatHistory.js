@@ -21,10 +21,19 @@ Client.rooms.interface.chat.history = new function() {
         if(!Client.rooms.interface.chat.history.mouseDown)
             return;
 
-        const height = (Client.rooms.interface.chat.history.$element.height() + (event.clientY - Client.rooms.interface.chat.history.mousePosition));
+        let height = (Client.rooms.interface.chat.history.$element.height() + (event.clientY - Client.rooms.interface.chat.history.mousePosition));
 
         if(height < 30 || height > $(window).height() / 2)
             return;
+
+        if(height < 50 && (height < Client.rooms.interface.chat.history.$element.height())) {
+            height = 30;
+
+            Client.rooms.interface.chat.history.mouseDown = false;
+    
+            $(window).unbind("mouseup", Client.rooms.interface.chat.history.mouseUp);
+            $(window).unbind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+        }
 
         Client.rooms.interface.chat.history.$messages[0].scrollTop += (Client.rooms.interface.chat.history.$element.height() - height);
 
