@@ -113,7 +113,7 @@ Client.rooms.items.entity = function(parent, name) {
 
         this.offset = [ Math.floor(-(row * 32) + (column * 32) - 64), Math.floor((column * 16) + (row * 16) - (depth * 32)) ];
 
-        this.index = (Math.round(row) * 1000) + (Math.round(column) * 1000) + (depth * 10) + index;
+        this.index = (Math.round(row) * 1000) + (Math.round(column) * 1000) + (depth * 100) + index;
 
         if(parent.door != undefined && parent.door.row == Math.round(row) && parent.door.column == Math.round(column))
             this.index = -102000 + index;
