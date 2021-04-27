@@ -107,12 +107,18 @@ class Dialog {
     };
 
     pause() {
+        if(!this.created)
+            return;
+
         this.$overlay.show();
 
         this.$title.text("Loading...");
     };
 
     unpause() {
+        if(!this.created)
+            return;
+
         this.$overlay.hide();
 
         this.$title.text(this.title);
