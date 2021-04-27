@@ -59,6 +59,17 @@ Client.loader = new function() {
     };
 
     this.loadScript = function(data, finished) {
+        while(data[0][0] == '@') {
+            let name = data[0].substring(data[0].lastIndexOf('/') + 1);
+
+            console.warn("[%cLoader%c]%c Skipping @" + name + "...", "color: orange", "color: inherit", "color: lightblue");
+
+            data.shift();
+
+            if(data.length == 0)
+                break;
+        }
+
         const name = data[0].substring(data[0].lastIndexOf('/') + 1);
 
         console.log("[%cLoader%c]%c Downloading and running " + name + "...", "color: orange", "color: inherit", "color: lightblue");
