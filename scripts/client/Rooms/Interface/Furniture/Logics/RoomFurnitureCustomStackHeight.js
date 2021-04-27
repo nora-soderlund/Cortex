@@ -5,7 +5,7 @@ Client.rooms.interface.furniture.logics.furniture_custom_stack_height = function
         return;
     }
 
-    entity.dialog = new Client.dialogs.default({
+    entity.dialog = new Dialog({
         title: entity.furniture.furniture.title,
         
         size: {

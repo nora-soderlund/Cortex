@@ -13,7 +13,8 @@
         "Game/Game.js",
 
         "Dialogs/Dialogs.js",
-        "Dialogs/Entities/DialogDefaultEntity.js",
+        "Dialogs/Entities/DialogEntity.js",
+        "@Dialogs/Entities/DialogDefaultEntity.js",
         "Dialogs/Entities/DialogHeaderEntity.js",
         "Dialogs/Entities/DialogTabsEntity.js",
         "Dialogs/Entities/DialogSelectionEntity.js",

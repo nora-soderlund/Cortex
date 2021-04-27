@@ -9,18 +9,10 @@ Client.dialogs = new function() {
         });
 
         for(let index in this.entities)
-            this.entities[index].$element.css("z-index", 1 + index);
+            this.entities[index].$element?.css("z-index", 1 + index);
     };
 
     this.add = function(entity) {
-        entity.$element.on("mousedown", function() {
-            entity.timestamp = performance.now();
-
-            Client.dialogs.sort();
-        });
-
-        entity.timestamp = performance.now();
-
         this.entities.push(entity);
 
         entity.events.show.push(function() {

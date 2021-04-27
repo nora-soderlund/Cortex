@@ -8,7 +8,7 @@ Client.dialogs.display = function(settings = {}) {
         height: 220
     };
 
-    const entity = new Client.dialogs.default(settings);
+    const entity = new Dialog(settings);
 
     entity.$element.addClass("dialog-display");
 

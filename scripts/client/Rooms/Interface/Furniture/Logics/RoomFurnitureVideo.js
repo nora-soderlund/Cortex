@@ -1,5 +1,5 @@
 Client.rooms.interface.furniture.logics.furniture_video = new function() {
-    const entity = new Client.dialogs.default({
+    const entity = new Dialog({
         title: "Room Furniture Video",
         
         size: {

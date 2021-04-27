@@ -1,5 +1,5 @@
 Client.rooms.interface.information = new function() {
-    const entity = new Client.dialogs.default({
+    const entity = new Dialog({
         title: "Room Information",
         
         size: {

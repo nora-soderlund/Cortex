@@ -1,5 +1,5 @@
 Client.inventory = new function() {
-    const entity = new Client.dialogs.default({
+    const entity = new Dialog({
         title: "Inventory",
         
         size: {

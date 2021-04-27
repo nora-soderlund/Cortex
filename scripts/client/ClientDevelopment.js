@@ -324,7 +324,7 @@ Client.development.frames = new function() {
 
 Client.loader.ready(function() {
     Client.development.furni = new function() {
-        const entity = new Client.dialogs.default({
+        const entity = new Dialog({
             title: "Loading",
             
             size: {
@@ -454,7 +454,7 @@ Client.loader.ready(function() {
 
 Client.loader.ready(function() {
     Client.development.shop = new function() {
-        const entity = new Client.dialogs.default({
+        const entity = new Dialog({
             title: "Loading",
             
             size: {

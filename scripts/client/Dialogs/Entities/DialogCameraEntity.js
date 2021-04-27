@@ -1,9 +1,9 @@
 Client.dialogs.camera = function(settings = {}) {
-    const entity = new Client.dialogs.default(settings);
-
-    entity.$element.addClass("dialog-camera");
+    const entity = new Dialog(settings);
 
     entity.events.create.push(function() {
+        entity.$element.addClass("dialog-camera");
+
         const $grid = $('<div class="dialog-camera-grid"></div>').appendTo(entity.$content);
     });
 
