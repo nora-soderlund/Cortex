@@ -16,6 +16,64 @@
         height: 265px;
     }
 
+
+    .room-creation-items {
+        display: grid;
+        grid-gap: 6px;
+        grid-template-columns: auto 214px;
+        
+        height: 100%;
+
+        .room-creation-items-container {
+            overflow: hidden;
+
+            .room-creation-items-content {
+                overflow: auto;
+
+                height: 100%;
+            }
+        }
+
+        .room-creation-item {
+            width: 40px;
+            height: 40px;
+
+            img {
+                margin: auto;
+
+                position: absolute;
+
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+        }
+
+        .room-creation-items-preview {
+            position: relative;
+
+            width: 214px;
+            min-height: 200px;
+
+            overflow: hidden;
+
+            background: black;
+            border: 2px solid black;
+
+            canvas {
+                margin: auto;
+
+                position: absolute;
+
+                left: -100%;
+                right: -100%;
+                top: -100%;
+                bottom: -100%;
+            }
+        }
+    }
+
     .room-creation-property {
         p {
             b {
