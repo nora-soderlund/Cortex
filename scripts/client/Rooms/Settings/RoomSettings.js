@@ -65,6 +65,10 @@ Client.rooms.settings = new function() {
             });
         });
 
+        tabs.add("wallpaper", "Wallpaper", function($element) {
+
+        });
+
         tabs.add("map", "Map Editor", function($element) {
             $element.parent().css("overflow", "visible");
 

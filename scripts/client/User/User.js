@@ -16,7 +16,7 @@ Client.user = new function() {
         for(let key in data)
             Client.user.furnitures[key] = data[key];
 
-        if(Client.inventory.active() && Client.inventory.tabs.selected == "furnitures")
+        if(Client.inventory.active && Client.inventory.tabs.selected == "furnitures")
             for(let key in data)
                 Client.inventory.page.setFurniture(key);
     });

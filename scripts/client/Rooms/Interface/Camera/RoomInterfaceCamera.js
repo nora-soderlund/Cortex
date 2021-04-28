@@ -1,5 +1,5 @@
 Client.rooms.interface.camera = new function() {
-    const entity = new Client.dialogs.camera({
+    const entity = new CameraDialog({
         title: "Room Camera",
         
         size: {

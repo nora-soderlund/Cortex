@@ -14,11 +14,13 @@
 
         "Dialogs/Dialogs.js",
         "Dialogs/Entities/DialogEntity.js",
+        "Dialogs/Entities/Types/CameraDialog.js",
+
         "@Dialogs/Entities/DialogDefaultEntity.js",
         "Dialogs/Entities/DialogHeaderEntity.js",
         "Dialogs/Entities/DialogTabsEntity.js",
         "Dialogs/Entities/DialogSelectionEntity.js",
-        "Dialogs/Entities/DialogCameraEntity.js",
+        "@Dialogs/Entities/DialogCameraEntity.js",
         "Dialogs/Entities/DialogDisplayEntity.js",
 
         "Figures/Figures.js",

@@ -36,7 +36,7 @@ Client.rooms.interface.information = new function() {
     });
 
     Client.rooms.interface.events.stop.push(function() {
-        if(entity.active())
+        if(entity.active)
             entity.hide();
     });
 

@@ -29,7 +29,7 @@ Client.dialogs = new function() {
         let current = -1;
 
         for(let index = Client.dialogs.entities.length - 1; index != -1; index--) {
-            if(!Client.dialogs.entities[index].active())
+            if(!Client.dialogs.entities[index].active)
                 continue;
 
             current = index;
@@ -43,7 +43,7 @@ Client.dialogs = new function() {
         Client.dialogs.entities[current].hide();
 
         for(let index = current - 1; index != -1; index--) {
-            if(!Client.dialogs.entities[index].active())
+            if(!Client.dialogs.entities[index].active)
                 continue;
 
             Client.dialogs.entities[index].show();

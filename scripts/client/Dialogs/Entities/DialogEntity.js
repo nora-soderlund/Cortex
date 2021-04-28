@@ -79,6 +79,9 @@ class Dialog {
     };
 
     hide() {
+        if(!this.active)
+            return;
+
         this.active = false;
         
         for(let index in this.events.hide)
@@ -95,6 +98,9 @@ class Dialog {
 
     destroy() {
         this.hide();
+
+        if(!this.created)
+            return;
 
         this.created = false;
 
@@ -130,10 +136,6 @@ class Dialog {
         this.$title.text(this.title);
     };
 
-    /**
-     * @param {} width  Width of the dialog in any CSS unit
-     * @param {} height Height of the dialog in any CSS unit (default width)
-     */
     setSize(width, height = width) {
         this.width = width;
         this.height = height;
