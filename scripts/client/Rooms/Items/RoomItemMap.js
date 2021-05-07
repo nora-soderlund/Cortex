@@ -1,9 +1,9 @@
-Client.rooms.items.map = function(parent, map = "", door = {}) {
+Client.rooms.items.map = function(parent, map = "", door = {}, floor = {}, wall = {}) {
     const entity = new Client.rooms.items.entity(parent, "map");
 
     entity.index = -100000;
 
-    entity.map = new Client.rooms.map.entity(map, door);
+    entity.map = new Client.rooms.map.entity(map, door, floor, wall);
 
     entity.render = async function() {
         await entity.map.render();
