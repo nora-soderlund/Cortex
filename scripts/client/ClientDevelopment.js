@@ -442,13 +442,7 @@ Client.loader.ready(function() {
     };
 
     Client.rooms.interface.cursor.events.click.push(function(entity) {
-        if(entity == undefined || entity.entity.name != "furniture") {
-            Client.development.furni.pause();
-            
-            return;
-        }
-        
-        Client.development.furni.set(entity.entity);
+        Client.development.furni.hide();
     });
 });
 

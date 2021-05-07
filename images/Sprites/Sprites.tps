@@ -196,6 +196,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/beta.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,2,8,3</rect>
+                <key>scale9Paddings</key>
+                <rect>4,2,8,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/cross.png</key>
             <key type="filename">images/dropdown.png</key>
             <key type="filename">images/dropup.png</key>
@@ -652,6 +667,7 @@
             <filename>images/display-star.png</filename>
             <filename>images/room-chat-history.png</filename>
             <filename>images/menu-sub-achievements.png</filename>
+            <filename>images/beta.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
