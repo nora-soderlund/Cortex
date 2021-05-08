@@ -184,7 +184,7 @@ Client.rooms.settings = new function() {
 
                     $item.addClass("active");
 
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, {}, { material: walls[index].id });
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: Client.rooms.interface.data.floor_material }, { material: walls[index].id });
 
                     map.render().then(function() {
                         context.canvas.width = $preview.width();
@@ -233,7 +233,7 @@ Client.rooms.settings = new function() {
 
                     $item.addClass("active");
 
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, {});
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, { material: Client.rooms.interface.data.wall_material });
 
                     map.render().then(function() {
                         context.canvas.width = $preview.width();
