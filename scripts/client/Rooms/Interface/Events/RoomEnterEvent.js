@@ -17,6 +17,9 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
     Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door, {
         thickness: data.floor_thickness,
         material: data.floor_material
+    }, {
+        thickness: data.wall_thickness,
+        material: data.wall_material
     });
     
     Client.rooms.interface.map.render().then(function() {

@@ -197,7 +197,7 @@ Client.rooms.settings = new function() {
                     if(Client.rooms.interface.data.wall_material != walls[index].id) {
                         Client.socket.messages.send({
                             OnRoomSettingsUpdate: {
-                                wall: { masterial: walls[index].id }
+                                wall: { material: walls[index].id }
                             }
                         });
                     }
@@ -246,7 +246,7 @@ Client.rooms.settings = new function() {
                     if(Client.rooms.interface.data.floor_material != floors[index].id) {
                         Client.socket.messages.send({
                             OnRoomSettingsUpdate: {
-                                floor: { masterial: floors[index].id }
+                                floor: { material: floors[index].id }
                             }
                         });
                     }
