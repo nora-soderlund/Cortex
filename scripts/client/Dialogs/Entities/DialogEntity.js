@@ -159,44 +159,58 @@ class Dialog {
         });
     };
 
-    setResizable(enabled = true) {
-        this.resizable = enabled;
+    #resizableMouseDown = false;
+    #resizableMousePosition = { left: null, top: null };
+    #resizableMousePositionStart = { left: null, top: null };
+    #resizableOnMouseMoveAlias = null;
+    #resizableOnMouseUpAlias = null;
+    #resizableOnMouseDownAlias = null;
 
-        if(this.resizable) {
+    #resizableOnMouseDown(event) {
+        this.#resizableMouseDown = true;
+
+        this.#resizableMousePositionStart = { left: event.clientX, top: event.clientY };
+        this.#resizableMousePosition = { left: event.clientX, top: event.clientY };
+
+        this.#resizableOnMouseMoveAlias = (event) => this.#resizableOnMouseMove(event);
+        this.#resizableOnMouseUpAlias = (event) => this.#resizableOnMouseUp(event);
+
+        $(window).bind("mousemove", this.#resizableOnMouseMoveAlias);
+        $(window).bind("mouseup", this.#resizableOnMouseUpAlias);
+    };
+
+    #resizableOnMouseMove(event, width, height) {
+        if(this.$container.width() > this.width || event.clientX >= this.#resizableMousePositionStart.left)
+            this.$container.css({ "width": "+=" + (event.clientX - this.#resizableMousePosition.left) });
+            
+        if(this.$container.height() > this.height || event.clientY >= this.#resizableMousePositionStart.top)
+            this.$container.css({ "height": "+=" + (event.clientY - this.#resizableMousePosition.top) });
+
+            this.#resizableMousePosition = { left: event.clientX, top: event.clientY };
+    };
+
+    #resizableOnMouseUp(event) {
+        this.#resizableMouseDown = false;
+
+        $(window).unbind("mousemove", this.#resizableOnMouseMoveAlias);
+        $(window).unbind("mouseup", this.#resizableOnMouseUpAlias);
+    };
+
+    setResizable(enabled = true) {
+        if(enabled) {
             this.$resizable = $('<div class="dialog-default-resizable"></div>').appendTo(this.$element);
 
-            let mouseDown = false, mousePosition = null, mousePositionStart = null;
+            this.#resizableOnMouseDownAlias = (event) => this.#resizableOnMouseDown(event);
 
-            const minWidth = this.$container.width(), minHeight = this.$container.height();
-
-            const mouseMove = function(event) {
-                if(this.$container.width() > minWidth || event.clientX >= mousePositionStart.left)
-                    this.$container.css({ "width": "+=" + (event.clientX - mousePosition.left) });
-                    
-                if(this.$container.height() > minHeight || event.clientY >= mousePositionStart.top)
-                    this.$container.css({ "height": "+=" + (event.clientY - mousePosition.top) });
-
-                mousePosition = { left: event.clientX, top: event.clientY };
-            };
-
-            const mouseUp = function(event) {
-                mouseDown = false;
-
-                $(window).unbind("mousemove", mouseMove);
-                $(window).unbind("mouseup", mouseUp);
-            };
-
-            this.$resizable.on("mousedown", function(event) {
-                mouseDown = true;
-
-                mousePositionStart = { left: event.clientX, top: event.clientY };
-                mousePosition = { left: event.clientX, top: event.clientY };
-
-                $(window).bind("mousemove", mouseMove);
-                $(window).bind("mouseup", mouseUp);
-            });
+            this.$resizable.bind("mousedown", this.#resizableOnMouseDownAlias);
         }
-        else
-            this.$resizable?.remove();
+        else {
+            this.$resizable?.unbind("mousedown", this.#resizableOnMouseDownAlias).remove();
+
+            $(window).unbind("mousemove", this.#resizableOnMouseMoveAlias);
+            $(window).unbbind("mouseup", this.#resizableOnMouseUpAlias);
+        }
+        
+        this.resizable = enabled;
     };
 };
