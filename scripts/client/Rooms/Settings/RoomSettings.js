@@ -65,82 +65,6 @@ Client.rooms.settings = new function() {
             });
         });
 
-        tabs.add("walls", "Walls", function($element) {
-            const walls = Client.rooms.asset.room_visualization.visualizationData.wallData.walls.wall;
-
-            const $container = $('<div class="room-creation-items"></div>').appendTo($element);
-
-            const $content = $('<div class="room-creation-items-container"></div>').appendTo($container);
-            const $items = $('<div class="room-creation-items-content"></div>').appendTo($content);
-
-            const $preview = $('<div class="room-creation-items-preview"></div>').appendTo($container);
-
-            const $canvas = $('<canvas width="200" height="200"></canvas>').appendTo($preview);
-            const context = $canvas[0].getContext("2d");
-
-            for(let index = 0; index < walls.length; index++) {
-                const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
-
-                Client.assets.getSpritesheet("HabboRoomContentIcons/th_wall_" + walls[index].id, false).then(function(image) {
-                    $(image).appendTo($item);
-                });
-
-                $item.on("click", function() {
-                    $items.find(".room-creation-item.active").removeClass("active");
-
-                    $item.addClass("active");
-
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, {}, { material: walls[index].id });
-
-                    map.render().then(function() {
-                        context.canvas.width = $preview.width();
-                        context.canvas.height = $preview.height();
-
-                        context.drawImage(map.$floor[0], -(8 * 16), ((6 * 16)) + -(map.depth * 16));
-                        context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
-                    });
-                });
-            }
-        });
-
-        tabs.add("floors", "Floors", function($element) {
-            const floors = Client.rooms.asset.room_visualization.visualizationData.floorData.floors.floor;
-
-            const $container = $('<div class="room-creation-items"></div>').appendTo($element);
-
-            const $content = $('<div class="room-creation-items-container"></div>').appendTo($container);
-            const $items = $('<div class="room-creation-items-content"></div>').appendTo($content);
-
-            const $preview = $('<div class="room-creation-items-preview"></div>').appendTo($container);
-
-            const $canvas = $('<canvas width="200" height="200"></canvas>').appendTo($preview);
-            const context = $canvas[0].getContext("2d");
-
-            for(let index = 0; index < floors.length; index++) {
-                const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
-
-                Client.assets.getSpritesheet("HabboRoomContentIcons/th_floor_" + floors[index].id, false).then(function(image) {
-                    $(image).appendTo($item);
-                });
-
-                $item.on("click", function() {
-                    $items.find(".room-creation-item.active").removeClass("active");
-
-                    $item.addClass("active");
-
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, {});
-
-                    map.render().then(function() {
-                        context.canvas.width = $preview.width();
-                        context.canvas.height = $preview.height();
-
-                        context.drawImage(map.$floor[0], -(8 * 16), ((6 * 16)) + -(map.depth * 16));
-                        context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
-                    });
-                });
-            }
-        });
-
         tabs.add("map", "Map Editor", function($element) {
             $element.parent().css("overflow", "visible");
 
@@ -235,9 +159,109 @@ Client.rooms.settings = new function() {
             $add.click();
         });
 
-        tabs.click(function() {
+        tabs.add("walls", "Walls", function($element) {
+            const walls = Client.rooms.asset.room_visualization.visualizationData.wallData.walls.wall;
+
+            const $container = $('<div class="room-creation-items"></div>').appendTo($element);
+
+            const $content = $('<div class="room-creation-items-container"></div>').appendTo($container);
+            const $items = $('<div class="room-creation-items-content"></div>').appendTo($content);
+
+            const $preview = $('<div class="room-creation-items-preview"></div>').appendTo($container);
+
+            const $canvas = $('<canvas width="200" height="200"></canvas>').appendTo($preview);
+            const context = $canvas[0].getContext("2d");
+
+            for(let index = 0; index < walls.length; index++) {
+                const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
+
+                Client.assets.getSpritesheet("HabboRoomContentIcons/th_wall_" + walls[index].id, false).then(function(image) {
+                    $(image).appendTo($item);
+                });
+
+                $item.on("click", function() {
+                    $items.find(".room-creation-item.active").removeClass("active");
+
+                    $item.addClass("active");
+
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, {}, { material: walls[index].id });
+
+                    map.render().then(function() {
+                        context.canvas.width = $preview.width();
+                        context.canvas.height = $preview.height();
+
+                        context.drawImage(map.$floor[0], -(8 * 16), ((6 * 16)) + -(map.depth * 16));
+                        context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
+                    });
+
+                    if(Client.rooms.interface.data.wall_material != walls[index].id) {
+                        Client.socket.messages.send({
+                            OnRoomSettingsUpdate: {
+                                wall: { masterial: walls[index].id }
+                            }
+                        });
+                    }
+                });
+
+                if(Client.rooms.interface.data.wall_material == walls[index].id)
+                    $item.click();
+            }
+        });
+
+        tabs.add("floors", "Floors", function($element) {
+            const floors = Client.rooms.asset.room_visualization.visualizationData.floorData.floors.floor;
+
+            const $container = $('<div class="room-creation-items"></div>').appendTo($element);
+
+            const $content = $('<div class="room-creation-items-container"></div>').appendTo($container);
+            const $items = $('<div class="room-creation-items-content"></div>').appendTo($content);
+
+            const $preview = $('<div class="room-creation-items-preview"></div>').appendTo($container);
+
+            const $canvas = $('<canvas width="200" height="200"></canvas>').appendTo($preview);
+            const context = $canvas[0].getContext("2d");
+
+            for(let index = 0; index < floors.length; index++) {
+                const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
+
+                Client.assets.getSpritesheet("HabboRoomContentIcons/th_floor_" + floors[index].id, false).then(function(image) {
+                    $(image).appendTo($item);
+                });
+
+                $item.on("click", function() {
+                    $items.find(".room-creation-item.active").removeClass("active");
+
+                    $item.addClass("active");
+
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, {});
+
+                    map.render().then(function() {
+                        context.canvas.width = $preview.width();
+                        context.canvas.height = $preview.height();
+
+                        context.drawImage(map.$floor[0], -(8 * 16), ((6 * 16)) + -(map.depth * 16));
+                        context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
+                    });
+
+                    if(Client.rooms.interface.data.floor_material != floors[index].id) {
+                        Client.socket.messages.send({
+                            OnRoomSettingsUpdate: {
+                                floor: { masterial: floors[index].id }
+                            }
+                        });
+                    }
+                });
+
+                if(Client.rooms.interface.data.floor_material == floors[index].id)
+                    $item.click();
+            }
+        });
+
+        tabs.click(function(identifier, $element) {
             if(entity.editor != undefined)
                 entity.editor.destroy();
+
+            $element.parent().css("overflow", "");
         }); 
 
         tabs.show("information");
