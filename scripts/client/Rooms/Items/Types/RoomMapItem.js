@@ -1,8 +1,8 @@
 class RoomMapItem extends RoomItem {
     index = -100000;
 
-    async constructorAsync(...args) {
-        await super.constructorAsync(...args);
+    async constructorAsync(room, map = "", door = {}, floor = {}, wall = {}) {
+        await super.constructorAsync(room, map = "", door = {}, floor = {}, wall = {});
 
         this.map = new Client.rooms.map.entity(map, door, floor, wall);
 

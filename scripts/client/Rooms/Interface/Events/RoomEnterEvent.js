@@ -27,7 +27,10 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
 
         const width = Client.rooms.interface.$element.width(), height = Client.rooms.interface.$element.height();
 
-        Client.rooms.interface.entity.setOffset((width / 2) - ((Client.rooms.interface.map.map.rows * 16) + (Client.rooms.interface.map.map.columns * 16)), (height / 2) - ((Client.rooms.interface.map.map.rows * 8) + (Client.rooms.interface.map.map.columns * 8)));
+        Client.rooms.interface.entity.offset = {
+            left: (width / 2) - ((Client.rooms.interface.map.map.rows * 16) + (Client.rooms.interface.map.map.columns * 16)),
+            top: (height / 2) - ((Client.rooms.interface.map.map.rows * 8) + (Client.rooms.interface.map.map.columns * 8))
+        };
     });
 
     Client.rooms.interface.start();
