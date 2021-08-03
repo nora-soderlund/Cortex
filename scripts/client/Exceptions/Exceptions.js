@@ -13,5 +13,7 @@ window.onerror = async function(exception, file, line, column, error) {
         }
     }, "OnUnhandledException");
 
+    debugger;
+
     Client.loader.hide();
 };

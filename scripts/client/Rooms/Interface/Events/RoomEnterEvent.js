@@ -14,7 +14,7 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
         Client.rooms.interface.data.map.stack = result;
     });
 
-    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door, {
+    Client.rooms.interface.map = new RoomMapItem(Client.rooms.interface.entity, data.map.floor, data.map.door, {
         thickness: data.floor_thickness,
         material: data.floor_material
     }, {
@@ -22,7 +22,7 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
         material: data.wall_material
     });
     
-    Client.rooms.interface.map.render().then(function() {
+    Client.rooms.interface.map.on("ready", () => {
         Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
 
         const width = Client.rooms.interface.$element.width(), height = Client.rooms.interface.$element.height();

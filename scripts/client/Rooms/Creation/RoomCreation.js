@@ -136,7 +136,7 @@ Client.rooms.creation = new function() {
         
         const models = await Client.socket.messages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
         
-        const tabs = new Client.dialogs.tabs(231);
+        const tabs = new Client.dialogs.tabs(242);
 
         tabs.add("default", "Default Maps", function($element) {
             if(Client.rooms.creation.editor != undefined) {

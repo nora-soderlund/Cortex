@@ -1,14 +1,14 @@
-Client.rooms.items.figure = function(parent, figure, direction) {
-    const entity = new Client.rooms.items.entity(parent, "figure");
+class RoomItemFigure extends RoomItem {
+    async constructorAsync(room, figure, direction) {
+        await super.constructorAsync(room, figure, direction);
 
-    entity.render = async function() {
-        entity.figure = new Client.figures.entity(figure, { direction });
+        this.figure = new Client.figures.entity(figure, { direction });
 
-        entity.figure.events.render.push(function(sprites) {
-            entity.sprites.length = 0;
+        this.figure.events.render.push((sprites) => {
+            this.sprites.length = 0;
 
             for(let index in sprites) {
-                let sprite = new Client.rooms.items.sprite(entity, sprites[index].image);
+                let sprite = new Client.rooms.items.sprite(this, sprites[index].image);
 
                 if(sprites[index].imageData != undefined) {
                     sprite.mouseover = function(position) {
@@ -43,53 +43,50 @@ Client.rooms.items.figure = function(parent, figure, direction) {
                 sprite.index = sprites[index].index;
                 sprite.composite = (sprites[index].composite == undefined)?("source-over"):(sprites[index].composite);
                 
-                entity.sprites.push(sprite);
+                this.sprites.push(sprite);
             }
         });
 
+        this.figure.process().then(() => {
+            this.figure.render();
+        });
 
-        entity.figure.process().then(function() {
-            entity.figure.render();
+        this.on("path start", async () => {
+            if(!this.data.walk)
+                return;
+    
+            await this.figure.setAction("Move");
+    
+            await this.figure.render();
+        });
+    
+        this.on("path", async (frame) => {
+            /*if(!entity.data.walk)
+                return;
+    
+            newFrame = Math.floor(frame / 2);
+    
+            if(entity.figure.frames["Move"] != newFrame) {
+                entity.figure.frames["Move"] = newFrame;
+    
+                await entity.figure.render();
+            }*/
+        });
+    
+        this.on("path finish", async () => {
+            if(!this.data.walk)
+                return;
+                
+            await this.figure.removeAction("Move");
+    
+            await this.figure.render();
         });
     };
-
-    entity.events.path.start.push(async function() {
-        if(!entity.data.walk)
-            return;
-
-        await entity.figure.setAction("Move");
-
-        await entity.figure.render();
-    });
-
-    entity.events.path.frame.push(async function(frame) {
-        /*if(!entity.data.walk)
-            return;
-
-        newFrame = Math.floor(frame / 2);
-
-        if(entity.figure.frames["Move"] != newFrame) {
-            entity.figure.frames["Move"] = newFrame;
-
-            await entity.figure.render();
-        }*/
-    });
-
-    entity.events.path.finish.push(async function() {
-        if(!entity.data.walk)
-            return;
-            
-        await entity.figure.removeAction("Move");
-
-        await entity.figure.render();
-    });
     
-    entity.process = function(timestamp, frame) {
-        entity.updatePath(frame);
+    process(...args) {
+        super.process(...ars);
 
-        if(entity.figure.updateActions())
-            entity.figure.render();
+        if(this.figure.updateActions())
+            this.figure.render();
     };
-
-    return entity;
 };

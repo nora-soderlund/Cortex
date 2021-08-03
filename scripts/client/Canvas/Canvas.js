@@ -1,122 +1,58 @@
-Client.canvas = new function() {
-    this.list = [];
+class Canvas extends Events {
+    static list = [];
 
-    this.addCanvas = function(canvas, settings) {
-        const properties = {
-            canvas,
+    static create(settings) {
+        const canvas = {
+            parent: settings.parent,
+            element: document.createElement("canvas"),
+            events: settings.events || new Events(),
 
-            offset: { left: 0, top: 0 },
-
-            draggable: true,
-            draggableEnabled: false,
-            draggableRate: 0,
-            draggableTimestamp: 0,
-
-            frame: 0,
-            frameRate: 24,
-            frameStamp: performance.now(),
-            frameLogs: [],
-
-            enabled: true
-        };
-
-        for(let key in settings)
-            properties[key] = settings[key];
-
-        if(properties.draggable) {
-            let position = null;
-
-            $(properties.canvas).on("mousedown", function(event) {
-                if(Client.keys.down["ShiftLeft"])
-                    return;
-
-                properties.draggableEnabled = true;
-
-                properties.draggableTimestamp = performance.now();
-                
-                position = { left: event.offsetX, top: event.offsetY };
-            }).on("mouseup", function() {
-                properties.draggableEnabled = false;
-            }).on("mousemove", function(event) {
-                if(properties.draggableEnabled == false)
-                    return;
-        
-                properties.offset.left += (event.offsetX - position.left);
-                properties.offset.top += (event.offsetY - position.top);
-        
-                position = { left: event.offsetX, top: event.offsetY };
-            });
-        }
-
-        properties.start = function() {
-            properties.enabled = true;
-        };
-
-        properties.destroy = function() {
-            properties.enabled = false;
-        };
-
-        properties.stop = function() {
-            properties.enabled = false;
-        };
-
-        this.list.push(properties);
-
-        return properties;
-    };
-
-    this.render = function() {
-        const timestamp = performance.now();
-
-        for(let index in this.list) {
-            if(this.list[index].enabled == false)
-                continue;
-
-            if(this.list[index].render == undefined)
-                continue;
-
-            if((this.list[index].draggableEnabled == false && this.list[index].frameRate != 0) || (this.list[index].draggableEnabled == true && this.list[index].draggableRate != 0)) {
-                const delta = timestamp - this.list[index].frameStamp;
-
-                const interval = (1000 / this.list[index].frameRate);
-
-                if(delta < interval)
-                    continue;
-
-                this.list[index].frameStamp = timestamp - (delta % interval);
+            frames: {
+                count: 0,
+                limit: null,
+                logs: []
             }
+        };
 
-            this.list[index].frame++;
+        canvas.parent.appendChild(canvas.element);
 
-            if(this.list[index].frame == this.list[index].frameRate + 1)
-                this.list[index].frame = 1;
+        Canvas.list.push(canvas);
 
-            for(let log in this.list[index].frameLogs)
-                if(timestamp - this.list[index].frameLogs[log] >= 1000)
-                    this.list[index].frameLogs.splice(log, 1);
-    
-            this.list[index].frameLogs.push(timestamp);
+        return canvas;
+    };
 
-            this.list[index].render(this.list[index]);
+    static render() {
+        for(let index = 0; index < Canvas.list.length; index++) {
+            Canvas.list[index].element.width = Canvas.list[index].parent.width;
+            Canvas.list[index].element.height = Canvas.list[index].parent.height;
+
+            const timestamp = performance.now();
+
+            for(let log in Canvas.list[index].frames.logs)
+                if(timestamp - Canvas.list[index].frames.logs[log] >= 1000)
+                    Canvas.list[index].frames.logs.splice(log, 1);
+
+            Canvas.list[index].frames.count++;
+
+            Canvas.list[index].frames.logs.push(timestamp);
+
+            Canvas.list[index].events.call("render", timestamp, Canvas.list[index].frames.logs.length);
             
-            const context = this.list[index].canvas.getContext("2d");
+            const context = Canvas.list[index].element.getContext("2d");
+            
+            context.save();
 
-            context.resetTransform();
+            context.font        = "13px Ubuntu Regular";
+            context.fillStyle   = "rgba(255, 255, 255, .5)";
+            context.textAlign   = "right";
 
-            context.font = "13px Ubuntu Regular";
-            context.fillStyle = "rgba(255, 255, 255, .5)";
-            context.textAlign = "right";
-
-            context.fillText(this.list[index].frameLogs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
+            context.fillText(Canvas.list[index].frames.logs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
+            
+            context.restore();
         }
 
-        window.requestAnimationFrame(function() {
-            Client.canvas.render();
-        });
+        window.requestAnimationFrame(Canvas.render);
     };
-    
-
-    window.requestAnimationFrame(function() {
-        Client.canvas.render();
-    });
 };
+
+window.requestAnimationFrame(Canvas.render);
