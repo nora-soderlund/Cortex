@@ -1,7 +1,7 @@
 Client.rooms.interface = new function() {
     this.$element = $('<div class="room"></div>').prependTo(Client.$element);
 
-    this.entity = new Room(this.$element[0]);
+    this.entity = new Client.rooms.entity(this.$element);
 
     this.users = {};
     this.furnitures = {};
@@ -31,7 +31,7 @@ Client.rooms.interface = new function() {
 
         this.frameLimitStamp = performance.now();
 
-        //window.requestAnimationFrame(this.render);
+        window.requestAnimationFrame(this.render);
     };
 
     this.stop = async function() {

@@ -17,7 +17,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.finished = finished;
 
-        this.entity = new RoomItemFurniture(Client.rooms.interface.entity, furniture.id, direction);
+        this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, direction);
 
         this.entity.furniture.events.render.push(function() {
             Client.rooms.interface.furniture.place.direction = Client.rooms.interface.furniture.place.entity.furniture.direction;

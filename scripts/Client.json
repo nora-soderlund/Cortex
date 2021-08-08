@@ -3,8 +3,6 @@
         "ClientDevelopment.js",
 
         "Keys/Keys.js",
-
-        "Utils/Events/Events.js",
         
         "Socket/Socket.js",
         "Socket/Messages/SocketMessages.js",
@@ -49,16 +47,13 @@
         "Rooms/Map/RoomMap.js",
         "Rooms/Map/Entity/RoomMapEntity.js",
 
-        "Rooms/Items/RoomItem.js",
+        "Rooms/Items/RoomItemEntity.js",
         "Rooms/Items/RoomItemSprite.js",
-
-        "@Rooms/Items/RoomItemOld.js",
-
-        "Rooms/Items/Types/RoomCursorItem.js",
-        "Rooms/Items/Types/RoomFigureItem.js",
-        "Rooms/Items/Types/RoomMapItem.js",
-        "Rooms/Items/Types/RoomFurnitureItem.js",
-        "Rooms/Items/Types/RoomVideoItem.js",
+        "Rooms/Items/RoomItemCursor.js",
+        "Rooms/Items/RoomItemFigure.js",
+        "Rooms/Items/RoomItemMap.js",
+        "Rooms/Items/RoomItemFurniture.js",
+        "Rooms/Items/RoomItemVideo.js",
 
         "Rooms/Interface/RoomInterface.js",
 

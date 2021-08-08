@@ -1,122 +1,173 @@
-class Room extends Events {
-    //#region
+Client.rooms.entity = function($parent) {
+    this.background = "#111";
 
-    entity = null;
+    this.offset = [ 0, 0 ];
 
-    entities = [];
+    this.center = 0;
 
-    addEntity(entity) {
-        if(this.entities.includes(entity)) {
-            const previous = this.entities.indexOf(entity);
+    this.setOffset = function(left, top) {
+        this.offset = [ left, top ];
+    };
 
-            Client.trace(this, "Entity %o is being added but it already exists as index %i!", entity, previous);
-        }
+    this.entities = [];
 
+    this.addEntity = function(entity) {
         this.entities.push(entity);
 
         return entity;
     };
 
-    getEntity(position, type) {
-        if(position == null)
-            return null;
+    this.currentEntity = undefined;
 
-        const offset = {
-            left:   position.left - this.offset.left - this.margin.left,
-            top:    position.top - this.offset.top - this.margin.top
-        };
+    this.getEntity = function(position, type = null) {
+        if(position == undefined)
+            return undefined;
 
-        // TODO: change to class name using Object.constructor.name
+        const offset = [
+            position[0] - this.offset[0] - this.center,
+            position[1] - this.offset[1]
+        ];
+
         const sprites = (type == null)?(this.sprites):(this.sprites.filter(x => x.parent.name == type));
 
         for(let index = sprites.length - 1; index != -1; index--) {
-            const sprite = sprites[index];
-
-            if(!sprite.mouseover(offset))
+            const mouseover = sprites[index].mouseover(offset, this.center);
+            
+            if(mouseover == false)
                 continue;
 
-            return {
-                sprite,
-                
-                entity: sprite.parent
-            };
+            return { entity: sprites[index].parent, sprite: sprites[index], result: mouseover };
         }
 
-        return null;
+        return undefined;
     };
 
-    removeEntity(entity) {
-        if(!this.entities.includes(entity)) {
-            Client.trace(this, "Entity %o does not exist in this room entity and cannot be removed!", entity);
-        
-            return false;
-        }
-
+    this.removeEntity = function(entity) {
         const index = this.entities.indexOf(entity);
 
-        this.entities.splice(index, 1);
+        if(index == -1)
+            return;
 
-        return true;
+        this.entities.splice(index, 1);
     };
 
-    //#endregion
+    this.$canvas = $('<canvas></canvas>').appendTo($parent);
 
-    //#region 
+    this.updateCanvas = function() {
+        const width = $parent.width();
+        const height = $parent.height();
 
-    offset = { left: 0, top: 0 };
-    margin = { left: 0, top: 0 };
-    
-    //#endregion
-
-    constructor(parent) {
-        super();
-
-        this.canvas = Canvas.create({
-            parent,
-
-            events: this
+        this.$canvas.attr({
+            "width": width,
+            "height": height
         });
 
-        this.on("render", () => this.render);
+        /*.css({
+            "width": Math.floor(width * window.devicePixelRatio),
+            "height": Math.floor(height * window.devicePixelRatio)
+        })*/
     };
 
-    render(timestamp, frame) {
-        const context = this.canvas.element.getContext("2d");
+    this.sprites = [];
+
+    this.frame = 0;
+    this.frameRate = 24;
+    this.frameRates = [];
+    this.frameStamp = performance.now();
+    this.framePerformance = [];
+
+    this.render = function() {
+        let timestamp = performance.now();
+
+        if((timestamp - this.frameStamp) > 1000 / this.frameRate) {
+            this.frame++;
+
+            if(this.frame > this.frameRate)
+                this.frame = 0;
+
+            this.frameStamp = timestamp;
+        }
+
+        for(let index in this.entities)
+            this.entities[index].process(timestamp, this.frame);
+
+        this.updateCanvas();
+
+        for(let index in this.events.beforeRender)
+            this.events.beforeRender[index]();
+        
+        const context = this.$canvas[0].getContext("2d");
+
+        context.fillStyle = this.background;
+
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
         context.save();
-        
-        context.fillStyle = this.background;
-        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+        //context.imageSmoothingEnabled = false;
+
+        //context.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+        this.sprites = [];
+
+        for(let index in this.entities) {
+            if(this.entities[index].enabled == false)
+                continue;
+
+            this.sprites = this.sprites.concat(this.entities[index].sprites);
+        }
+
+        this.sprites.sort(function(a, b) {
+            return a.getIndex() - b.getIndex();
+        });
+
+        const offset = [ this.center + this.offset[0], this.offset[1] ];
+
+        for(let index in this.sprites)
+            this.sprites[index].render(context, offset);
+
+        for(let index in this.events.render)
+            this.events.render[index]();
 
         context.restore();
 
-        for(let index = 0; index < this.entities.length; index++)
-            this.entities[index].call("process", timestamp, frame);
+        if(this.framePerformance.length == this.frameRate)
+            this.framePerformance.shift();
 
-        let sprites = [];
+        const milliseconds = (Math.round((performance.now() - timestamp) * 100) / 100);
 
-        for(let index = 0; index < this.entities.length; index++) {
-            if(!this.entities[index].enabled)
-                continue;
+        this.framePerformance.push(milliseconds);
 
-            sprites = sprites.concat(this.entities[index].sprites);
+        const median = Client.utils.getArrayMedian(this.framePerformance);
+        
+        if(median > 6) {
+            //console.warn("[RoomEntity]%c Execution for last " + this.framePerformance.length + " frames took ~" + (Math.round(median * 100) / 100) + "ms; last took ~" + milliseconds + "ms!", "color: lightblue");
+
+            //this.framePerformance.length = 0;
         }
 
-        sprites.sort((a, b) => a.getIndex() - b.getIndex());
+        timestamp = performance.now();
 
-        const offset = {
-            left:   this.margin.left    + this.offset.left,
-            top:    this.margin.top     + this.offset.top
-        };
-        
-        for(let index = 0; index < sprites.length; index++) {
-            context.save();
-
-            //sprites[index].call("render", context, offset);
-        
-            context.restore();
+        for(let index in this.frameRates) {
+            if(timestamp - this.frameRates[index] >= 1000) {
+                this.frameRates.splice(index, 1);
+            }
         }
+
+        this.frameRates.push(timestamp);
+
+        Client.development.$frames.text(this.frameRates.length + " FPS");
 
         return { median, milliseconds, frames: this.frameRates.length };
+    };
+
+    this.events = new function() {
+        this.render = [];
+
+        this.beforeRender = [];
+    };
+
+    this.setCursor = function(cursor) {
+        this.$canvas.css("cursor", cursor);
     };
 };

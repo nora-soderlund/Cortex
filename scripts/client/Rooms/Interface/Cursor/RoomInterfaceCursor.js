@@ -12,7 +12,7 @@ Client.rooms.interface.cursor = new function() {
         doubleclick: []
     };
 
-    /*Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
+    Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
         Client.rooms.interface.cursor.down = true;
 
         Client.rooms.interface.cursor.downTimestamp = performance.now();
@@ -92,10 +92,12 @@ Client.rooms.interface.cursor = new function() {
         Client.rooms.interface.cursor.down = false;
 
         Client.rooms.interface.cursor.position = [ 0, 0 ];
-    });*/
+    });
 
-    const cursor = new RoomItemFurniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
-    cursor.enabled = false;
+    const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
+    cursor.name = "cursor";
+    cursor.render();
+    cursor.disable();
 
     Client.rooms.interface.events.start.push(function() {
         Client.rooms.interface.entity.addEntity(cursor);
