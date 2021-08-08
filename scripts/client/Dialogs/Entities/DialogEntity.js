@@ -208,7 +208,7 @@ class Dialog {
             this.$resizable?.unbind("mousedown", this.#resizableOnMouseDownAlias).remove();
 
             $(window).unbind("mousemove", this.#resizableOnMouseMoveAlias);
-            $(window).unbind("mouseup", this.#resizableOnMouseUpAlias);
+            $(window).unbbind("mouseup", this.#resizableOnMouseUpAlias);
         }
         
         this.resizable = enabled;
