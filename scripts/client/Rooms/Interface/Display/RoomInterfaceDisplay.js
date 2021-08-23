@@ -49,7 +49,7 @@ Client.rooms.interface.display = new function() {
 
         Client.socket.messages.sendCall({ OnUserBadgeRequest: entity.data.id }, "OnUserBadgeRequest").then(function(badges) {
             for(let index in badges)
-                Client.badges.renderer(badges[index].badge).appendTo($badge[index]);
+                (new BadgeRenderer(badges[index].badge)).appendTo($badge[index]);
         });
 
         this.$element.show();

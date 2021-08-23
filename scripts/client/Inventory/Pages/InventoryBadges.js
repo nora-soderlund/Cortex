@@ -30,16 +30,16 @@ Client.inventory.pages.badges = async function($element) {
     for(let index in badges) {
         const $badge = $('<div class="dialog-item inventory-badges-icon"></div>').prependTo((badges[index].equipped)?($equipped):($uneqipped));
 
-        Client.badges.renderer(badges[index].badge).addClass("inventory-badges-icon-image").appendTo($badge);
+        (new BadgeRenderer(badges[index].badge)).addClass("inventory-badges-icon-image").appendTo($badge);
 
         async function click() {
             $element.find(".inventory-badges-icon.active").removeClass("active");
 
             $badge.addClass("active");
 
-            $infoBadge.html(Client.badges.renderer(badges[index].badge));
+            $infoBadge.html((new BadgeRenderer(badges[index].badge)));
 
-            const badge = await Client.badges.get(badges[index].badge);
+            const badge = await Badges.get(badges[index].badge);
 
             $infoContent.html(
                 '<b>' + badge.title + '</b>' +
