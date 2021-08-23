@@ -40,7 +40,7 @@ Client.inventory.pages.furnitures = function($element) {
             
                     result.unbind();
             
-                    Client.socket.messages.sendCall({
+                    SocketMessages.sendCall({
                         OnRoomFurniturePlace: {
                             id: result.furniture.id,
                             position: {

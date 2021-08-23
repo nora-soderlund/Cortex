@@ -11,7 +11,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.furniture = furniture;
 
-        this.map = await Client.socket.messages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate");
+        this.map = await SocketMessages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate");
 
         this.enabled = true;
 

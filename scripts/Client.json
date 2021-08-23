@@ -6,7 +6,6 @@
         
         "Socket/Socket.js",
         "Socket/Messages/SocketMessages.js",
-        "Socket/Network/SocketNetwork.js",
 
         "Assets/Assets.js",
         

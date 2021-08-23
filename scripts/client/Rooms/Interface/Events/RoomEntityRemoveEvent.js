@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomEntityRemove", async function(data) {
+SocketMessages.register("OnRoomEntityRemove", async function(data) {
     if(data.furnitures != undefined) {
         if(data.furnitures.length == undefined)
             data.furnitures = [ data.furnitures ];

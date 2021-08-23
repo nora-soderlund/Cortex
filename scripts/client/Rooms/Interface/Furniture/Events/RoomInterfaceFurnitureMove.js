@@ -13,7 +13,7 @@ Client.rooms.interface.furniture.move = new function() {
     
             result.unbind();
     
-            Client.socket.messages.sendCall({
+            SocketMessages.sendCall({
                 OnRoomFurnitureMove: {
                     id: entity.data.id,
                     position: {

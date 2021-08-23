@@ -134,7 +134,7 @@ Client.rooms.creation = new function() {
 
         entity.settings.map = {};
         
-        const models = await Client.socket.messages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
+        const models = await SocketMessages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
         
         const tabs = new Client.dialogs.tabs(231);
 
@@ -283,7 +283,7 @@ Client.rooms.creation = new function() {
         const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
 
         $continue.on("click", async function() {
-            await Client.socket.messages.sendCall({ OnRoomModelCreate: entity.settings }, "OnRoomModelCreate");
+            await SocketMessages.sendCall({ OnRoomModelCreate: entity.settings }, "OnRoomModelCreate");
 
             entity.hide();
         });

@@ -21,7 +21,7 @@ Client.furnitures = new function() {
 
         this.promises[id] = [];
 
-        this.cache[id] = await Client.socket.messages.sendCall({ OnFurnitureRequest: id }, "OnFurnitureRequest", function(result) {
+        this.cache[id] = await SocketMessages.sendCall({ OnFurnitureRequest: id }, "OnFurnitureRequest", function(result) {
             if(result.id != id)
                 return 0;
 

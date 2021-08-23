@@ -38,7 +38,7 @@ Client.rooms.settings = new function() {
                     '</div>' + 
                 '</div>'
             ).appendTo($information).find(".room-creation-name").on("change", function() {
-                Client.socket.messages.send({
+                SocketMessages.send({
                     OnRoomSettingsUpdate: {
                         title: $(this).val()
                     }
@@ -57,7 +57,7 @@ Client.rooms.settings = new function() {
                     '</div>' + 
                 '</div>'
             ).appendTo($information).find(".room-creation-description").on("change", function() {
-                Client.socket.messages.send({
+                SocketMessages.send({
                     OnRoomSettingsUpdate: {
                         description: $(this).val()
                     }
@@ -119,7 +119,7 @@ Client.rooms.settings = new function() {
 
                 //$settings.html($canvas);
 
-                Client.socket.messages.send({
+                SocketMessages.send({
                     OnRoomSettingsUpdate: {
                         map: { floor: map, extra }
                     }
@@ -195,7 +195,7 @@ Client.rooms.settings = new function() {
                     });
 
                     if(Client.rooms.interface.data.wall_material != walls[index].id) {
-                        Client.socket.messages.send({
+                        SocketMessages.send({
                             OnRoomSettingsUpdate: {
                                 wall: { material: walls[index].id }
                             }
@@ -244,7 +244,7 @@ Client.rooms.settings = new function() {
                     });
 
                     if(Client.rooms.interface.data.floor_material != floors[index].id) {
-                        Client.socket.messages.send({
+                        SocketMessages.send({
                             OnRoomSettingsUpdate: {
                                 floor: { material: floors[index].id }
                             }

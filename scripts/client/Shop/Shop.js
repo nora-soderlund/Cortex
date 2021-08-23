@@ -53,7 +53,7 @@ Client.shop = new function() {
         const page = entity.pages.find(x => x.id == id);
 
         if(!page.data)
-            page.data = await Client.socket.messages.sendCall({ OnShopPageUpdate: id }, "OnShopPageUpdate");
+            page.data = await SocketMessages.sendCall({ OnShopPageUpdate: id }, "OnShopPageUpdate");
 
         Client.development.shop.set(page);
 
@@ -85,7 +85,7 @@ Client.shop = new function() {
 
     entity.events.create.push(async function() {
         if(!entity.pages)
-            entity.pages = await Client.socket.messages.sendCall({ OnShopUpdate: null }, "OnShopUpdate");
+            entity.pages = await SocketMessages.sendCall({ OnShopUpdate: null }, "OnShopUpdate");
 
         entity.header = new Client.dialogs.header({ height: 95 });
 

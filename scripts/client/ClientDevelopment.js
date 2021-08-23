@@ -272,7 +272,7 @@ Client.development = new function() {
 
         $("<p><br>Finished stress test after " + Math.round(end - start) + "ms!</p>").appendTo($content);
 
-        await Client.socket.messages.sendCall({
+        await SocketMessages.sendCall({
             OnStressTest: {
                 count: end - start,
 
@@ -351,7 +351,7 @@ Client.loader.ready(function() {
 
             const data = await Client.furnitures.get(furniture.data.furniture);
 
-            const depth = await Client.socket.messages.sendCall({ OnFurnitureDepthRequest: data.id }, "OnFurnitureDepthRequest");
+            const depth = await SocketMessages.sendCall({ OnFurnitureDepthRequest: data.id }, "OnFurnitureDepthRequest");
             
             $(
                 '<div class="dialog-property">' +
@@ -365,10 +365,10 @@ Client.loader.ready(function() {
                     '</div>' + 
                 '</div>'
             ).appendTo(entity.$content).find(".furniture-depth").on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, depth: parseFloat($(this).val()) } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, depth: parseFloat($(this).val()) } }, "Temp_DevFurniUpdate");
             });
 
-            const logic = await Client.socket.messages.sendCall({ OnFurnitureLogicRequest: data.id }, "OnFurnitureLogicRequest");
+            const logic = await SocketMessages.sendCall({ OnFurnitureLogicRequest: data.id }, "OnFurnitureLogicRequest");
             
             $(
                 '<div class="dialog-property">' +
@@ -383,10 +383,10 @@ Client.loader.ready(function() {
                     '</div>' + 
                 '</div>'
             ).appendTo(entity.$content).find(".furniture-logic").on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, logic: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, logic: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
-            const flags = await Client.socket.messages.sendCall({ OnFurnitureFlagsRequest: data.id }, "OnFurnitureFlagsRequest");
+            const flags = await SocketMessages.sendCall({ OnFurnitureFlagsRequest: data.id }, "OnFurnitureFlagsRequest");
             
             const $flags = $(
                 '<div class="dialog-property">' +
@@ -402,35 +402,35 @@ Client.loader.ready(function() {
                 '<input type="checkbox" id="stackable" style="width: auto"' + ((flags & Client.furnitures.flags.stackable)?(" checked"):("")) + '>' +
                 '<label for="stackable"> Stackable</label>'
             ).appendTo($checkboxes).on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, stackable: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, stackable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             $(
                 '<input type="checkbox" id="sitable" style="width: auto"' + ((flags & Client.furnitures.flags.sitable)?(" checked"):("")) + '>' +
                 '<label for="sitable"> Sitable</label>'
             ).appendTo($checkboxes).on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sitable: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sitable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             $(
                 '<input type="checkbox" id="standable" style="width: auto"' + ((flags & Client.furnitures.flags.standable)?(" checked"):("")) + '>' +
                 '<label for="standable"> Standable</label>'
             ).appendTo($checkboxes).on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, standable: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, standable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             $(
                 '<input type="checkbox" id="walkable" style="width: auto"' + ((flags & Client.furnitures.flags.walkable)?(" checked"):("")) + '>' +
                 '<label for="walkable"> Walkable</label>'
             ).appendTo($checkboxes).on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, walkable: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, walkable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             $(
                 '<input type="checkbox" id="sleepable" style="width: auto"' + ((flags & Client.furnitures.flags.sleepable)?(" checked"):("")) + '>' +
                 '<label for="sleepable"> Sleep</label>'
             ).appendTo($checkboxes).on("change", async function() {
-                await Client.socket.messages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sleepable: $(this).val() } }, "Temp_DevFurniUpdate");
+                await SocketMessages.sendCall({ Temp_DevFurniUpdate: { id: data.id, sleepable: $(this).val() } }, "Temp_DevFurniUpdate");
             });
 
             Client.development.furni.unpause();
@@ -488,7 +488,7 @@ Client.loader.ready(function() {
             ).appendTo(entity.$content).find(".page-icon").on("change", async function() {
                 const icon = parseInt($(this).val());
 
-                await Client.socket.messages.sendCall({ Temp_DevShopUpdate: { id: page.id, icon: icon } }, "Temp_DevShopUpdate");
+                await SocketMessages.sendCall({ Temp_DevShopUpdate: { id: page.id, icon: icon } }, "Temp_DevShopUpdate");
 
                 page.icon = icon;
 

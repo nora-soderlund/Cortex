@@ -7,12 +7,12 @@ Client.user = new function() {
 
     this.friends = {};
     
-    Client.socket.messages.register("OnUserUpdate", function(data) {
+    SocketMessages.register("OnUserUpdate", function(data) {
         for(let key in data)
             Client.user[key] = data[key];
     });
     
-    Client.socket.messages.register("OnUserFurnitureUpdate", function(data) {
+    SocketMessages.register("OnUserFurnitureUpdate", function(data) {
         for(let key in data)
             Client.user.furnitures[key] = data[key];
 

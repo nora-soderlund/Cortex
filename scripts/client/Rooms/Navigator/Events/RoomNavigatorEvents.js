@@ -1,3 +1,3 @@
-Client.socket.messages.register("OnRoomNavigatorEnter", function(response) {
+SocketMessages.register("OnRoomNavigatorEnter", function(response) {
     
 });

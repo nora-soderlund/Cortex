@@ -57,7 +57,7 @@ Client.rooms.navigator = new function() {
         entity.tabs.click(async function(identifier, $element) {
             entity.pause();
 
-            const rooms = await Client.socket.messages.sendCall({ "OnRoomNavigatorUpdate": identifier }, "OnRoomNavigatorUpdate");
+            const rooms = await SocketMessages.sendCall({ "OnRoomNavigatorUpdate": identifier }, "OnRoomNavigatorUpdate");
 
             for(let key in rooms) {
                 const list = new Client.rooms.navigator.list({ title: key, active: true });
@@ -74,7 +74,7 @@ Client.rooms.navigator = new function() {
         });
         
         entity.$home = $('<div class="room-navigator-tab-icon room-navigator-tab-home"></div>').on("click", function() {
-            Client.socket.messages.send({ OnRoomNavigatorEnter: Client.user.home });
+            SocketMessages.send({ OnRoomNavigatorEnter: Client.user.home });
         }).appendTo(entity.tabs.$header);
         
         entity.$create = $('<div class="room-navigator-tab-icon room-navigator-tab-create"></div>').on("click", function() {

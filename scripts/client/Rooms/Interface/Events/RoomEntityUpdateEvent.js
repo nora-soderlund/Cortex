@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomEntityUpdate", async function(data) {
+SocketMessages.register("OnRoomEntityUpdate", async function(data) {
     for(let key in data) {
         for(let index in data[key]) {
             const item = data[key][index];

@@ -10,7 +10,7 @@ Client.rooms.interface.chat.input = new function() {
         if($(this).val().length == 0)
             return;
 
-        Client.socket.messages.send({
+        SocketMessages.send({
             OnRoomUserChat: $(this).val()
         });
 

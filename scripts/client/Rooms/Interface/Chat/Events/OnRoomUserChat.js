@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomUserChat", async function(data) {
+SocketMessages.register("OnRoomUserChat", async function(data) {
     const user = Client.rooms.interface.users[data.id];
                 
     const center = Client.rooms.interface.entity.center;

@@ -19,7 +19,7 @@ Client.game = new function() {
 
         this.promises.users[id] = [];
 
-        this.users[id] = await Client.socket.messages.sendCall({ OnUserRequest: id }, "OnUserRequest", x => x.id == id);
+        this.users[id] = await SocketMessages.sendCall({ OnUserRequest: id }, "OnUserRequest", x => x.id == id);
 
         for(let index in this.promises.users[id])
             this.promises.users[id][index](this.users[id]);

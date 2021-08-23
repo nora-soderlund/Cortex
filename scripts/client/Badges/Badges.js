@@ -17,7 +17,7 @@ class Badges {
 
         Badges.promises[id] = [];
 
-        Badges.cache[id] = await Client.socket.messages.sendCall({ OnBadgeRequest: id }, "OnBadgeRequest", function(result) {
+        Badges.cache[id] = await SocketMessages.sendCall({ OnBadgeRequest: id }, "OnBadgeRequest", function(result) {
             if(result.id != id)
                 return 0;
 

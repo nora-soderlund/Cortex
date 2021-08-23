@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomSettingsUpdate", function(data) {
+SocketMessages.register("OnRoomSettingsUpdate", function(data) {
     for(let key in data)
         Client.rooms.interface.data[key] = data[key];
         

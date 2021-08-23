@@ -68,21 +68,21 @@ Client.rooms.interface.display.users = new function() {
                     if(friend != undefined) {
                         if(friend.status == -1) {
                             this.add("Cancel Friend Invite", async function() {
-                                await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
     
                                 Client.rooms.interface.display.users.tabs.hide();
                             });
                         }
                         else if(friend.status == 0) {
                             this.add("Accept Friend Invite", async function() {
-                                await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+                                await SocketMessages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
     
                                 Client.rooms.interface.display.users.tabs.hide();
                             });
                         }
                         else {
                             this.add("Remove Friend Invite", async function() {
-                                await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
     
                                 Client.rooms.interface.display.users.tabs.hide();
                             });
@@ -90,7 +90,7 @@ Client.rooms.interface.display.users = new function() {
                     }
                     else {
                         this.add("Send Friend Invite", async function() {
-                            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+                            await SocketMessages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
 
                             Client.rooms.interface.display.users.tabs.hide();
                         });
@@ -101,25 +101,25 @@ Client.rooms.interface.display.users = new function() {
 
                 case "actions": {
                     this.add("Wave", function() {
-                        Client.socket.messages.sendCall({ OnRoomUserAction: "Wave" }, "OnRoomUserAction");
+                        SocketMessages.sendCall({ OnRoomUserAction: "Wave" }, "OnRoomUserAction");
 
                         Client.rooms.interface.display.users.tabs.hide();
                     });
                     
                     this.add("Blow", function() {
-                        Client.socket.messages.sendCall({ OnRoomUserAction: "Blow" }, "OnRoomUserAction");
+                        SocketMessages.sendCall({ OnRoomUserAction: "Blow" }, "OnRoomUserAction");
 
                         Client.rooms.interface.display.users.tabs.hide();
                     });
 
                     this.add("Laugh", function() {
-                        Client.socket.messages.sendCall({ OnRoomUserAction: "Laugh" }, "OnRoomUserAction");
+                        SocketMessages.sendCall({ OnRoomUserAction: "Laugh" }, "OnRoomUserAction");
 
                         Client.rooms.interface.display.users.tabs.hide();
                     });
 
                     this.add("Idle", function() {
-                        Client.socket.messages.sendCall({ OnRoomUserAction: "Idle" }, "OnRoomUserAction");
+                        SocketMessages.sendCall({ OnRoomUserAction: "Idle" }, "OnRoomUserAction");
 
                         Client.rooms.interface.display.users.tabs.hide();
                     });
@@ -129,10 +129,10 @@ Client.rooms.interface.display.users = new function() {
 
                 case "moderate": {
                     if(Client.user.id == Client.rooms.interface.data.user) {
-                        Client.rooms.interface.data.rights = await Client.socket.messages.sendCall({ OnRoomRightsUpdate: null }, "OnRoomRightsUpdate");
+                        Client.rooms.interface.data.rights = await SocketMessages.sendCall({ OnRoomRightsUpdate: null }, "OnRoomRightsUpdate");
 
                         this.add((Client.rooms.interface.data.rights.includes(this.entity.entity.data.id)?("Revoke"):("Grant")) + " Rights", async function() {
-                            await Client.socket.messages.sendCall({ OnRoomRightsUpdate: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnRoomRightsUpdate");
+                            await SocketMessages.sendCall({ OnRoomRightsUpdate: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnRoomRightsUpdate");
 
                             Client.rooms.interface.display.users.tabs.show("moderate", "default");
                         });
@@ -226,13 +226,13 @@ Client.rooms.interface.display.users = new function() {
         });
 
         $element.find(".room-interface-user-request-decline").on("click", async function() {
-            await Client.socket.messages.sendCall({ OnUserFriendRemove: { user: entity.data.id } }, "OnUserFriendRemove");
+            await SocketMessages.sendCall({ OnUserFriendRemove: { user: entity.data.id } }, "OnUserFriendRemove");
 
             destroy();
         });
 
         $element.find(".room-interface-user-request-accept").on("click", async function() {
-            await Client.socket.messages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendUpdate");
+            await SocketMessages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendUpdate");
 
             destroy();
         });

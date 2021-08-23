@@ -13,6 +13,8 @@
         <link rel="icon" type="image/x-icon" href="favicon.ico">
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
+        <link rel="manifest" href="manifest.json">
+
         <script type="text/javascript">
             const key = "<?= (isset($_GET["key"])?($_GET["key"]):("Cake")) ?>";
             

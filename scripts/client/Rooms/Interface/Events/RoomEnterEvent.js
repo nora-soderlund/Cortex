@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomEnter", async function(data) {
+SocketMessages.register("OnRoomEnter", async function(data) {
     Client.rooms.interface.entity.door = undefined;
 
     if(data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X')
@@ -10,7 +10,7 @@ Client.socket.messages.register("OnRoomEnter", async function(data) {
 
     Client.rooms.interface.data = data;
 
-    Client.socket.messages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate").then(function(result) {
+    SocketMessages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate").then(function(result) {
         Client.rooms.interface.data.map.stack = result;
     });
 

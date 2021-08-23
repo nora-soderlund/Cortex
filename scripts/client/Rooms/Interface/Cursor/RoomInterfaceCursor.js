@@ -80,7 +80,7 @@ Client.rooms.interface.cursor = new function() {
 
         if(Client.rooms.interface.entity.currentMapEntity != undefined) {
             if(!(Client.keys.down["ControlLeft"] || Client.keys.down["ShiftLeft"] || Client.keys.down["AltLeft"]))
-                Client.socket.messages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
+                SocketMessages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
         }
 
         if(Client.rooms.interface.entity.currentEntity != undefined)

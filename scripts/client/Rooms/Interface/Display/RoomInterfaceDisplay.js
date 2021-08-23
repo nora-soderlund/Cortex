@@ -47,7 +47,7 @@ Client.rooms.interface.display = new function() {
         for(let index = 1; index < 5; index++)
             $badge[index] = $('<div class="room-interface-display-badge"></div>').appendTo($badges);
 
-        Client.socket.messages.sendCall({ OnUserBadgeRequest: entity.data.id }, "OnUserBadgeRequest").then(function(badges) {
+        SocketMessages.sendCall({ OnUserBadgeRequest: entity.data.id }, "OnUserBadgeRequest").then(function(badges) {
             for(let index in badges)
                 (new BadgeRenderer(badges[index].badge)).appendTo($badge[index]);
         });

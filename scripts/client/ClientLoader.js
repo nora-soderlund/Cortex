@@ -154,12 +154,12 @@ Client.loader.addStep(async function(finished) {
 Client.loader.addStep(async function(finished) {
     Client.loader.setText("Connecting to the server...");
     
-    Client.socket.messages.register("OnSocketAuthenticate", function(data) {
+    SocketMessages.register("OnSocketAuthenticate", function(data) {
         finished();
     });
     
-    Client.socket.messages.register("OnSocketClose", function(data) {
-        Client.socket.connected = false;
+    SocketMessages.register("OnSocketClose", function(data) {
+        Socket.connected = false;
         
         switch(data) {
             case "USER_KEY_INVALID": {
@@ -184,7 +184,7 @@ Client.loader.addStep(async function(finished) {
         Client.loader.show();
     });
     
-    Client.socket.server = await Client.socket.open();
+    Socket.server = await Socket.open();
 });
 
 Client.loader.addStep(async function(finished) {
@@ -223,7 +223,7 @@ if(theme != null) {
 Client.loader.load(function() {
     Client.loader.setText("Brewing coffee...");
 
-    Client.socket.messages.send({ OnUserReady: null });
+    SocketMessages.send({ OnUserReady: null });
 
     Client.loader.hide();
 

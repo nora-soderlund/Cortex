@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnUserFriendUpdate", function(data) {
+SocketMessages.register("OnUserFriendUpdate", function(data) {
     if(data.length == undefined)
         data = [ data ];
     

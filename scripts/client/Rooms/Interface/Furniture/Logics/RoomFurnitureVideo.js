@@ -38,7 +38,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
 
             entity.pause();
 
-            const result = await Client.socket.messages.sendCall({
+            const result = await SocketMessages.sendCall({
                 OnRoomFurnitureUse: {
                     id: entity.data.id,
 
@@ -53,7 +53,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
             $link.val("");
 
             if(result)
-                Client.socket.messages.send({ OnRoomFurnitureUse: { id: entity.data.id } });
+                SocketMessages.send({ OnRoomFurnitureUse: { id: entity.data.id } });
         });
 
         entity.$videos = $('<div class="room-interface-furniture-videos"></div>').appendTo(entity.$controls);
@@ -63,7 +63,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
         $('<div class="room-interface-furniture-player"><i class="sprite-player-previous"></i></div>').appendTo(entity.$buttons).on("click", async function() {
             entity.pause();
 
-            await Client.socket.messages.sendCall({
+            await SocketMessages.sendCall({
                 OnRoomFurnitureUse: {
                     id: entity.data.id,
 
@@ -77,7 +77,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
         $('<div class="room-interface-furniture-player"><i class="sprite-player-stop"></i></div>').appendTo(entity.$buttons).on("click", async function() {
             entity.pause();
 
-            await Client.socket.messages.sendCall({
+            await SocketMessages.sendCall({
                 OnRoomFurnitureUse: {
                     id: entity.data.id,
 
@@ -91,7 +91,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
         $('<div class="room-interface-furniture-player"><i class="sprite-player-pause"></i></div>').appendTo(entity.$buttons).on("click", async function() {
             entity.pause();
 
-            await Client.socket.messages.sendCall({
+            await SocketMessages.sendCall({
                 OnRoomFurnitureUse: {
                     id: entity.data.id,
 
@@ -105,7 +105,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
         $('<div class="room-interface-furniture-player"><i class="sprite-player-next"></i></div>').appendTo(entity.$buttons).on("click", async function() {
             entity.pause();
 
-            await Client.socket.messages.sendCall({
+            await SocketMessages.sendCall({
                 OnRoomFurnitureUse: {
                     id: entity.data.id,
 
@@ -161,7 +161,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
             $cross.on("click", async function() {
                 entity.pause();
 
-                await Client.socket.messages.sendCall({
+                await SocketMessages.sendCall({
                     OnRoomFurnitureUse: {
                         id: entity.data.id,
 
@@ -185,7 +185,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
     return entity;
 };
 
-Client.socket.messages.register("OnRoomFurnitureVideoUse", function(data) {
+SocketMessages.register("OnRoomFurnitureVideoUse", function(data) {
     Client.rooms.interface.furniture.logics.furniture_video.data = data;
 
     Client.rooms.interface.furniture.logics.furniture_video.show();

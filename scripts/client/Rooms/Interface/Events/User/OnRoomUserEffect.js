@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomUserEffect", function(data) {
+SocketMessages.register("OnRoomUserEffect", function(data) {
     if(data.length == undefined)
         data = [ data ];
 

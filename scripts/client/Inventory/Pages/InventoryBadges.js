@@ -25,7 +25,7 @@ Client.inventory.pages.badges = async function($element) {
 
     const $equipped = $element.find(".inventory-badges-equipped");
 
-    const badges = await Client.socket.messages.sendCall({ OnUserInventoryBadges: null }, "OnUserInventoryBadges");
+    const badges = await SocketMessages.sendCall({ OnUserInventoryBadges: null }, "OnUserInventoryBadges");
 
     for(let index in badges) {
         const $badge = $('<div class="dialog-item inventory-badges-icon"></div>').prependTo((badges[index].equipped)?($equipped):($uneqipped));
@@ -51,7 +51,7 @@ Client.inventory.pages.badges = async function($element) {
             $('<div class="dialog-button">' + ((badges[index].equipped)?("Unequip"):("Equip")) + '</div>').appendTo($infoButton).on("click", async function() {
                 Client.inventory.pause();
 
-                const result =  await Client.socket.messages.sendCall({ OnUserInventoryBadges: { id: badges[index].badge } }, "OnUserInventoryBadges");
+                const result =  await SocketMessages.sendCall({ OnUserInventoryBadges: { id: badges[index].badge } }, "OnUserInventoryBadges");
 
                 Client.inventory.unpause();
 

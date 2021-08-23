@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomFurnitureVideoStart", function(data) {
+SocketMessages.register("OnRoomFurnitureVideoStart", function(data) {
     const entity = Client.rooms.interface.furnitures[data.id];
 
     if(entity == undefined)
@@ -17,7 +17,7 @@ Client.socket.messages.register("OnRoomFurnitureVideoStart", function(data) {
     entity.sprites.push(entity.video);
 });
 
-Client.socket.messages.register("OnRoomFurnitureVideoStop", function(data) {
+SocketMessages.register("OnRoomFurnitureVideoStop", function(data) {
     const entity = Client.rooms.interface.furnitures[data];
 
     if(entity == undefined)

@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnRoomFurnitureFlash", function(data) {
+SocketMessages.register("OnRoomFurnitureFlash", function(data) {
     const furnitures = [];
 
     for(let id in Client.rooms.interface.furnitures) {

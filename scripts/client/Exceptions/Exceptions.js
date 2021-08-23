@@ -6,7 +6,7 @@ window.onerror = async function(exception, file, line, column, error) {
     
     Client.loader.show();
 
-    await Client.socket.messages.sendCall({
+    await SocketMessages.sendCall({
         OnUnhandledException: {
             file: file + ":" + line + "." + column,
             exception, stack: error.stack

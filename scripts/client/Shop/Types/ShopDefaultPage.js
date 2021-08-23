@@ -14,7 +14,7 @@ Client.shop.types.default = async function(page) {
     const $items = $element.find(".shop-furnitures-items-container");
 
     if(!page.furnitures)
-        page.furnitures = await Client.socket.messages.sendCall({ OnShopFurnituresUpdate: page.id }, "OnShopFurnituresUpdate");
+        page.furnitures = await SocketMessages.sendCall({ OnShopFurnituresUpdate: page.id }, "OnShopFurnituresUpdate");
 
     for(let index in page.furnitures) {
         const furniture = page.furnitures[index].furniture;
@@ -50,7 +50,7 @@ Client.shop.types.default = async function(page) {
             $button.click(async function() {
                 Client.shop.pause();
 
-                await Client.socket.messages.sendCall({ OnShopFurniturePurchase: page.furnitures[index].id }, "OnShopFurniturePurchase");
+                await SocketMessages.sendCall({ OnShopFurniturePurchase: page.furnitures[index].id }, "OnShopFurniturePurchase");
 
                 Client.shop.unpause();
             });

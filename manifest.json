@@ -1,0 +1,21 @@
+{
+    "background_color": "#111",
+    "theme_color": "#d30000",
+    "categories": [ "entertainment", "games", "kids", "social" ],
+
+    "name": "Project Cortex",
+    "short_name": "Cortex",
+    "description": "Project Cortex is a community project replicating the modern Habbo Hotel client using modern technologies like HTML5.",
+
+    "lang": "en-US",
+
+    "display": "standalone",
+    "orientation": "landscape",
+
+    "icons": [
+        {
+        "src": "favicon.ico",
+        "sizes": "72x72 96x96 128x128 256x256"
+        }
+    ]
+}

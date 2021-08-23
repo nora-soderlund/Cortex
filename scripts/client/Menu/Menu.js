@@ -55,7 +55,7 @@ Client.loader.ready(function() {
     
     const entity = new Client.figures.entity(Client.user.figure);
     
-    Client.socket.messages.register("OnUserUpdate", function(data) {
+    SocketMessages.register("OnUserUpdate", function(data) {
         if(data.figure == undefined)
             return;
 

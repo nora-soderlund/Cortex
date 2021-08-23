@@ -72,7 +72,7 @@ Client.rooms.navigator.list = function(settings) {
         });
 
         $element.click(async function() {
-            Client.socket.messages.send({ OnRoomNavigatorEnter: room.id });
+            SocketMessages.send({ OnRoomNavigatorEnter: room.id });
         });
 
         if(this.settings.count > 10) {

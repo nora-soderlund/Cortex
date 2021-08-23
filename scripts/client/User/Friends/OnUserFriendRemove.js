@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnUserFriendRemove", function(data) {
+SocketMessages.register("OnUserFriendRemove", function(data) {
     if(Client.user.friends[data] == undefined)
         return;
 

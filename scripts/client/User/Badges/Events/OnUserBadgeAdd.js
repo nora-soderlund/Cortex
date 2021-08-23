@@ -1,4 +1,4 @@
-Client.socket.messages.register("OnUserBadgeAdd", function(data) {
+SocketMessages.register("OnUserBadgeAdd", function(data) {
     const entity = new Client.dialogs.display({
         title: "Badge Unlocked"
     });

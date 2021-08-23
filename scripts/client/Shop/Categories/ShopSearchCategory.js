@@ -59,7 +59,7 @@ Client.shop.categories.search = function(input) {
         });
     };
 
-    Client.socket.messages.sendCall({ OnShopSearch: input }, "OnShopSearch").then(function(response) {
+    SocketMessages.sendCall({ OnShopSearch: input }, "OnShopSearch").then(function(response) {
         for(let index in response.pages)
             addPage(response.pages[index], $list);
 
