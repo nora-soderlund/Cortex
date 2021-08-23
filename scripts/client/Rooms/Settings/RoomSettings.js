@@ -175,7 +175,7 @@ Client.rooms.settings = new function() {
             for(let index = 0; index < walls.length; index++) {
                 const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
 
-                Client.assets.getSpritesheet("HabboRoomContentIcons/th_wall_" + walls[index].id, false).then(function(image) {
+                Assets.getSpritesheet("HabboRoomContentIcons/th_wall_" + walls[index].id, false).then(function(image) {
                     $(image).appendTo($item);
                 });
 
@@ -224,7 +224,7 @@ Client.rooms.settings = new function() {
             for(let index = 0; index < floors.length; index++) {
                 const $item = $('<div class="dialog-item room-creation-item"></div>').appendTo($items);
 
-                Client.assets.getSpritesheet("HabboRoomContentIcons/th_floor_" + floors[index].id, false).then(function(image) {
+                Assets.getSpritesheet("HabboRoomContentIcons/th_floor_" + floors[index].id, false).then(function(image) {
                     $(image).appendTo($item);
                 });
 

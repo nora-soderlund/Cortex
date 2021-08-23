@@ -4,7 +4,7 @@ Client.rooms.items.video = function(parent, link, time) {
     sprite.image = $('<video muted="muted"></video>')[0];
 
     sprite.image.addEventListener("loadeddata", function() {
-        Client.assets.getManifest("HabboFurnitureVideos").then(function(data) {
+        Assets.getManifest("HabboFurnitureVideos").then(function(data) {
             sprite.visualization = data.visualization[parent.furniture.settings.id];
 
             if(sprite.visualization == undefined)

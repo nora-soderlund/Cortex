@@ -1,7 +1,7 @@
 Client.rooms.items.furniture = function(parent, id, direction) {
     const entity = new Client.rooms.items.entity(parent, "furniture");
 
-    const loading = Client.assets.getSpritesheet("HabboLoading").then(function(image) {
+    const loading = Assets.getSpritesheet("HabboLoading").then(function(image) {
         const sprite = new Client.rooms.items.sprite(entity, image);
 
         sprite.setOffset(32, -32);

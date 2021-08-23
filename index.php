@@ -9,6 +9,9 @@
             if(isset($_GET["theme"]))
                 echo '<link rel="stylesheet" href="styles/themes/' . $_GET["theme"] . '.min.css">';
         ?>
+        
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
         <script type="text/javascript">
             const key = "<?= (isset($_GET["key"])?($_GET["key"]):("Cake")) ?>";

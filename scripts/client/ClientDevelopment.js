@@ -38,13 +38,13 @@ Client.development = new function() {
 
         let assetStart = 0, assetSpritesStart = 0;
 
-        for(let key in Client.assets.cache) {
+        for(let key in Assets.cache) {
             assetStart++;
 
-            if(Client.assets.cache[key].sprites == undefined)
+            if(Assets.cache[key].sprites == undefined)
                 continue;
 
-            for(let sprite in Client.assets.cache[key].sprites)
+            for(let sprite in Assets.cache[key].sprites)
                 assetSpritesStart++;
         }
 
@@ -52,11 +52,11 @@ Client.development = new function() {
 
         let assetPromisesStart = 0;
 
-        for(let key in Client.assets.promises) {
-            if(Client.assets.cache[key].spritesheet != undefined)
+        for(let key in Assets.promises) {
+            if(Assets.cache[key].spritesheet != undefined)
                 assetPromisesStart++;
 
-            if(Client.assets.cache[key].manifest != undefined)
+            if(Assets.cache[key].manifest != undefined)
                 assetPromisesStart++;
         }
 
@@ -246,13 +246,13 @@ Client.development = new function() {
 
         let assetEnd = 0, assetSpritesEnd = 0;
 
-        for(let key in Client.assets.cache) {
+        for(let key in Assets.cache) {
             assetEnd++;
 
-            if(Client.assets.cache[key].sprites == undefined)
+            if(Assets.cache[key].sprites == undefined)
                 continue;
 
-            for(let sprite in Client.assets.cache[key].sprites)
+            for(let sprite in Assets.cache[key].sprites)
                 assetSpritesEnd++;
         }
 
@@ -260,11 +260,11 @@ Client.development = new function() {
 
         let assetPromisesEnd = 0;
 
-        for(let key in Client.assets.promises) {
-            if(Client.assets.cache[key].spritesheet != undefined)
+        for(let key in Assets.promises) {
+            if(Assets.cache[key].spritesheet != undefined)
                 assetPromisesEnd++;
 
-            if(Client.assets.cache[key].manifest != undefined)
+            if(Assets.cache[key].manifest != undefined)
                 assetPromisesEnd++;
         }
 

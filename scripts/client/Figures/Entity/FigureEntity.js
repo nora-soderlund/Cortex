@@ -21,7 +21,7 @@ Client.figures.entity = function(figure, properties = {}) {
     this.data = {};
 
     this.getSprite = async function(library, type, id, direction, color) {
-        const manifest = await Client.assets.getManifest("HabboFigures/" + library);
+        const manifest = await Assets.getManifest("HabboFigures/" + library);
 
         let frame = 0, sprite;
 
@@ -63,12 +63,12 @@ Client.figures.entity = function(figure, properties = {}) {
             return null;
         }
 
-        let image = await Client.assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
+        let image = await Assets.getSprite("HabboFigures/" + library, library + "_" + sprite);
 
         if(color != undefined && type != "ey")
-            image = await Client.assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
+            image = await Assets.getSpriteColor("HabboFigures/" + library, library + "_" + sprite, "#" + color);
 
-        const imageData = await Client.assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
+        const imageData = await Assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
 
         const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
 
@@ -379,7 +379,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
         const map = Client.figures.getEffect(this.effect);
     
-        const manifest = await Client.assets.getManifest("HabboFigures/" + map.lib);
+        const manifest = await Assets.getManifest("HabboFigures/" + map.lib);
 
         if(manifest == undefined || manifest.animation == undefined || manifest.animation.animation == undefined)
             return sprites;
@@ -435,7 +435,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
                 const name = map.lib + "_h_" + manifest.animation.animation.sprite[index].member + "_" + _direction + "_" + frame;
 
-                const sprite = await Client.assets.getSprite("HabboFigures/" + map.lib, name, flipped);
+                const sprite = await Assets.getSprite("HabboFigures/" + map.lib, name, flipped);
 
                 if(sprite == null)
                     continue;
@@ -510,7 +510,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
                 const name = "h_std_" + base + "_1_" + direction + "_" + frame;
                 
-                const sprite = await Client.assets.getSprite("HabboFigures/" + map.lib, map.lib + "_" + name, flipped);
+                const sprite = await Assets.getSprite("HabboFigures/" + map.lib, map.lib + "_" + name, flipped);
 
                 if(sprite == null)
                     continue;

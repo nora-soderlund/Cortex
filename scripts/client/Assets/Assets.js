@@ -1,73 +1,73 @@
-Client.assets = new function() {
-    this.cache = {};
+class Assets {
+    static cache = {};
 
-    this.promises = {};
+    static promises = {};
 
-    this.getManifest = async function(asset, library = true) {
-        if(this.cache[asset] == undefined)
-            this.cache[asset] = {};
+    static async getManifest(asset, library = true) {
+        if(Assets.cache[asset] == undefined)
+            Assets.cache[asset] = {};
             
-        if(this.cache[asset].manifest != undefined)
-            return this.cache[asset].manifest;
+        if(Assets.cache[asset].manifest != undefined)
+            return Assets.cache[asset].manifest;
 
-        await this.downloadManifest(asset, library);
+        await Assets.downloadManifest(asset, library);
 
-        return this.cache[asset].manifest;
+        return Assets.cache[asset].manifest;
     };
 
-    this.downloadManifest = async function(asset, library = true) {
+    static async downloadManifest(asset, library = true) {
         const name = asset.substring(asset.lastIndexOf('/') + 1);
 
         const path = (library)?("assets/" + asset + "/" + name + ".json"):("assets/" + asset + ".json");
 
-        if(this.promises[asset] == undefined)
-            this.promises[asset] = {};
+        if(Assets.promises[asset] == undefined)
+            Assets.promises[asset] = {};
             
-        if(this.promises[asset] == undefined)
-            this.promises[asset] = {};
+        if(Assets.promises[asset] == undefined)
+            Assets.promises[asset] = {};
 
-        if(this.promises[asset].manifest != undefined) {
+        if(Assets.promises[asset].manifest != undefined) {
             return new Promise(function(resolve) {
-                Client.assets.promises[asset].manifest.push(function() {
+                Assets.promises[asset].manifest.push(function() {
                     resolve();
                 });
             });
         }
 
-        this.promises[asset].manifest = [];
+        Assets.promises[asset].manifest = [];
 
         return new Promise(function(resolve) {
             $.getJSON(path, function(manifest) {
-                Client.assets.cache[asset].manifest = manifest;
+                Assets.cache[asset].manifest = manifest;
 
-                for(let index in Client.assets.promises[asset].manifest)
-                    Client.assets.promises[asset].manifest[index]();
+                for(let index in Assets.promises[asset].manifest)
+                    Assets.promises[asset].manifest[index]();
 
                 resolve();
             }).fail(function() {
-                Client.assets.cache[asset].manifest = {};
+                Assets.cache[asset].manifest = {};
 
-                for(let index in Client.assets.promises[asset].manifest)
-                    Client.assets.promises[asset].manifest[index]();
+                for(let index in Assets.promises[asset].manifest)
+                    Assets.promises[asset].manifest[index]();
 
                 resolve();
             });
         });
     };
 
-    this.getSpritesheet = async function(asset, library = true) {
-        if(this.cache[asset] == undefined)
-            this.cache[asset] = {};
+    static async getSpritesheet(asset, library = true) {
+        if(Assets.cache[asset] == undefined)
+            Assets.cache[asset] = {};
             
-        if(this.cache[asset].spritesheet != undefined)
-            return this.cache[asset].spritesheet;
+        if(Assets.cache[asset].spritesheet != undefined)
+            return Assets.cache[asset].spritesheet;
 
-        await this.downloadSpritesheet(asset, library);
+        await Assets.downloadSpritesheet(asset, library);
 
-        return this.cache[asset].spritesheet;
+        return Assets.cache[asset].spritesheet;
     };
 
-    this.downloadSpritesheet = async function(asset, library = true) {
+    static async downloadSpritesheet(asset, library = true) {
         const name = asset.substring(asset.lastIndexOf('/') + 1);
 
         let path = (library)?("assets/" + asset + "/" + name):("assets/" + asset);
@@ -75,36 +75,36 @@ Client.assets = new function() {
         if(library == true || asset.indexOf('.') == -1)
             path += ".png";
 
-        if(this.promises[asset] == undefined)
-            this.promises[asset] = [];
+        if(Assets.promises[asset] == undefined)
+            Assets.promises[asset] = [];
 
-        if(this.promises[asset].spritesheet != undefined) {
+        if(Assets.promises[asset].spritesheet != undefined) {
             return new Promise(function(resolve) {
-                Client.assets.promises[asset].spritesheet.push(function() {
+                Assets.promises[asset].spritesheet.push(function() {
                     resolve();
                 });
             });
         }
 
-        this.promises[asset].spritesheet = [];
+        Assets.promises[asset].spritesheet = [];
 
         return new Promise(function(resolve) {
             const image = new Image();
 
             image.onload = function() {
-                Client.assets.cache[asset].spritesheet = image;
+                Assets.cache[asset].spritesheet = image;
 
-                for(let index in Client.assets.promises[asset].spritesheet)
-                    Client.assets.promises[asset].spritesheet[index]();
+                for(let index in Assets.promises[asset].spritesheet)
+                    Assets.promises[asset].spritesheet[index]();
 
                 resolve();
             };
 
             image.onerror = function() {
-                Client.assets.cache[asset].spritesheet = image;
+                Assets.cache[asset].spritesheet = image;
 
-                for(let index in Client.assets.promises[asset].spritesheet)
-                    Client.assets.promises[asset].spritesheet[index]();
+                for(let index in Assets.promises[asset].spritesheet)
+                    Assets.promises[asset].spritesheet[index]();
 
                 resolve();
             };
@@ -113,19 +113,19 @@ Client.assets = new function() {
         });
     };
 
-    this.getSprite = async function(asset, sprite, flipped = false) {
-        const manifest = await this.getManifest(asset);
+    static async getSprite(asset, sprite, flipped = false) {
+        const manifest = await Assets.getManifest(asset);
 
-        const spritesheet = await this.getSpritesheet(asset);
+        const spritesheet = await Assets.getSpritesheet(asset);
 
-        if(this.cache[asset].sprites == undefined)
-            this.cache[asset].sprites = {};
+        if(Assets.cache[asset].sprites == undefined)
+            Assets.cache[asset].sprites = {};
 
-        if(this.cache[asset].spritesData == undefined)
-            this.cache[asset].spritesData = {};
+        if(Assets.cache[asset].spritesData == undefined)
+            Assets.cache[asset].spritesData = {};
 
-        if(this.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))] != undefined)
-            return this.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))];
+        if(Assets.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))] != undefined)
+            return Assets.cache[asset].sprites[sprite + ((flipped == true)?("?flipped=true"):(""))];
 
         const data = manifest.sprites[sprite];
 
@@ -148,7 +148,7 @@ Client.assets = new function() {
 
         context.drawImage(spritesheet, parseInt(data.left), parseInt(data.top), parseInt(data.width), parseInt(data.height), 0, 0, parseInt(data.width), parseInt(data.height));
 
-        this.cache[asset].sprites[sprite] = $canvas[0];
+        Assets.cache[asset].sprites[sprite] = $canvas[0];
 
         if(flipped == true) {
             const $flippedCanvas = $('<canvas width="' + data.width + '" height="' + data.height + '"></canvas>');
@@ -161,30 +161,30 @@ Client.assets = new function() {
 
             flippedContext.drawImage($canvas[0], 0, 0);
             
-            this.cache[asset].sprites[sprite + "?flipped=true"] = $flippedCanvas[0];
+            Assets.cache[asset].sprites[sprite + "?flipped=true"] = $flippedCanvas[0];
 
-            return this.cache[asset].sprites[sprite + "?flipped=true"];
+            return Assets.cache[asset].sprites[sprite + "?flipped=true"];
         }
 
-        return this.cache[asset].sprites[sprite];
+        return Assets.cache[asset].sprites[sprite];
     };
 
-    this.getSpriteData = async function(asset, sprite) {
-        const image = await this.getSprite(asset, sprite);
+    static async getSpriteData(asset, sprite) {
+        const image = await Assets.getSprite(asset, sprite);
 
-        if(this.cache[asset].spritesData[sprite] != undefined)
-            return this.cache[asset].spritesData[sprite];
+        if(Assets.cache[asset].spritesData[sprite] != undefined)
+            return Assets.cache[asset].spritesData[sprite];
 
-        this.cache[asset].spritesData[sprite] = image.getContext("2d").getImageData(0, 0, image.width, image.height);
+        Assets.cache[asset].spritesData[sprite] = image.getContext("2d").getImageData(0, 0, image.width, image.height);
 
-        return this.cache[asset].spritesData[sprite];
+        return Assets.cache[asset].spritesData[sprite];
     };
 
-    this.getSpriteColor = async function(asset, sprite, color) {
-        const image = await this.getSprite(asset, sprite);
+    static async getSpriteColor(asset, sprite, color) {
+        const image = await Assets.getSprite(asset, sprite);
 
-        if(this.cache[asset].sprites[sprite + "?color=" + color] != undefined)
-            return this.cache[asset].sprites[sprite + "?color=" + color];
+        if(Assets.cache[asset].sprites[sprite + "?color=" + color] != undefined)
+            return Assets.cache[asset].sprites[sprite + "?color=" + color];
 
         const $colorCanvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
         const colorContext = $colorCanvas[0].getContext("2d");
@@ -199,8 +199,8 @@ Client.assets = new function() {
         context.globalCompositeOperation = "source-in";
         context.drawImage($colorCanvas[0], 0, 0);
 
-        this.cache[asset].sprites[sprite + "?color=" + color] = $canvas[0];
+        Assets.cache[asset].sprites[sprite + "?color=" + color] = $canvas[0];
 
-        return this.cache[asset].sprites[sprite + "?color=" + color];
+        return Assets.cache[asset].sprites[sprite + "?color=" + color];
     };
 };

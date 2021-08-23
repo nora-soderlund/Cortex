@@ -48,10 +48,10 @@ Client.shop.categories.default = function(page) {
 
         const context = $icon[0].getContext("2d");
 
-        Client.assets.getSpritesheet("HabboShopIcons/icon_1", false).then(function(spritesheet) {
+        Assets.getSpritesheet("HabboShopIcons/icon_1", false).then(function(spritesheet) {
             context.drawImage(spritesheet, Math.floor((context.canvas.width - spritesheet.width) / 2), Math.floor((context.canvas.height - spritesheet.height) / 2));
 
-            Client.assets.getSpritesheet("HabboShopIcons/icon_" + page.icon, false).then(function(spritesheet) {
+            Assets.getSpritesheet("HabboShopIcons/icon_" + page.icon, false).then(function(spritesheet) {
                 context.clearRect(0, 0, context.canvas.width, context.canvas.height);
                 
                 context.drawImage(spritesheet, Math.floor((context.canvas.width - spritesheet.width) / 2), Math.floor((context.canvas.height - spritesheet.height) / 2));

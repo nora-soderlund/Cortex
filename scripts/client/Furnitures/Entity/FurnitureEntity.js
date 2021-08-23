@@ -37,7 +37,7 @@ Client.furnitures.entity = function(settings = {}) {
                     continue;
                 }
 
-                layer.sprite = await Client.assets.getSprite(this.library, layer.asset.name, (layer.asset.flipH == 1)?(true):(false));
+                layer.sprite = await Assets.getSprite(this.library, layer.asset.name, (layer.asset.flipH == 1)?(true):(false));
 
                 if(layer.sprite == null) {
                     delete layers[index];
@@ -45,7 +45,7 @@ Client.furnitures.entity = function(settings = {}) {
                     continue;
                 }
 
-                layer.spriteData = await Client.assets.getSpriteData(this.library, layer.asset.name + ((layer.asset.flipH == 1)?("?flipped=true"):("")));
+                layer.spriteData = await Assets.getSpriteData(this.library, layer.asset.name + ((layer.asset.flipH == 1)?("?flipped=true"):("")));
                 
                 layer.z = (layer.z == undefined)?(0):(parseInt(layer.z));
 
@@ -541,7 +541,7 @@ Client.furnitures.entity = function(settings = {}) {
 
         this.library = (this.settings.library != null)?(this.settings.library):("HabboFurnitures/" + this.furniture.line + "/" + this.furniture.id);
 
-        this.manifest = await Client.assets.getManifest(this.library);
+        this.manifest = await Assets.getManifest(this.library);
         
         this.visualization = this.getVisualization();
 

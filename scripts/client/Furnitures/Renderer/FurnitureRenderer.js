@@ -1,6 +1,6 @@
 Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
     this.renderer = async function() {
-        const loading = await Client.assets.getSpritesheet((settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
+        const loading = await Assets.getSpritesheet((settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
             const context = $canvas[0].getContext("2d");
     
             context.canvas.width = image.width;

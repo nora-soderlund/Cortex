@@ -88,12 +88,12 @@ Client.rooms.entity = function($parent) {
             this.frameStamp = timestamp;
         }
 
-        for(let index in this.entities)
+        for(let index = 0; index < this.entities.length; index++)
             this.entities[index].process(timestamp, this.frame);
 
         this.updateCanvas();
 
-        for(let index in this.events.beforeRender)
+        for(let index = 0; index < this.events.beforeRender.length; index++)
             this.events.beforeRender[index]();
         
         const context = this.$canvas[0].getContext("2d");
@@ -110,7 +110,7 @@ Client.rooms.entity = function($parent) {
 
         this.sprites = [];
 
-        for(let index in this.entities) {
+        for(let index = 0; index < this.entities.length; index++) {
             if(this.entities[index].enabled == false)
                 continue;
 
@@ -122,11 +122,11 @@ Client.rooms.entity = function($parent) {
         });
 
         const offset = [ this.center + this.offset[0], this.offset[1] ];
-
-        for(let index in this.sprites)
+        
+        for(let index = 0; index < this.sprites.length; index++)
             this.sprites[index].render(context, offset);
 
-        for(let index in this.events.render)
+        for(let index = 0; index < this.events.render.length; index++)
             this.events.render[index]();
 
         context.restore();

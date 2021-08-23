@@ -218,8 +218,8 @@ Client.figures = new function() {
 };
 
 Client.loader.addAsset(async function() {
-    Client.figures.data = await Client.assets.getManifest("HabboFigureData");
-    Client.figures.map = await Client.assets.getManifest("HabboFigureMap");
-    Client.figures.actions = await Client.assets.getManifest("HabboFigureActions");
-    Client.figures.effects = await Client.assets.getManifest("HabboFigureEffects");
+    Client.figures.data = await Assets.getManifest("HabboFigureData");
+    Client.figures.map = await Assets.getManifest("HabboFigureMap");
+    Client.figures.actions = await Assets.getManifest("HabboFigureActions");
+    Client.figures.effects = await Assets.getManifest("HabboFigureEffects");
 });

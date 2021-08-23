@@ -31,10 +31,10 @@ Client.rooms.interface.chat = new function() {
     };
 
     this.addMessage = async function(style, message, center = 0, color = undefined) {
-        let sprite = await Client.assets.getSprite("HabboRoomChat", "HabboRoomChat_" + style);
+        let sprite = await Assets.getSprite("HabboRoomChat", "HabboRoomChat_" + style);
         
         if(color != undefined)
-            sprite = await Client.assets.getSpriteColor("HabboRoomChat", "HabboRoomChat_" + style, color);
+            sprite = await Assets.getSpriteColor("HabboRoomChat", "HabboRoomChat_" + style, color);
 
         const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
         const context = $canvas[0].getContext("2d");
@@ -151,5 +151,5 @@ Client.rooms.interface.chat = new function() {
 };
 
 Client.loader.addAsset(async function() {
-    Client.rooms.interface.chat.assets = await Client.assets.getManifest("HabboRoomChat");
+    Client.rooms.interface.chat.assets = await Assets.getManifest("HabboRoomChat");
 });

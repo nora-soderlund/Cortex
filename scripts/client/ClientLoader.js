@@ -144,7 +144,7 @@ Client.loader.addStep(async function(finished) {
     Client.loader.setText("Preparing assets...");
 
     for(let index in Client.loader.data.assets)
-        await Client.assets.getManifest(Client.loader.data.assets[index]);
+        await Assets.getManifest(Client.loader.data.assets[index]);
 
     console.log("[%cLoader%c]%c Finished loading the pre-loaded assets!", "color: orange", "color: inherit", "color: lightblue");
 
@@ -190,7 +190,7 @@ Client.loader.addStep(async function(finished) {
 Client.loader.addStep(async function(finished) {
     Client.loader.setText("Executing scripts...");
 
-    Client.rooms.asset = await Client.assets.getManifest("HabboRoomContent");
+    Client.rooms.asset = await Assets.getManifest("HabboRoomContent");
 
     finished();
 });

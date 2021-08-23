@@ -66,15 +66,15 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
         let canvas, context, patterns = [];
 
-        canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture, visualization.color);
+        canvas = await Assets.getSpriteColor("HabboRoomContent", texture, visualization.color);
         context = canvas.getContext("2d");
         patterns[0] = context.createPattern(canvas, "repeat");
 
-        canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#666");
+        canvas = await Assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#666");
         context = canvas.getContext("2d");
         patterns[1] = context.createPattern(canvas, "repeat");
 
-        canvas = await Client.assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#BBB");
+        canvas = await Assets.getSpriteColor("HabboRoomContent", texture + "?color=" + visualization.color, "#BBB");
         context = canvas.getContext("2d");
         patterns[2] = context.createPattern(canvas, "repeat");
 
@@ -431,7 +431,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         if(this.settings.door.row != null && this.settings.door.column != null) {
             const mask = Client.rooms.map.getMask("door_64");
 
-            const sprite = await Client.assets.getSprite("HabboRoomContent", "HabboRoomContent_" + mask.asset.name);
+            const sprite = await Assets.getSprite("HabboRoomContent", "HabboRoomContent_" + mask.asset.name);
 
             context.globalCompositeOperation = "destination-out";
 
