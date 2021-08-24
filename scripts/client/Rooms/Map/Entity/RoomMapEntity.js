@@ -149,7 +149,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.setTransform(1, .5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
                     
-            context.fillStyle = patterns[1];
+            context.fillStyle = patterns[2];
 
             for(let index in rectangles) {
                 const rectangle = rectangles[index];
@@ -169,7 +169,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
 
             context.setTransform(1, -.5, 0, 1, this.settings.wall.thickness + this.rows * 32, this.depth * 16);
                     
-            context.fillStyle = patterns[2];
+            context.fillStyle = patterns[1];
 
             for(let index in rectangles) {
                 const rectangle = rectangles[index];
