@@ -91,9 +91,7 @@ class Dialog {
     };
 
     toggle() {
-        this.active = !this.active;
-
-        return (this.active)?(this.show()):(this.hide());
+        return (!this.active)?(this.show()):(this.hide());
     };
 
     destroy() {
