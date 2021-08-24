@@ -32,7 +32,7 @@ Client.menu.friends = new function() {
             const $canvas = $('<canvas class="menu-friend-figure-canvas" width="256" height="256"></canvas>').appendTo($figure);
             const context = $canvas[0].getContext("2d");
 
-            const entity = new Client.figures.entity(user.figure);
+            const entity = new FigureEntity(user.figure);
 
             entity.events.render.push(function(sprites) {
                 context.clearRect(0, 0, 256, 256);

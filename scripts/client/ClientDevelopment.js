@@ -82,7 +82,7 @@ Client.development = new function() {
 
             const figureRenderStart = performance.now();
 
-            const figure = new Client.figures.entity(string, {
+            const figure = new FigureEntity(string, {
                 direction: Math.round(Math.random() * 6)
             });
 

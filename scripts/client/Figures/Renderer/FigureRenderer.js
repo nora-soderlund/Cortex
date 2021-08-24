@@ -1,6 +1,6 @@
-Client.figures.renderer = function(figure, settings, $canvas, color = undefined) {
+Figures.renderer = function(figure, settings, $canvas, color = undefined) {
     this.renderer = async function() {
-        const entity = new Client.figures.entity(figure, settings);
+        const entity = new FigureEntity(figure, settings);
     
         entity.events.render.push(function(sprites) {
             const context = $canvas[0].getContext("2d");

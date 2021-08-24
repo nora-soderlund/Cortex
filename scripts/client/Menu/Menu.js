@@ -53,7 +53,7 @@ Client.loader.ready(function() {
 
     $user.html($canvas);
     
-    const entity = new Client.figures.entity(Client.user.figure);
+    const entity = new FigureEntity(Client.user.figure);
     
     SocketMessages.register("OnUserUpdate", function(data) {
         if(data.figure == undefined)

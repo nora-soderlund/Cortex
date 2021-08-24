@@ -1,34 +1,41 @@
-Client.figures.entity = function(figure, properties = {}) {
-    this.$canvas = $('<canvas width="256" height="256"></canvas>');
+class FigureEntity {
+    constructor(figure, properties = {}) {
+        this.setFigure(figure);
+        
+        for(let key in properties)
+            this[key] = properties[key];
+    };
+
+    $canvas = $('<canvas width="256" height="256"></canvas>');
     
-    this.events = {
+    events = {
         render: []
     };
 
-    this.direction = 2;
+    direction = 2;
 
-    this.effect = 0;
-    this.effectFrame = 0;
-    this.effectFrames = {};
-    this.effectDirection = 0;
-    this.effectRemovals = {};
+    effect = 0;
+    effectFrame = 0;
+    effectFrames = {};
+    effectDirection = 0;
+    effectRemovals = {};
     
-    this.actions = [];
-    this.actionTimestamp = performance.now();
+    actions = [];
+    actionTimestamp = performance.now();
 
-    this.frames = {};
+    frames = {};
 
-    this.data = {};
+    data = {};
 
-    this.getSprite = async function(library, type, id, direction, color) {
+    async getSprite(library, type, id, direction, color) {
         const manifest = await Assets.getManifest("HabboFigures/" + library);
 
         let frame = 0, sprite;
 
-        const partName = Client.figures.getPartName(type).toLowerCase();
+        const partName = Figures.getPartName(type).toLowerCase();
 
         if(this.effectFrames["bodypart"] != undefined && this.effectFrames["bodypart"][partName] != undefined) {
-            const action = await Client.figures.getAction(this.effectFrames["bodypart"][partName].action);
+            const action = await Figures.getAction(this.effectFrames["bodypart"][partName].action);
 
             sprite = "h_" + action.assetpartdefinition + "_" + type + "_" + id + "_" + direction +  "_" + frame;
         }
@@ -57,7 +64,7 @@ Client.figures.entity = function(figure, properties = {}) {
         }
 
         if(manifest.sprites[library + "_" + sprite] == undefined) {
-            if(Client.figures.logging.missingSprite)
+            if(Figures.logging.missingSprite)
                 console.warn("[FigureEntity]%c Unable to locate sprite " + sprite + " in library " + library + "!", "color: lightblue");
 
             return null;
@@ -70,7 +77,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
         const imageData = await Assets.getSpriteData("HabboFigures/" + library, library + "_" + sprite);
 
-        const spriteData = Client.figures.getSprite(manifest, sprite).split(',');
+        const spriteData = Figures.getSprite(manifest, sprite).split(',');
 
         return {
             image, imageData,
@@ -79,7 +86,7 @@ Client.figures.entity = function(figure, properties = {}) {
         };
     };
 
-    this.setFigure = function(figure) {
+    setFigure(figure) {
         this.parts = {};
         
         this.figure = figure.split('.');
@@ -110,13 +117,11 @@ Client.figures.entity = function(figure, properties = {}) {
         }
     };
 
-    this.setFigure(figure);
-
-    this.setAction = async function(id) {
+    async setAction(id) {
         if(this.actions.findIndex(x => x.id == id) != -1)
             return;
 
-        const action = await Client.figures.getAction(id);
+        const action = await Figures.getAction(id);
 
         this.actions.push(action);
 
@@ -125,7 +130,7 @@ Client.figures.entity = function(figure, properties = {}) {
         });
     };
 
-    this.setActions = async function(actions) {
+    async setActions(actions) {
         this.actions.length = 0;
 
         for(let key in actions)
@@ -134,7 +139,7 @@ Client.figures.entity = function(figure, properties = {}) {
         await this.setAction("Default");
     }
 
-    this.updateActions = function() {
+    updateActions() {
         if(this.actions.length == 0 && this.effect == 0)
             return false;
 
@@ -156,13 +161,13 @@ Client.figures.entity = function(figure, properties = {}) {
         for(let index in this.actions) {
             const id = this.actions[index].id;
 
-            if(Client.figures.actionFrames[id] == undefined)
+            if(Figures.actionFrames[id] == undefined)
                 continue;
 
             if(this.frames[id] != undefined) {
                 this.frames[id]++;
 
-                if(this.frames[id] > Client.figures.actionFrames[id])
+                if(this.frames[id] > Figures.actionFrames[id])
                     this.frames[id] = 0;
             }
             else
@@ -174,7 +179,7 @@ Client.figures.entity = function(figure, properties = {}) {
         return changed;
     };
 
-    this.removeAction = function(id) {
+    removeAction(id) {
         const index = this.actions.findIndex(x => x.id == id);
 
         if(index == -1)
@@ -183,7 +188,7 @@ Client.figures.entity = function(figure, properties = {}) {
         this.actions.splice(index, 1);
     };
 
-    this.setEffect = function(id) {
+    setEffect(id) {
         this.effect = id;
         this.effectFrame = 0;
         this.effectFrames = {};
@@ -191,14 +196,11 @@ Client.figures.entity = function(figure, properties = {}) {
         this.effectRemovals = {};
     };
 
-    this.process = async function() {
+    async process() {
         await this.setAction("Default");
-        
-        for(let key in properties)
-            this[key] = properties[key];
     };
 
-    this.render = async function() {
+    async render() {
         const context = this.$canvas[0].getContext("2d");
 
         context.save();
@@ -209,9 +211,9 @@ Client.figures.entity = function(figure, properties = {}) {
         
         const sprites = await this.renderEffect(direction);
 
-        let offset = Client.figures.map.offsets["std"], offsetName = "std";
+        let offset = Figures.map.offsets["std"], offsetName = "std";
 
-        let priorities = Client.figures.map.priorities["std"][direction];
+        let priorities = Figures.map.priorities["std"][direction];
 
         let prioritiesChanged = false, offsetChanged = false;
 
@@ -219,9 +221,9 @@ Client.figures.entity = function(figure, properties = {}) {
             const stance = this.actions[index].assetpartdefinition;
 
             if(prioritiesChanged == false) {
-                if(Client.figures.map.priorities[stance] != undefined) {
-                    if(Client.figures.map.priorities[stance][direction] != undefined) {
-                        priorities = Client.figures.map.priorities[stance][direction];
+                if(Figures.map.priorities[stance] != undefined) {
+                    if(Figures.map.priorities[stance][direction] != undefined) {
+                        priorities = Figures.map.priorities[stance][direction];
 
                         prioritiesChanged = true;
                     }
@@ -229,13 +231,13 @@ Client.figures.entity = function(figure, properties = {}) {
             }
 
             if(offsetChanged == false) {
-                if(Client.figures.map.offsets[stance] != undefined) {
+                if(Figures.map.offsets[stance] != undefined) {
                     offsetName = stance;
 
-                    if(Client.figures.map.offsets[stance].link != undefined)
-                        offset = Client.figures.map.offsets[Client.figures.map.offsets[stance].link];
+                    if(Figures.map.offsets[stance].link != undefined)
+                        offset = Figures.map.offsets[Figures.map.offsets[stance].link];
                     else
-                        offset = Client.figures.map.offsets[stance];
+                        offset = Figures.map.offsets[stance];
 
                     offsetChanged = true;
                 }
@@ -254,9 +256,9 @@ Client.figures.entity = function(figure, properties = {}) {
         }
 
         for(let set in this.parts) {
-            const setType = await Client.figures.getSetType(set);
+            const setType = await Figures.getSetType(set);
 
-            const setData = await Client.figures.getSetData(setType, this.parts[set].id);
+            const setData = await Figures.getSetData(setType, this.parts[set].id);
 
             let palette = undefined, color = undefined;
 
@@ -276,12 +278,12 @@ Client.figures.entity = function(figure, properties = {}) {
                 const colorIndex = parseInt(setData.part[index].colorindex) - 1;
 
                 if(this.parts[set].color != undefined && this.parts[set].color[colorIndex] != undefined) {
-                    palette = await Client.figures.getPalette(setType.paletteid);
+                    palette = await Figures.getPalette(setType.paletteid);
     
-                    color = Client.figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
+                    color = Figures.getPaletteColor(palette, this.parts[set].color[colorIndex])["#text"];
                 }
 
-                const priorityType = (Client.figures.parts[type] != undefined)?(Client.figures.parts[type]):(type);
+                const priorityType = (Figures.parts[type] != undefined)?(Figures.parts[type]):(type);
 
                 if(layers[priorityType] == undefined) {
                     console.warn("[FigureEntity]%c Unable to locate type " + type + " in current priority list!", "color: lightblue");
@@ -289,7 +291,7 @@ Client.figures.entity = function(figure, properties = {}) {
                     continue;
                 }
 
-                const library = await Client.figures.getLibrary(id, type);
+                const library = await Figures.getLibrary(id, type);
 
                 const sprite = await this.getSprite(library, type, id, direction, color, priorityType);
 
@@ -366,7 +368,7 @@ Client.figures.entity = function(figure, properties = {}) {
         //Client.utils.warn("FigureEntity", "After math render processes took ~" + (Math.round((performance.now() - timestamp) * 100) / 100) + "ms to execute!");
     };
 
-    this.renderEffect = async function(direction) {
+    async renderEffect(direction) {
         const sprites = [];
 
         this.effectFrames = {};
@@ -377,7 +379,7 @@ Client.figures.entity = function(figure, properties = {}) {
             
         const flipped = (this.direction > 3 && this.direction < 7);
 
-        const map = Client.figures.getEffect(this.effect);
+        const map = Figures.getEffect(this.effect);
     
         const manifest = await Assets.getManifest("HabboFigures/" + map.lib);
 
@@ -454,7 +456,7 @@ Client.figures.entity = function(figure, properties = {}) {
                 if(directionData == null)
                     continue;
 
-                let asset = Client.figures.getEffectAsset(manifest, "h_" + manifest.animation.animation.sprite[index].member + "_" + _direction + "_" + frame);
+                let asset = Figures.getEffectAsset(manifest, "h_" + manifest.animation.animation.sprite[index].member + "_" + _direction + "_" + frame);
 
                 if(asset != null) {
                     left += asset.offset.left * -1;
@@ -469,7 +471,7 @@ Client.figures.entity = function(figure, properties = {}) {
 
                     image: sprite,
                     left: left + 96, top: top + 170,
-                    composite: Client.figures.getEffectComposite(manifest.animation.animation.sprite[index].ink),
+                    composite: Figures.getEffectComposite(manifest.animation.animation.sprite[index].ink),
                     index: (directionData.dz != undefined)?(parseInt(directionData.dz)):(0)
                 });
             }
@@ -515,7 +517,7 @@ Client.figures.entity = function(figure, properties = {}) {
                 if(sprite == null)
                     continue;
 
-                const asset = Client.figures.getEffectAsset(manifest, name);
+                const asset = Figures.getEffectAsset(manifest, name);
 
                 if(asset != null) {
                     left += asset.offset.left * -1;
@@ -529,7 +531,7 @@ Client.figures.entity = function(figure, properties = {}) {
                     base,
                     image: sprite,
                     left: left + 96, top: top + 170,
-                    index: Client.figures.getEffectIndex(add.align)
+                    index: Figures.getEffectIndex(add.align)
                 });
             }
         }

@@ -1,15 +1,15 @@
-Client.figures = new function() {
-    this.logging = {
+class Figures {
+    static logging = {
         missingSprite: false
     };
 
-    this.parts = {
+    static parts = {
         "cc": "ch",
         "lc": "ls",
         "rc": "rs"
     };
 
-    this.getPartName = function(part) {
+    static getPartName(part) {
 
         // "bd","sh","lg","ch","wa","ca","hd","fc","ey","hr","hrb","fa","ea","ha","he"
 
@@ -32,15 +32,15 @@ Client.figures = new function() {
         return "Body";
     };
 
-    this.actionFrames = {
+    static actionFrames = {
         "Move": 4,
         "Talk": 2,
 
         "Wave": 1
     };
 
-    this.getLibrary = async function(id, type) {
-        const libraries = this.map.map.lib;
+    static async getLibrary(id, type) {
+        const libraries = Figures.map.map.lib;
 
         let index = 0;
 
@@ -61,8 +61,8 @@ Client.figures = new function() {
         return libraries[index].id;
     };
 
-    this.getSetType = async function(type) {
-        const sets = this.data.figuredata.sets.settype;
+    static async getSetType(type) {
+        const sets = Figures.data.figuredata.sets.settype;
 
         let index = 0;
 
@@ -76,7 +76,7 @@ Client.figures = new function() {
         return sets[index];
     };
 
-    this.getSetData = async function(set, id) {
+    static async getSetData(set, id) {
         let index = 0;
 
         for(index in set.set) {
@@ -89,7 +89,7 @@ Client.figures = new function() {
         return set.set[index];
     };
 
-    this.getSprite = function(asset, sprite) {
+    static getSprite(asset, sprite) {
         const assets = asset.manifest.manifest.library.assets.asset;
 
         let index = 0;
@@ -104,8 +104,8 @@ Client.figures = new function() {
         return assets[index].param.value;
     }
 
-    this.getPalette = async function(palette) {
-        const palettes = this.data.figuredata.colors.palette;
+    static async getPalette(palette) {
+        const palettes = Figures.data.figuredata.colors.palette;
 
         let index = 0;
 
@@ -119,7 +119,7 @@ Client.figures = new function() {
         return palettes[index].color;
     };
 
-    this.getPaletteColor = function(palette, id) {
+    static getPaletteColor(palette, id) {
         let index = 0;
 
         for(index in palette) {
@@ -132,31 +132,31 @@ Client.figures = new function() {
         return palette[index];
     };
 
-    this.getAction = async function(id) {
+    static async getAction(id) {
         let index = 0;
 
-        for(index in this.actions.actions.action) {
-            if(this.actions.actions.action[index].id != id)
+        for(index in Figures.actions.actions.action) {
+            if(Figures.actions.actions.action[index].id != id)
                 continue;
 
             break;
         }
 
-        return this.actions.actions.action[index];
+        return Figures.actions.actions.action[index];
     };
 
-    this.getEffect = function(id) {
-        for(let index in this.effects.map.effect) {
-            if(this.effects.map.effect[index].id != id)
+    static getEffect(id) {
+        for(let index in Figures.effects.map.effect) {
+            if(Figures.effects.map.effect[index].id != id)
                 continue;
 
-            return this.effects.map.effect[index];
+            return Figures.effects.map.effect[index];
         }
 
         return null;
     };
 
-    this.getEffectAsset = function(manifest, sprite) {
+    static getEffectAsset(manifest, sprite) {
         let result = null;
 
         const assets = manifest.manifest.manifest.library.assets.asset;
@@ -184,7 +184,7 @@ Client.figures = new function() {
                 if(aliases[index].name != sprite)
                     continue;
 
-                const alias = this.getEffectAsset(manifest, aliases[index].link);
+                const alias = Figures.getEffectAsset(manifest, aliases[index].link);
 
                 for(let key in alias) {
                     if(result[key] == undefined)
@@ -198,7 +198,7 @@ Client.figures = new function() {
         return result;
     };
 
-    this.getEffectComposite = function(ink) {
+    static getEffectComposite(ink) {
         switch(ink) {
             case "33": return "lighter";
         }
@@ -206,7 +206,7 @@ Client.figures = new function() {
         return "source-over";
     };
 
-    this.getEffectIndex = function(align) {
+    static getEffectIndex(align) {
         switch(align) {
             case "behind": return -100;
             case "bottom": return -100;
@@ -218,8 +218,8 @@ Client.figures = new function() {
 };
 
 Client.loader.addAsset(async function() {
-    Client.figures.data = await Assets.getManifest("HabboFigureData");
-    Client.figures.map = await Assets.getManifest("HabboFigureMap");
-    Client.figures.actions = await Assets.getManifest("HabboFigureActions");
-    Client.figures.effects = await Assets.getManifest("HabboFigureEffects");
+    Figures.data = await Assets.getManifest("HabboFigureData");
+    Figures.map = await Assets.getManifest("HabboFigureMap");
+    Figures.actions = await Assets.getManifest("HabboFigureActions");
+    Figures.effects = await Assets.getManifest("HabboFigureEffects");
 });
