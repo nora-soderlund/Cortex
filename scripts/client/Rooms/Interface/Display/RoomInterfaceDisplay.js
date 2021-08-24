@@ -34,7 +34,7 @@ Client.rooms.interface.display = new function() {
 
         const $canvas = $('<canvas width="256" height="256"></canvas>').appendTo($figure);
 
-        new Figures.renderer(entity.data.figure, { direction: 4 }, $canvas);
+        new FigureRenderer(entity.data.figure, { direction: 4 }, $canvas);
 
         const $badges = $('<div class="room-interface-display-badges"></div>').appendTo($grid);
 

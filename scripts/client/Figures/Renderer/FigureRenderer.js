@@ -1,5 +1,5 @@
-Figures.renderer = function(figure, settings, $canvas, color = undefined) {
-    this.renderer = async function() {
+class FigureRenderer {
+    constructor(figure, settings, $canvas, color = undefined) {
         const entity = new FigureEntity(figure, settings);
     
         entity.events.render.push(function(sprites) {
@@ -22,6 +22,4 @@ Figures.renderer = function(figure, settings, $canvas, color = undefined) {
             entity.render();
         });
     };
-
-    this.renderer();
 };
