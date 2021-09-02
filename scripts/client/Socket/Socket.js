@@ -4,7 +4,7 @@ class Socket {
     static sent = 0;
     static received = 0;
 
-    static open = function(url = "ws://" + Client.loader.settings.socket.address + ":" + Client.loader.settings.socket.port + "/" + key) {
+    static open = function(url = "ws" + ((Client.loader.settings.socket.ssl)?("s"):("")) + "://" + Client.loader.settings.socket.address + ":" + Client.loader.settings.socket.port + "/" + key) {
         return new Promise(function(resolve, failure) {
             console.log("[%cSocket%c]%c Connecting to the server at " + url + "...", "color: orange", "color: inherit", "color: lightblue");
 
