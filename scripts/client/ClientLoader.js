@@ -88,7 +88,7 @@ Client.loader.addStep(function(finished) {
     $.getJSON("/hotel/scripts/Client.json", function(data) {
         Client.loader.data = data;
         
-        $.getJSON("index.json", function(data) {
+        $.getJSON("/hotel/index.json", function(data) {
             Client.loader.settings = data;
             
             finished();
