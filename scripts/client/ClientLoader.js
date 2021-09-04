@@ -74,7 +74,7 @@ Client.loader = new function() {
 
         console.log("[%cLoader%c]%c Downloading and running " + name + "...", "color: orange", "color: inherit", "color: lightblue");
 
-        $.getScript("/hotel/scripts/client/" + data[0], function() {
+        $.getScript(Client.loader.settings.cdn + "scripts/client/" + data[0], function() {
             data.shift();
 
             finished();
@@ -85,11 +85,11 @@ Client.loader = new function() {
 Client.loader.addStep(function(finished) {
     Client.loader.setText("Loading configuration...");
 
-    $.getJSON("/hotel/scripts/Client.json", function(data) {
-        Client.loader.data = data;
+    $.getJSON("/client.json", function(data) {
+        Client.loader.settings = data;
         
-        $.getJSON("/hotel/index.json", function(data) {
-            Client.loader.settings = data;
+        $.getJSON(Client.loader.settings.cdn + "scripts/Client.json", function(data) {
+            Client.loader.data = data;
             
             finished();
         });
