@@ -17,7 +17,7 @@ Client.inventory = new function() {
     entity.pages = {};
 
     entity.events.create.push(async function() {
-        entity.tabs = new Client.dialogs.tabs("100%");
+        entity.tabs = new DialogTabs("100%");
 
         entity.tabs.$element.addClass("inventory-tabs");
 

@@ -1,5 +1,5 @@
 SocketMessages.register("OnAchievementUnlocked", function(data) {
-    const entity = new Client.dialogs.display({
+    const entity = new DisplayDialog({
         title: "Achievement Unlocked"
     });
     

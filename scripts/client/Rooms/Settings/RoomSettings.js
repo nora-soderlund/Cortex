@@ -17,7 +17,7 @@ Client.rooms.settings = new function() {
     entity.events.create.push(function() {
         entity.$content.addClass("room-creation");
 
-        const tabs = new Client.dialogs.tabs("100%");
+        const tabs = new DialogTabs("100%");
 
         tabs.$element.addClass("room-creation-tabs");
 

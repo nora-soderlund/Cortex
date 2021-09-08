@@ -1,17 +1,19 @@
-Client.dialogs.tabs = function(height) {
-    this.$element = $(
-        '<div class="dialog-tabs">' +
-            '<div class="dialog-tabs-container" style="height: ' + height + 'px"></div>' +
-        '</div>'
-    );
+class DialogTabs {
+    constructor(height) {
+        this.$element = $(
+            '<div class="dialog-tabs">' +
+                '<div class="dialog-tabs-container" style="height: ' + height + 'px"></div>' +
+            '</div>'
+        );
+    
+        this.$header = $('<div class="dialog-tabs-header"></div>').prependTo(this.$element);
+    
+        this.$content = $('<div class="dialog-tabs-content"></div>').appendTo(this.$element.find(".dialog-tabs-container"));
+    
+        this.buttons = {};
+    };
 
-    this.$header = $('<div class="dialog-tabs-header"></div>').prependTo(this.$element);
-
-    this.$content = $('<div class="dialog-tabs-content"></div>').appendTo(this.$element.find(".dialog-tabs-container"));
-
-    this.buttons = {};
-
-    this.add = function(identifier, text, callback = undefined, disabled = false) {
+    add(identifier, text, callback = undefined, disabled = false) {
         const $element = $('<div class="dialog-tabs-button">' + text + '</div>').appendTo(this.$header);
 
         if(disabled) {
@@ -30,13 +32,13 @@ Client.dialogs.tabs = function(height) {
         });
     };
 
-    this.hide = function() {
+    hide() {
         this.$header.find(".dialog-tabs-button[active]").removeAttr("active");
         
         this.$content.html("");
     };
 
-    this.show = async function(identifier = this.selected) {
+    async show(identifier = this.selected) {
         if(identifier == undefined)
             return;
             
@@ -55,9 +57,9 @@ Client.dialogs.tabs = function(height) {
         this.selected = identifier;
     };
 
-    this.callbacks = [];
+    callbacks = [];
 
-    this.click = function(callback) {
+    click(callback) {
         this.callbacks.push(callback);
     };
 };

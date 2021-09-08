@@ -87,11 +87,11 @@ Client.shop = new function() {
         if(!entity.pages)
             entity.pages = await SocketMessages.sendCall({ OnShopUpdate: null }, "OnShopUpdate");
 
-        entity.header = new Client.dialogs.header({ height: 95 });
+        entity.header = new DialogHeader({ height: 95 });
 
         entity.header.$element.appendTo(entity.$content);
 
-        entity.tabs = new Client.dialogs.tabs(500);
+        entity.tabs = new DialogTabs(500);
 
         entity.$icon = $('<canvas width="64" height="64"></canvas>');
 

@@ -18,7 +18,7 @@ class Dialog {
 
         this.resizable = settings.resizable || false;
 
-        Client.dialogs.add(this);
+        Dialogs.add(this);
     };
     
     create() {
@@ -49,8 +49,8 @@ class Dialog {
         }).css("position", "absolute").on("mousedown", event => {
             this.timestamp = performance.now();
 
-            Client.dialogs.sort();
-        }).on("click", ".dialog-default-header-close", event => this.destroy()).appendTo(Client.dialogs.$element);
+            Dialogs.sort();
+        }).on("click", ".dialog-default-header-close", event => this.destroy()).appendTo(Dialogs.$element);
 
         this.$title = this.$element.find(".dialog-default-header-title");
 

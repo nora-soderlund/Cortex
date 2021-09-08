@@ -16,11 +16,11 @@ Client.rooms.navigator = new function() {
     });
 
     entity.events.create.push(function() {
-        entity.header = new Client.dialogs.header();
+        entity.header = new DialogHeader();
 
         entity.header.$element.appendTo(entity.$content);
 
-        entity.tabs = new Client.dialogs.tabs(400);
+        entity.tabs = new DialogTabs(400);
 
         entity.tabs.add("public", "Public", function($element) {
             entity.header.setTitle("Public Lounges!");

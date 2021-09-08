@@ -75,7 +75,7 @@ Client.rooms.creation = new function() {
         for(let index in categories)
             list.push({ text: categories[index].name, value: categories[index].id });
 
-        const selection = new Client.dialogs.selection("Select a room category...", list);
+        const selection = new DialogSelection("Select a room category...", list);
 
         $category.append(selection.$element);
 
@@ -136,7 +136,7 @@ Client.rooms.creation = new function() {
         
         const models = await SocketMessages.sendCall({ OnRoomModelsUpdate: null }, "OnRoomModelsUpdate");
         
-        const tabs = new Client.dialogs.tabs(231);
+        const tabs = new DialogTabs(231);
 
         tabs.add("default", "Default Maps", function($element) {
             if(Client.rooms.creation.editor != undefined) {
