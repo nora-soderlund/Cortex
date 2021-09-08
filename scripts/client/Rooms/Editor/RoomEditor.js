@@ -49,7 +49,7 @@ Client.rooms.editor = function(settings, change) {
             context.strokeRect(settings.door.column * 16, settings.door.row * 16, 15.5, 15.5);
         };
         
-        const canvas = Client.canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
+        const canvas = Canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
 
         this.canvas = canvas;
 

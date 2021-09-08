@@ -1,7 +1,7 @@
-Client.canvas = new function() {
-    this.list = [];
+class Canvas {
+    static list = [];
 
-    this.addCanvas = function(canvas, settings) {
+    static addCanvas(canvas, settings) {
         const properties = {
             canvas,
 
@@ -60,46 +60,46 @@ Client.canvas = new function() {
             properties.enabled = false;
         };
 
-        this.list.push(properties);
+        Canvas.list.push(properties);
 
         return properties;
     };
 
-    this.render = function() {
+    static render() {
         const timestamp = performance.now();
 
-        for(let index in this.list) {
-            if(this.list[index].enabled == false)
+        for(let index in Canvas.list) {
+            if(Canvas.list[index].enabled == false)
                 continue;
 
-            if(this.list[index].render == undefined)
+            if(Canvas.list[index].render == undefined)
                 continue;
 
-            if((this.list[index].draggableEnabled == false && this.list[index].frameRate != 0) || (this.list[index].draggableEnabled == true && this.list[index].draggableRate != 0)) {
-                const delta = timestamp - this.list[index].frameStamp;
+            if((Canvas.list[index].draggableEnabled == false && Canvas.list[index].frameRate != 0) || (Canvas.list[index].draggableEnabled == true && Canvas.list[index].draggableRate != 0)) {
+                const delta = timestamp - Canvas.list[index].frameStamp;
 
-                const interval = (1000 / this.list[index].frameRate);
+                const interval = (1000 / Canvas.list[index].frameRate);
 
                 if(delta < interval)
                     continue;
 
-                this.list[index].frameStamp = timestamp - (delta % interval);
+                Canvas.list[index].frameStamp = timestamp - (delta % interval);
             }
 
-            this.list[index].frame++;
+            Canvas.list[index].frame++;
 
-            if(this.list[index].frame == this.list[index].frameRate + 1)
-                this.list[index].frame = 1;
+            if(Canvas.list[index].frame == Canvas.list[index].frameRate + 1)
+                Canvas.list[index].frame = 1;
 
-            for(let log in this.list[index].frameLogs)
-                if(timestamp - this.list[index].frameLogs[log] >= 1000)
-                    this.list[index].frameLogs.splice(log, 1);
+            for(let log in Canvas.list[index].frameLogs)
+                if(timestamp - Canvas.list[index].frameLogs[log] >= 1000)
+                    Canvas.list[index].frameLogs.splice(log, 1);
     
-            this.list[index].frameLogs.push(timestamp);
+            Canvas.list[index].frameLogs.push(timestamp);
 
-            this.list[index].render(this.list[index]);
+            Canvas.list[index].render(Canvas.list[index]);
             
-            const context = this.list[index].canvas.getContext("2d");
+            const context = Canvas.list[index].canvas.getContext("2d");
 
             context.resetTransform();
 
@@ -107,16 +107,15 @@ Client.canvas = new function() {
             context.fillStyle = "rgba(255, 255, 255, .5)";
             context.textAlign = "right";
 
-            context.fillText(this.list[index].frameLogs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
+            context.fillText(Canvas.list[index].frameLogs.length + " FPS", context.canvas.width - 12, context.canvas.height - 12);
         }
 
         window.requestAnimationFrame(function() {
-            Client.canvas.render();
+            Canvas.render();
         });
     };
-    
-
-    window.requestAnimationFrame(function() {
-        Client.canvas.render();
-    });
 };
+    
+window.requestAnimationFrame(function() {
+    Canvas.render();
+});
