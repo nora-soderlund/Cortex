@@ -1,19 +1,18 @@
 class Loader {
-    static $element = $("#client-loader");
+    static element = document.getElementById("client-loader");
 
-    static $text = Loader.$element.find("#client-loader-text");
-
-    static $scripts = $('<scripts id="client-scripts"></scripts>').appendTo(Loader.$element);
+    static text = document.getElementById("client-loader-text");
 
     static assets = [];
     static readySteps = [];
 
     static show() {
-        Loader.$element.fadeIn();
+        Loader.element.classList.remove("animation-fade-out");
+        Loader.element.classList.add("animation-fade-in");
     };
 
     static setText(text) {
-        Loader.$text.html(text);
+        Loader.text.innerHTML = text;
     };
 
     static setError(text) {
@@ -21,7 +20,8 @@ class Loader {
     };
 
     static hide() {
-        Loader.$element.fadeOut(500);
+        Loader.element.classList.remove("animation-fade-in");
+        Loader.element.classList.add("animation-fade-out");
     };
 
     static steps = [];
@@ -74,28 +74,27 @@ class Loader {
 
         console.log("[%cLoader%c]%c Downloading and running " + name + "...", "color: orange", "color: inherit", "color: lightblue");
 
-        $.getScript(Loader.settings.cdn + "scripts/client/" + data[0], function() {
+        const element = document.createElement("script");
+        
+        element.onload = () => {
             data.shift();
 
             finished();
-        });
+        };
+
+        element.src = `${Loader.settings.cdn}scripts/client/${data[0]}`;
+
+        document.appendChild(element);
     };
 };
 
-Loader.addStep(function(finished) {
+Loader.addStep(async function(finished) {
     Loader.setText("Loading configuration...");
 
-    $.getJSON("/client.json", function(data) {
-        Loader.settings = data;
-        
-        $.getJSON(Loader.settings.cdn + "scripts/Client.json", function(data) {
-            Loader.data = data;
+    Loader.settings = await (await fetch("/client.json")).json();
+    Loader.data = await (await fetch(`${Loader.settings.cdn}scripts/Client.json`)).json();
 
-            //Loader.data.scripts = [ "Client.js" ];
-            
-            finished();
-        });
-    });
+    finished();
 });
 
 Loader.addStep(function(finished) {
@@ -106,11 +105,7 @@ Loader.addStep(function(finished) {
     
     Loader.setText("Downloading scripts...");
     
-    $.holdReady(true);
-    
     Loader.loadScripts(Loader.data.scripts, function() {
-        $.holdReady(false);
-    
         console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
 
         finished();
@@ -125,9 +120,14 @@ Loader.addStep(function(finished) {
     
     Loader.setText("Downloading fonts...");
 
-    const $canvas = $('<canvas width="100" height="100"></canvas>').appendTo(Client.$element);
+    const canvas = document.createElement("canvas");
+    
+    canvas.width = 100;
+    canvas.height = 100;
 
-    const context = $canvas[0].getContext("2d");
+    Client.element.appendChild(canvas);
+
+    const context = canvas.getContext("2d");
     
     for(let index in Loader.data.fonts) {
         context.font = "12px " + Loader.data.fonts[index] + "";
@@ -135,7 +135,7 @@ Loader.addStep(function(finished) {
         context.fillText(".", 20, 20);
     }
 
-    $canvas.remove();
+    canvas.remove();
     
     finished();
 });
@@ -211,14 +211,12 @@ Loader.addStep(async function(finished) {
 });
 
 if(theme != null) {
-    Loader.addStep(function(finished) {
+    Loader.addStep(async function(finished) {
         Loader.setText("Loading theme configuration...");
 
-        $.getJSON("/hotel/styles/themes/" + theme + "/" + theme + ".json", function(data) {
-            Client.theme.data = data;
+        Client.theme.data = await (await fetch(`/hotel/styles/themes/${theme}/${theme}.json`)).json();
 
-            finished();
-        });
+        finished();
     });
 }
 

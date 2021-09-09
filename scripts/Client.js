@@ -1,3 +1,3 @@
 const Client = new function() {
-    this.$element = $("#client");
+    this.element = document.getElementById("client");
 };
