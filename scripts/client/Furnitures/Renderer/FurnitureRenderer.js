@@ -1,5 +1,9 @@
-Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
-    this.renderer = async function() {
+class FurnitureRenderer {
+    constructor(settings, $canvas, color = undefined) {
+        this.renderer();
+    };
+
+    async renderer() {
         const loading = await Assets.getSpritesheet((settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
             const context = $canvas[0].getContext("2d");
     
@@ -9,7 +13,7 @@ Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
             context.drawImage(image, 0, 0);
         });
 
-        const entity = new Client.furnitures.entity(settings);
+        const entity = new FurnitureEntity(settings);
     
         entity.events.render.push(function(sprites) {
             const context = $canvas[0].getContext("2d");
@@ -65,6 +69,4 @@ Client.furnitures.renderer = function(settings, $canvas, color = undefined) {
             }
         });
     };
-
-    this.renderer();
 };

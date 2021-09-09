@@ -83,7 +83,7 @@ Client.inventory.pages.furnitures = function($element) {
         
         const $canvas = $element.find(".inventory-furniture-display-canvas");
 
-        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas);
+        new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas);
     };
 
     function setFurniture(id) {
@@ -117,8 +117,8 @@ Client.inventory.pages.furnitures = function($element) {
         else
             Client.inventory.$furnitures[id].$quantity.show();
 
-        Client.furnitures.get(id).then(function(furniture) {
-            const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, Client.inventory.$furnitures[id].$canvas);
+        Furnitures.get(id).then(function(furniture) {
+            const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, Client.inventory.$furnitures[id].$canvas);
         
             Client.inventory.$furnitures[id].$element.click(function() {
                 Client.inventory.$furnitures[id].$element.parent().find(".active").removeClass("active");

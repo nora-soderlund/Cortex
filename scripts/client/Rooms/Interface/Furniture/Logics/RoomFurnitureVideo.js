@@ -122,7 +122,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
 
         const furniture = Client.rooms.interface.furnitures[entity.data.id];
 
-        Client.furnitures.get(furniture.data.furniture).then(function(info) {
+        Furnitures.get(furniture.data.furniture).then(function(info) {
             //entity.setTitle(info.title);
         });
 

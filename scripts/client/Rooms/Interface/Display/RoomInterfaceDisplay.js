@@ -63,7 +63,7 @@ Client.rooms.interface.display = new function() {
         this.$content.html("");
         this.$buttons.html("");
 
-        const furniture = await Client.furnitures.get(entity.furniture.settings.id);
+        const furniture = await Furnitures.get(entity.furniture.settings.id);
 
         const $header = $('<div class="room-interface-display-title">' + furniture.title + '</div>').appendTo(this.$content);
 
@@ -77,7 +77,7 @@ Client.rooms.interface.display = new function() {
             $('<div class="room-interface-display-description">' + furniture.description + '</div>').appendTo(this.$content);
         }
 
-        new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
+        new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
         this.addButton('Edit <i class="sprite-beta"></i>', function() {
             Client.development.furni.set(entity);

@@ -9,7 +9,7 @@ Client.rooms.items.furniture = function(parent, id, direction) {
         entity.sprites.push(sprite);
     });
     
-    entity.furniture = new Client.furnitures.entity({ id, direction });
+    entity.furniture = new FurnitureEntity({ id, direction });
 
     entity.render = async function() {
         entity.furniture.events.render.push(function(sprites) {

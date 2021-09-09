@@ -4,7 +4,7 @@ Client.rooms.interface.furniture.place = new function() {
     this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
 
     this.start = async function(furniture, finished, direction = null) {
-        furniture = await Client.furnitures.get(furniture);
+        furniture = await Furnitures.get(furniture);
         
         if(finished == undefined)
             console.trace("finished is missing");
@@ -27,7 +27,7 @@ Client.rooms.interface.furniture.place = new function() {
 
         this.entity.alpha = 0.5;
 
-        const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, this.$icon);
+        const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, this.$icon);
 
         await this.entity.render();
 

@@ -29,14 +29,14 @@ Client.shop.types.default = async function(page) {
 
         const $canvas = $('<canvas></canvas>').appendTo($icon);
 
-        const renderer = new Client.furnitures.renderer({ id: furniture.id, size: 1 }, $canvas);
+        const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, $canvas);
 
         $item.click(async function() {
             $display.html("");
 
             const $canvas = $('<canvas class="shop-furnitures-display-canvas"></canvas>').appendTo($display);
 
-            new Client.furnitures.renderer({ id: furniture.id, direction: 4 }, $canvas, "#e9e9e1");
+            new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas, "#e9e9e1");
 
             const $information = $(
                 '<div class="shop-furnitures-display-info">' + 
