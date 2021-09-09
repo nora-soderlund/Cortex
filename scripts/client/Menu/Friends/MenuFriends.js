@@ -6,7 +6,7 @@ Client.menu.friends = new function() {
     this.add = function(id) {
         const $element = $('<div class="menu-friend"></div>').appendTo(this.$element);
 
-        Client.game.getUser(id).then(async function(user) {
+        Game.getUser(id).then(async function(user) {
             const friend = Client.user.friends[id];
 
             const $content = $('<div class="menu-friend-content"></div>').appendTo($element);

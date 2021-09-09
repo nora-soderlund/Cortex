@@ -67,7 +67,7 @@ Client.rooms.navigator.list = function(settings) {
             '</div>'
         ).appendTo(this.$table);
 
-        Client.game.getUser(room.user).then(function(user) {
+        Game.getUser(room.user).then(function(user) {
             $('<div class="room-navigator-list-owner">By ' + user.name + '</div>').appendTo($element);
         });
 

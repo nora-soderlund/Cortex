@@ -1,29 +1,29 @@
-Client.game = new function() {
-    this.users = {};
+class Game {
+    static users = {};
 
-    this.promises = {
+    static promises = {
         users: {}
     };
 
-    this.getUser = async function(id) {
-        if(this.users[id] != undefined)
-            return this.users[id];
+    static async getUser(id) {
+        if(Game.users[id] != undefined)
+            return Game.users[id];
             
-        if(this.promises.users[id] != undefined) {
+        if(Game.promises.users[id] != undefined) {
             return new Promise(function(resolve) {
-                Client.game.promises.users[id].push(function(data) {
+                Game.promises.users[id].push(function(data) {
                     resolve(data);
                 });
             });
         }
 
-        this.promises.users[id] = [];
+        Game.promises.users[id] = [];
 
-        this.users[id] = await SocketMessages.sendCall({ OnUserRequest: id }, "OnUserRequest", x => x.id == id);
+        Game.users[id] = await SocketMessages.sendCall({ OnUserRequest: id }, "OnUserRequest", x => x.id == id);
 
-        for(let index in this.promises.users[id])
-            this.promises.users[id][index](this.users[id]);
+        for(let index in Game.promises.users[id])
+            Game.promises.users[id][index](Game.users[id]);
 
-        return this.users[id];
+        return Game.users[id];
     };
 };

@@ -30,7 +30,7 @@ Client.rooms.interface.information = new function() {
         entity.$owner.text("");
         entity.$description.text((Client.rooms.interface.data.description == undefined)?(""):(Client.rooms.interface.data.description));
 
-        Client.game.getUser(Client.rooms.interface.data.user).then(function(user) {
+        Game.getUser(Client.rooms.interface.data.user).then(function(user) {
             entity.$owner.text("By " + user.name);
         });
     });
