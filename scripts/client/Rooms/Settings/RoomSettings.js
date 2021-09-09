@@ -115,7 +115,7 @@ Client.rooms.settings = new function() {
             entity.editor = new Client.rooms.editor(data, async function(map, extra) {
                 //entity.settings.map.map = map;
 
-                //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
+                //const $canvas = new RoomCreationMap(map.split('|'), entity.settings.map.door);
 
                 //$settings.html($canvas);
 

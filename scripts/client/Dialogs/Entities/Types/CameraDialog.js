@@ -2,8 +2,10 @@ class CameraDialog extends Dialog {
     create() {
         super.create();
 
-        this.$element.addClass("dialog-camera");
+        this.element.classList.add("dialog-camera");
 
-        this.$grid = $('<div class="dialog-camera-grid"></div>').appendTo(this.$content);
+        this.grid = document.createElement("div");
+        this.grid.className = "dialog-camera-grid";
+        this.content.appendChild(this.grid);
     };
 };

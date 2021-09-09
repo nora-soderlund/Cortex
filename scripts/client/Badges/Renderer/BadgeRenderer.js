@@ -1,13 +1,18 @@
 class BadgeRenderer {
     constructor(id) {
-        const $element = $('<div class="badge"></div>');
+        const element = document.createElement("div");
+        element.classList.add("badge")
 
-        const $canvas = $('<img class="badge-image" src="assets/HabboBadges/' + id + '.gif">').appendTo($element);
+        const image = document.createElement("img");
+        image.classList.add("badge-image");
+        image.src = `assets/HabboBadges/${id}.gif`;
+        
+        element.appendChild(image);
 
         Badges.get(id).then(function() {
 
         });
 
-        return $element;
+        return element;
     };
 };

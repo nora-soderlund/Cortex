@@ -78,7 +78,7 @@ Client.rooms.navigator = new function() {
         }).appendTo(entity.tabs.$header);
         
         entity.$create = $('<div class="room-navigator-tab-icon room-navigator-tab-create"></div>').on("click", function() {
-            Client.rooms.creation.toggle();
+            RoomCreation.toggle();
         }).appendTo(entity.tabs.$header);
 
         entity.tabs.show("my_rooms");

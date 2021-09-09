@@ -1,38 +1,42 @@
 class DialogSelection {
     constructor(placeholder, options = []) {
-        this.$element = $(
-            '<div class="dialog-selection">' +
-                '<div class="dialog-selection-placeholder">' + placeholder + '</div>' +
+        this.element = document.createElement("div");
+        this.element.classList.add("dialog-selection");
+        this.element.innerHTML = `
+            <div class="dialog-selection-placeholder">${placeholder}</div>
                 
-                '<div class="dialog-selection-options"></div>' +
-            '</div>'
-        );
-    
+            <div class="dialog-selection-options"></div>
+        `;
 
-        this.$placeholder = this.$element.find(".dialog-selection-placeholder");
+        this.placeholder = this.element.querySelector(".dialog-selection-placeholder");
     
-        const $options = this.$element.find(".dialog-selection-options");
+        const options = this.element.querySelector(".dialog-selection-options");
     
-        this.$placeholder.on("click", function() {
-            $options.toggle();
+        this.placeholder.addEventListener("click", () => {
+            options.style.display = (options.style.display == "none")?("block"):("none");
         });
     
         for(let index in options) {
-            const $option = $('<div class="dialog-selection-option" value="' + options[index].value + '">' + options[index].text + '</div>').appendTo($options);
+            const option = document.createElement("div");
+            option.className = "dialog-selection-option";
+            option.value = options[index].value;
+            option.innerText = options[index].text;
+            options.appendChild(option);
     
-            $option.on("click", () => {
-                $(this).parent().find(".dialog-selection-option.active").removeClass("active");
+            option.addEventListener("click", () => {
+                options.querySelector(".dialog-selection-option.active").classList.remove("active");
     
-                $(this).addClass("active");
+                option.classList.add("active");
     
-                this.$placeholder.text($(this).text()).attr("value", $(this).attr("value"));
+                this.placeholder.innerText = option.innerText;
+                this.placeholder.value = option.value;
     
-                $options.hide();
+                options.style.display = "none";
             });
         }
     };
 
     value() {
-        return this.$placeholder.attr("value");
+        return this.placeholder.value;
     };
 };

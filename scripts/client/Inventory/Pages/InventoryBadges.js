@@ -1,54 +1,61 @@
-Inventory.pages.badges = async function($element) {
-    $element.html(
-        '<div class="inventory-badges">' +
-            '<div class="inventory-badges-grid">' +
-                '<div class="inventory-badges-container">' +
-                    '<div class="inventory-badges-unequipped"></div>' +
-                '</div>' +
+Inventory.pages.badges = async function(element) {
+    element.innerHTML = `
+        <div class="inventory-badges">
+            <div class="inventory-badges-grid">
+                <div class="inventory-badges-container">
+                    <div class="inventory-badges-unequipped"></div>
+                </div>
 
-                '<div class="inventory-badges-equipped"></div>' +
-            '</div>' +
+                <div class="inventory-badges-equipped"></div>
+            </div>
 
-            '<div class="inventory-badges-info">' +
-                '<div class="inventory-badges-info-badge"></div>' +
-                '<div class="inventory-badges-info-content"></div>' +
-                '<div class="inventory-badges-info-button"></div>' +
-            '</div>' +
-        '</div>'
-    );
+            <div class="inventory-badges-info">
+                <div class="inventory-badges-info-badge"></div>
+                <div class="inventory-badges-info-content"></div>
+                <div class="inventory-badges-info-button"></div>
+            </div>
+        </div>
+    `;
     
-    const $infoBadge = $element.find(".inventory-badges-info-badge");
-    const $infoContent = $element.find(".inventory-badges-info-content");
-    const $infoButton = $element.find(".inventory-badges-info-button");
+    const infoBadge = element.querySelector(".inventory-badges-info-badge");
+    const infoContent = element.querySelector(".inventory-badges-info-content");
+    const infoButton = element.querySelector(".inventory-badges-info-button");
 
-    const $uneqipped = $element.find(".inventory-badges-unequipped");
+    const uneqipped = element.querySelector(".inventory-badges-unequipped");
 
-    const $equipped = $element.find(".inventory-badges-equipped");
+    const equipped = element.querySelector(".inventory-badges-equipped");
 
     const badges = await SocketMessages.sendCall({ OnUserInventoryBadges: null }, "OnUserInventoryBadges");
 
     for(let index in badges) {
-        const $badge = $('<div class="dialog-item inventory-badges-icon"></div>').prependTo((badges[index].equipped)?($equipped):($uneqipped));
+        const badge = document.createElement("div");
+        badge.className = "dialog-item inventory-badges-icon";
+        ((badges[index].equipped)?(equipped):(uneqipped)).prepend(badge);
 
-        (new BadgeRenderer(badges[index].badge)).addClass("inventory-badges-icon-image").appendTo($badge);
+        const badgeRenderer = (new BadgeRenderer(badges[index].badge));
+        badgeRenderer.classList.add("inventory-badges-icon-image");
+        badge.append(badgeRenderer);
 
         async function click() {
-            $element.find(".inventory-badges-icon.active").removeClass("active");
+            element.querySelector(".inventory-badges-icon.active").classList.remove("active");
 
-            $badge.addClass("active");
+            badge.classList.add("active");
 
-            $infoBadge.html((new BadgeRenderer(badges[index].badge)));
+            infoBadge.innerHTML = (new BadgeRenderer(badges[index].badge));
 
             const badge = await Badges.get(badges[index].badge);
 
-            $infoContent.html(
-                '<b>' + badge.title + '</b>' +
-                '<p>' + badge.description + '</p>'
-            );
+            infoContent.innerHTML = `
+                <b>${badge.title}</b>
+                <p>${badge.description}</p>
+            `;
 
-            $infoButton.html("");
-            
-            $('<div class="dialog-button">' + ((badges[index].equipped)?("Unequip"):("Equip")) + '</div>').appendTo($infoButton).on("click", async function() {
+            infoButton.innerHTML = "";
+
+            const button = document.createElement("div");
+            button.className = "dialog-button";
+            button.innerText = ((badges[index].equipped)?("Unequip"):("Equip"));
+            button.addEventListener("click", async () => {
                 Inventory.pause();
 
                 const result =  await SocketMessages.sendCall({ OnUserInventoryBadges: { id: badges[index].badge } }, "OnUserInventoryBadges");
@@ -58,18 +65,26 @@ Inventory.pages.badges = async function($element) {
                 if(result == true) {
                     badges[index].equipped = !badges[index].equipped;
 
-                    $badge.remove().appendTo((badges[index].equipped)?($equipped):($uneqipped)).on("click", click).click();
+                    badge.remove();
+
+                    ((badges[index].equipped)?(equipped):(uneqipped)).append(badge);
+                    
+                    badge.addEventListener("click", click);
+
+                    click();
                 }
             });
+
+            infoButton.append(button);
         };
 
-        $badge.on("click", click);
+        badge.on("click", click);
     }
 
-    let $first = $equipped.find(".inventory-badges-icon");
+    let first = equipped.querySelector(".inventory-badges-icon");
     
-    if(!$first.length)
-        $first = $uneqipped.find(".inventory-badges-icon");
+    if(first == null)
+        first = uneqipped.querySelector(".inventory-badges-icon");
 
-    $first.first().click();
+    first.click();
 };

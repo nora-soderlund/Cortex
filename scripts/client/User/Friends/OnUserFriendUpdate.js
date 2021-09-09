@@ -16,7 +16,7 @@ SocketMessages.register("OnUserFriendUpdate", function(data) {
             Client.user.friends[id].menu.remove();
 
         if(data[index].status != -1)
-            data[index].menu = Client.menu.friends.add(id);
+            data[index].menu = MenuFriends.add(id);
 
         for(let key in data[index])
             Client.user.friends[id][key] = data[index][key];

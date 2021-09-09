@@ -1,57 +1,64 @@
-Client.menu = new function() {
-    this.$element = $(
-        '<div id="menu"></div>'
-    ).appendTo(Client.$element);
+const Menu = new class {
+    constructor() {
+        this.element = document.createElement("div");
+        this.element.id = "menu";
+        this.element.innerHTML = `
+            <div class="menu-items"></div>
+        `;
 
-    this.$icons = $('<div class="menu-items"></div>').appendTo(this.$element);
+        Client.element.append(this.element);
 
-    this.addItem = function(identifier, callback) {
-        const $element = $(
-            '<div class="menu-item">' +
-                '<div class="menu-sprite menu-' + identifier + '"></div>' +
-            '</div>'
-        ).on("click", function() {
-            callback();
-        }).appendTo(this.$icons);
+        this.icons = this.element.querySelector(".menu-items");
 
-        return $element;
+        this.addItem("navigator", function() {
+            Client.rooms.navigator.toggle();
+        });
+
+        this.addItem("shop", function() {
+            Client.shop.toggle();
+        });
+    
+        const inventory = this.addItem("inventory", function() {
+            Inventory.toggle();
+        });
+    
+        const camera = this.addItem("camera", function() {
+            Client.rooms.interface.camera.toggle();
+        });
+    
+        Client.rooms.interface.events.start.push(function() {
+            inventory.show();
+            camera.show();
+        });
+    
+        Client.rooms.interface.events.stop.push(function() {
+            camera.hide();
+            inventory.hide();
+        });
     };
 
-    this.addItem("navigator", function() {
-        Client.rooms.navigator.toggle();
-    });
+    addItem(identifier, callback) {
+        const element = document.createElement("div");
+        element.className = "menu-item";
+        element.innerHTML = `<div class="menu-sprite menu-${identifier}"></div>`;
 
-    this.addItem("shop", function() {
-        Client.shop.toggle();
-    });
+        element.addEventListener("click", () => callback());
+        
+        this.icons.append(element);
 
-    const $inventory = this.addItem("inventory", function() {
-        Inventory.toggle();
-    });
-
-    const $camera = this.addItem("camera", function() {
-        Client.rooms.interface.camera.toggle();
-    });
-
-    Client.rooms.interface.events.start.push(function() {
-        $inventory.show();
-        $camera.show();
-    });
-
-    Client.rooms.interface.events.stop.push(function() {
-        $camera.hide();
-        $inventory.hide();
-    });
+        return element;
+    };
 };
 
 Loader.ready(function() {
-    const $user = Client.menu.addItem("user", function() {
-        Client.menu.sub.$element.toggle();
+    const user = Menu.addItem("user", function() {
+        MenuSub.element.style.display = ((MenuSub.element.style.display == "none")?("block"):("none"));
     });
 
-    const $canvas = $('<div class="menu-sprite menu-user"></div>');
+    const canvas = document.createElement("div");
+    canvas.className = "menu-sprite menu-user";
 
-    $user.html($canvas);
+    user.innerHTML = canvas;
     
     const entity = new FigureEntity(Client.user.figure);
     
@@ -65,7 +72,7 @@ Loader.ready(function() {
     });
 
     entity.events.render.push(function() {
-        $canvas.html(entity.$canvas);
+        canvas.innerHTML = entity.canvas;
     });
 
     entity.process().then(function() {

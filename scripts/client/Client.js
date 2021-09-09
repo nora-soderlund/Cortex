@@ -2624,7 +2624,7 @@ Client.rooms.entity = function ($parent) {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.categories = new function () {
+RoomCategories = new function () {
   this.get = async function () {
     if (this.categories != undefined) return this.categories;
     this.categories = await SocketMessages.sendCall({
@@ -5094,7 +5094,7 @@ Client.rooms.navigator = new function () {
       });
     }).appendTo(entity.tabs.$header);
     entity.$create = $('<div class="room-navigator-tab-icon room-navigator-tab-create"></div>').on("click", function () {
-      Client.rooms.creation.toggle();
+      RoomCreation.toggle();
     }).appendTo(entity.tabs.$header);
     entity.tabs.show("my_rooms");
     entity.tabs.$element.appendTo(entity.$content);
@@ -5198,7 +5198,7 @@ SocketMessages.register("OnRoomNavigatorEnter", function (response) {});// @hash
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.creation = new function () {
+RoomCreation = new function () {
   const entity = new Dialog({
     title: "Room Creation",
     size: {
@@ -5228,7 +5228,7 @@ Client.rooms.creation = new function () {
     });
     const $category = $('<div class="room-creation-property">' + '<p>' + '<b>Room Category</b>' + '<span>What category does your room fall into?</span>' + '</p>' + '</div>').appendTo($information);
     const list = [];
-    const categories = await Client.rooms.categories.get();
+    const categories = await RoomCategories.get();
 
     for (let index in categories) list.push({
       text: categories[index].name,
@@ -5247,7 +5247,7 @@ Client.rooms.creation = new function () {
     });
     const $continue = $('<div class="dialog-button">Continue »</div>').appendTo($buttons);
     $continue.click(function () {
-      Client.rooms.creation.showMap();
+      RoomCreation.showMap();
     });
   };
 
@@ -5259,9 +5259,9 @@ Client.rooms.creation = new function () {
     }, "OnRoomModelsUpdate");
     const tabs = new DialogTabs(231);
     tabs.add("default", "Default Maps", function ($element) {
-      if (Client.rooms.creation.editor != undefined) {
-        Client.rooms.creation.editor.destroy();
-        Client.rooms.creation.editor = undefined;
+      if (RoomCreation.editor != undefined) {
+        RoomCreation.editor.destroy();
+        RoomCreation.editor = undefined;
       }
 
       $element.parent().css("overflow", "auto");
@@ -5276,7 +5276,7 @@ Client.rooms.creation = new function () {
         }
 
         const $element = $('<div class="dialog-item room-creation-model">' + '<p class="room-creation-model-tiles">' + tiles + ' tiles</div>' + '</div>').appendTo($models);
-        const $canvas = new Client.rooms.creation.map(map, models[index].door).prependTo($element);
+        const $canvas = new RoomCreationMap(map, models[index].door).prependTo($element);
         $element.on("click", function () {
           $models.find(".room-creation-model.active").removeClass("active");
           $element.addClass("active");
@@ -5304,10 +5304,10 @@ Client.rooms.creation = new function () {
         }
       };
       const editor = new Client.rooms.editor(data, function (map) {
-        entity.settings.map.map = map; //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
+        entity.settings.map.map = map; //const $canvas = new RoomCreationMap(map.split('|'), entity.settings.map.door);
         //$settings.html($canvas);
       });
-      Client.rooms.creation.editor = editor;
+      RoomCreation.editor = editor;
       editor.tiles.$element.css({
         "width": "280px",
         "height": "230px"
@@ -5352,9 +5352,9 @@ Client.rooms.creation = new function () {
     entity.showProperties();
   });
   entity.events.destroy.push(function () {
-    if (Client.rooms.creation.editor != undefined) {
-      Client.rooms.creation.editor.destroy();
-      Client.rooms.creation.editor = undefined;
+    if (RoomCreation.editor != undefined) {
+      RoomCreation.editor.destroy();
+      RoomCreation.editor = undefined;
     }
   });
   return entity;
@@ -5363,7 +5363,7 @@ Client.rooms.creation = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.creation.map = function (input, door) {
+RoomCreationMap = function (input, door) {
   const $canvas = $('<canvas></canvas>');
   const context = $canvas[0].getContext("2d");
   let map = [],
@@ -5817,7 +5817,7 @@ Client.rooms.settings = new function () {
 
       entity.editor = new Client.rooms.editor(data, async function (map, extra) {
         //entity.settings.map.map = map;
-        //const $canvas = new Client.rooms.creation.map(map.split('|'), entity.settings.map.door);
+        //const $canvas = new RoomCreationMap(map.split('|'), entity.settings.map.door);
         //$settings.html($canvas);
         SocketMessages.send({
           OnRoomSettingsUpdate: {
@@ -5955,7 +5955,7 @@ Client.rooms.interface.events.stop.push(function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.menu = new function () {
+Menu = new function () {
   this.$element = $('<div id="menu"></div>').appendTo(Client.$element);
   this.$icons = $('<div class="menu-items"></div>').appendTo(this.$element);
 
@@ -5988,8 +5988,8 @@ Client.menu = new function () {
   });
 }();
 Loader.ready(function () {
-  const $user = Client.menu.addItem("user", function () {
-    Client.menu.sub.$element.toggle();
+  const $user = Menu.addItem("user", function () {
+    MenuSub.$element.toggle();
   });
   const $canvas = $('<div class="menu-sprite menu-user"></div>');
   $user.html($canvas);
@@ -6010,7 +6010,7 @@ Loader.ready(function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.menu.sub = new function () {
+MenuSub = new function () {
   this.$element = $('<div class="menu-sub"></div>').appendTo(Client.$element);
 
   this.addItem = function (sprite, click) {
@@ -6024,8 +6024,8 @@ Client.menu.sub = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.menu.friends = new function () {
-  this.$element = $('<div class="menu-friends"></div>').appendTo(Client.menu.$element);
+MenuFriends = new function () {
+  this.$element = $('<div class="menu-friends"></div>').appendTo(Menu.$element);
   this.friends = {};
 
   this.add = function (id) {
@@ -6515,7 +6515,7 @@ SocketMessages.register("OnUserFriendUpdate", function (data) {
     if (Client.user.friends[id] == undefined) Client.user.friends[id] = {};
     if (data[index].status == 0 && Client.user.friends[id].status != data[index].status && Client.user.friends[id].request == undefined && Client.rooms.interface.users[id] != undefined) data[index].request = new Client.rooms.interface.display.users.request(Client.rooms.interface.users[id]);
     if (Client.user.friends[id].menu != undefined) Client.user.friends[id].menu.remove();
-    if (data[index].status != -1) data[index].menu = Client.menu.friends.add(id);
+    if (data[index].status != -1) data[index].menu = MenuFriends.add(id);
 
     for (let key in data[index]) Client.user.friends[id][key] = data[index][key];
   }

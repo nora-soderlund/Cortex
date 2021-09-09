@@ -1,5 +1,5 @@
-Client.rooms.categories = new function() {
-    this.get = async function() {
+const RoomCategories = new class {
+    async get() {
         if(this.categories != undefined)
             return this.categories;
 

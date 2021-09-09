@@ -1,6 +1,6 @@
-Client.rooms.creation.map = function(input, door) {
-    const $canvas = $('<canvas></canvas>');
-    const context = $canvas[0].getContext("2d");
+const RoomCreationMap = function(input, door) {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
 
     let map = [], rows = input.length, columns = 0, maxDepth = 0;
 
@@ -147,5 +147,5 @@ Client.rooms.creation.map = function(input, door) {
     context.drawImage(context.canvas, -1, 0);
     context.drawImage(context.canvas, 0, 1);
 
-    return $canvas;
+    return canvas;
 };

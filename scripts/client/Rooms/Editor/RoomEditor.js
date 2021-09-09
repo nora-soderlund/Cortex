@@ -2,9 +2,13 @@ Client.rooms.editor = function(settings, change) {
     let editorDepth = 0, editorTool = 0;
 
     this.tiles = new function() {
-        this.$element = $('<div class="room-editor-tiles"></div>');
+        this.element = document.createElement("div");
+        this.element.className = "room-editor-tiles";
+        this.element.innerHTML = `
+            <canvas class="room-editor-tiles"></canvas>
+        `;
 
-        const $canvas = $('<canvas></canvas>').appendTo(this.$element);
+        const canvas = this.element.querySelector(".room-editor-tiles");
 
         let map = settings.map, rows = map.length, columns = 0, renderOffset = { left: 0, top: 0 };
 
@@ -23,10 +27,10 @@ Client.rooms.editor = function(settings, change) {
         }
 
         const render = function(canvas) {
-            const context = $canvas[0].getContext("2d");
+            const context = canvas.getContext("2d");
 
-            context.canvas.width = $canvas.parent().width();
-            context.canvas.height = $canvas.parent().height();
+            context.canvas.width = canvas.parentElement.width;
+            context.canvas.height = canvas.parentElement.height;
            
             renderOffset = { left: canvas.offset.left, top: canvas.offset.top };
 
@@ -49,13 +53,13 @@ Client.rooms.editor = function(settings, change) {
             context.strokeRect(settings.door.column * 16, settings.door.row * 16, 15.5, 15.5);
         };
         
-        const canvas = Canvas.addCanvas($canvas[0], { render, draggable: true, offset: { left: $canvas[0].width / 2, top: ($canvas[0].height / 2) - (rows * 4) } });
+        const canvas = Canvas.addCanvas(canvas, { render, draggable: true, offset: { left: canvas.width / 2, top: (canvas.height / 2) - (rows * 4) } });
 
         this.canvas = canvas;
 
         let down = false, lastCoordinate = { row: null, column: null }, timestamp = performance.now();
 
-        $canvas.on("mousedown", function() {
+        canvas.addEventListener("mousedown", () => {
             if(canvas.draggableEnabled && (performance.now() - canvas.draggableTimestamp) > 200)
                 return;
 
@@ -63,9 +67,13 @@ Client.rooms.editor = function(settings, change) {
                 return;
                 
             down = true;
-        }).on("mouseup", function() {
+        });
+        
+        canvas.addEventListener("mouseup", () => {
             down = false;
-        }).on("mousemove click", function(event) {
+        });
+        
+        canvas.addEventListener("mousemove", (event) => {
             const innerPosition = {
                 left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top),
                 top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top)
@@ -281,25 +289,31 @@ Client.rooms.editor = function(settings, change) {
     };
 
     this.depth = new function() {
-        this.$element = $('<div class="room-editor-depth"></div>');
+        this.element = document.createElement("div");
+        this.element.className = "room-editor-depth";
+        this.element.innerHTML = `
+            <canvas class="room-editor-depth-canvas"></canvas>
 
-        const $canvas = $('<canvas></canvas>').appendTo(this.$element);
+            <div class="room-editor-depth-cursor"></div>
+        `;
 
-        const $cursor = $('<div class="room-editor-depth-cursor"></div>').appendTo(this.$element);
+        const canvas = this.element.querySelector(".room-editor-depth-canvas");
+
+        const cursor = this.element.querySelector(".room-editor-depth-cursor");
 
         const setCursor = function(depth) {
-            const width = $canvas.parent().width() / 24;
+            const width = canvas.parentElement.width / 24;
 
-            $cursor.css("left", (width / 2) + (width * depth));
+            cursor.style.left = `${((width / 2) + (width * depth))}px`;
 
             editorDepth = depth;
         };
 
         this.render = function() {
-            const context = $canvas[0].getContext("2d");
+            const context = canvas.getContext("2d");
             
-            context.canvas.width = $canvas.parent().width();
-            context.canvas.height = $canvas.parent().height();
+            context.canvas.width = canvas.parentElement.width;
+            context.canvas.height = canvas.parentElement.height;
 
             const steps = 24, width = context.canvas.width / steps;
 
@@ -320,10 +334,10 @@ Client.rooms.editor = function(settings, change) {
 
         let paths = {}, down = false;
 
-        this.$element.on("mousedown", function(event) {
+        this.element.addEventListener("mousedown", (event) => {
             down = true;
 
-            const context = $canvas[0].getContext("2d");
+            const context = canvas.getContext("2d");
 
             for(let depth in paths) {
                 if(!context.isPointInPath(paths[depth], event.offsetX, event.offsetY))
@@ -333,11 +347,13 @@ Client.rooms.editor = function(settings, change) {
 
                 break;
             }
-        }).on("mousemove", function(event) {
+        });
+        
+        this.element.addEventListener("mousemove", (event) => {
             if(!down)
                 return;
 
-            const context = $canvas[0].getContext("2d");
+            const context = canvas.getContext("2d");
 
             for(let depth in paths) {
                 if(!context.isPointInPath(paths[depth], event.offsetX, event.offsetY))
@@ -347,17 +363,28 @@ Client.rooms.editor = function(settings, change) {
 
                 break;
             }
-        }).on("mouseup", function() {
+        });
+        
+        this.element.addEventListener("mouseup", () => {
             down = false;
         });
     };
 
     this.tools = new function() {
-        this.$add = $('<div class="room-editor-tile-add"></div>');
-        this.$remove = $('<div class="room-editor-tile-remove"></div>');
-        this.$up = $('<div class="room-editor-tile-up"></div>');
-        this.$down = $('<div class="room-editor-tile-down"></div>');
-        this.$door = $('<div class="room-editor-door"></div>');
+        this.add = document.createElement("div");
+        this.add.className = "room-editor-tile-add";
+        
+        this.remove = document.createElement("div");
+        this.remove.className = "room-editor-tile-remove";
+        
+        this.up = document.createElement("div");
+        this.up.className = "room-editor-tile-up";
+        
+        this.down = document.createElement("div");
+        this.down.className = "room-editor-tile-down";
+        
+        this.door = document.createElement("div");
+        this.door.className = "room-editor-tile-door";
 
         this.setTool = function(tool) {
             editorTool = tool;

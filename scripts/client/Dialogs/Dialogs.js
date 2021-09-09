@@ -1,24 +1,26 @@
-class Dialogs {
-    static $element = $('<div id="dialogs"></div>').appendTo(Client.$element);
+const Dialogs = new function() {
+    this.element = document.createElement("div");
+    this.element.id = "dialogs";
+    Client.element.appendChild(this.element);
 
-    static entities = [];
+    this.entities = [];
 
-    static sort() {
-        Dialogs.entities.sort(function(a, b) {
+    this.sort = () => {
+        this.entities.sort(function(a, b) {
             return a.timestamp - b.timestamp;
         });
 
-        for(let index in Dialogs.entities)
-            Dialogs.entities[index].$element?.css("z-index", 1 + index);
+        for(let index in this.entities)
+            this.entities[index].element?.style.zIndex = 1 + index;
     };
 
-    static add(entity) {
-        Dialogs.entities.push(entity);
+    this.add = (entity) => {
+        this.entities.push(entity);
 
         entity.events.show.push(function() {
             entity.timestamp = performance.now();
 
-            Dialogs.sort();
+            this.sort();
         });
     };
 };

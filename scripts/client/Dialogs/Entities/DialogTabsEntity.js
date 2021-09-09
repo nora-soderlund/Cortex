@@ -1,41 +1,44 @@
 class DialogTabs {
     constructor(height) {
-        this.$element = $(
-            '<div class="dialog-tabs">' +
-                '<div class="dialog-tabs-container" style="height: ' + height + 'px"></div>' +
-            '</div>'
-        );
+        this.element = document.createElement("div");
+        this.element.innerHTML = `
+            <div class="dialog-tabs-header"></div>
+
+            <div class="dialog-tabs-container" style="height: ${height}px">
+                <div class="dialog-tabs-content"></div>
+            </div>
+        `;
     
-        this.$header = $('<div class="dialog-tabs-header"></div>').prependTo(this.$element);
-    
-        this.$content = $('<div class="dialog-tabs-content"></div>').appendTo(this.$element.find(".dialog-tabs-container"));
+        this.header = this.element.querySelector(".dialog-tabs-header");
+        this.content = this.element.querySelector(".dialog-tabs-content");
     
         this.buttons = {};
     };
 
     add(identifier, text, callback = undefined, disabled = false) {
-        const $element = $('<div class="dialog-tabs-button">' + text + '</div>').appendTo(this.$header);
+        const element = document.createElement("div");
+        element.classList.add("dialog-tabs-button");
+        element.innerText = text;
+        this.header.appendChild(element);
 
         if(disabled) {
-            $element.css({
-                "pointer-events": "none",
-                "opacity": .5
-            });
+            element.style.pointerEvents = "none";
+            element.style.opacity = .5;
         }
 
-        this.buttons[identifier] = { element: $element, callback: callback };
+        this.buttons[identifier] = { element, callback };
 
         const entity = this;
 
-        $element.on("click", function() {
+        element.addEventListener("click", () => {
             entity.show(identifier);
         });
     };
 
     hide() {
-        this.$header.find(".dialog-tabs-button[active]").removeAttr("active");
+        this.header.querySelector(".dialog-tabs-button[active]").removeAttribute("active");
         
-        this.$content.html("");
+        this.content.innerHTML = "";
     };
 
     async show(identifier = this.selected) {
@@ -46,7 +49,7 @@ class DialogTabs {
             
         this.buttons[identifier].element.attr("active", "");
 
-        this.$content.html("");
+        this.content.innerHTML = "";
 
         for(let index in this.callbacks)
             await this.callbacks[index](identifier, this.$content);

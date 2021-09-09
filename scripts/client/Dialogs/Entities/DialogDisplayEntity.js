@@ -15,55 +15,70 @@ class DisplayDialog extends Dialog {
     create() {
         super.create();
 
-        this.$element.addClass("dialog-display");
+        this.element.classList.add("dialog-display");
     
-        this.events.create.push(function() {
-            this.$header = $('<div class="dialog-display-header"></div>').appendTo(this.$content);
+        this.events.create.push(() => {
+            this.header = document.createElement("div");
+            this.header.className = "dialog-display-header";
+            this.content.appendChild(this.header);
     
-            const $display = $('<div class="dialog-display-content"></div>').appendTo(this.$header);
+            const display = document.createElement("div");
+            display.className = "dialog-display-content";
+            this.header.appendChild(display);
     
-            const $container = $('<div class="dialog-display-header-info"></div>').appendTo(this.$header)
+            const container = document.createElement("div");
+            container.className = "dialog-display-header-info";
+            this.header.appendChild(container);
     
-            this.$info = $('<div class="dialog-display-header-info-content"></div>').appendTo($container);
+            const info = document.createElement("div");
+            info.className = "dialog-display-header-info-content";
+            container.appendChild(info);
+
+            display.innerHTML += `<div class="dialog-display-content-star"></div>`;
     
-            $('<div class="dialog-display-content-star"></div>').appendTo($display);
+            this.display = document.createElement("div");
+            this.display.className = "dialog-display-content-item";
+            display.appendChild(this.display);
     
-            this.$display = $('<div class="dialog-display-content-item"></div>').appendTo($display);
+            const button = document.createElement("div");
+            button.className = "dialog-button";
+            button.innerText = "Okay!";
+            this.content.appendChild(button);
     
-            const $button = $('<div class="dialog-button">Okay!</div>').appendTo(this.$content);
-    
-            $button.on("click", function() {
+            button.addEventListener("click", () => {
                 this.hide();
             });
         });
     
         this.events.show.push(function() {
-            if(this.$effects != undefined) {
-                this.$effects.remove();
+            if(this.effects != undefined) {
+                this.effects.remove();
     
-                delete this.$effects;
+                delete this.effects;
             }
     
-            this.$effects = $('<div class="dialog-display-content-effects"></div>').appendTo(this.$display);
+            this.effects = document.createElement("div");
+            this.effects.className = "dialog-display-content-effects";
+            this.display.appendChild(this.effects);
     
             const sizes = ["small", "small", "medium", "big"];
             
             for(let index = 0; index < 20; index++) {
                 setTimeout(function() {
-                    const $effect = $('<div class="dialog-display-content-effect"></div>').appendTo(this.$effects);
+                    const effect = document.createElement("div");
+                    effect.className = "dialog-display-content-effect";
+                    this.effects.appendChild(effect);
     
-                    $effect.css({
-                        "left": (3 + (Math.floor((Math.random() * 9)) * 10)) + "px",
-                        "top": (3 + (Math.floor((Math.random() * 9)) * 10)) + "px"
-                    });
+                    effect.style.left = `${(3 + (Math.floor((Math.random() * 9)) * 10))}px`;
+                    effect.style.top = `${(3 + (Math.floor((Math.random() * 9)) * 10))}px`;
     
-                    $effect.addClass("sprite-display-effect-" + sizes[Math.floor(Math.random() * sizes.length)]);
+                    effect.classList.add("sprite-display-effect-" + sizes[Math.floor(Math.random() * sizes.length)]);
     
-                    $effect.fadeIn(Math.floor(Math.random() * 500), function() {
+                    /*effect.fadeIn(Math.floor(Math.random() * 500), function() {
                         setTimeout(function() {
                             $effect.fadeOut(Math.floor(Math.random() * 500));
                         }, Math.floor(Math.random() * 5000));
-                    });
+                    });*/
                 }, Math.floor(Math.random() * 1500));
             }
         });

@@ -1,12 +1,14 @@
 class FigureEntity {
     constructor(figure, properties = {}) {
+        this.canvas = document.createElement("canvas");
+        this.canvas.width = 256;
+        this.canvas.height = 256;
+
         this.setFigure(figure);
         
         for(let key in properties)
             this[key] = properties[key];
     };
-
-    $canvas = $('<canvas width="256" height="256"></canvas>');
     
     events = {
         render: []
@@ -201,7 +203,7 @@ class FigureEntity {
     };
 
     async render() {
-        const context = this.$canvas[0].getContext("2d");
+        const context = this.canvas.getContext("2d");
 
         context.save();
 

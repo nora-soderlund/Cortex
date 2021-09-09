@@ -18,7 +18,7 @@ Inventory.pages = {};
 Inventory.events.create.push(async function() {
     Inventory.tabs = new DialogTabs("100%");
 
-    Inventory.tabs.$element.addClass("inventory-tabs");
+    Inventory.tabs.element.addClass("inventory-tabs");
 
     Inventory.tabs.add("furnitures", "Furnitures");
     Inventory.tabs.add("badges", "Badges");
@@ -39,7 +39,7 @@ Inventory.events.create.push(async function() {
 
     Inventory.tabs.show("furnitures");
 
-    Inventory.tabs.$element.appendTo(Inventory.$content);
+    Inventory.tabs.element.appendTo(Inventory.$content);
 });
 
 Inventory.events.show.push(function() {

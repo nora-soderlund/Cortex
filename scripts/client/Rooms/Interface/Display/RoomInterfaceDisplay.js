@@ -79,10 +79,6 @@ Client.rooms.interface.display = new function() {
 
         new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
-        this.addButton('Edit <i class="sprite-beta"></i>', function() {
-            Client.development.furni.set(entity);
-        });
-
         if(Client.rooms.interface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
             this.addButton("Pickup", function() {
                 Client.rooms.interface.furniture.pickup.start(entity);

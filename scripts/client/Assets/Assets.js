@@ -37,14 +37,14 @@ class Assets {
         Assets.promises[asset].manifest = [];
 
         return new Promise(function(resolve) {
-            $.getJSON(path, function(manifest) {
+            fetch(path).then((response) => response.json().then((manifest) => {
                 Assets.cache[asset].manifest = manifest;
 
                 for(let index in Assets.promises[asset].manifest)
                     Assets.promises[asset].manifest[index]();
 
                 resolve();
-            }).fail(function() {
+            })).catch(function() {
                 Assets.cache[asset].manifest = {};
 
                 for(let index in Assets.promises[asset].manifest)
@@ -142,26 +142,30 @@ class Assets {
             delete data.link;
         }
 
-        const $canvas = $('<canvas width="' + data.width + '" height="' + data.height + '"></canvas>');
+        const canvas = document.createElement("canvas");
+        canvas.width = data.width;
+        canvas.height = data.height;
 
-        const context = $canvas[0].getContext("2d");
+        const context = canvas.getContext("2d");
 
         context.drawImage(spritesheet, parseInt(data.left), parseInt(data.top), parseInt(data.width), parseInt(data.height), 0, 0, parseInt(data.width), parseInt(data.height));
 
-        Assets.cache[asset].sprites[sprite] = $canvas[0];
+        Assets.cache[asset].sprites[sprite] = canvas;
 
         if(flipped == true) {
-            const $flippedCanvas = $('<canvas width="' + data.width + '" height="' + data.height + '"></canvas>');
+            const flippedCanvas = document.createElement("canvas");
+            flippedCanvas.width = data.width;
+            flippedCanvas.height = data.height;
 
-            const flippedContext = $flippedCanvas[0].getContext("2d");
+            const flippedContext = flippedCanvas.getContext("2d");
 
             flippedContext.translate(flippedContext.canvas.width, 0);
 
             flippedContext.scale(-1, 1);
 
-            flippedContext.drawImage($canvas[0], 0, 0);
+            flippedContext.drawImage(canvas, 0, 0);
             
-            Assets.cache[asset].sprites[sprite + "?flipped=true"] = $flippedCanvas[0];
+            Assets.cache[asset].sprites[sprite + "?flipped=true"] = flippedCanvas;
 
             return Assets.cache[asset].sprites[sprite + "?flipped=true"];
         }
@@ -186,20 +190,24 @@ class Assets {
         if(Assets.cache[asset].sprites[sprite + "?color=" + color] != undefined)
             return Assets.cache[asset].sprites[sprite + "?color=" + color];
 
-        const $colorCanvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
-        const colorContext = $colorCanvas[0].getContext("2d");
+        const colorCanvas = document.createElement("canvas");
+        colorCanvas.width = image.width;
+        colorCanvas.height = image.height;
+        const colorContext = colorCanvas.getContext("2d");
         colorContext.drawImage(image, 0, 0);
         colorContext.globalCompositeOperation = "multiply";
         colorContext.fillStyle = color.replace('0x', '#');
         colorContext.fillRect(0, 0, image.width, image.height);
 
-        const $canvas = $('<canvas width="' + image.width + '" height="' + image.height + '"></canvas>');
-        const context = $canvas[0].getContext("2d");
+        const canvas = document.createElement("canvas");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        const context = canvas.getContext("2d");
         context.drawImage(image, 0, 0);
         context.globalCompositeOperation = "source-in";
-        context.drawImage($colorCanvas[0], 0, 0);
+        context.drawImage(colorCanvas, 0, 0);
 
-        Assets.cache[asset].sprites[sprite + "?color=" + color] = $canvas[0];
+        Assets.cache[asset].sprites[sprite + "?color=" + color] = canvas;
 
         return Assets.cache[asset].sprites[sprite + "?color=" + color];
     };

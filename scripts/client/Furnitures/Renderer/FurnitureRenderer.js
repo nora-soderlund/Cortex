@@ -1,7 +1,7 @@
 class FurnitureRenderer {
-    constructor(settings, $canvas, color = undefined) {
+    constructor(settings, canvas, color = undefined) {
         this.settings = settings;
-        this.$canvas = $canvas;
+        this.canvas = canvas;
         this.color = color;
 
         this.renderer();
@@ -9,7 +9,7 @@ class FurnitureRenderer {
 
     async renderer() {
         const loading = await Assets.getSpritesheet((this.settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then((image) => {
-            const context = this.$canvas[0].getContext("2d");
+            const context = this.canvas.getContext("2d");
     
             context.canvas.width = image.width;
             context.canvas.height = image.height;
@@ -20,7 +20,7 @@ class FurnitureRenderer {
         const entity = new FurnitureEntity(this.settings);
     
         entity.events.render.push((sprites) => {
-            const context = this.$canvas[0].getContext("2d");
+            const context = this.canvas.getContext("2d");
 
             let minLeft = 0, minTop = 0, maxWidth = 0, maxHeight = 0;
 
@@ -67,7 +67,7 @@ class FurnitureRenderer {
                     entity.render();
                 }, 1000 / 12);
 
-                this.$canvas.on("click", function() {
+                this.canvas.addEventListener("click", () => {
                     entity.setAnimation(entity.getNextAnimation());
                 });
             }

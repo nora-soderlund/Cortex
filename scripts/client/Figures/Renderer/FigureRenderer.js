@@ -1,9 +1,9 @@
 class FigureRenderer {
-    constructor(figure, settings, $canvas, color = undefined) {
+    constructor(figure, settings, canvas, color = undefined) {
         const entity = new FigureEntity(figure, settings);
     
         entity.events.render.push(function(sprites) {
-            const context = $canvas[0].getContext("2d");
+            const context = canvas.getContext("2d");
 
             if(color != undefined) {
                 context.fillStyle = color;
