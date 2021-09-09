@@ -32,7 +32,7 @@ Client.rooms.interface.cursor = new function() {
         if(Client.rooms.interface.entity.currentEntity != undefined && Client.rooms.interface.cursor.down)
             Client.rooms.interface.entity.currentEntity.sprite.mousedown(event);
 
-        if(!Client.rooms.interface.cursor.down || (Client.keys.down["ControlLeft"] || Client.keys.down["ShiftLeft"] || Client.keys.down["AltLeft"])) {
+        if(!Client.rooms.interface.cursor.down || (Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"])) {
             Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
 
             return;
@@ -79,7 +79,7 @@ Client.rooms.interface.cursor = new function() {
         }
 
         if(Client.rooms.interface.entity.currentMapEntity != undefined) {
-            if(!(Client.keys.down["ControlLeft"] || Client.keys.down["ShiftLeft"] || Client.keys.down["AltLeft"]))
+            if(!(Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"]))
                 SocketMessages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
         }
 

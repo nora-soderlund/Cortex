@@ -59,7 +59,7 @@ Client.rooms.editor = function(settings, change) {
             if(canvas.draggableEnabled && (performance.now() - canvas.draggableTimestamp) > 200)
                 return;
 
-            if(!Client.keys.down["ShiftLeft"])
+            if(!Keys.down["ShiftLeft"])
                 return;
                 
             down = true;
@@ -90,7 +90,7 @@ Client.rooms.editor = function(settings, change) {
 
                 lastCoordinate = coordinate;
             }
-            else if(!Client.keys.down["ShiftLeft"])
+            else if(!Keys.down["ShiftLeft"])
                 return;
 
             let extra = null;

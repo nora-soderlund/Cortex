@@ -1,4 +1,4 @@
-Client.inventory.pages.furnitures = function($element) {
+Inventory.pages.furnitures = function($element) {
     $element.html(
         '<div class="inventory-furnitures">' +
             '<div class="inventory-furnitures-container">' +
@@ -27,13 +27,13 @@ Client.inventory.pages.furnitures = function($element) {
             const $button = $('<div class="dialog-button">Place in room</div>').appendTo($display.find(".inventory-furniture-display-information"));
 
             $button.click(function() {
-                Client.inventory.hide();
+                Inventory.hide();
                 
                 Client.rooms.interface.furniture.place.start(furniture.id, function(result) {
                     if(result.entity.enabled == false) {
                         result.stop();
             
-                        Client.inventory.show();
+                        Inventory.show();
             
                         return;
                     }
@@ -53,7 +53,7 @@ Client.inventory.pages.furnitures = function($element) {
                         if(response == null) {
                             result.stop();
 
-                            Client.inventory.show();
+                            Inventory.show();
 
                             return;
                         }
@@ -70,7 +70,7 @@ Client.inventory.pages.furnitures = function($element) {
                         if(Client.user.furnitures[furniture.id].inventory == 0) {
                             result.stop();
                             
-                            Client.inventory.show();
+                            Inventory.show();
 
                             return;
                         }
@@ -88,17 +88,17 @@ Client.inventory.pages.furnitures = function($element) {
 
     function setFurniture(id) {
         if(!(Client.user.furnitures[id].inventory > 0)) {
-            if(Client.inventory.$furnitures[id] != undefined) {
-                Client.inventory.$furnitures[id].$element.remove();
+            if(Inventory.$furnitures[id] != undefined) {
+                Inventory.$furnitures[id].$element.remove();
 
-                Client.inventory.$furnitures[id] = undefined;
+                Inventory.$furnitures[id] = undefined;
             }
 
             return;
         }
 
-        if(Client.inventory.$furnitures[id] == undefined) {
-            Client.inventory.$furnitures[id] = {
+        if(Inventory.$furnitures[id] == undefined) {
+            Inventory.$furnitures[id] = {
                 $element: $('<div class="dialog-item inventory-furniture-icon"></div>').prependTo($content),
 
                 $canvas: $('<canvas class="inventory-furniture-icon-image"></canvas>'),
@@ -106,24 +106,24 @@ Client.inventory.pages.furnitures = function($element) {
                 $quantity: $('<div class="inventory-furniture-icon-quantity">' + Client.user.furnitures[id].inventory + '</div>')
             };
 
-            Client.inventory.$furnitures[id].$canvas.appendTo(Client.inventory.$furnitures[id].$element);
-            Client.inventory.$furnitures[id].$quantity.appendTo(Client.inventory.$furnitures[id].$element);
+            Inventory.$furnitures[id].$canvas.appendTo(Inventory.$furnitures[id].$element);
+            Inventory.$furnitures[id].$quantity.appendTo(Inventory.$furnitures[id].$element);
         }
 
-        Client.inventory.$furnitures[id].$quantity.html(Client.user.furnitures[id].inventory);
+        Inventory.$furnitures[id].$quantity.html(Client.user.furnitures[id].inventory);
         
         if(Client.user.furnitures[id].inventory == 1)
-            Client.inventory.$furnitures[id].$quantity.hide();
+            Inventory.$furnitures[id].$quantity.hide();
         else
-            Client.inventory.$furnitures[id].$quantity.show();
+            Inventory.$furnitures[id].$quantity.show();
 
         Furnitures.get(id).then(function(furniture) {
-            const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, Client.inventory.$furnitures[id].$canvas);
+            const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, Inventory.$furnitures[id].$canvas);
         
-            Client.inventory.$furnitures[id].$element.click(function() {
-                Client.inventory.$furnitures[id].$element.parent().find(".active").removeClass("active");
+            Inventory.$furnitures[id].$element.click(function() {
+                Inventory.$furnitures[id].$element.parent().find(".active").removeClass("active");
 
-                Client.inventory.$furnitures[id].$element.addClass("active");
+                Inventory.$furnitures[id].$element.addClass("active");
                 
                 setDisplay(furniture);
             });

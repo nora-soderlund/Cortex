@@ -51,16 +51,16 @@ Client.rooms.items.furniture = function(parent, id, direction) {
                 };
 
                 sprite.mouseclick = function(event) {
-                    if(Client.keys.down["ControlLeft"])
+                    if(Keys.down["ControlLeft"])
                         Client.rooms.interface.furniture.pickup.start(entity);
-                    else if(Client.keys.down["AltLeft"])
+                    else if(Keys.down["AltLeft"])
                         Client.rooms.interface.furniture.move.start(entity);
-                    else if(Client.keys.down["ShiftLeft"])
+                    else if(Keys.down["ShiftLeft"])
                         Client.rooms.interface.furniture.rotate.start(entity);
                 };
 
                 sprite.mousedown = function(event) {
-                    if(Client.keys.down["ControlLeft"])
+                    if(Keys.down["ControlLeft"])
                         Client.rooms.interface.furniture.pickup.start(entity);
                 };
 

@@ -26,7 +26,7 @@ Client.menu = new function() {
     });
 
     const $inventory = this.addItem("inventory", function() {
-        Client.inventory.toggle();
+        Inventory.toggle();
     });
 
     const $camera = this.addItem("camera", function() {

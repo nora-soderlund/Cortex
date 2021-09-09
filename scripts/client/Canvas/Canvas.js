@@ -27,7 +27,7 @@ class Canvas {
             let position = null;
 
             $(properties.canvas).on("mousedown", function(event) {
-                if(Client.keys.down["ShiftLeft"])
+                if(Keys.down["ShiftLeft"])
                     return;
 
                 properties.draggableEnabled = true;
