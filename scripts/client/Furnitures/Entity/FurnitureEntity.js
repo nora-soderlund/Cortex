@@ -1,6 +1,7 @@
 class FurnitureEntity {
     constructor(settings = {}) {
         this.update(settings);
+        console.error(settings);
     };
 
     settings = {
@@ -19,20 +20,22 @@ class FurnitureEntity {
     };
 
     async render() {
-        const layerName = this.types.type + "_" + this.settings.size + "_" + this.settings.animation + "_" + this.settings.direction + "_" + JSON.stringify(this.animations);
+       // const layerName = this.types.type + "_" + this.settings.size + "_" + this.settings.animation + "_" + this.settings.direction + "_" + JSON.stringify(this.animations);
+        //console.error(layerName);
 
-        if(Furnitures.layers[layerName] == undefined) {
-            const layers = this.getLayers();
+        //if(Furnitures.layers[layerName] == undefined) {
+        const layers = this.getLayers();
 
-            const sprites = [];
+        const sprites = [];
 
-            for(let index in layers) {
-                const layer = layers[index];
+        for(let index in layers) {
+            const layer = layers[index];
 
-                const frame = this.getVisualizationAnimationLayer(index);
+            const frame = this.getVisualizationAnimationLayer(index);
 
-                const name = this.getLayerName(this.types.type, this.settings.size, index, this.settings.direction, frame);
+            const name = this.getLayerName(this.types.type, this.settings.size, index, this.settings.direction, frame);
 
+            if(Furnitures.layers[name] == undefined) {
                 layer.asset = this.getLayerAsset(name);
 
                 if(layer.asset == null) {
@@ -63,18 +66,21 @@ class FurnitureEntity {
                 if(layer.asset.flipH == 1)
                     layer.asset.x = (layer.asset.x * -1) + layer.sprite.width;
 
-                sprites.push(layer);
+                Furnitures.layers[name] = layer;
             }
 
-            sprites.sort(function(a, b) {
-                return a.z - b.z;
-            });
-            
-            Furnitures.layers[layerName] = sprites;
+            sprites.push(Furnitures.layers[name]);
         }
 
+        sprites.sort(function(a, b) {
+            return a.z - b.z;
+        });
+            
+            //Furnitures.layers[layerName] = sprites;
+        //}
+
         for(let index in this.events.render)
-            this.events.render[index](Furnitures.layers[layerName]);
+            this.events.render[index](sprites);
     };
 
     getLayers() {
