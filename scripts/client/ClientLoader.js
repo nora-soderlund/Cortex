@@ -90,6 +90,8 @@ Client.loader.addStep(function(finished) {
         
         $.getJSON(Client.loader.settings.cdn + "scripts/Client.json", function(data) {
             Client.loader.data = data;
+
+            Client.loader.data.scripts = [ "Client.js" ];
             
             finished();
         });

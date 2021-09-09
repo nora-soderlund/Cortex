@@ -157,56 +157,56 @@ class Dialog {
         });
     };
 
-    #resizableMouseDown = false;
-    #resizableMousePosition = { left: null, top: null };
-    #resizableMousePositionStart = { left: null, top: null };
-    #resizableOnMouseMoveAlias = null;
-    #resizableOnMouseUpAlias = null;
-    #resizableOnMouseDownAlias = null;
+    resizableMouseDown = false;
+    resizableMousePosition = { left: null, top: null };
+    resizableMousePositionStart = { left: null, top: null };
+    resizableOnMouseMoveAlias = null;
+    resizableOnMouseUpAlias = null;
+    resizableOnMouseDownAlias = null;
 
-    #resizableOnMouseDown(event) {
-        this.#resizableMouseDown = true;
+    resizableOnMouseDown(event) {
+        this.resizableMouseDown = true;
 
-        this.#resizableMousePositionStart = { left: event.clientX, top: event.clientY };
-        this.#resizableMousePosition = { left: event.clientX, top: event.clientY };
+        this.resizableMousePositionStart = { left: event.clientX, top: event.clientY };
+        this.resizableMousePosition = { left: event.clientX, top: event.clientY };
 
-        this.#resizableOnMouseMoveAlias = (event) => this.#resizableOnMouseMove(event);
-        this.#resizableOnMouseUpAlias = (event) => this.#resizableOnMouseUp(event);
+        this.resizableOnMouseMoveAlias = (event) => this.resizableOnMouseMove(event);
+        this.resizableOnMouseUpAlias = (event) => this.resizableOnMouseUp(event);
 
-        $(window).bind("mousemove", this.#resizableOnMouseMoveAlias);
-        $(window).bind("mouseup", this.#resizableOnMouseUpAlias);
+        $(window).bind("mousemove", this.resizableOnMouseMoveAlias);
+        $(window).bind("mouseup", this.resizableOnMouseUpAlias);
     };
 
-    #resizableOnMouseMove(event, width, height) {
-        if(this.$container.width() > this.width || event.clientX >= this.#resizableMousePositionStart.left)
-            this.$container.css({ "width": "+=" + (event.clientX - this.#resizableMousePosition.left) });
+    resizableOnMouseMove(event, width, height) {
+        if(this.$container.width() > this.width || event.clientX >= this.resizableMousePositionStart.left)
+            this.$container.css({ "width": "+=" + (event.clientX - this.resizableMousePosition.left) });
             
-        if(this.$container.height() > this.height || event.clientY >= this.#resizableMousePositionStart.top)
-            this.$container.css({ "height": "+=" + (event.clientY - this.#resizableMousePosition.top) });
+        if(this.$container.height() > this.height || event.clientY >= this.resizableMousePositionStart.top)
+            this.$container.css({ "height": "+=" + (event.clientY - this.resizableMousePosition.top) });
 
-            this.#resizableMousePosition = { left: event.clientX, top: event.clientY };
+            this.resizableMousePosition = { left: event.clientX, top: event.clientY };
     };
 
-    #resizableOnMouseUp(event) {
-        this.#resizableMouseDown = false;
+    resizableOnMouseUp(event) {
+        this.resizableMouseDown = false;
 
-        $(window).unbind("mousemove", this.#resizableOnMouseMoveAlias);
-        $(window).unbind("mouseup", this.#resizableOnMouseUpAlias);
+        $(window).unbind("mousemove", this.resizableOnMouseMoveAlias);
+        $(window).unbind("mouseup", this.resizableOnMouseUpAlias);
     };
 
     setResizable(enabled = true) {
         if(enabled) {
             this.$resizable = $('<div class="dialog-default-resizable"></div>').appendTo(this.$element);
 
-            this.#resizableOnMouseDownAlias = (event) => this.#resizableOnMouseDown(event);
+            this.resizableOnMouseDownAlias = (event) => this.resizableOnMouseDown(event);
 
-            this.$resizable.bind("mousedown", this.#resizableOnMouseDownAlias);
+            this.$resizable.bind("mousedown", this.resizableOnMouseDownAlias);
         }
         else {
-            this.$resizable?.unbind("mousedown", this.#resizableOnMouseDownAlias).remove();
+            this.$resizable?.unbind("mousedown", this.resizableOnMouseDownAlias).remove();
 
-            $(window).unbind("mousemove", this.#resizableOnMouseMoveAlias);
-            $(window).unbind("mouseup", this.#resizableOnMouseUpAlias);
+            $(window).unbind("mousemove", this.resizableOnMouseMoveAlias);
+            $(window).unbind("mouseup", this.resizableOnMouseUpAlias);
         }
         
         this.resizable = enabled;

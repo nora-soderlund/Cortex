@@ -1,11 +1,15 @@
 class FurnitureRenderer {
     constructor(settings, $canvas, color = undefined) {
+        this.settings = settings;
+        this.$canvas = $canvas;
+        this.color = color;
+
         this.renderer();
     };
 
     async renderer() {
-        const loading = await Assets.getSpritesheet((settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
-            const context = $canvas[0].getContext("2d");
+        const loading = await Assets.getSpritesheet((this.settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
+            const context = this.$canvas[0].getContext("2d");
     
             context.canvas.width = image.width;
             context.canvas.height = image.height;
@@ -13,10 +17,10 @@ class FurnitureRenderer {
             context.drawImage(image, 0, 0);
         });
 
-        const entity = new FurnitureEntity(settings);
+        const entity = new FurnitureEntity(this.settings);
     
         entity.events.render.push(function(sprites) {
-            const context = $canvas[0].getContext("2d");
+            const context = this.$canvas[0].getContext("2d");
 
             let minLeft = 0, minTop = 0, maxWidth = 0, maxHeight = 0;
 
@@ -37,8 +41,8 @@ class FurnitureRenderer {
             context.canvas.width = ((minLeft * -1) + maxWidth);
             context.canvas.height = ((minTop * -1) + maxHeight);
 
-            if(color != undefined) {
-                context.fillStyle = color;
+            if(this.color != undefined) {
+                context.fillStyle = this.color;
              
                 context.fillRect(0, 0, context.canvas.width, context.canvas.height);
             }
@@ -50,11 +54,11 @@ class FurnitureRenderer {
             }
         });
     
-        entity.process().then(async function() {
+        entity.process().then(async () => {
             await entity.render();
 
             if(entity.types.visualization == "furniture_animated") {
-                setInterval(function() {
+                setInterval(() => {
                     const timestamp = performance.now();
     
                     if(!entity.updateAnimations(timestamp))
@@ -63,7 +67,7 @@ class FurnitureRenderer {
                     entity.render();
                 }, 1000 / 12);
 
-                $canvas.on("click", function() {
+                this.$canvas.on("click", function() {
                     entity.setAnimation(entity.getNextAnimation());
                 });
             }
