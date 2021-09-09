@@ -8,8 +8,8 @@ SocketMessages.register("OnUserFriendUpdate", function(data) {
         if(Client.user.friends[id] == undefined)
             Client.user.friends[id] = {};
 
-        if(data[index].status == 0 && Client.user.friends[id].status != data[index].status && Client.user.friends[id].request == undefined && Client.rooms.interface.users[id] != undefined)
-            data[index].request = new Client.rooms.interface.display.users.request(Client.rooms.interface.users[id]);
+        if(data[index].status == 0 && Client.user.friends[id].status != data[index].status && Client.user.friends[id].request == undefined && RoomInterface.users[id] != undefined)
+            data[index].request = new RoomInterface.display.users.request(RoomInterface.users[id]);
 
             
         if(Client.user.friends[id].menu != undefined)

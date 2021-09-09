@@ -1,3 +1,3 @@
-Client.rooms.interface.furniture = new function() {
+RoomInterface.furniture = new function() {
     this.logics = {};
 };

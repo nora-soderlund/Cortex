@@ -1,4 +1,4 @@
-Client.rooms.interface.camera = new function() {
+RoomInterface.camera = new function() {
     const entity = new CameraDialog({
         title: "Room Camera",
         

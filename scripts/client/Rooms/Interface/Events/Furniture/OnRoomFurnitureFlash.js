@@ -1,8 +1,8 @@
 SocketMessages.register("OnRoomFurnitureFlash", function(data) {
     const furnitures = [];
 
-    for(let id in Client.rooms.interface.furnitures) {
-        const entity = Client.rooms.interface.furnitures[id];
+    for(let id in RoomInterface.furnitures) {
+        const entity = RoomInterface.furnitures[id];
 
         if(entity.data.furniture != data.id)
             continue;
@@ -12,7 +12,7 @@ SocketMessages.register("OnRoomFurnitureFlash", function(data) {
 
     function setAnimation(animation) {
         for(let index in furnitures)
-            Client.rooms.interface.furnitures[furnitures[index]].furniture.setAnimation(animation);
+            RoomInterface.furnitures[furnitures[index]].furniture.setAnimation(animation);
     };
 
     setAnimation(data.animation);

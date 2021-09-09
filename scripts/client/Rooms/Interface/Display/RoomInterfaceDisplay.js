@@ -1,11 +1,11 @@
-Client.rooms.interface.display = new function() {
+RoomInterface.display = new function() {
     this.$element = $(
         '<div class="room-interface-display">' +
             '<div class="room-interface-display-content"></div>' +
 
             '<div class="room-interface-display-buttons"></div>' + 
         '</div>'
-    ).hide().appendTo(Client.rooms.interface.$element);
+    ).hide().appendTo(RoomInterface.$element);
 
     this.$content = this.$element.find(".room-interface-display-content");
     this.$buttons = this.$element.find(".room-interface-display-buttons");
@@ -79,24 +79,24 @@ Client.rooms.interface.display = new function() {
 
         new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
 
-        if(Client.rooms.interface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
+        if(RoomInterface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
             this.addButton("Pickup", function() {
-                Client.rooms.interface.furniture.pickup.start(entity);
+                RoomInterface.furniture.pickup.start(entity);
             });
         }
 
-        if(Client.rooms.interface.data.rights.includes(Client.user.id)) {
+        if(RoomInterface.data.rights.includes(Client.user.id)) {
             this.addButton("Rotate", function() {
-                Client.rooms.interface.furniture.rotate.start(entity);
+                RoomInterface.furniture.rotate.start(entity);
             });
             
             this.addButton("Move", function() {
-                Client.rooms.interface.furniture.move.start(entity);
+                RoomInterface.furniture.move.start(entity);
             });
 
-            if(Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) {
+            if(RoomInterface.furniture.logics[entity.furniture.types.logic] != undefined) {
                 this.addButton("Use", function() {
-                    Client.rooms.interface.furniture.use.start(entity);
+                    RoomInterface.furniture.use.start(entity);
                 });
             }
         }
@@ -105,26 +105,26 @@ Client.rooms.interface.display = new function() {
     };
 
     this.hide = function() {
-        Client.rooms.interface.display.entity = undefined;
+        RoomInterface.display.entity = undefined;
         
-        Client.rooms.interface.display.$element.hide();
+        RoomInterface.display.$element.hide();
     };
 
-    Client.rooms.interface.cursor.events.click.push(function(entity) {
+    RoomInterface.cursor.events.click.push(function(entity) {
         if(entity == undefined) {
-            Client.rooms.interface.display.hide();
+            RoomInterface.display.hide();
             
             return;
         }
 
         switch(entity.entity.name) {
             case "furniture":
-                Client.rooms.interface.display.furniture(entity.entity);
+                RoomInterface.display.furniture(entity.entity);
 
                 break;
 
             case "figure":
-                Client.rooms.interface.display.figure(entity.entity);
+                RoomInterface.display.figure(entity.entity);
 
                 break;
         }

@@ -1,20 +1,20 @@
 SocketMessages.register("OnRoomEnter", async function(data) {
-    Client.rooms.interface.entity.door = undefined;
+    RoomInterface.entity.door = undefined;
 
     if(data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X')
-        Client.rooms.interface.entity.door = data.map.door;
+        RoomInterface.entity.door = data.map.door;
 
     Client.rooms.navigator.hide();
 
-    await Client.rooms.interface.clear();
+    await RoomInterface.clear();
 
-    Client.rooms.interface.data = data;
+    RoomInterface.data = data;
 
     SocketMessages.sendCall({ OnRoomMapStackUpdate: null }, "OnRoomMapStackUpdate").then(function(result) {
-        Client.rooms.interface.data.map.stack = result;
+        RoomInterface.data.map.stack = result;
     });
 
-    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door, {
+    RoomInterface.map = new Client.rooms.items.map(RoomInterface.entity, data.map.floor, data.map.door, {
         thickness: data.floor_thickness,
         material: data.floor_material
     }, {
@@ -22,16 +22,16 @@ SocketMessages.register("OnRoomEnter", async function(data) {
         material: data.wall_material
     });
     
-    Client.rooms.interface.map.render().then(function() {
-        Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
+    RoomInterface.map.render().then(function() {
+        RoomInterface.entity.addEntity(RoomInterface.map);
 
-        const width = Client.rooms.interface.$element.width(), height = Client.rooms.interface.$element.height();
+        const width = RoomInterface.$element.width(), height = RoomInterface.$element.height();
 
-        Client.rooms.interface.entity.offset = [
-            (width / 2) - ((Client.rooms.interface.map.map.rows * 16) + (Client.rooms.interface.map.map.columns * 16)),
-            (height / 2) - ((Client.rooms.interface.map.map.rows * 8) + (Client.rooms.interface.map.map.columns * 8))
+        RoomInterface.entity.offset = [
+            (width / 2) - ((RoomInterface.map.map.rows * 16) + (RoomInterface.map.map.columns * 16)),
+            (height / 2) - ((RoomInterface.map.map.rows * 8) + (RoomInterface.map.map.columns * 8))
         ];
     });
 
-    Client.rooms.interface.start();
+    RoomInterface.start();
 });

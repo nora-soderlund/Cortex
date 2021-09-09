@@ -1,8 +1,8 @@
-Client.rooms.interface.furniture.use = new function() {
+RoomInterface.furniture.use = new function() {
     this.start = async function(entity, sprite) {
-        if(Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined)
-            Client.rooms.interface.furniture.logics[entity.furniture.types.logic](entity, sprite);
+        if(RoomInterface.furniture.logics[entity.furniture.types.logic] != undefined)
+            RoomInterface.furniture.logics[entity.furniture.types.logic](entity, sprite);
         else
-            Client.rooms.interface.furniture.logics["furniture_basic"](entity, sprite);
+            RoomInterface.furniture.logics["furniture_basic"](entity, sprite);
     };
 };

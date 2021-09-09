@@ -1,4 +1,4 @@
-Client.rooms.interface.furniture.logics.furniture_custom_stack_height = function(entity) {
+RoomInterface.furniture.logics.furniture_custom_stack_height = function(entity) {
     if(entity.dialog != undefined) {
         entity.dialog.show();
 

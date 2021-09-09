@@ -1,4 +1,4 @@
-Client.rooms.interface.furniture.pickup = new function() {
+RoomInterface.furniture.pickup = new function() {
     this.start = async function(entity) {
         entity.alpha = .5;
 

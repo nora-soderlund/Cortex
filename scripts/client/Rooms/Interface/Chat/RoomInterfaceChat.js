@@ -1,5 +1,5 @@
-Client.rooms.interface.chat = new function() {
-    this.$element = $('<div class="room-interface-chat"></div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.chat = new function() {
+    this.$element = $('<div class="room-interface-chat"></div>').appendTo(RoomInterface.$element);
 
     this.interval = null;
 
@@ -12,7 +12,7 @@ Client.rooms.interface.chat = new function() {
         this.stopInterval();
 
         this.interval = setInterval(function() {
-            Client.rooms.interface.chat.updateMessages();
+            RoomInterface.chat.updateMessages();
         }, 3 * 1000);
     };
 
@@ -137,19 +137,19 @@ Client.rooms.interface.chat = new function() {
         if(this.messages.length == 0)
             return;
 
-        if(this.margin == Client.rooms.interface.entity.offset[0])
+        if(this.margin == RoomInterface.entity.offset[0])
             return;
 
-        this.margin = Client.rooms.interface.entity.offset[0];
+        this.margin = RoomInterface.entity.offset[0];
 
-        this.$element.css("margin-left", Client.rooms.interface.entity.offset[0] + "px");
+        this.$element.css("margin-left", RoomInterface.entity.offset[0] + "px");
     };
 
-    Client.rooms.interface.entity.events.render.push(function() {
-        Client.rooms.interface.chat.render();
+    RoomInterface.entity.events.render.push(function() {
+        RoomInterface.chat.render();
     });
 };
 
 Loader.addAsset(async function() {
-    Client.rooms.interface.chat.assets = await Assets.getManifest("HabboRoomChat");
+    RoomInterface.chat.assets = await Assets.getManifest("HabboRoomChat");
 });

@@ -1,8 +1,8 @@
-Client.rooms.interface.furniture.move = new function() {
+RoomInterface.furniture.move = new function() {
     this.start = async function(entity) {
         entity.disable();
 
-        Client.rooms.interface.furniture.place.start(entity.data.furniture, function(result) {
+        RoomInterface.furniture.place.start(entity.data.furniture, function(result) {
             if(result.entity.enabled == false) {
                 result.stop();
 

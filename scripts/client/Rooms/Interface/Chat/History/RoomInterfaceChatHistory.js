@@ -1,4 +1,4 @@
-Client.rooms.interface.chat.history = new function() {
+RoomInterface.chat.history = new function() {
     this.$element = $(
         '<div class="room-interface-chat-history">' +
             '<div class="room-interface-chat-history-messages">' +
@@ -9,7 +9,7 @@ Client.rooms.interface.chat.history = new function() {
                 '<div class="room-interface-chat-history-button"></div>' +
             '</div>' +
         '</div>'
-    ).appendTo(Client.rooms.interface.$element);
+    ).appendTo(RoomInterface.$element);
 
     this.$messages = this.$element.find(".room-interface-chat-history-messages-content");
 
@@ -18,48 +18,48 @@ Client.rooms.interface.chat.history = new function() {
     this.mouseDown = false;
     this.mousePosition = false;
     this.mouseMove = function(event) {
-        if(!Client.rooms.interface.chat.history.mouseDown)
+        if(!RoomInterface.chat.history.mouseDown)
             return;
 
-        let height = (Client.rooms.interface.chat.history.$element.height() + (event.clientY - Client.rooms.interface.chat.history.mousePosition));
+        let height = (RoomInterface.chat.history.$element.height() + (event.clientY - RoomInterface.chat.history.mousePosition));
 
         if(height < 30 || height > $(window).height() / 2)
             return;
 
-        if(height < 50 && (height < Client.rooms.interface.chat.history.$element.height())) {
+        if(height < 50 && (height < RoomInterface.chat.history.$element.height())) {
             height = 30;
 
-            Client.rooms.interface.chat.history.mouseDown = false;
+            RoomInterface.chat.history.mouseDown = false;
     
-            $(window).unbind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-            $(window).unbind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+            $(window).unbind("mouseup", RoomInterface.chat.history.mouseUp);
+            $(window).unbind("mousemove", RoomInterface.chat.history.mouseMove);
         }
 
-        Client.rooms.interface.chat.history.$messages[0].scrollTop += (Client.rooms.interface.chat.history.$element.height() - height);
+        RoomInterface.chat.history.$messages[0].scrollTop += (RoomInterface.chat.history.$element.height() - height);
 
-        Client.rooms.interface.chat.history.$element.css({
+        RoomInterface.chat.history.$element.css({
             "height": height + "px"
         });
 
-        Client.rooms.interface.chat.history.mousePosition = event.clientY;
+        RoomInterface.chat.history.mousePosition = event.clientY;
     };
     this.mouseUp = function(event) {
-        if(!Client.rooms.interface.chat.history.mouseDown)
+        if(!RoomInterface.chat.history.mouseDown)
             return;
 
-        Client.rooms.interface.chat.history.mouseDown = false;
+        RoomInterface.chat.history.mouseDown = false;
 
-        $(window).unbind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-        $(window).unbind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+        $(window).unbind("mouseup", RoomInterface.chat.history.mouseUp);
+        $(window).unbind("mousemove", RoomInterface.chat.history.mouseMove);
     };
 
     this.$button.on("mousedown", function(event) {
-        Client.rooms.interface.chat.history.mouseDown = true;
+        RoomInterface.chat.history.mouseDown = true;
 
-        Client.rooms.interface.chat.history.mousePosition = event.clientY;
+        RoomInterface.chat.history.mousePosition = event.clientY;
 
-        $(window).bind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-        $(window).bind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+        $(window).bind("mouseup", RoomInterface.chat.history.mouseUp);
+        $(window).bind("mousemove", RoomInterface.chat.history.mouseMove);
     });
 
     this.messages = [];
@@ -67,7 +67,7 @@ Client.rooms.interface.chat.history = new function() {
     this.addMessage = function(image, left) {
         const previousScroll = this.$messages[0].scrollTop;
 
-        const $canvas = $('<canvas class="room-interface-chat-message" width="' + image.width + '" height="' + image.height + '"></canvas>').css("margin-left", Client.rooms.interface.entity.offset[0] + left).appendTo(this.$messages);
+        const $canvas = $('<canvas class="room-interface-chat-message" width="' + image.width + '" height="' + image.height + '"></canvas>').css("margin-left", RoomInterface.entity.offset[0] + left).appendTo(this.$messages);
         const context = $canvas[0].getContext("2d");
 
         context.drawImage(image, 0, 0);
@@ -87,6 +87,6 @@ Client.rooms.interface.chat.history = new function() {
     };
 };
 
-Client.rooms.interface.events.stop.push(function() {
-    Client.rooms.interface.chat.history.reset();
+RoomInterface.events.stop.push(function() {
+    RoomInterface.chat.history.reset();
 });

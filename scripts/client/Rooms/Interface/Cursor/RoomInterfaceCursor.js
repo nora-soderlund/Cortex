@@ -1,4 +1,4 @@
-Client.rooms.interface.cursor = new function() {
+RoomInterface.cursor = new function() {
     this.down = false;
     this.downTimestamp = 0;
     this.downFrame = 0;
@@ -12,118 +12,118 @@ Client.rooms.interface.cursor = new function() {
         doubleclick: []
     };
 
-    Client.rooms.interface.entity.$canvas.on("mousedown", function(event) {
-        Client.rooms.interface.cursor.down = true;
+    RoomInterface.entity.$canvas.on("mousedown", function(event) {
+        RoomInterface.cursor.down = true;
 
-        Client.rooms.interface.cursor.downTimestamp = performance.now();
+        RoomInterface.cursor.downTimestamp = performance.now();
         
-        Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
+        RoomInterface.cursor.position = [ event.offsetX, event.offsetY ];
 
-        if(Client.rooms.interface.frameLimit != 0) {
-            Client.rooms.interface.cursor.downFrame = Client.rooms.interface.frameLimit;
+        if(RoomInterface.frameLimit != 0) {
+            RoomInterface.cursor.downFrame = RoomInterface.frameLimit;
 
-            Client.rooms.interface.frameLimit = 0;
+            RoomInterface.frameLimit = 0;
         }
     }).on("mouseup", function() {
-        Client.rooms.interface.cursor.down = false;
+        RoomInterface.cursor.down = false;
 
-        Client.rooms.interface.frameLimit = Client.rooms.interface.cursor.downFrame;
+        RoomInterface.frameLimit = RoomInterface.cursor.downFrame;
     }).on("mousemove", function(event) {
-        if(Client.rooms.interface.entity.currentEntity != undefined && Client.rooms.interface.cursor.down)
-            Client.rooms.interface.entity.currentEntity.sprite.mousedown(event);
+        if(RoomInterface.entity.currentEntity != undefined && RoomInterface.cursor.down)
+            RoomInterface.entity.currentEntity.sprite.mousedown(event);
 
-        if(!Client.rooms.interface.cursor.down || (Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"])) {
-            Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
+        if(!RoomInterface.cursor.down || (Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"])) {
+            RoomInterface.cursor.position = [ event.offsetX, event.offsetY ];
 
             return;
         }
 
-        Client.rooms.interface.entity.offset[0] += (event.offsetX - Client.rooms.interface.cursor.position[0]);
-        Client.rooms.interface.entity.offset[1] += (event.offsetY - Client.rooms.interface.cursor.position[1]);
+        RoomInterface.entity.offset[0] += (event.offsetX - RoomInterface.cursor.position[0]);
+        RoomInterface.entity.offset[1] += (event.offsetY - RoomInterface.cursor.position[1]);
 
-        Client.rooms.interface.cursor.position = [ event.offsetX, event.offsetY ];
+        RoomInterface.cursor.position = [ event.offsetX, event.offsetY ];
     }).on("touchstart", function(event) {
-        Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+        RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
-        Client.rooms.interface.cursor.down = true;
+        RoomInterface.cursor.down = true;
     }).on("touchmove", function(event) {
-        if(Client.rooms.interface.cursor.position == null)
-            Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+        if(RoomInterface.cursor.position == null)
+            RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
-        if(!Client.rooms.interface.cursor.down)
+        if(!RoomInterface.cursor.down)
             return;
 
-        Client.rooms.interface.entity.offset[0] += (event.touches[0].clientX - Client.rooms.interface.cursor.position[0]);
-        Client.rooms.interface.entity.offset[1] += (event.touches[0].clientY - Client.rooms.interface.cursor.position[1]);
+        RoomInterface.entity.offset[0] += (event.touches[0].clientX - RoomInterface.cursor.position[0]);
+        RoomInterface.entity.offset[1] += (event.touches[0].clientY - RoomInterface.cursor.position[1]);
 
-        Client.rooms.interface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
+        RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
     }).on("touchend", function(event) {
-        Client.rooms.interface.cursor.down = false;
+        RoomInterface.cursor.down = false;
     }).on("dblclick", function(event) {
-        if(Client.rooms.interface.furniture.place.enabled)
+        if(RoomInterface.furniture.place.enabled)
             return;
 
-        if(Client.rooms.interface.entity.currentEntity != undefined)
-            Client.rooms.interface.entity.currentEntity.sprite.mousedoubleclick(event);
+        if(RoomInterface.entity.currentEntity != undefined)
+            RoomInterface.entity.currentEntity.sprite.mousedoubleclick(event);
         
-        for(let index in Client.rooms.interface.cursor.events.doubleclick)
-            Client.rooms.interface.cursor.events.doubleclick[index](Client.rooms.interface.entity.currentEntity, event);
+        for(let index in RoomInterface.cursor.events.doubleclick)
+            RoomInterface.cursor.events.doubleclick[index](RoomInterface.entity.currentEntity, event);
     }).on("click", function(event) {
-        if(performance.now() - Client.rooms.interface.cursor.downTimestamp > 250)
+        if(performance.now() - RoomInterface.cursor.downTimestamp > 250)
             return;
 
-        if(Client.rooms.interface.furniture.place.enabled) {
-            Client.rooms.interface.furniture.place.click();
+        if(RoomInterface.furniture.place.enabled) {
+            RoomInterface.furniture.place.click();
             
             return;
         }
 
-        if(Client.rooms.interface.entity.currentMapEntity != undefined) {
+        if(RoomInterface.entity.currentMapEntity != undefined) {
             if(!(Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"]))
-                SocketMessages.send({ OnRoomMapClick: { row: Client.rooms.interface.entity.currentMapEntity.result.row, column: Client.rooms.interface.entity.currentMapEntity.result.column } });
+                SocketMessages.send({ OnRoomMapClick: { row: RoomInterface.entity.currentMapEntity.result.row, column: RoomInterface.entity.currentMapEntity.result.column } });
         }
 
-        if(Client.rooms.interface.entity.currentEntity != undefined)
-            Client.rooms.interface.entity.currentEntity.sprite.mouseclick(event);
+        if(RoomInterface.entity.currentEntity != undefined)
+            RoomInterface.entity.currentEntity.sprite.mouseclick(event);
         
-        for(let index in Client.rooms.interface.cursor.events.click)
-            Client.rooms.interface.cursor.events.click[index](Client.rooms.interface.entity.currentEntity, event);
+        for(let index in RoomInterface.cursor.events.click)
+            RoomInterface.cursor.events.click[index](RoomInterface.entity.currentEntity, event);
     }).on("mouseout", function() {
-        Client.rooms.interface.cursor.down = false;
+        RoomInterface.cursor.down = false;
 
-        Client.rooms.interface.cursor.position = [ 0, 0 ];
+        RoomInterface.cursor.position = [ 0, 0 ];
     });
 
-    const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
+    const cursor = new Client.rooms.items.furniture(RoomInterface.entity, "HabboRoomCursor", 0);
     cursor.name = "cursor";
     cursor.render();
     cursor.disable();
 
-    Client.rooms.interface.events.start.push(function() {
-        Client.rooms.interface.entity.addEntity(cursor);
+    RoomInterface.events.start.push(function() {
+        RoomInterface.entity.addEntity(cursor);
     });
 
-    Client.rooms.interface.entity.events.render.push(function() {
-        Client.rooms.interface.entity.currentMapEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
+    RoomInterface.entity.events.render.push(function() {
+        RoomInterface.entity.currentMapEntity = RoomInterface.entity.getEntity(RoomInterface.cursor.position, "map");
         
-        if(Client.rooms.interface.entity.currentMapEntity == undefined) {
+        if(RoomInterface.entity.currentMapEntity == undefined) {
             if(cursor.enabled) {
                 cursor.disable();
 
-                for(let index in Client.rooms.interface.cursor.events.unhover)
-                    Client.rooms.interface.cursor.events.unhover[index]();
+                for(let index in RoomInterface.cursor.events.unhover)
+                    RoomInterface.cursor.events.unhover[index]();
             }
         }
         else {
-            const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row), column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column), depth = Math.round(Client.rooms.interface.entity.currentMapEntity.result.depth);
+            const row = parseInt(RoomInterface.entity.currentMapEntity.result.row), column = parseInt(RoomInterface.entity.currentMapEntity.result.column), depth = Math.round(RoomInterface.entity.currentMapEntity.result.depth);
 
             cursor.setCoordinates(row, column, depth, -2000);
             cursor.enable();
 
-            for(let index in Client.rooms.interface.cursor.events.hover)
-                Client.rooms.interface.cursor.events.hover[index]({ row, column, depth });
+            for(let index in RoomInterface.cursor.events.hover)
+                RoomInterface.cursor.events.hover[index]({ row, column, depth });
         }
 
-        Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
+        RoomInterface.entity.currentEntity = RoomInterface.entity.getEntity(RoomInterface.cursor.position);
     });
 };

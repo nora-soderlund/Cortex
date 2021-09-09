@@ -6,7 +6,7 @@ const MenuFriends = new class {
         this.element.className = "menu-friends";
         Menu.element.append(this.element);
 
-        Client.rooms.interface.events.stop.push(function() {
+        RoomInterface.events.stop.push(function() {
             for(let id in Client.user.friends) {
                 if(Client.user.friends[id].request == undefined)
                     continue;

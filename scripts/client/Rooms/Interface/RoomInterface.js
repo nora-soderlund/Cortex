@@ -1,26 +1,30 @@
-Client.rooms.interface = new function() {
-    this.$element = $('<div class="room"></div>').prependTo(Client.$element);
+const RoomInterface = new class {
+    constructor() {
+        this.element = document.createElement("div");
+        this.element.className = "room";
+        Client.element.append(this.element);
+    
+        this.entity = new RoomEntity(this.element);
+    };
 
-    this.entity = new Client.rooms.entity(this.$element);
+    users = {};
+    furnitures = {};
 
-    this.users = {};
-    this.furnitures = {};
+    active = false;
 
-    this.active = false;
+    frameLimit = 60;
+    frameLimitStamp = null;
 
-    this.frameLimit = 60;
-    this.frameLimitStamp = null;
+    frameAdjust = 2;
+    frameAdjustTimestamp = performance.now();
+    frameAdjustCounts = [];    
 
-    this.frameAdjust = 2;
-    this.frameAdjustTimestamp = performance.now();
-    this.frameAdjustCounts = [];    
-
-    this.events = {
+    events = {
         start: [],
         stop: []
     };
 
-    this.start = function() {
+    start() {
         if(this.active == true)
             return;
 
@@ -34,11 +38,11 @@ Client.rooms.interface = new function() {
         window.requestAnimationFrame(this.render);
     };
 
-    this.stop = async function() {
-        Client.rooms.interface.active = false;
+    async stop() {
+        RoomInterface.active = false;
         
-        for(let index in Client.rooms.interface.events.stop)
-            Client.rooms.interface.events.stop[index]();
+        for(let index in RoomInterface.events.stop)
+            RoomInterface.events.stop[index]();
 
         return new Promise(function(resolve) {
             window.requestAnimationFrame(function() {
@@ -49,61 +53,61 @@ Client.rooms.interface = new function() {
         });
     }
 
-    this.render = function() {
-        if(!Client.rooms.interface.active)
+    render() {
+        if(!RoomInterface.active)
             return;
 
-        window.requestAnimationFrame(Client.rooms.interface.render);
+        window.requestAnimationFrame(RoomInterface.render);
 
-        if(Client.rooms.interface.frameLimit != 0) {
+        if(RoomInterface.frameLimit != 0) {
             let timestamp = performance.now();
 
-            const delta = timestamp - Client.rooms.interface.frameLimitStamp;
+            const delta = timestamp - RoomInterface.frameLimitStamp;
 
-            const interval = (1000 / Client.rooms.interface.frameLimit);
+            const interval = (1000 / RoomInterface.frameLimit);
 
             if(delta > interval) {
-                Client.rooms.interface.frameLimitStamp = timestamp - (delta % interval);
+                RoomInterface.frameLimitStamp = timestamp - (delta % interval);
 
                 timestamp = performance.now();
 
-                const { median, milliseconds, frames } = Client.rooms.interface.entity.render();
+                const { median, milliseconds, frames } = RoomInterface.entity.render();
 
-                if(timestamp - Client.rooms.interface.frameAdjustTimestamp > 1000) {
-                    Client.rooms.interface.frameAdjustTimestamp = timestamp;
+                if(timestamp - RoomInterface.frameAdjustTimestamp > 1000) {
+                    RoomInterface.frameAdjustTimestamp = timestamp;
 
-                    Client.rooms.interface.frameAdjustCounts.push(frames);
+                    RoomInterface.frameAdjustCounts.push(frames);
 
-                    if(Client.rooms.interface.frameAdjustCounts.length == 5) {
-                        Client.rooms.interface.frameAdjustCounts.splice(0, 1);
+                    if(RoomInterface.frameAdjustCounts.length == 5) {
+                        RoomInterface.frameAdjustCounts.splice(0, 1);
                         
-                        //console.log("median of frames per seconds in 5 seconds is " + Client.utils.getArrayMedian(Client.rooms.interface.frameAdjustCounts));
+                        //console.log("median of frames per seconds in 5 seconds is " + Client.utils.getArrayMedian(RoomInterface.frameAdjustCounts));
                     }
 
-                    //console.log("we have rendered " + frames + " frames and we wanted " + Client.rooms.interface.frameLimit + ", render took " + Math.round(performance.now() - timestamp) + "ms, we can afford " + Math.floor(1000 / (performance.now() - timestamp)) + " frames");
+                    //console.log("we have rendered " + frames + " frames and we wanted " + RoomInterface.frameLimit + ", render took " + Math.round(performance.now() - timestamp) + "ms, we can afford " + Math.floor(1000 / (performance.now() - timestamp)) + " frames");
                 
                 }
 
-                /*if((Client.rooms.interface.frameLimit - frames) > 3) {
-                    console.warn("[RoomInterface]%c We're detecting an urge for more frames (" + frames + "/" + Client.rooms.interface.frameLimit + ") than we can deliver, render took " + median + "/" + interval + "!", "color: lightblue");
+                /*if((RoomInterface.frameLimit - frames) > 3) {
+                    console.warn("[RoomInterface]%c We're detecting an urge for more frames (" + frames + "/" + RoomInterface.frameLimit + ") than we can deliver, render took " + median + "/" + interval + "!", "color: lightblue");
 
-                    if(Client.rooms.interface.frameLimit > 12) {
-                        Client.rooms.interface.frameLimit -= 2;
+                    if(RoomInterface.frameLimit > 12) {
+                        RoomInterface.frameLimit -= 2;
 
-                        if(Client.rooms.interface.frameLimit < 12)
-                            Client.rooms.interface.frameLimit = 12;
+                        if(RoomInterface.frameLimit < 12)
+                            RoomInterface.frameLimit = 12;
 
-                        console.warn("[RoomInterface]%c Lowered expected frame count down to " + Client.rooms.interface.frameLimit + "!", "color: lightblue");
+                        console.warn("[RoomInterface]%c Lowered expected frame count down to " + RoomInterface.frameLimit + "!", "color: lightblue");
                     }
                     
                 }*/
             }
         }
         else
-            Client.rooms.interface.entity.render();
+            RoomInterface.entity.render();
     };
 
-    this.clear = async function() {
+    async clear() {
         this.chat.clear();
 
         this.entity.entities.length = 0;

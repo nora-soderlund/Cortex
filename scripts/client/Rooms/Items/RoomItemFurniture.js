@@ -52,20 +52,20 @@ Client.rooms.items.furniture = function(parent, id, direction) {
 
                 sprite.mouseclick = function(event) {
                     if(Keys.down["ControlLeft"])
-                        Client.rooms.interface.furniture.pickup.start(entity);
+                        RoomInterface.furniture.pickup.start(entity);
                     else if(Keys.down["AltLeft"])
-                        Client.rooms.interface.furniture.move.start(entity);
+                        RoomInterface.furniture.move.start(entity);
                     else if(Keys.down["ShiftLeft"])
-                        Client.rooms.interface.furniture.rotate.start(entity);
+                        RoomInterface.furniture.rotate.start(entity);
                 };
 
                 sprite.mousedown = function(event) {
                     if(Keys.down["ControlLeft"])
-                        Client.rooms.interface.furniture.pickup.start(entity);
+                        RoomInterface.furniture.pickup.start(entity);
                 };
 
                 sprite.mousedoubleclick = function(event) {
-                    Client.rooms.interface.furniture.use.start(entity, sprite);
+                    RoomInterface.furniture.use.start(entity, sprite);
                 };
 
                 sprite.setOffset(64 - sprites[index].asset.x, 16 - sprites[index].asset.y);

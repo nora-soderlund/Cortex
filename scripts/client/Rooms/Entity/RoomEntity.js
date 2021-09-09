@@ -1,25 +1,30 @@
-Client.rooms.entity = function($parent) {
-    this.background = "#111";
+class RoomEntity {
+    constructor(parent) {
+        this.canvas = document.createElement("canvas");
+        parent.append(this.canvas);
+    };
+    
+    background = "#111";
 
-    this.offset = [ 0, 0 ];
+    offset = [ 0, 0 ];
 
-    this.center = 0;
+    center = 0;
 
-    this.setOffset = function(left, top) {
+    setOffset(left, top) {
         this.offset = [ left, top ];
     };
 
-    this.entities = [];
+    entities = [];
 
-    this.addEntity = function(entity) {
+    addEntity(entity) {
         this.entities.push(entity);
 
         return entity;
     };
 
-    this.currentEntity = undefined;
+    currentEntity = undefined;
 
-    this.getEntity = function(position, type = null) {
+    getEntity(position, type = null) {
         if(position == undefined)
             return undefined;
 
@@ -42,7 +47,7 @@ Client.rooms.entity = function($parent) {
         return undefined;
     };
 
-    this.removeEntity = function(entity) {
+    removeEntity(entity) {
         const index = this.entities.indexOf(entity);
 
         if(index == -1)
@@ -51,16 +56,12 @@ Client.rooms.entity = function($parent) {
         this.entities.splice(index, 1);
     };
 
-    this.$canvas = $('<canvas></canvas>').appendTo($parent);
+    updateCanvas() {
+        const width = this.canvas.parentElement.width;
+        const height = this.canvas.parentElement.height;
 
-    this.updateCanvas = function() {
-        const width = $parent.width();
-        const height = $parent.height();
-
-        this.$canvas.attr({
-            "width": width,
-            "height": height
-        });
+        this.canvas.width = width;
+        this.canvas.height = height;
 
         /*.css({
             "width": Math.floor(width * window.devicePixelRatio),
@@ -68,15 +69,15 @@ Client.rooms.entity = function($parent) {
         })*/
     };
 
-    this.sprites = [];
+    sprites = [];
 
-    this.frame = 0;
-    this.frameRate = 24;
-    this.frameRates = [];
-    this.frameStamp = performance.now();
-    this.framePerformance = [];
+    frame = 0;
+    frameRate = 24;
+    frameRates = [];
+    frameStamp = performance.now();
+    framePerformance = [];
 
-    this.render = function() {
+    render() {
         let timestamp = performance.now();
 
         if((timestamp - this.frameStamp) > 1000 / this.frameRate) {
@@ -96,7 +97,7 @@ Client.rooms.entity = function($parent) {
         for(let index = 0; index < this.events.beforeRender.length; index++)
             this.events.beforeRender[index]();
         
-        const context = this.$canvas[0].getContext("2d");
+        const context = this.canvas.getContext("2d");
 
         context.fillStyle = this.background;
 
@@ -156,18 +157,17 @@ Client.rooms.entity = function($parent) {
 
         this.frameRates.push(timestamp);
 
-        Client.development.$frames.text(this.frameRates.length + " FPS");
+        //Client.development.$frames.text(this.frameRates.length + " FPS");
 
         return { median, milliseconds, frames: this.frameRates.length };
     };
 
-    this.events = new function() {
-        this.render = [];
-
-        this.beforeRender = [];
+    events = {
+        render: [],
+        beforeRender: []
     };
 
-    this.setCursor = function(cursor) {
-        this.$canvas.css("cursor", cursor);
+    setCursor(cursor) {
+        this.canvas.style.cursor = cursor;
     };
 };

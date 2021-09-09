@@ -1,4 +1,4 @@
-Client.rooms.interface.information = new function() {
+RoomInterface.information = new function() {
     const entity = new Dialog({
         title: "Room Information",
         
@@ -26,16 +26,16 @@ Client.rooms.interface.information = new function() {
     });
 
     entity.events.show.push(function() {
-        entity.$title.text(Client.rooms.interface.data.title);
+        entity.$title.text(RoomInterface.data.title);
         entity.$owner.text("");
-        entity.$description.text((Client.rooms.interface.data.description == undefined)?(""):(Client.rooms.interface.data.description));
+        entity.$description.text((RoomInterface.data.description == undefined)?(""):(RoomInterface.data.description));
 
-        Game.getUser(Client.rooms.interface.data.user).then(function(user) {
+        Game.getUser(RoomInterface.data.user).then(function(user) {
             entity.$owner.text("By " + user.name);
         });
     });
 
-    Client.rooms.interface.events.stop.push(function() {
+    RoomInterface.events.stop.push(function() {
         if(entity.active)
             entity.hide();
     });

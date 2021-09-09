@@ -6,14 +6,14 @@ SocketMessages.register("OnRoomEntityRemove", async function(data) {
         for(let index in data.furnitures) {
             const id = data.furnitures[index];
 
-            const entity = Client.rooms.interface.furnitures[id];
+            const entity = RoomInterface.furnitures[id];
 
-            if(Client.rooms.interface.display.entity == entity)
-                Client.rooms.interface.display.hide();
+            if(RoomInterface.display.entity == entity)
+                RoomInterface.display.hide();
 
-            Client.rooms.interface.entity.removeEntity(entity);
+            RoomInterface.entity.removeEntity(entity);
 
-            delete Client.rooms.interface.furnitures[id];
+            delete RoomInterface.furnitures[id];
         }
     }
 
@@ -24,14 +24,14 @@ SocketMessages.register("OnRoomEntityRemove", async function(data) {
         for(let index in data.users) {
             const id = data.users[index];
 
-            const entity = Client.rooms.interface.users[id];
+            const entity = RoomInterface.users[id];
 
-            if(Client.rooms.interface.display.entity == entity)
-                Client.rooms.interface.display.hide();
+            if(RoomInterface.display.entity == entity)
+                RoomInterface.display.hide();
 
-            Client.rooms.interface.entity.removeEntity(entity);
+            RoomInterface.entity.removeEntity(entity);
 
-            delete Client.rooms.interface.users[id];
+            delete RoomInterface.users[id];
         }
     }
 });

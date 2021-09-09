@@ -23,7 +23,7 @@ Inventory.pages.furnitures = function(element) {
             </div>
         `;
 
-        if(Client.rooms.interface.active == true) {
+        if(RoomInterface.active == true) {
             const button = document.createElement("div");
             button.className = "dialog-button";
             button.innerTExt = "Place in room";
@@ -33,7 +33,7 @@ Inventory.pages.furnitures = function(element) {
             button.addEventListener("click", () => {
                 Inventory.hide();
                 
-                Client.rooms.interface.furniture.place.start(furniture.id, (result) => {
+                RoomInterface.furniture.place.start(furniture.id, (result) => {
                     if(result.entity.enabled == false) {
                         result.stop();
             

@@ -1,5 +1,5 @@
-Client.rooms.interface.chat.input = new function() {
-    this.$element = $('<div class="room-interface-chat-input"></div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.chat.input = new function() {
+    this.$element = $('<div class="room-interface-chat-input"></div>').appendTo(RoomInterface.$element);
 
     this.$input = $('<input type="text" placeholder="Click here to chat...">').appendTo(this.$element);
 

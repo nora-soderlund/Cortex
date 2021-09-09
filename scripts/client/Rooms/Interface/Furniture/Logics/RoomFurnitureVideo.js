@@ -1,4 +1,4 @@
-Client.rooms.interface.furniture.logics.furniture_video = new function() {
+RoomInterface.furniture.logics.furniture_video = new function() {
     const entity = new Dialog({
         title: "Room Furniture Video",
         
@@ -120,7 +120,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
     entity.events.show.push(function() {
         entity.$videos.html("");
 
-        const furniture = Client.rooms.interface.furnitures[entity.data.id];
+        const furniture = RoomInterface.furnitures[entity.data.id];
 
         Furnitures.get(furniture.data.furniture).then(function(info) {
             //entity.setTitle(info.title);
@@ -186,7 +186,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function() {
 };
 
 SocketMessages.register("OnRoomFurnitureVideoUse", function(data) {
-    Client.rooms.interface.furniture.logics.furniture_video.data = data;
+    RoomInterface.furniture.logics.furniture_video.data = data;
 
-    Client.rooms.interface.furniture.logics.furniture_video.show();
+    RoomInterface.furniture.logics.furniture_video.show();
 });

@@ -1,8 +1,8 @@
-Client.rooms.interface.display.users = new function() {
+RoomInterface.display.users = new function() {
     this.tabs = new function() {
         this.entity = undefined;
 
-        this.$element = $('<div class="room-interface-user"></div>').appendTo(Client.rooms.interface.$element);
+        this.$element = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
 
         this.click = function(entity) {
             this.$element.html(
@@ -27,7 +27,7 @@ Client.rooms.interface.display.users = new function() {
         };
 
         this.render = function(sprites) {
-            const entity = Client.rooms.interface.display.users.tabs;
+            const entity = RoomInterface.display.users.tabs;
 
             const context = entity.$canvas[0].getContext("2d");
 
@@ -44,18 +44,18 @@ Client.rooms.interface.display.users = new function() {
                 case "default": {
                     if(Client.user.id == this.entity.entity.data.id) {
                         this.add("Actions", function() {
-                            Client.rooms.interface.display.users.tabs.show("actions", "default");
+                            RoomInterface.display.users.tabs.show("actions", "default");
                         });
                     }
                     else {
                         this.add("Manage", function() {
-                            Client.rooms.interface.display.users.tabs.show("manage", "default");
+                            RoomInterface.display.users.tabs.show("manage", "default");
                         });
                     }
 
-                    if(Client.rooms.interface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
+                    if(RoomInterface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
                         this.add("Moderate", function() {
-                            Client.rooms.interface.display.users.tabs.show("moderate", "default");
+                            RoomInterface.display.users.tabs.show("moderate", "default");
                         });
                     }
 
@@ -68,31 +68,31 @@ Client.rooms.interface.display.users = new function() {
                     if(friend != undefined) {
                         if(friend.status == -1) {
                             this.add("Cancel Friend Invite", async function() {
-                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: RoomInterface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
     
-                                Client.rooms.interface.display.users.tabs.hide();
+                                RoomInterface.display.users.tabs.hide();
                             });
                         }
                         else if(friend.status == 0) {
                             this.add("Accept Friend Invite", async function() {
-                                await SocketMessages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+                                await SocketMessages.sendCall({ OnUserFriendAdd: { user: RoomInterface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
     
-                                Client.rooms.interface.display.users.tabs.hide();
+                                RoomInterface.display.users.tabs.hide();
                             });
                         }
                         else {
                             this.add("Remove Friend Invite", async function() {
-                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
+                                await SocketMessages.sendCall({ OnUserFriendRemove: { user: RoomInterface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendRemove");
     
-                                Client.rooms.interface.display.users.tabs.hide();
+                                RoomInterface.display.users.tabs.hide();
                             });
                         }
                     }
                     else {
                         this.add("Send Friend Invite", async function() {
-                            await SocketMessages.sendCall({ OnUserFriendAdd: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
+                            await SocketMessages.sendCall({ OnUserFriendAdd: { user: RoomInterface.display.users.tabs.entity.entity.data.id } }, "OnUserFriendAdd");
 
-                            Client.rooms.interface.display.users.tabs.hide();
+                            RoomInterface.display.users.tabs.hide();
                         });
                     }
 
@@ -103,38 +103,38 @@ Client.rooms.interface.display.users = new function() {
                     this.add("Wave", function() {
                         SocketMessages.sendCall({ OnRoomUserAction: "Wave" }, "OnRoomUserAction");
 
-                        Client.rooms.interface.display.users.tabs.hide();
+                        RoomInterface.display.users.tabs.hide();
                     });
                     
                     this.add("Blow", function() {
                         SocketMessages.sendCall({ OnRoomUserAction: "Blow" }, "OnRoomUserAction");
 
-                        Client.rooms.interface.display.users.tabs.hide();
+                        RoomInterface.display.users.tabs.hide();
                     });
 
                     this.add("Laugh", function() {
                         SocketMessages.sendCall({ OnRoomUserAction: "Laugh" }, "OnRoomUserAction");
 
-                        Client.rooms.interface.display.users.tabs.hide();
+                        RoomInterface.display.users.tabs.hide();
                     });
 
                     this.add("Idle", function() {
                         SocketMessages.sendCall({ OnRoomUserAction: "Idle" }, "OnRoomUserAction");
 
-                        Client.rooms.interface.display.users.tabs.hide();
+                        RoomInterface.display.users.tabs.hide();
                     });
 
                     break;
                 }
 
                 case "moderate": {
-                    if(Client.user.id == Client.rooms.interface.data.user) {
-                        Client.rooms.interface.data.rights = await SocketMessages.sendCall({ OnRoomRightsUpdate: null }, "OnRoomRightsUpdate");
+                    if(Client.user.id == RoomInterface.data.user) {
+                        RoomInterface.data.rights = await SocketMessages.sendCall({ OnRoomRightsUpdate: null }, "OnRoomRightsUpdate");
 
-                        this.add((Client.rooms.interface.data.rights.includes(this.entity.entity.data.id)?("Revoke"):("Grant")) + " Rights", async function() {
-                            await SocketMessages.sendCall({ OnRoomRightsUpdate: { user: Client.rooms.interface.display.users.tabs.entity.entity.data.id } }, "OnRoomRightsUpdate");
+                        this.add((RoomInterface.data.rights.includes(this.entity.entity.data.id)?("Revoke"):("Grant")) + " Rights", async function() {
+                            await SocketMessages.sendCall({ OnRoomRightsUpdate: { user: RoomInterface.display.users.tabs.entity.entity.data.id } }, "OnRoomRightsUpdate");
 
-                            Client.rooms.interface.display.users.tabs.show("moderate", "default");
+                            RoomInterface.display.users.tabs.show("moderate", "default");
                         });
                     }
 
@@ -144,7 +144,7 @@ Client.rooms.interface.display.users = new function() {
 
             if(page != previous) {
                 this.add("Back", function() {
-                    Client.rooms.interface.display.users.tabs.show(previous, "default");
+                    RoomInterface.display.users.tabs.show(previous, "default");
                 });
             }
         };
@@ -179,30 +179,30 @@ Client.rooms.interface.display.users = new function() {
             if(this.entity == undefined)
                 return;
                 
-            const center = Client.rooms.interface.entity.center;
-            const position = Client.rooms.interface.entity.offset;
+            const center = RoomInterface.entity.center;
+            const position = RoomInterface.entity.offset;
     
             const offset = this.entity.entity.getOffset();
     
             this.$element.css({
                 "left": center + position[0] + offset[0],
-                "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+                "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
             }).show();
         };
 
-        Client.rooms.interface.cursor.events.click.push(function(entity) {
+        RoomInterface.cursor.events.click.push(function(entity) {
             if(entity == undefined || entity.entity.name != "figure") {
-                Client.rooms.interface.display.users.tabs.hide();
+                RoomInterface.display.users.tabs.hide();
                 
                 return;
             }
     
-            Client.rooms.interface.display.users.tabs.hide();
-            Client.rooms.interface.display.users.tabs.click(entity);
+            RoomInterface.display.users.tabs.hide();
+            RoomInterface.display.users.tabs.click(entity);
         });
     
-        Client.rooms.interface.entity.events.render.push(function() {
-            Client.rooms.interface.display.users.tabs.hover();
+        RoomInterface.entity.events.render.push(function() {
+            RoomInterface.display.users.tabs.hover();
         });
     };
 
@@ -219,7 +219,7 @@ Client.rooms.interface.display.users = new function() {
                 '</div>' +
 
                 '<div class="room-interface-user-arrow"></div>' +
-            '</div>').appendTo(Client.rooms.interface.$element);
+            '</div>').appendTo(RoomInterface.$element);
 
         $element.find(".room-interface-user-request-close").on("click", function() {
             destroy();
@@ -238,9 +238,9 @@ Client.rooms.interface.display.users = new function() {
         });
 
         function destroy() {
-            const index = Client.rooms.interface.entity.events.render.indexOf(hover);
+            const index = RoomInterface.entity.events.render.indexOf(hover);
             
-            Client.rooms.interface.entity.events.render.splice(index, 1);
+            RoomInterface.entity.events.render.splice(index, 1);
 
             $element.remove();
         };
@@ -248,21 +248,21 @@ Client.rooms.interface.display.users = new function() {
         this.destroy = destroy;
 
         function hover() {
-            const center = Client.rooms.interface.entity.center;
-            const position = Client.rooms.interface.entity.offset;
+            const center = RoomInterface.entity.center;
+            const position = RoomInterface.entity.offset;
     
             const offset = entity.getOffset();
     
             $element.css({
                 "left": center + position[0] + offset[0],
-                "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+                "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
             }).show();
         };
     
-        Client.rooms.interface.entity.events.render.push(hover);
+        RoomInterface.entity.events.render.push(hover);
     };
 
-    this.$name = $('<div class="room-interface-user"></div>').appendTo(Client.rooms.interface.$element);
+    this.$name = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
 
     this.hover = function(entity) {
         if(entity == undefined || entity.entity.name != "figure") {
@@ -271,7 +271,7 @@ Client.rooms.interface.display.users = new function() {
             return;
         }
 
-        if(Client.rooms.interface.display.users.tabs.entity != undefined && entity.entity == Client.rooms.interface.display.users.tabs.entity.entity) {
+        if(RoomInterface.display.users.tabs.entity != undefined && entity.entity == RoomInterface.display.users.tabs.entity.entity) {
             this.$name.hide();
 
             return;
@@ -283,28 +283,28 @@ Client.rooms.interface.display.users = new function() {
             '<div class="room-interface-user-arrow"></div>'
         );
 
-        const center = Client.rooms.interface.entity.center;
-        const position = Client.rooms.interface.entity.offset;
+        const center = RoomInterface.entity.center;
+        const position = RoomInterface.entity.offset;
 
         const offset = entity.entity.getOffset();
 
         this.$name.css({
             "left": center + position[0] + offset[0],
-            "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+            "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
         }).show();
     };
 
-    Client.rooms.interface.entity.events.render.push(function() {
-        const entity = Client.rooms.interface.entity.currentEntity;
+    RoomInterface.entity.events.render.push(function() {
+        const entity = RoomInterface.entity.currentEntity;
 
-        Client.rooms.interface.display.users.hover(entity);
+        RoomInterface.display.users.hover(entity);
     });
 
-    Client.rooms.interface.events.stop.push(function() {
-        Client.rooms.interface.display.users.tabs.hide();
+    RoomInterface.events.stop.push(function() {
+        RoomInterface.display.users.tabs.hide();
 
-        for(let id in Client.rooms.interface.users)
-            if(Client.rooms.interface.users[id].request != undefined)
-                Client.rooms.interface.users[id].request.destroy();
+        for(let id in RoomInterface.users)
+            if(RoomInterface.users[id].request != undefined)
+                RoomInterface.users[id].request.destroy();
     });
 };

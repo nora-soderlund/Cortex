@@ -3,7 +3,7 @@ SocketMessages.register("OnRoomUserEffect", function(data) {
         data = [ data ];
 
     for(let index in data) {
-        const user = Client.rooms.interface.users[data[index].id];
+        const user = RoomInterface.users[data[index].id];
 
         if(user == undefined)
             continue;

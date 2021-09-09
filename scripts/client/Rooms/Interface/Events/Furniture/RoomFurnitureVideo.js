@@ -1,5 +1,5 @@
 SocketMessages.register("OnRoomFurnitureVideoStart", function(data) {
-    const entity = Client.rooms.interface.furnitures[data.id];
+    const entity = RoomInterface.furnitures[data.id];
 
     if(entity == undefined)
         return;
@@ -18,7 +18,7 @@ SocketMessages.register("OnRoomFurnitureVideoStart", function(data) {
 });
 
 SocketMessages.register("OnRoomFurnitureVideoStop", function(data) {
-    const entity = Client.rooms.interface.furnitures[data];
+    const entity = RoomInterface.furnitures[data];
 
     if(entity == undefined)
         return;

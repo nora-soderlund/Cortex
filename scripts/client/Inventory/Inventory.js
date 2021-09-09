@@ -43,8 +43,8 @@ Inventory.events.create.push(async function() {
 });
 
 Inventory.events.show.push(function() {
-    if(Client.rooms.interface.furniture.place.enabled == true) {
-        Client.rooms.interface.furniture.place.stop();
+    if(RoomInterface.furniture.place.enabled == true) {
+        RoomInterface.furniture.place.stop();
     }
 
     Inventory.tabs.show();

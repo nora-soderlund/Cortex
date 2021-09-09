@@ -1,4 +1,4 @@
-Client.rooms.interface.furniture.rotate = new function() {
+RoomInterface.furniture.rotate = new function() {
     this.start = async function(entity) {
         await SocketMessages.sendCall({
             OnRoomFurnitureRotate: {

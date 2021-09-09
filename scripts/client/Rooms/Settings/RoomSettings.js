@@ -34,7 +34,7 @@ Client.rooms.settings = new function() {
                     '</p>' +
                     
                     '<div class="input-pen">' +
-                        '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + Client.rooms.interface.data.title + '">' +
+                        '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + RoomInterface.data.title + '">' +
                     '</div>' + 
                 '</div>'
             ).appendTo($information).find(".room-creation-name").on("change", function() {
@@ -53,7 +53,7 @@ Client.rooms.settings = new function() {
                     '</p>' +
                     
                     '<div class="textarea-pen">' +
-                        '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + Client.rooms.interface.data.description + '</textarea>' +
+                        '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + RoomInterface.data.description + '</textarea>' +
                     '</div>' + 
                 '</div>'
             ).appendTo($information).find(".room-creation-description").on("change", function() {
@@ -104,13 +104,13 @@ Client.rooms.settings = new function() {
                 map: [],
 
                 door: {
-                    row: Client.rooms.interface.data.map.door.row,
-                    column: Client.rooms.interface.data.map.door.column
+                    row: RoomInterface.data.map.door.row,
+                    column: RoomInterface.data.map.door.column
                 }
             };
 
-            for(let row in Client.rooms.interface.data.map.floor)
-                data.map[row] = Client.rooms.interface.data.map.floor[row];
+            for(let row in RoomInterface.data.map.floor)
+                data.map[row] = RoomInterface.data.map.floor[row];
 
             entity.editor = new Client.rooms.editor(data, async function(map, extra) {
                 //entity.settings.map.map = map;
@@ -184,7 +184,7 @@ Client.rooms.settings = new function() {
 
                     $item.addClass("active");
 
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: Client.rooms.interface.data.floor_material }, { material: walls[index].id });
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: RoomInterface.data.floor_material }, { material: walls[index].id });
 
                     map.render().then(function() {
                         context.canvas.width = $preview.width();
@@ -194,7 +194,7 @@ Client.rooms.settings = new function() {
                         context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
                     });
 
-                    if(Client.rooms.interface.data.wall_material != walls[index].id) {
+                    if(RoomInterface.data.wall_material != walls[index].id) {
                         SocketMessages.send({
                             OnRoomSettingsUpdate: {
                                 wall: { material: walls[index].id }
@@ -203,7 +203,7 @@ Client.rooms.settings = new function() {
                     }
                 });
 
-                if(Client.rooms.interface.data.wall_material == walls[index].id)
+                if(RoomInterface.data.wall_material == walls[index].id)
                     $item.click();
             }
         });
@@ -233,7 +233,7 @@ Client.rooms.settings = new function() {
 
                     $item.addClass("active");
 
-                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, { material: Client.rooms.interface.data.wall_material });
+                    const map = new Client.rooms.map.entity([ "XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000" ], {}, { material: floors[index].id }, { material: RoomInterface.data.wall_material });
 
                     map.render().then(function() {
                         context.canvas.width = $preview.width();
@@ -243,7 +243,7 @@ Client.rooms.settings = new function() {
                         context.drawImage(map.$wall[0], -(8 * 16), ((6 * 16)) + map.offset);
                     });
 
-                    if(Client.rooms.interface.data.floor_material != floors[index].id) {
+                    if(RoomInterface.data.floor_material != floors[index].id) {
                         SocketMessages.send({
                             OnRoomSettingsUpdate: {
                                 floor: { material: floors[index].id }
@@ -252,7 +252,7 @@ Client.rooms.settings = new function() {
                     }
                 });
 
-                if(Client.rooms.interface.data.floor_material == floors[index].id)
+                if(RoomInterface.data.floor_material == floors[index].id)
                     $item.click();
             }
         });
@@ -281,6 +281,6 @@ Client.rooms.settings = new function() {
     return entity;
 };
 
-Client.rooms.interface.events.stop.push(function() {
+RoomInterface.events.stop.push(function() {
     Client.rooms.settings.destroy();
 });

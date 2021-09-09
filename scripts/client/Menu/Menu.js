@@ -23,15 +23,15 @@ const Menu = new class {
         });
     
         const camera = this.addItem("camera", function() {
-            Client.rooms.interface.camera.toggle();
+            RoomInterface.camera.toggle();
         });
     
-        Client.rooms.interface.events.start.push(function() {
+        RoomInterface.events.start.push(function() {
             inventory.show();
             camera.show();
         });
     
-        Client.rooms.interface.events.stop.push(function() {
+        RoomInterface.events.stop.push(function() {
             camera.hide();
             inventory.hide();
         });

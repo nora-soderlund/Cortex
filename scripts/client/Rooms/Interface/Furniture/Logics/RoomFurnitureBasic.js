@@ -1,4 +1,4 @@
-Client.rooms.interface.furniture.logics.furniture_basic = async function(entity, sprite) {
+RoomInterface.furniture.logics.furniture_basic = async function(entity, sprite) {
     const tag = (sprite == undefined)?(undefined):(sprite.tag);
 
     await SocketMessages.sendCall({

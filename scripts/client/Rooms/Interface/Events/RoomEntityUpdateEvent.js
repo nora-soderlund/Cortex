@@ -3,7 +3,7 @@ SocketMessages.register("OnRoomEntityUpdate", async function(data) {
         for(let index in data[key]) {
             const item = data[key][index];
 
-            const entity = Client.rooms.interface[key][index];
+            const entity = RoomInterface[key][index];
 
             if(item.position != undefined) {
                 if(item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined) {
@@ -21,7 +21,7 @@ SocketMessages.register("OnRoomEntityUpdate", async function(data) {
             }
 
             for(let property in item)
-                Client.rooms.interface[key][index].data[property] = item[property];
+                RoomInterface[key][index].data[property] = item[property];
         }
     }
 
@@ -31,45 +31,45 @@ SocketMessages.register("OnRoomEntityUpdate", async function(data) {
 
             if(data.users[index].position != undefined) {
                 if(data.users[index].position.direction != undefined) {
-                    Client.rooms.interface.users[index].figure.direction = data.users[index].position.direction;
+                    RoomInterface.users[index].figure.direction = data.users[index].position.direction;
 
                     render = true;
                 }
                 
                 if(data.users[index].position.actions != undefined) {
-                    await Client.rooms.interface.users[index].figure.setActions(data.users[index].position.actions);
+                    await RoomInterface.users[index].figure.setActions(data.users[index].position.actions);
 
                     render = true;
                 }
             }
                 
             if(data.users[index].action != undefined) {
-                await Client.rooms.interface.users[index].figure.setAction(data.users[index].action.action);
+                await RoomInterface.users[index].figure.setAction(data.users[index].action.action);
 
                 setTimeout(async function() {
-                    await Client.rooms.interface.users[index].figure.removeAction(data.users[index].action.action);
+                    await RoomInterface.users[index].figure.removeAction(data.users[index].action.action);
 
-                    Client.rooms.interface.users[index].figure.render();
+                    RoomInterface.users[index].figure.render();
                 }, data.users[index].action.time);
             }
 
-            Client.rooms.interface.users[index].figure.render();
+            RoomInterface.users[index].figure.render();
         }
     }
 
     if(data.furnitures != undefined) {
         for(let index in data.furnitures) {
             if(data.furnitures[index].animation != undefined) {
-                Client.rooms.interface.furnitures[index].furniture.setAnimation(data.furnitures[index].animation);
+                RoomInterface.furnitures[index].furniture.setAnimation(data.furnitures[index].animation);
             }
 
             if(data.furnitures[index].position != undefined) {
                 if(data.furnitures[index].position.direction != undefined) {
-                    Client.rooms.interface.furnitures[index].furniture.setDirection(data.furnitures[index].position.direction);
+                    RoomInterface.furnitures[index].furniture.setDirection(data.furnitures[index].position.direction);
                 }
             }
 
-            Client.rooms.interface.furnitures[index].furniture.render();
+            RoomInterface.furnitures[index].furniture.render();
         }
     }
 });

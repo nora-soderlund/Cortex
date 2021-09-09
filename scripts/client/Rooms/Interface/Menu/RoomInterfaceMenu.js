@@ -1,11 +1,11 @@
-Client.rooms.interface.menu = new function() {
+RoomInterface.menu = new function() {
     this.$element = $(
         '<div class="room-interface-menu active">' +
             '<div class="room-interface-menu-toggle"></div>' +
 
             '<div class="room-interface-menu-content"></div>' +
         '</div>'
-    ).appendTo(Client.rooms.interface.$element);
+    ).appendTo(RoomInterface.$element);
 
     this.$toggle = this.$element.find(".room-interface-menu-toggle");
 
@@ -26,15 +26,15 @@ Client.rooms.interface.menu = new function() {
     };
     
     this.link("information", "Information", function() {
-        Client.rooms.interface.information.toggle();
+        RoomInterface.information.toggle();
     });
     
     const $settings = this.link("settings", "Settings", function() {
         Client.rooms.settings.toggle();
     });
 
-    Client.rooms.interface.events.start.push(function() {
-        if(Client.rooms.interface.data.user == Client.user.id)
+    RoomInterface.events.start.push(function() {
+        if(RoomInterface.data.user == Client.user.id)
             $settings.show();
         else
             $settings.hide();

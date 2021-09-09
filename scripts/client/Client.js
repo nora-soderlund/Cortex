@@ -22,8 +22,8 @@ Client.development = new function () {
     const $content = $("<p>Performing a stress test on the client...<br><br></p>");
     Loader.setText($content);
     Loader.show();
-    const room = Client.rooms.interface.active;
-    if (room) Client.rooms.interface.stop();
+    const room = RoomInterface.active;
+    if (room) RoomInterface.stop();
     const start = performance.now();
     let assetStart = 0,
         assetSpritesStart = 0;
@@ -132,7 +132,7 @@ Client.development = new function () {
         }
       }
     }, "OnStressTest");
-    if (room) Client.rooms.interface.start();
+    if (room) RoomInterface.start();
     setTimeout(function () {
       Loader.hide();
     }, 1000);
@@ -149,8 +149,8 @@ Client.development.frames = new function () {
   $(window).on("wheel", function (event) {
     if (!event.shiftKey) return;
     const direction = event.originalEvent.deltaY < 0 ? 1 : -1;
-    if (!Client.rooms.interface.active) return;
-    Client.rooms.interface.frameLimit += direction;
+    if (!RoomInterface.active) return;
+    RoomInterface.frameLimit += direction;
   });
 }();
 Loader.ready(function () {
@@ -246,7 +246,7 @@ Loader.ready(function () {
 
     return entity;
   }();
-  Client.rooms.interface.cursor.events.click.push(function (entity) {
+  RoomInterface.cursor.events.click.push(function (entity) {
     Client.development.furni.hide();
   });
 });
@@ -2483,7 +2483,7 @@ Client.rooms = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.entity = function ($parent) {
+RoomEntity = function ($parent) {
   this.background = "#111";
   this.offset = [0, 0];
   this.center = 0;
@@ -3434,15 +3434,15 @@ Client.rooms.items.furniture = function (parent, id, direction) {
         };
 
         sprite.mouseclick = function (event) {
-          if (Keys.down["ControlLeft"]) Client.rooms.interface.furniture.pickup.start(entity);else if (Keys.down["AltLeft"]) Client.rooms.interface.furniture.move.start(entity);else if (Keys.down["ShiftLeft"]) Client.rooms.interface.furniture.rotate.start(entity);
+          if (Keys.down["ControlLeft"]) RoomInterface.furniture.pickup.start(entity);else if (Keys.down["AltLeft"]) RoomInterface.furniture.move.start(entity);else if (Keys.down["ShiftLeft"]) RoomInterface.furniture.rotate.start(entity);
         };
 
         sprite.mousedown = function (event) {
-          if (Keys.down["ControlLeft"]) Client.rooms.interface.furniture.pickup.start(entity);
+          if (Keys.down["ControlLeft"]) RoomInterface.furniture.pickup.start(entity);
         };
 
         sprite.mousedoubleclick = function (event) {
-          Client.rooms.interface.furniture.use.start(entity, sprite);
+          RoomInterface.furniture.use.start(entity, sprite);
         };
 
         sprite.setOffset(64 - sprites[index].asset.x, 16 - sprites[index].asset.y); //sprite.index = parseInt(sprites[index].index);
@@ -3504,9 +3504,9 @@ Client.rooms.items.video = function (parent, link, time) {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface = new function () {
+RoomInterface = new function () {
   this.$element = $('<div class="room"></div>').prependTo(Client.$element);
-  this.entity = new Client.rooms.entity(this.$element);
+  this.entity = new RoomEntity(this.$element);
   this.users = {};
   this.furnitures = {};
   this.active = false;
@@ -3531,9 +3531,9 @@ Client.rooms.interface = new function () {
   };
 
   this.stop = async function () {
-    Client.rooms.interface.active = false;
+    RoomInterface.active = false;
 
-    for (let index in Client.rooms.interface.events.stop) Client.rooms.interface.events.stop[index]();
+    for (let index in RoomInterface.events.stop) RoomInterface.events.stop[index]();
 
     return new Promise(function (resolve) {
       window.requestAnimationFrame(function () {
@@ -3545,45 +3545,45 @@ Client.rooms.interface = new function () {
   };
 
   this.render = function () {
-    if (!Client.rooms.interface.active) return;
-    window.requestAnimationFrame(Client.rooms.interface.render);
+    if (!RoomInterface.active) return;
+    window.requestAnimationFrame(RoomInterface.render);
 
-    if (Client.rooms.interface.frameLimit != 0) {
+    if (RoomInterface.frameLimit != 0) {
       let timestamp = performance.now();
-      const delta = timestamp - Client.rooms.interface.frameLimitStamp;
-      const interval = 1000 / Client.rooms.interface.frameLimit;
+      const delta = timestamp - RoomInterface.frameLimitStamp;
+      const interval = 1000 / RoomInterface.frameLimit;
 
       if (delta > interval) {
-        Client.rooms.interface.frameLimitStamp = timestamp - delta % interval;
+        RoomInterface.frameLimitStamp = timestamp - delta % interval;
         timestamp = performance.now();
         const {
           median,
           milliseconds,
           frames
-        } = Client.rooms.interface.entity.render();
+        } = RoomInterface.entity.render();
 
-        if (timestamp - Client.rooms.interface.frameAdjustTimestamp > 1000) {
-          Client.rooms.interface.frameAdjustTimestamp = timestamp;
-          Client.rooms.interface.frameAdjustCounts.push(frames);
+        if (timestamp - RoomInterface.frameAdjustTimestamp > 1000) {
+          RoomInterface.frameAdjustTimestamp = timestamp;
+          RoomInterface.frameAdjustCounts.push(frames);
 
-          if (Client.rooms.interface.frameAdjustCounts.length == 5) {
-            Client.rooms.interface.frameAdjustCounts.splice(0, 1); //console.log("median of frames per seconds in 5 seconds is " + Client.utils.getArrayMedian(Client.rooms.interface.frameAdjustCounts));
-          } //console.log("we have rendered " + frames + " frames and we wanted " + Client.rooms.interface.frameLimit + ", render took " + Math.round(performance.now() - timestamp) + "ms, we can afford " + Math.floor(1000 / (performance.now() - timestamp)) + " frames");
+          if (RoomInterface.frameAdjustCounts.length == 5) {
+            RoomInterface.frameAdjustCounts.splice(0, 1); //console.log("median of frames per seconds in 5 seconds is " + Client.utils.getArrayMedian(RoomInterface.frameAdjustCounts));
+          } //console.log("we have rendered " + frames + " frames and we wanted " + RoomInterface.frameLimit + ", render took " + Math.round(performance.now() - timestamp) + "ms, we can afford " + Math.floor(1000 / (performance.now() - timestamp)) + " frames");
 
         }
-        /*if((Client.rooms.interface.frameLimit - frames) > 3) {
-            console.warn("[RoomInterface]%c We're detecting an urge for more frames (" + frames + "/" + Client.rooms.interface.frameLimit + ") than we can deliver, render took " + median + "/" + interval + "!", "color: lightblue");
-              if(Client.rooms.interface.frameLimit > 12) {
-                Client.rooms.interface.frameLimit -= 2;
-                  if(Client.rooms.interface.frameLimit < 12)
-                    Client.rooms.interface.frameLimit = 12;
-                  console.warn("[RoomInterface]%c Lowered expected frame count down to " + Client.rooms.interface.frameLimit + "!", "color: lightblue");
+        /*if((RoomInterface.frameLimit - frames) > 3) {
+            console.warn("[RoomInterface]%c We're detecting an urge for more frames (" + frames + "/" + RoomInterface.frameLimit + ") than we can deliver, render took " + median + "/" + interval + "!", "color: lightblue");
+              if(RoomInterface.frameLimit > 12) {
+                RoomInterface.frameLimit -= 2;
+                  if(RoomInterface.frameLimit < 12)
+                    RoomInterface.frameLimit = 12;
+                  console.warn("[RoomInterface]%c Lowered expected frame count down to " + RoomInterface.frameLimit + "!", "color: lightblue");
             }
             
         }*/
 
       }
-    } else Client.rooms.interface.entity.render();
+    } else RoomInterface.entity.render();
   };
 
   this.clear = async function () {
@@ -3596,8 +3596,8 @@ Client.rooms.interface = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.chat = new function () {
-  this.$element = $('<div class="room-interface-chat"></div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.chat = new function () {
+  this.$element = $('<div class="room-interface-chat"></div>').appendTo(RoomInterface.$element);
   this.interval = null;
   this.messages = [];
 
@@ -3605,7 +3605,7 @@ Client.rooms.interface.chat = new function () {
     if (this.interval != null) return;
     this.stopInterval();
     this.interval = setInterval(function () {
-      Client.rooms.interface.chat.updateMessages();
+      RoomInterface.chat.updateMessages();
     }, 3 * 1000);
   };
 
@@ -3685,24 +3685,24 @@ Client.rooms.interface.chat = new function () {
 
   this.render = function () {
     if (this.messages.length == 0) return;
-    if (this.margin == Client.rooms.interface.entity.offset[0]) return;
-    this.margin = Client.rooms.interface.entity.offset[0];
-    this.$element.css("margin-left", Client.rooms.interface.entity.offset[0] + "px");
+    if (this.margin == RoomInterface.entity.offset[0]) return;
+    this.margin = RoomInterface.entity.offset[0];
+    this.$element.css("margin-left", RoomInterface.entity.offset[0] + "px");
   };
 
-  Client.rooms.interface.entity.events.render.push(function () {
-    Client.rooms.interface.chat.render();
+  RoomInterface.entity.events.render.push(function () {
+    RoomInterface.chat.render();
   });
 }();
 Loader.addAsset(async function () {
-  Client.rooms.interface.chat.assets = await Assets.getManifest("HabboRoomChat");
+  RoomInterface.chat.assets = await Assets.getManifest("HabboRoomChat");
 });// @hash v3-1DC84D0BCF3294A8A7EA483E5C3359593670679C
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.chat.input = new function () {
-  this.$element = $('<div class="room-interface-chat-input"></div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.chat.input = new function () {
+  this.$element = $('<div class="room-interface-chat-input"></div>').appendTo(RoomInterface.$element);
   this.$input = $('<input type="text" placeholder="Click here to chat...">').appendTo(this.$element);
   this.$input.on("keyup", function (event) {
     if (event.key != "Enter") return;
@@ -3717,50 +3717,50 @@ Client.rooms.interface.chat.input = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.chat.history = new function () {
-  this.$element = $('<div class="room-interface-chat-history">' + '<div class="room-interface-chat-history-messages">' + '<div class="room-interface-chat-history-messages-content"></div>' + '</div>' + '<div class="room-interface-chat-history-handle">' + '<div class="room-interface-chat-history-button"></div>' + '</div>' + '</div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.chat.history = new function () {
+  this.$element = $('<div class="room-interface-chat-history">' + '<div class="room-interface-chat-history-messages">' + '<div class="room-interface-chat-history-messages-content"></div>' + '</div>' + '<div class="room-interface-chat-history-handle">' + '<div class="room-interface-chat-history-button"></div>' + '</div>' + '</div>').appendTo(RoomInterface.$element);
   this.$messages = this.$element.find(".room-interface-chat-history-messages-content");
   this.$button = this.$element.find(".room-interface-chat-history-button");
   this.mouseDown = false;
   this.mousePosition = false;
 
   this.mouseMove = function (event) {
-    if (!Client.rooms.interface.chat.history.mouseDown) return;
-    let height = Client.rooms.interface.chat.history.$element.height() + (event.clientY - Client.rooms.interface.chat.history.mousePosition);
+    if (!RoomInterface.chat.history.mouseDown) return;
+    let height = RoomInterface.chat.history.$element.height() + (event.clientY - RoomInterface.chat.history.mousePosition);
     if (height < 30 || height > $(window).height() / 2) return;
 
-    if (height < 50 && height < Client.rooms.interface.chat.history.$element.height()) {
+    if (height < 50 && height < RoomInterface.chat.history.$element.height()) {
       height = 30;
-      Client.rooms.interface.chat.history.mouseDown = false;
-      $(window).unbind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-      $(window).unbind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+      RoomInterface.chat.history.mouseDown = false;
+      $(window).unbind("mouseup", RoomInterface.chat.history.mouseUp);
+      $(window).unbind("mousemove", RoomInterface.chat.history.mouseMove);
     }
 
-    Client.rooms.interface.chat.history.$messages[0].scrollTop += Client.rooms.interface.chat.history.$element.height() - height;
-    Client.rooms.interface.chat.history.$element.css({
+    RoomInterface.chat.history.$messages[0].scrollTop += RoomInterface.chat.history.$element.height() - height;
+    RoomInterface.chat.history.$element.css({
       "height": height + "px"
     });
-    Client.rooms.interface.chat.history.mousePosition = event.clientY;
+    RoomInterface.chat.history.mousePosition = event.clientY;
   };
 
   this.mouseUp = function (event) {
-    if (!Client.rooms.interface.chat.history.mouseDown) return;
-    Client.rooms.interface.chat.history.mouseDown = false;
-    $(window).unbind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-    $(window).unbind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+    if (!RoomInterface.chat.history.mouseDown) return;
+    RoomInterface.chat.history.mouseDown = false;
+    $(window).unbind("mouseup", RoomInterface.chat.history.mouseUp);
+    $(window).unbind("mousemove", RoomInterface.chat.history.mouseMove);
   };
 
   this.$button.on("mousedown", function (event) {
-    Client.rooms.interface.chat.history.mouseDown = true;
-    Client.rooms.interface.chat.history.mousePosition = event.clientY;
-    $(window).bind("mouseup", Client.rooms.interface.chat.history.mouseUp);
-    $(window).bind("mousemove", Client.rooms.interface.chat.history.mouseMove);
+    RoomInterface.chat.history.mouseDown = true;
+    RoomInterface.chat.history.mousePosition = event.clientY;
+    $(window).bind("mouseup", RoomInterface.chat.history.mouseUp);
+    $(window).bind("mousemove", RoomInterface.chat.history.mouseMove);
   });
   this.messages = [];
 
   this.addMessage = function (image, left) {
     const previousScroll = this.$messages[0].scrollTop;
-    const $canvas = $('<canvas class="room-interface-chat-message" width="' + image.width + '" height="' + image.height + '"></canvas>').css("margin-left", Client.rooms.interface.entity.offset[0] + left).appendTo(this.$messages);
+    const $canvas = $('<canvas class="room-interface-chat-message" width="' + image.width + '" height="' + image.height + '"></canvas>').css("margin-left", RoomInterface.entity.offset[0] + left).appendTo(this.$messages);
     const context = $canvas[0].getContext("2d");
     context.drawImage(image, 0, 0);
     this.$messages[0].scrollTop += this.$messages[0].scrollHeight - previousScroll;
@@ -3776,19 +3776,19 @@ Client.rooms.interface.chat.history = new function () {
     });
   };
 }();
-Client.rooms.interface.events.stop.push(function () {
-  Client.rooms.interface.chat.history.reset();
+RoomInterface.events.stop.push(function () {
+  RoomInterface.chat.history.reset();
 });// @hash v3-EB671153552AEB122F916155C2E2D67234D22BB6
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
 SocketMessages.register("OnRoomUserChat", async function (data) {
-  const user = Client.rooms.interface.users[data.id];
-  const center = Client.rooms.interface.entity.center;
-  const position = Client.rooms.interface.entity.offset;
+  const user = RoomInterface.users[data.id];
+  const center = RoomInterface.entity.center;
+  const position = RoomInterface.entity.offset;
   const offset = user.getOffset();
-  Client.rooms.interface.chat.addMessage("bot_a", "**" + user.data.name + ":** " + data.message, center + offset[0] + 64);
+  RoomInterface.chat.addMessage("bot_a", "**" + user.data.name + ":** " + data.message, center + offset[0] + 64);
   await user.figure.setAction("Talk");
   setTimeout(async function () {
     await user.figure.removeAction("Talk");
@@ -3799,7 +3799,7 @@ SocketMessages.register("OnRoomUserChat", async function (data) {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.cursor = new function () {
+RoomInterface.cursor = new function () {
   this.down = false;
   this.downTimestamp = 0;
   this.downFrame = 0;
@@ -3810,108 +3810,108 @@ Client.rooms.interface.cursor = new function () {
     click: [],
     doubleclick: []
   };
-  Client.rooms.interface.entity.$canvas.on("mousedown", function (event) {
-    Client.rooms.interface.cursor.down = true;
-    Client.rooms.interface.cursor.downTimestamp = performance.now();
-    Client.rooms.interface.cursor.position = [event.offsetX, event.offsetY];
+  RoomInterface.entity.$canvas.on("mousedown", function (event) {
+    RoomInterface.cursor.down = true;
+    RoomInterface.cursor.downTimestamp = performance.now();
+    RoomInterface.cursor.position = [event.offsetX, event.offsetY];
 
-    if (Client.rooms.interface.frameLimit != 0) {
-      Client.rooms.interface.cursor.downFrame = Client.rooms.interface.frameLimit;
-      Client.rooms.interface.frameLimit = 0;
+    if (RoomInterface.frameLimit != 0) {
+      RoomInterface.cursor.downFrame = RoomInterface.frameLimit;
+      RoomInterface.frameLimit = 0;
     }
   }).on("mouseup", function () {
-    Client.rooms.interface.cursor.down = false;
-    Client.rooms.interface.frameLimit = Client.rooms.interface.cursor.downFrame;
+    RoomInterface.cursor.down = false;
+    RoomInterface.frameLimit = RoomInterface.cursor.downFrame;
   }).on("mousemove", function (event) {
-    if (Client.rooms.interface.entity.currentEntity != undefined && Client.rooms.interface.cursor.down) Client.rooms.interface.entity.currentEntity.sprite.mousedown(event);
+    if (RoomInterface.entity.currentEntity != undefined && RoomInterface.cursor.down) RoomInterface.entity.currentEntity.sprite.mousedown(event);
 
-    if (!Client.rooms.interface.cursor.down || Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"]) {
-      Client.rooms.interface.cursor.position = [event.offsetX, event.offsetY];
+    if (!RoomInterface.cursor.down || Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"]) {
+      RoomInterface.cursor.position = [event.offsetX, event.offsetY];
       return;
     }
 
-    Client.rooms.interface.entity.offset[0] += event.offsetX - Client.rooms.interface.cursor.position[0];
-    Client.rooms.interface.entity.offset[1] += event.offsetY - Client.rooms.interface.cursor.position[1];
-    Client.rooms.interface.cursor.position = [event.offsetX, event.offsetY];
+    RoomInterface.entity.offset[0] += event.offsetX - RoomInterface.cursor.position[0];
+    RoomInterface.entity.offset[1] += event.offsetY - RoomInterface.cursor.position[1];
+    RoomInterface.cursor.position = [event.offsetX, event.offsetY];
   }).on("touchstart", function (event) {
-    Client.rooms.interface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
-    Client.rooms.interface.cursor.down = true;
+    RoomInterface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
+    RoomInterface.cursor.down = true;
   }).on("touchmove", function (event) {
-    if (Client.rooms.interface.cursor.position == null) Client.rooms.interface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
-    if (!Client.rooms.interface.cursor.down) return;
-    Client.rooms.interface.entity.offset[0] += event.touches[0].clientX - Client.rooms.interface.cursor.position[0];
-    Client.rooms.interface.entity.offset[1] += event.touches[0].clientY - Client.rooms.interface.cursor.position[1];
-    Client.rooms.interface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
+    if (RoomInterface.cursor.position == null) RoomInterface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
+    if (!RoomInterface.cursor.down) return;
+    RoomInterface.entity.offset[0] += event.touches[0].clientX - RoomInterface.cursor.position[0];
+    RoomInterface.entity.offset[1] += event.touches[0].clientY - RoomInterface.cursor.position[1];
+    RoomInterface.cursor.position = [event.touches[0].clientX, event.touches[0].clientY];
   }).on("touchend", function (event) {
-    Client.rooms.interface.cursor.down = false;
+    RoomInterface.cursor.down = false;
   }).on("dblclick", function (event) {
-    if (Client.rooms.interface.furniture.place.enabled) return;
-    if (Client.rooms.interface.entity.currentEntity != undefined) Client.rooms.interface.entity.currentEntity.sprite.mousedoubleclick(event);
+    if (RoomInterface.furniture.place.enabled) return;
+    if (RoomInterface.entity.currentEntity != undefined) RoomInterface.entity.currentEntity.sprite.mousedoubleclick(event);
 
-    for (let index in Client.rooms.interface.cursor.events.doubleclick) Client.rooms.interface.cursor.events.doubleclick[index](Client.rooms.interface.entity.currentEntity, event);
+    for (let index in RoomInterface.cursor.events.doubleclick) RoomInterface.cursor.events.doubleclick[index](RoomInterface.entity.currentEntity, event);
   }).on("click", function (event) {
-    if (performance.now() - Client.rooms.interface.cursor.downTimestamp > 250) return;
+    if (performance.now() - RoomInterface.cursor.downTimestamp > 250) return;
 
-    if (Client.rooms.interface.furniture.place.enabled) {
-      Client.rooms.interface.furniture.place.click();
+    if (RoomInterface.furniture.place.enabled) {
+      RoomInterface.furniture.place.click();
       return;
     }
 
-    if (Client.rooms.interface.entity.currentMapEntity != undefined) {
+    if (RoomInterface.entity.currentMapEntity != undefined) {
       if (!(Keys.down["ControlLeft"] || Keys.down["ShiftLeft"] || Keys.down["AltLeft"])) SocketMessages.send({
         OnRoomMapClick: {
-          row: Client.rooms.interface.entity.currentMapEntity.result.row,
-          column: Client.rooms.interface.entity.currentMapEntity.result.column
+          row: RoomInterface.entity.currentMapEntity.result.row,
+          column: RoomInterface.entity.currentMapEntity.result.column
         }
       });
     }
 
-    if (Client.rooms.interface.entity.currentEntity != undefined) Client.rooms.interface.entity.currentEntity.sprite.mouseclick(event);
+    if (RoomInterface.entity.currentEntity != undefined) RoomInterface.entity.currentEntity.sprite.mouseclick(event);
 
-    for (let index in Client.rooms.interface.cursor.events.click) Client.rooms.interface.cursor.events.click[index](Client.rooms.interface.entity.currentEntity, event);
+    for (let index in RoomInterface.cursor.events.click) RoomInterface.cursor.events.click[index](RoomInterface.entity.currentEntity, event);
   }).on("mouseout", function () {
-    Client.rooms.interface.cursor.down = false;
-    Client.rooms.interface.cursor.position = [0, 0];
+    RoomInterface.cursor.down = false;
+    RoomInterface.cursor.position = [0, 0];
   });
-  const cursor = new Client.rooms.items.furniture(Client.rooms.interface.entity, "HabboRoomCursor", 0);
+  const cursor = new Client.rooms.items.furniture(RoomInterface.entity, "HabboRoomCursor", 0);
   cursor.name = "cursor";
   cursor.render();
   cursor.disable();
-  Client.rooms.interface.events.start.push(function () {
-    Client.rooms.interface.entity.addEntity(cursor);
+  RoomInterface.events.start.push(function () {
+    RoomInterface.entity.addEntity(cursor);
   });
-  Client.rooms.interface.entity.events.render.push(function () {
-    Client.rooms.interface.entity.currentMapEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position, "map");
+  RoomInterface.entity.events.render.push(function () {
+    RoomInterface.entity.currentMapEntity = RoomInterface.entity.getEntity(RoomInterface.cursor.position, "map");
 
-    if (Client.rooms.interface.entity.currentMapEntity == undefined) {
+    if (RoomInterface.entity.currentMapEntity == undefined) {
       if (cursor.enabled) {
         cursor.disable();
 
-        for (let index in Client.rooms.interface.cursor.events.unhover) Client.rooms.interface.cursor.events.unhover[index]();
+        for (let index in RoomInterface.cursor.events.unhover) RoomInterface.cursor.events.unhover[index]();
       }
     } else {
-      const row = parseInt(Client.rooms.interface.entity.currentMapEntity.result.row),
-            column = parseInt(Client.rooms.interface.entity.currentMapEntity.result.column),
-            depth = Math.round(Client.rooms.interface.entity.currentMapEntity.result.depth);
+      const row = parseInt(RoomInterface.entity.currentMapEntity.result.row),
+            column = parseInt(RoomInterface.entity.currentMapEntity.result.column),
+            depth = Math.round(RoomInterface.entity.currentMapEntity.result.depth);
       cursor.setCoordinates(row, column, depth, -2000);
       cursor.enable();
 
-      for (let index in Client.rooms.interface.cursor.events.hover) Client.rooms.interface.cursor.events.hover[index]({
+      for (let index in RoomInterface.cursor.events.hover) RoomInterface.cursor.events.hover[index]({
         row,
         column,
         depth
       });
     }
 
-    Client.rooms.interface.entity.currentEntity = Client.rooms.interface.entity.getEntity(Client.rooms.interface.cursor.position);
+    RoomInterface.entity.currentEntity = RoomInterface.entity.getEntity(RoomInterface.cursor.position);
   });
 }();// @hash v3-55556613D771E4F463AE3858066C5133AD709C43
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.display = new function () {
-  this.$element = $('<div class="room-interface-display">' + '<div class="room-interface-display-content"></div>' + '<div class="room-interface-display-buttons"></div>' + '</div>').hide().appendTo(Client.rooms.interface.$element);
+RoomInterface.display = new function () {
+  this.$element = $('<div class="room-interface-display">' + '<div class="room-interface-display-content"></div>' + '<div class="room-interface-display-buttons"></div>' + '</div>').hide().appendTo(RoomInterface.$element);
   this.$content = this.$element.find(".room-interface-display-content");
   this.$buttons = this.$element.find(".room-interface-display-buttons");
 
@@ -3971,23 +3971,23 @@ Client.rooms.interface.display = new function () {
       Client.development.furni.set(entity);
     });
 
-    if (Client.rooms.interface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
+    if (RoomInterface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
       this.addButton("Pickup", function () {
-        Client.rooms.interface.furniture.pickup.start(entity);
+        RoomInterface.furniture.pickup.start(entity);
       });
     }
 
-    if (Client.rooms.interface.data.rights.includes(Client.user.id)) {
+    if (RoomInterface.data.rights.includes(Client.user.id)) {
       this.addButton("Rotate", function () {
-        Client.rooms.interface.furniture.rotate.start(entity);
+        RoomInterface.furniture.rotate.start(entity);
       });
       this.addButton("Move", function () {
-        Client.rooms.interface.furniture.move.start(entity);
+        RoomInterface.furniture.move.start(entity);
       });
 
-      if (Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) {
+      if (RoomInterface.furniture.logics[entity.furniture.types.logic] != undefined) {
         this.addButton("Use", function () {
-          Client.rooms.interface.furniture.use.start(entity);
+          RoomInterface.furniture.use.start(entity);
         });
       }
     }
@@ -3996,23 +3996,23 @@ Client.rooms.interface.display = new function () {
   };
 
   this.hide = function () {
-    Client.rooms.interface.display.entity = undefined;
-    Client.rooms.interface.display.$element.hide();
+    RoomInterface.display.entity = undefined;
+    RoomInterface.display.$element.hide();
   };
 
-  Client.rooms.interface.cursor.events.click.push(function (entity) {
+  RoomInterface.cursor.events.click.push(function (entity) {
     if (entity == undefined) {
-      Client.rooms.interface.display.hide();
+      RoomInterface.display.hide();
       return;
     }
 
     switch (entity.entity.name) {
       case "furniture":
-        Client.rooms.interface.display.furniture(entity.entity);
+        RoomInterface.display.furniture(entity.entity);
         break;
 
       case "figure":
-        Client.rooms.interface.display.figure(entity.entity);
+        RoomInterface.display.figure(entity.entity);
         break;
     }
   });
@@ -4021,10 +4021,10 @@ Client.rooms.interface.display = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.display.users = new function () {
+RoomInterface.display.users = new function () {
   this.tabs = new function () {
     this.entity = undefined;
-    this.$element = $('<div class="room-interface-user"></div>').appendTo(Client.rooms.interface.$element);
+    this.$element = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
 
     this.click = function (entity) {
       this.$element.html('<div class="room-interface-user-header">' + entity.entity.data.name + '</div>' + '<div class="room-interface-user-content"></div>' + '<div class="room-interface-user-footer"></div>' + '<div class="room-interface-user-arrow"></div>');
@@ -4040,7 +4040,7 @@ Client.rooms.interface.display.users = new function () {
     };
 
     this.render = function (sprites) {
-      const entity = Client.rooms.interface.display.users.tabs;
+      const entity = RoomInterface.display.users.tabs;
       const context = entity.$canvas[0].getContext("2d");
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
@@ -4055,17 +4055,17 @@ Client.rooms.interface.display.users = new function () {
           {
             if (Client.user.id == this.entity.entity.data.id) {
               this.add("Actions", function () {
-                Client.rooms.interface.display.users.tabs.show("actions", "default");
+                RoomInterface.display.users.tabs.show("actions", "default");
               });
             } else {
               this.add("Manage", function () {
-                Client.rooms.interface.display.users.tabs.show("manage", "default");
+                RoomInterface.display.users.tabs.show("manage", "default");
               });
             }
 
-            if (Client.rooms.interface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
+            if (RoomInterface.data.rights.includes(Client.user.id) && Client.user.id != this.entity.entity.data.id) {
               this.add("Moderate", function () {
-                Client.rooms.interface.display.users.tabs.show("moderate", "default");
+                RoomInterface.display.users.tabs.show("moderate", "default");
               });
             }
 
@@ -4081,38 +4081,38 @@ Client.rooms.interface.display.users = new function () {
                 this.add("Cancel Friend Invite", async function () {
                   await SocketMessages.sendCall({
                     OnUserFriendRemove: {
-                      user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
+                      user: RoomInterface.display.users.tabs.entity.entity.data.id
                     }
                   }, "OnUserFriendRemove");
-                  Client.rooms.interface.display.users.tabs.hide();
+                  RoomInterface.display.users.tabs.hide();
                 });
               } else if (friend.status == 0) {
                 this.add("Accept Friend Invite", async function () {
                   await SocketMessages.sendCall({
                     OnUserFriendAdd: {
-                      user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
+                      user: RoomInterface.display.users.tabs.entity.entity.data.id
                     }
                   }, "OnUserFriendAdd");
-                  Client.rooms.interface.display.users.tabs.hide();
+                  RoomInterface.display.users.tabs.hide();
                 });
               } else {
                 this.add("Remove Friend Invite", async function () {
                   await SocketMessages.sendCall({
                     OnUserFriendRemove: {
-                      user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
+                      user: RoomInterface.display.users.tabs.entity.entity.data.id
                     }
                   }, "OnUserFriendRemove");
-                  Client.rooms.interface.display.users.tabs.hide();
+                  RoomInterface.display.users.tabs.hide();
                 });
               }
             } else {
               this.add("Send Friend Invite", async function () {
                 await SocketMessages.sendCall({
                   OnUserFriendAdd: {
-                    user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
+                    user: RoomInterface.display.users.tabs.entity.entity.data.id
                   }
                 }, "OnUserFriendAdd");
-                Client.rooms.interface.display.users.tabs.hide();
+                RoomInterface.display.users.tabs.hide();
               });
             }
 
@@ -4125,42 +4125,42 @@ Client.rooms.interface.display.users = new function () {
               SocketMessages.sendCall({
                 OnRoomUserAction: "Wave"
               }, "OnRoomUserAction");
-              Client.rooms.interface.display.users.tabs.hide();
+              RoomInterface.display.users.tabs.hide();
             });
             this.add("Blow", function () {
               SocketMessages.sendCall({
                 OnRoomUserAction: "Blow"
               }, "OnRoomUserAction");
-              Client.rooms.interface.display.users.tabs.hide();
+              RoomInterface.display.users.tabs.hide();
             });
             this.add("Laugh", function () {
               SocketMessages.sendCall({
                 OnRoomUserAction: "Laugh"
               }, "OnRoomUserAction");
-              Client.rooms.interface.display.users.tabs.hide();
+              RoomInterface.display.users.tabs.hide();
             });
             this.add("Idle", function () {
               SocketMessages.sendCall({
                 OnRoomUserAction: "Idle"
               }, "OnRoomUserAction");
-              Client.rooms.interface.display.users.tabs.hide();
+              RoomInterface.display.users.tabs.hide();
             });
             break;
           }
 
         case "moderate":
           {
-            if (Client.user.id == Client.rooms.interface.data.user) {
-              Client.rooms.interface.data.rights = await SocketMessages.sendCall({
+            if (Client.user.id == RoomInterface.data.user) {
+              RoomInterface.data.rights = await SocketMessages.sendCall({
                 OnRoomRightsUpdate: null
               }, "OnRoomRightsUpdate");
-              this.add((Client.rooms.interface.data.rights.includes(this.entity.entity.data.id) ? "Revoke" : "Grant") + " Rights", async function () {
+              this.add((RoomInterface.data.rights.includes(this.entity.entity.data.id) ? "Revoke" : "Grant") + " Rights", async function () {
                 await SocketMessages.sendCall({
                   OnRoomRightsUpdate: {
-                    user: Client.rooms.interface.display.users.tabs.entity.entity.data.id
+                    user: RoomInterface.display.users.tabs.entity.entity.data.id
                   }
                 }, "OnRoomRightsUpdate");
-                Client.rooms.interface.display.users.tabs.show("moderate", "default");
+                RoomInterface.display.users.tabs.show("moderate", "default");
               });
             }
 
@@ -4170,7 +4170,7 @@ Client.rooms.interface.display.users = new function () {
 
       if (page != previous) {
         this.add("Back", function () {
-          Client.rooms.interface.display.users.tabs.show(previous, "default");
+          RoomInterface.display.users.tabs.show(previous, "default");
         });
       }
     };
@@ -4197,31 +4197,31 @@ Client.rooms.interface.display.users = new function () {
 
     this.hover = function () {
       if (this.entity == undefined) return;
-      const center = Client.rooms.interface.entity.center;
-      const position = Client.rooms.interface.entity.offset;
+      const center = RoomInterface.entity.center;
+      const position = RoomInterface.entity.offset;
       const offset = this.entity.entity.getOffset();
       this.$element.css({
         "left": center + position[0] + offset[0],
-        "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+        "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
       }).show();
     };
 
-    Client.rooms.interface.cursor.events.click.push(function (entity) {
+    RoomInterface.cursor.events.click.push(function (entity) {
       if (entity == undefined || entity.entity.name != "figure") {
-        Client.rooms.interface.display.users.tabs.hide();
+        RoomInterface.display.users.tabs.hide();
         return;
       }
 
-      Client.rooms.interface.display.users.tabs.hide();
-      Client.rooms.interface.display.users.tabs.click(entity);
+      RoomInterface.display.users.tabs.hide();
+      RoomInterface.display.users.tabs.click(entity);
     });
-    Client.rooms.interface.entity.events.render.push(function () {
-      Client.rooms.interface.display.users.tabs.hover();
+    RoomInterface.entity.events.render.push(function () {
+      RoomInterface.display.users.tabs.hover();
     });
   }();
 
   this.request = function (entity) {
-    const $element = $('<div class="room-interface-user room-interface-user-request">' + '<div class="user-profile" data-user="' + entity.data.id + '"><i class="sprite-user-profile"></i> <b>Friend request from ' + entity.data.name + '</b></div>' + '<div class="room-interface-user-request-close"></div>' + '<div class="room-interface-user-request-buttons">' + '<div class="room-interface-user-request-decline dialog-button">Decline</div>' + '<div class="room-interface-user-request-accept dialog-button"><i class="sprite-success"></i> Accept</div>' + '</div>' + '<div class="room-interface-user-arrow"></div>' + '</div>').appendTo(Client.rooms.interface.$element);
+    const $element = $('<div class="room-interface-user room-interface-user-request">' + '<div class="user-profile" data-user="' + entity.data.id + '"><i class="sprite-user-profile"></i> <b>Friend request from ' + entity.data.name + '</b></div>' + '<div class="room-interface-user-request-close"></div>' + '<div class="room-interface-user-request-buttons">' + '<div class="room-interface-user-request-decline dialog-button">Decline</div>' + '<div class="room-interface-user-request-accept dialog-button"><i class="sprite-success"></i> Accept</div>' + '</div>' + '<div class="room-interface-user-arrow"></div>' + '</div>').appendTo(RoomInterface.$element);
     $element.find(".room-interface-user-request-close").on("click", function () {
       destroy();
     });
@@ -4243,8 +4243,8 @@ Client.rooms.interface.display.users = new function () {
     });
 
     function destroy() {
-      const index = Client.rooms.interface.entity.events.render.indexOf(hover);
-      Client.rooms.interface.entity.events.render.splice(index, 1);
+      const index = RoomInterface.entity.events.render.indexOf(hover);
+      RoomInterface.entity.events.render.splice(index, 1);
       $element.remove();
     }
 
@@ -4252,20 +4252,20 @@ Client.rooms.interface.display.users = new function () {
     this.destroy = destroy;
 
     function hover() {
-      const center = Client.rooms.interface.entity.center;
-      const position = Client.rooms.interface.entity.offset;
+      const center = RoomInterface.entity.center;
+      const position = RoomInterface.entity.offset;
       const offset = entity.getOffset();
       $element.css({
         "left": center + position[0] + offset[0],
-        "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+        "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
       }).show();
     }
 
     ;
-    Client.rooms.interface.entity.events.render.push(hover);
+    RoomInterface.entity.events.render.push(hover);
   };
 
-  this.$name = $('<div class="room-interface-user"></div>').appendTo(Client.rooms.interface.$element);
+  this.$name = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
 
   this.hover = function (entity) {
     if (entity == undefined || entity.entity.name != "figure") {
@@ -4273,37 +4273,37 @@ Client.rooms.interface.display.users = new function () {
       return;
     }
 
-    if (Client.rooms.interface.display.users.tabs.entity != undefined && entity.entity == Client.rooms.interface.display.users.tabs.entity.entity) {
+    if (RoomInterface.display.users.tabs.entity != undefined && entity.entity == RoomInterface.display.users.tabs.entity.entity) {
       this.$name.hide();
       return;
     }
 
     this.$name.html('<div class="room-interface-user-title">' + entity.entity.data.name + '</div>' + '<div class="room-interface-user-arrow"></div>');
-    const center = Client.rooms.interface.entity.center;
-    const position = Client.rooms.interface.entity.offset;
+    const center = RoomInterface.entity.center;
+    const position = RoomInterface.entity.offset;
     const offset = entity.entity.getOffset();
     this.$name.css({
       "left": center + position[0] + offset[0],
-      "bottom": Client.rooms.interface.$element.height() - (position[1] + offset[1])
+      "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
     }).show();
   };
 
-  Client.rooms.interface.entity.events.render.push(function () {
-    const entity = Client.rooms.interface.entity.currentEntity;
-    Client.rooms.interface.display.users.hover(entity);
+  RoomInterface.entity.events.render.push(function () {
+    const entity = RoomInterface.entity.currentEntity;
+    RoomInterface.display.users.hover(entity);
   });
-  Client.rooms.interface.events.stop.push(function () {
-    Client.rooms.interface.display.users.tabs.hide();
+  RoomInterface.events.stop.push(function () {
+    RoomInterface.display.users.tabs.hide();
 
-    for (let id in Client.rooms.interface.users) if (Client.rooms.interface.users[id].request != undefined) Client.rooms.interface.users[id].request.destroy();
+    for (let id in RoomInterface.users) if (RoomInterface.users[id].request != undefined) RoomInterface.users[id].request.destroy();
   });
 }();// @hash v3-FC4EACB17A9FFB2C4A0B0F76487E53CF99E6311A
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.menu = new function () {
-  this.$element = $('<div class="room-interface-menu active">' + '<div class="room-interface-menu-toggle"></div>' + '<div class="room-interface-menu-content"></div>' + '</div>').appendTo(Client.rooms.interface.$element);
+RoomInterface.menu = new function () {
+  this.$element = $('<div class="room-interface-menu active">' + '<div class="room-interface-menu-toggle"></div>' + '<div class="room-interface-menu-content"></div>' + '</div>').appendTo(RoomInterface.$element);
   this.$toggle = this.$element.find(".room-interface-menu-toggle");
   this.$toggle.on("click", function () {
     $(this).parent().toggleClass("active");
@@ -4319,20 +4319,20 @@ Client.rooms.interface.menu = new function () {
   };
 
   this.link("information", "Information", function () {
-    Client.rooms.interface.information.toggle();
+    RoomInterface.information.toggle();
   });
   const $settings = this.link("settings", "Settings", function () {
     Client.rooms.settings.toggle();
   });
-  Client.rooms.interface.events.start.push(function () {
-    if (Client.rooms.interface.data.user == Client.user.id) $settings.show();else $settings.hide();
+  RoomInterface.events.start.push(function () {
+    if (RoomInterface.data.user == Client.user.id) $settings.show();else $settings.hide();
   });
 }();// @hash v3-74129C0935ACB11DBDEE4AB3D7C805E8F710D71C
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.information = new function () {
+RoomInterface.information = new function () {
   const entity = new Dialog({
     title: "Room Information",
     size: {
@@ -4351,14 +4351,14 @@ Client.rooms.interface.information = new function () {
     entity.$thumbnail = $('<div class="room-interface-information-thumbnail"></div>').appendTo(entity.$content);
   });
   entity.events.show.push(function () {
-    entity.$title.text(Client.rooms.interface.data.title);
+    entity.$title.text(RoomInterface.data.title);
     entity.$owner.text("");
-    entity.$description.text(Client.rooms.interface.data.description == undefined ? "" : Client.rooms.interface.data.description);
-    Game.getUser(Client.rooms.interface.data.user).then(function (user) {
+    entity.$description.text(RoomInterface.data.description == undefined ? "" : RoomInterface.data.description);
+    Game.getUser(RoomInterface.data.user).then(function (user) {
       entity.$owner.text("By " + user.name);
     });
   });
-  Client.rooms.interface.events.stop.push(function () {
+  RoomInterface.events.stop.push(function () {
     if (entity.active) entity.hide();
   });
   return entity;
@@ -4368,30 +4368,30 @@ Client.rooms.interface.information = new function () {
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
 SocketMessages.register("OnRoomEnter", async function (data) {
-  Client.rooms.interface.entity.door = undefined;
-  if (data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X') Client.rooms.interface.entity.door = data.map.door;
+  RoomInterface.entity.door = undefined;
+  if (data.map.floor[data.map.door.row + 1] == undefined || data.map.floor[data.map.door.row + 1][data.map.door.column] == 'X') RoomInterface.entity.door = data.map.door;
   Client.rooms.navigator.hide();
-  await Client.rooms.interface.clear();
-  Client.rooms.interface.data = data;
+  await RoomInterface.clear();
+  RoomInterface.data = data;
   SocketMessages.sendCall({
     OnRoomMapStackUpdate: null
   }, "OnRoomMapStackUpdate").then(function (result) {
-    Client.rooms.interface.data.map.stack = result;
+    RoomInterface.data.map.stack = result;
   });
-  Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, data.map.floor, data.map.door, {
+  RoomInterface.map = new Client.rooms.items.map(RoomInterface.entity, data.map.floor, data.map.door, {
     thickness: data.floor_thickness,
     material: data.floor_material
   }, {
     thickness: data.wall_thickness,
     material: data.wall_material
   });
-  Client.rooms.interface.map.render().then(function () {
-    Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
-    const width = Client.rooms.interface.$element.width(),
-          height = Client.rooms.interface.$element.height();
-    Client.rooms.interface.entity.offset = [width / 2 - (Client.rooms.interface.map.map.rows * 16 + Client.rooms.interface.map.map.columns * 16), height / 2 - (Client.rooms.interface.map.map.rows * 8 + Client.rooms.interface.map.map.columns * 8)];
+  RoomInterface.map.render().then(function () {
+    RoomInterface.entity.addEntity(RoomInterface.map);
+    const width = RoomInterface.$element.width(),
+          height = RoomInterface.$element.height();
+    RoomInterface.entity.offset = [width / 2 - (RoomInterface.map.map.rows * 16 + RoomInterface.map.map.columns * 16), height / 2 - (RoomInterface.map.map.rows * 8 + RoomInterface.map.map.columns * 8)];
   });
-  Client.rooms.interface.start();
+  RoomInterface.start();
 });// @hash v3-B59CB2D780C2A8C7C1A0D6C2680A0A66AFCDF0C8
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
@@ -4403,15 +4403,15 @@ SocketMessages.register("OnRoomEntityAdd", async function (data) {
 
     for (let index in data.furnitures) {
       const dataFurniture = data.furnitures[index];
-      let entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, dataFurniture.furniture, dataFurniture.position.direction);
+      let entity = new Client.rooms.items.furniture(RoomInterface.entity, dataFurniture.furniture, dataFurniture.position.direction);
       entity.setPosition(dataFurniture.position);
       if (dataFurniture.animation) entity.furniture.update({
         animation: dataFurniture.animation
       });
       entity.render();
       entity.data = data.furnitures[index];
-      Client.rooms.interface.entity.addEntity(entity);
-      Client.rooms.interface.furnitures[dataFurniture.id] = entity;
+      RoomInterface.entity.addEntity(entity);
+      RoomInterface.furnitures[dataFurniture.id] = entity;
     }
   }
 
@@ -4419,7 +4419,7 @@ SocketMessages.register("OnRoomEntityAdd", async function (data) {
     if (data.users.length == undefined) data.users = [data.users];
 
     for (let index in data.users) {
-      let entity = new Client.rooms.items.figure(Client.rooms.interface.entity, data.users[index].figure, data.users[index].position.direction);
+      let entity = new Client.rooms.items.figure(RoomInterface.entity, data.users[index].figure, data.users[index].position.direction);
       entity.setPosition(data.users[index].position);
       entity.render();
 
@@ -4429,12 +4429,12 @@ SocketMessages.register("OnRoomEntityAdd", async function (data) {
       }
 
       entity.data = data.users[index];
-      Client.rooms.interface.entity.addEntity(entity);
-      Client.rooms.interface.users[data.users[index].id] = entity;
+      RoomInterface.entity.addEntity(entity);
+      RoomInterface.users[data.users[index].id] = entity;
       const friend = Client.user.friends[data.users[index].id];
 
       if (friend != undefined) {
-        if (friend.status == 0 && friend.request == undefined) friend.request = new Client.rooms.interface.display.users.request(Client.rooms.interface.users[data.users[index].id]);
+        if (friend.status == 0 && friend.request == undefined) friend.request = new RoomInterface.display.users.request(RoomInterface.users[data.users[index].id]);
       }
     }
   }
@@ -4447,7 +4447,7 @@ SocketMessages.register("OnRoomEntityUpdate", async function (data) {
   for (let key in data) {
     for (let index in data[key]) {
       const item = data[key][index];
-      const entity = Client.rooms.interface[key][index];
+      const entity = RoomInterface[key][index];
 
       if (item.position != undefined) {
         if (item.position.row != undefined && item.position.column != undefined && item.position.depth != undefined) {
@@ -4460,7 +4460,7 @@ SocketMessages.register("OnRoomEntityUpdate", async function (data) {
         }
       }
 
-      for (let property in item) Client.rooms.interface[key][index].data[property] = item[property];
+      for (let property in item) RoomInterface[key][index].data[property] = item[property];
     }
   }
 
@@ -4470,41 +4470,41 @@ SocketMessages.register("OnRoomEntityUpdate", async function (data) {
 
       if (data.users[index].position != undefined) {
         if (data.users[index].position.direction != undefined) {
-          Client.rooms.interface.users[index].figure.direction = data.users[index].position.direction;
+          RoomInterface.users[index].figure.direction = data.users[index].position.direction;
           render = true;
         }
 
         if (data.users[index].position.actions != undefined) {
-          await Client.rooms.interface.users[index].figure.setActions(data.users[index].position.actions);
+          await RoomInterface.users[index].figure.setActions(data.users[index].position.actions);
           render = true;
         }
       }
 
       if (data.users[index].action != undefined) {
-        await Client.rooms.interface.users[index].figure.setAction(data.users[index].action.action);
+        await RoomInterface.users[index].figure.setAction(data.users[index].action.action);
         setTimeout(async function () {
-          await Client.rooms.interface.users[index].figure.removeAction(data.users[index].action.action);
-          Client.rooms.interface.users[index].figure.render();
+          await RoomInterface.users[index].figure.removeAction(data.users[index].action.action);
+          RoomInterface.users[index].figure.render();
         }, data.users[index].action.time);
       }
 
-      Client.rooms.interface.users[index].figure.render();
+      RoomInterface.users[index].figure.render();
     }
   }
 
   if (data.furnitures != undefined) {
     for (let index in data.furnitures) {
       if (data.furnitures[index].animation != undefined) {
-        Client.rooms.interface.furnitures[index].furniture.setAnimation(data.furnitures[index].animation);
+        RoomInterface.furnitures[index].furniture.setAnimation(data.furnitures[index].animation);
       }
 
       if (data.furnitures[index].position != undefined) {
         if (data.furnitures[index].position.direction != undefined) {
-          Client.rooms.interface.furnitures[index].furniture.setDirection(data.furnitures[index].position.direction);
+          RoomInterface.furnitures[index].furniture.setDirection(data.furnitures[index].position.direction);
         }
       }
 
-      Client.rooms.interface.furnitures[index].furniture.render();
+      RoomInterface.furnitures[index].furniture.render();
     }
   }
 });// @hash v3-B1952A7AE0FB956233CCB10FE2ED758EC0EB2A6C
@@ -4518,10 +4518,10 @@ SocketMessages.register("OnRoomEntityRemove", async function (data) {
 
     for (let index in data.furnitures) {
       const id = data.furnitures[index];
-      const entity = Client.rooms.interface.furnitures[id];
-      if (Client.rooms.interface.display.entity == entity) Client.rooms.interface.display.hide();
-      Client.rooms.interface.entity.removeEntity(entity);
-      delete Client.rooms.interface.furnitures[id];
+      const entity = RoomInterface.furnitures[id];
+      if (RoomInterface.display.entity == entity) RoomInterface.display.hide();
+      RoomInterface.entity.removeEntity(entity);
+      delete RoomInterface.furnitures[id];
     }
   }
 
@@ -4530,10 +4530,10 @@ SocketMessages.register("OnRoomEntityRemove", async function (data) {
 
     for (let index in data.users) {
       const id = data.users[index];
-      const entity = Client.rooms.interface.users[id];
-      if (Client.rooms.interface.display.entity == entity) Client.rooms.interface.display.hide();
-      Client.rooms.interface.entity.removeEntity(entity);
-      delete Client.rooms.interface.users[id];
+      const entity = RoomInterface.users[id];
+      if (RoomInterface.display.entity == entity) RoomInterface.display.hide();
+      RoomInterface.entity.removeEntity(entity);
+      delete RoomInterface.users[id];
     }
   }
 });// @hash v3-87E400730A3907261CC848787DE51CF2EA0ADDB9
@@ -4542,7 +4542,7 @@ SocketMessages.register("OnRoomEntityRemove", async function (data) {
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
 SocketMessages.register("OnRoomFurnitureVideoStart", function (data) {
-  const entity = Client.rooms.interface.furnitures[data.id];
+  const entity = RoomInterface.furnitures[data.id];
   if (entity == undefined) return;
 
   if (entity.video != undefined) {
@@ -4555,7 +4555,7 @@ SocketMessages.register("OnRoomFurnitureVideoStart", function (data) {
   entity.sprites.push(entity.video);
 });
 SocketMessages.register("OnRoomFurnitureVideoStop", function (data) {
-  const entity = Client.rooms.interface.furnitures[data];
+  const entity = RoomInterface.furnitures[data];
   if (entity == undefined) return;
   if (entity.video == undefined) return;
   entity.video.image.pause();
@@ -4569,14 +4569,14 @@ SocketMessages.register("OnRoomFurnitureVideoStop", function (data) {
 SocketMessages.register("OnRoomFurnitureFlash", function (data) {
   const furnitures = [];
 
-  for (let id in Client.rooms.interface.furnitures) {
-    const entity = Client.rooms.interface.furnitures[id];
+  for (let id in RoomInterface.furnitures) {
+    const entity = RoomInterface.furnitures[id];
     if (entity.data.furniture != data.id) continue;
     furnitures.push(id);
   }
 
   function setAnimation(animation) {
-    for (let index in furnitures) Client.rooms.interface.furnitures[furnitures[index]].furniture.setAnimation(animation);
+    for (let index in furnitures) RoomInterface.furnitures[furnitures[index]].furniture.setAnimation(animation);
   }
 
   ;
@@ -4605,7 +4605,7 @@ SocketMessages.register("OnRoomUserEffect", function (data) {
   if (data.length == undefined) data = [data];
 
   for (let index in data) {
-    const user = Client.rooms.interface.users[data[index].id];
+    const user = RoomInterface.users[data[index].id];
     if (user == undefined) continue;
     user.figure.setEffect(data[index].effect);
     user.figure.render();
@@ -4616,19 +4616,19 @@ SocketMessages.register("OnRoomUserEffect", function (data) {
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
 SocketMessages.register("OnRoomSettingsUpdate", function (data) {
-  for (let key in data) Client.rooms.interface.data[key] = data[key];
+  for (let key in data) RoomInterface.data[key] = data[key];
 
   if (data.map != undefined || data.floor_material != undefined || data.wall_material != undefined) {
-    if (Client.rooms.interface.map != undefined) Client.rooms.interface.entity.removeEntity(Client.rooms.interface.map);
-    Client.rooms.interface.map = new Client.rooms.items.map(Client.rooms.interface.entity, Client.rooms.interface.data.map.floor, Client.rooms.interface.data.map.door, {
-      thickness: Client.rooms.interface.data.floor_thickness,
-      material: Client.rooms.interface.data.floor_material
+    if (RoomInterface.map != undefined) RoomInterface.entity.removeEntity(RoomInterface.map);
+    RoomInterface.map = new Client.rooms.items.map(RoomInterface.entity, RoomInterface.data.map.floor, RoomInterface.data.map.door, {
+      thickness: RoomInterface.data.floor_thickness,
+      material: RoomInterface.data.floor_material
     }, {
-      thickness: Client.rooms.interface.data.wall_thickness,
-      material: Client.rooms.interface.data.wall_material
+      thickness: RoomInterface.data.wall_thickness,
+      material: RoomInterface.data.wall_material
     });
-    Client.rooms.interface.map.render().then(function () {
-      Client.rooms.interface.entity.addEntity(Client.rooms.interface.map);
+    RoomInterface.map.render().then(function () {
+      RoomInterface.entity.addEntity(RoomInterface.map);
     });
   }
 });// @hash v3-648471AE321D45589FECC8CE18B5A55113D85D5E
@@ -4636,14 +4636,14 @@ SocketMessages.register("OnRoomSettingsUpdate", function (data) {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture = new function () {
+RoomInterface.furniture = new function () {
   this.logics = {};
 }();// @hash v3-4FDEE50B075A9305089D398214925977C458F73B
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.place = new function () {
+RoomInterface.furniture.place = new function () {
   this.enabled = false;
   this.$icon = $('<canvas></canvas>').css({
     "position": "fixed",
@@ -4659,9 +4659,9 @@ Client.rooms.interface.furniture.place = new function () {
     }, "OnRoomMapStackUpdate");
     this.enabled = true;
     this.finished = finished;
-    this.entity = new Client.rooms.items.furniture(Client.rooms.interface.entity, furniture.id, direction);
+    this.entity = new Client.rooms.items.furniture(RoomInterface.entity, furniture.id, direction);
     this.entity.furniture.events.render.push(function () {
-      Client.rooms.interface.furniture.place.direction = Client.rooms.interface.furniture.place.entity.furniture.direction;
+      RoomInterface.furniture.place.direction = RoomInterface.furniture.place.entity.furniture.direction;
     });
     this.entity.disable();
     this.entity.alpha = 0.5;
@@ -4670,100 +4670,100 @@ Client.rooms.interface.furniture.place = new function () {
       size: 1
     }, this.$icon);
     await this.entity.render();
-    this.$icon.appendTo(Client.rooms.interface.$element);
-    Client.rooms.interface.entity.addEntity(this.entity);
+    this.$icon.appendTo(RoomInterface.$element);
+    RoomInterface.entity.addEntity(this.entity);
     this.showIcon();
-    Client.rooms.interface.cursor.events.hover.push(this.hover);
-    Client.rooms.interface.cursor.events.unhover.push(this.unhover);
-    Client.rooms.interface.entity.$canvas.bind("wheel", this.scroll);
+    RoomInterface.cursor.events.hover.push(this.hover);
+    RoomInterface.cursor.events.unhover.push(this.unhover);
+    RoomInterface.entity.$canvas.bind("wheel", this.scroll);
   };
 
   this.hover = function (position) {
-    const dimensions = Client.rooms.interface.furniture.place.entity.furniture.getDimensions();
+    const dimensions = RoomInterface.furniture.place.entity.furniture.getDimensions();
 
     for (let row = 0; row < dimensions.row; row++) {
-      if (Client.rooms.interface.furniture.place.map[position.row + row] == undefined) {
-        Client.rooms.interface.furniture.place.showIcon();
+      if (RoomInterface.furniture.place.map[position.row + row] == undefined) {
+        RoomInterface.furniture.place.showIcon();
         return;
       }
 
       for (let column = 0; column < dimensions.column; column++) {
-        if (Client.rooms.interface.furniture.place.map[position.row + row][position.column + column] == undefined) {
-          Client.rooms.interface.furniture.place.showIcon();
+        if (RoomInterface.furniture.place.map[position.row + row][position.column + column] == undefined) {
+          RoomInterface.furniture.place.showIcon();
           return;
         }
       }
     }
 
-    Client.rooms.interface.furniture.place.hideIcon();
-    Client.rooms.interface.furniture.place.position = position;
-    Client.rooms.interface.furniture.place.entity.setCoordinates(position.row, position.column, Client.rooms.interface.furniture.place.map[position.row][position.column], 0);
-    Client.rooms.interface.furniture.place.entity.enable();
+    RoomInterface.furniture.place.hideIcon();
+    RoomInterface.furniture.place.position = position;
+    RoomInterface.furniture.place.entity.setCoordinates(position.row, position.column, RoomInterface.furniture.place.map[position.row][position.column], 0);
+    RoomInterface.furniture.place.entity.enable();
   };
 
   this.showIcon = function () {
-    if (Client.rooms.interface.furniture.place.iconShown == true) return;
-    Client.rooms.interface.furniture.place.entity.disable();
-    Client.rooms.interface.furniture.place.iconShown = true;
-    Client.rooms.interface.entity.$canvas.bind("mousemove", Client.rooms.interface.furniture.place.move);
+    if (RoomInterface.furniture.place.iconShown == true) return;
+    RoomInterface.furniture.place.entity.disable();
+    RoomInterface.furniture.place.iconShown = true;
+    RoomInterface.entity.$canvas.bind("mousemove", RoomInterface.furniture.place.move);
   };
 
   this.hideIcon = function () {
-    if (Client.rooms.interface.furniture.place.iconShown == false) return;
-    Client.rooms.interface.furniture.place.iconShown = false;
-    Client.rooms.interface.entity.$canvas.unbind("mousemove", Client.rooms.interface.furniture.place.move);
-    Client.rooms.interface.furniture.place.$icon.hide();
+    if (RoomInterface.furniture.place.iconShown == false) return;
+    RoomInterface.furniture.place.iconShown = false;
+    RoomInterface.entity.$canvas.unbind("mousemove", RoomInterface.furniture.place.move);
+    RoomInterface.furniture.place.$icon.hide();
   };
 
   this.click = function () {
-    Client.rooms.interface.furniture.place.finished(Client.rooms.interface.furniture.place);
+    RoomInterface.furniture.place.finished(RoomInterface.furniture.place);
   };
 
   this.move = function (event) {
-    Client.rooms.interface.furniture.place.$icon.css({
+    RoomInterface.furniture.place.$icon.css({
       "left": event.offsetX,
       "top": event.offsetY
     }).show();
   };
 
   this.unhover = function () {
-    Client.rooms.interface.furniture.place.entity.disable();
-    Client.rooms.interface.furniture.place.showIcon();
+    RoomInterface.furniture.place.entity.disable();
+    RoomInterface.furniture.place.showIcon();
   };
 
   this.scroll = async function (event) {
     const direction = event.originalEvent.deltaY < 0 ? 1 : 0;
-    Client.rooms.interface.furniture.place.entity.furniture.settings.direction = Client.rooms.interface.furniture.place.entity.furniture.getNextDirection();
-    await Client.rooms.interface.furniture.place.entity.furniture.render();
+    RoomInterface.furniture.place.entity.furniture.settings.direction = RoomInterface.furniture.place.entity.furniture.getNextDirection();
+    await RoomInterface.furniture.place.entity.furniture.render();
   };
 
   this.bind = function () {
-    Client.rooms.interface.furniture.place.showIcon();
-    Client.rooms.interface.cursor.events.hover.push(Client.rooms.interface.furniture.place.hover);
-    Client.rooms.interface.cursor.events.unhover.push(Client.rooms.interface.furniture.place.unhover);
-    Client.rooms.interface.entity.$canvas.bind("wheel", Client.rooms.interface.furniture.place.scroll);
-    Client.rooms.interface.furniture.place.$icon.appendTo(Client.rooms.interface.$element);
+    RoomInterface.furniture.place.showIcon();
+    RoomInterface.cursor.events.hover.push(RoomInterface.furniture.place.hover);
+    RoomInterface.cursor.events.unhover.push(RoomInterface.furniture.place.unhover);
+    RoomInterface.entity.$canvas.bind("wheel", RoomInterface.furniture.place.scroll);
+    RoomInterface.furniture.place.$icon.appendTo(RoomInterface.$element);
   };
 
   this.unbind = function () {
-    Client.rooms.interface.furniture.place.hideIcon();
-    Client.rooms.interface.cursor.events.hover.splice(Client.rooms.interface.cursor.events.hover.indexOf(Client.rooms.interface.furniture.place.hover), 1);
-    Client.rooms.interface.cursor.events.unhover.splice(Client.rooms.interface.cursor.events.unhover.indexOf(Client.rooms.interface.furniture.place.unhover), 1);
-    Client.rooms.interface.entity.$canvas.unbind("wheel", Client.rooms.interface.furniture.place.scroll);
-    Client.rooms.interface.furniture.place.$icon.remove();
+    RoomInterface.furniture.place.hideIcon();
+    RoomInterface.cursor.events.hover.splice(RoomInterface.cursor.events.hover.indexOf(RoomInterface.furniture.place.hover), 1);
+    RoomInterface.cursor.events.unhover.splice(RoomInterface.cursor.events.unhover.indexOf(RoomInterface.furniture.place.unhover), 1);
+    RoomInterface.entity.$canvas.unbind("wheel", RoomInterface.furniture.place.scroll);
+    RoomInterface.furniture.place.$icon.remove();
   };
 
   this.stop = function () {
     this.enabled = false;
     this.unbind();
-    Client.rooms.interface.entity.removeEntity(Client.rooms.interface.furniture.place.entity);
+    RoomInterface.entity.removeEntity(RoomInterface.furniture.place.entity);
   };
 }();// @hash v3-DDA54FFA13D22BF663B330477A829023B729404C
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.pickup = new function () {
+RoomInterface.furniture.pickup = new function () {
   this.start = async function (entity) {
     entity.alpha = .5;
     const response = await SocketMessages.sendCall({
@@ -4775,10 +4775,10 @@ Client.rooms.interface.furniture.pickup = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.move = new function () {
+RoomInterface.furniture.move = new function () {
   this.start = async function (entity) {
     entity.disable();
-    Client.rooms.interface.furniture.place.start(entity.data.furniture, function (result) {
+    RoomInterface.furniture.place.start(entity.data.furniture, function (result) {
       if (result.entity.enabled == false) {
         result.stop();
         entity.enable();
@@ -4807,7 +4807,7 @@ Client.rooms.interface.furniture.move = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.rotate = new function () {
+RoomInterface.furniture.rotate = new function () {
   this.start = async function (entity) {
     await SocketMessages.sendCall({
       OnRoomFurnitureRotate: {
@@ -4821,16 +4821,16 @@ Client.rooms.interface.furniture.rotate = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.use = new function () {
+RoomInterface.furniture.use = new function () {
   this.start = async function (entity, sprite) {
-    if (Client.rooms.interface.furniture.logics[entity.furniture.types.logic] != undefined) Client.rooms.interface.furniture.logics[entity.furniture.types.logic](entity, sprite);else Client.rooms.interface.furniture.logics["furniture_basic"](entity, sprite);
+    if (RoomInterface.furniture.logics[entity.furniture.types.logic] != undefined) RoomInterface.furniture.logics[entity.furniture.types.logic](entity, sprite);else RoomInterface.furniture.logics["furniture_basic"](entity, sprite);
   };
 }();// @hash v3-B658A0B60E89487B65AAF774B92860887C478344
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.logics.furniture_multistate = async function (entity) {
+RoomInterface.furniture.logics.furniture_multistate = async function (entity) {
   const animation = entity.furniture.getNextAnimation();
   await SocketMessages.sendCall({
     OnRoomFurnitureUse: {
@@ -4844,7 +4844,7 @@ Client.rooms.interface.furniture.logics.furniture_multistate = async function (e
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.logics.furniture_custom_stack_height = function (entity) {
+RoomInterface.furniture.logics.furniture_custom_stack_height = function (entity) {
   if (entity.dialog != undefined) {
     entity.dialog.show();
     return;
@@ -4869,7 +4869,7 @@ Client.rooms.interface.furniture.logics.furniture_custom_stack_height = function
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.logics.furniture_basic = async function (entity, sprite) {
+RoomInterface.furniture.logics.furniture_basic = async function (entity, sprite) {
   const tag = sprite == undefined ? undefined : sprite.tag;
   await SocketMessages.sendCall({
     OnRoomFurnitureUse: {
@@ -4882,7 +4882,7 @@ Client.rooms.interface.furniture.logics.furniture_basic = async function (entity
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.furniture.logics.furniture_video = new function () {
+RoomInterface.furniture.logics.furniture_video = new function () {
   const entity = new Dialog({
     title: "Room Furniture Video",
     size: {
@@ -4964,7 +4964,7 @@ Client.rooms.interface.furniture.logics.furniture_video = new function () {
   });
   entity.events.show.push(function () {
     entity.$videos.html("");
-    const furniture = Client.rooms.interface.furnitures[entity.data.id];
+    const furniture = RoomInterface.furnitures[entity.data.id];
     Furnitures.get(furniture.data.furniture).then(function (info) {//entity.setTitle(info.title);
     });
 
@@ -5003,14 +5003,14 @@ Client.rooms.interface.furniture.logics.furniture_video = new function () {
   return entity;
 }();
 SocketMessages.register("OnRoomFurnitureVideoUse", function (data) {
-  Client.rooms.interface.furniture.logics.furniture_video.data = data;
-  Client.rooms.interface.furniture.logics.furniture_video.show();
+  RoomInterface.furniture.logics.furniture_video.data = data;
+  RoomInterface.furniture.logics.furniture_video.show();
 });// @hash v3-6DB2DD7A9174D50C79A6692C2F4F2E3B3174EAEE
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:13
 ///////////////////////////////////////////////////////////////////////////////
-Client.rooms.interface.camera = new function () {
+RoomInterface.camera = new function () {
   const entity = new CameraDialog({
     title: "Room Camera",
     size: {
@@ -5780,14 +5780,14 @@ Client.rooms.settings = new function () {
     tabs.add("information", "Information", async function ($element) {
       const $grid = $('<div class="room-creation-grid"></div>').appendTo($element);
       const $information = $('<div class="room-creation-information"></div>').appendTo($grid);
-      $('<div class="room-creation-property">' + '<p>' + '<b>Room Name</b>' + '<span>Give your room a fun and interesting title, this is what interests others!</span>' + '</p>' + '<div class="input-pen">' + '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + Client.rooms.interface.data.title + '">' + '</div>' + '</div>').appendTo($information).find(".room-creation-name").on("change", function () {
+      $('<div class="room-creation-property">' + '<p>' + '<b>Room Name</b>' + '<span>Give your room a fun and interesting title, this is what interests others!</span>' + '</p>' + '<div class="input-pen">' + '<input type="text" class="room-creation-name" placeholder="Enter a room name..." value="' + RoomInterface.data.title + '">' + '</div>' + '</div>').appendTo($information).find(".room-creation-name").on("change", function () {
         SocketMessages.send({
           OnRoomSettingsUpdate: {
             title: $(this).val()
           }
         });
       });
-      $('<div class="room-creation-property">' + '<p>' + '<b>Room Description</b>' + '<span>Describe what your room is, what can others do in your room, let them know what it is!</span>' + '</p>' + '<div class="textarea-pen">' + '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + Client.rooms.interface.data.description + '</textarea>' + '</div>' + '</div>').appendTo($information).find(".room-creation-description").on("change", function () {
+      $('<div class="room-creation-property">' + '<p>' + '<b>Room Description</b>' + '<span>Describe what your room is, what can others do in your room, let them know what it is!</span>' + '</p>' + '<div class="textarea-pen">' + '<textarea type="text" class="room-creation-description" placeholder="Enter a room description...">' + RoomInterface.data.description + '</textarea>' + '</div>' + '</div>').appendTo($information).find(".room-creation-description").on("change", function () {
         SocketMessages.send({
           OnRoomSettingsUpdate: {
             description: $(this).val()
@@ -5808,12 +5808,12 @@ Client.rooms.settings = new function () {
       const data = {
         map: [],
         door: {
-          row: Client.rooms.interface.data.map.door.row,
-          column: Client.rooms.interface.data.map.door.column
+          row: RoomInterface.data.map.door.row,
+          column: RoomInterface.data.map.door.column
         }
       };
 
-      for (let row in Client.rooms.interface.data.map.floor) data.map[row] = Client.rooms.interface.data.map.floor[row];
+      for (let row in RoomInterface.data.map.floor) data.map[row] = RoomInterface.data.map.floor[row];
 
       entity.editor = new Client.rooms.editor(data, async function (map, extra) {
         //entity.settings.map.map = map;
@@ -5869,7 +5869,7 @@ Client.rooms.settings = new function () {
           $items.find(".room-creation-item.active").removeClass("active");
           $item.addClass("active");
           const map = new Client.rooms.map.entity(["XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000"], {}, {
-            material: Client.rooms.interface.data.floor_material
+            material: RoomInterface.data.floor_material
           }, {
             material: walls[index].id
           });
@@ -5880,7 +5880,7 @@ Client.rooms.settings = new function () {
             context.drawImage(map.$wall[0], -(8 * 16), 6 * 16 + map.offset);
           });
 
-          if (Client.rooms.interface.data.wall_material != walls[index].id) {
+          if (RoomInterface.data.wall_material != walls[index].id) {
             SocketMessages.send({
               OnRoomSettingsUpdate: {
                 wall: {
@@ -5890,7 +5890,7 @@ Client.rooms.settings = new function () {
             });
           }
         });
-        if (Client.rooms.interface.data.wall_material == walls[index].id) $item.click();
+        if (RoomInterface.data.wall_material == walls[index].id) $item.click();
       }
     });
     tabs.add("floors", "Floors", function ($element) {
@@ -5913,7 +5913,7 @@ Client.rooms.settings = new function () {
           const map = new Client.rooms.map.entity(["XXXXXXX", "X000000", "X000000", "X000000", "X000000", "X000000", "X000000"], {}, {
             material: floors[index].id
           }, {
-            material: Client.rooms.interface.data.wall_material
+            material: RoomInterface.data.wall_material
           });
           map.render().then(function () {
             context.canvas.width = $preview.width();
@@ -5922,7 +5922,7 @@ Client.rooms.settings = new function () {
             context.drawImage(map.$wall[0], -(8 * 16), 6 * 16 + map.offset);
           });
 
-          if (Client.rooms.interface.data.floor_material != floors[index].id) {
+          if (RoomInterface.data.floor_material != floors[index].id) {
             SocketMessages.send({
               OnRoomSettingsUpdate: {
                 floor: {
@@ -5932,7 +5932,7 @@ Client.rooms.settings = new function () {
             });
           }
         });
-        if (Client.rooms.interface.data.floor_material == floors[index].id) $item.click();
+        if (RoomInterface.data.floor_material == floors[index].id) $item.click();
       }
     });
     tabs.click(function (identifier, $element) {
@@ -5948,7 +5948,7 @@ Client.rooms.settings = new function () {
   });
   return entity;
 }();
-Client.rooms.interface.events.stop.push(function () {
+RoomInterface.events.stop.push(function () {
   Client.rooms.settings.destroy();
 });// @hash v3-B42FAAA798F9CD8F728E182B82C733FD58E6C7DF
 // Automatically generated by ReactJS.NET. Do not edit, your changes will be overridden.
@@ -5976,13 +5976,13 @@ Menu = new function () {
     Inventory.toggle();
   });
   const $camera = this.addItem("camera", function () {
-    Client.rooms.interface.camera.toggle();
+    RoomInterface.camera.toggle();
   });
-  Client.rooms.interface.events.start.push(function () {
+  RoomInterface.events.start.push(function () {
     $inventory.show();
     $camera.show();
   });
-  Client.rooms.interface.events.stop.push(function () {
+  RoomInterface.events.stop.push(function () {
     $camera.hide();
     $inventory.hide();
   });
@@ -6060,7 +6060,7 @@ MenuFriends = new function () {
     return $element;
   };
 
-  Client.rooms.interface.events.stop.push(function () {
+  RoomInterface.events.stop.push(function () {
     for (let id in Client.user.friends) {
       if (Client.user.friends[id].request == undefined) continue;
       Client.user.friends[id].request.destroy();
@@ -6324,8 +6324,8 @@ Inventory.events.create.push(async function () {
   Inventory.tabs.$element.appendTo(Inventory.$content);
 });
 Inventory.events.show.push(function () {
-  if (Client.rooms.interface.furniture.place.enabled == true) {
-    Client.rooms.interface.furniture.place.stop();
+  if (RoomInterface.furniture.place.enabled == true) {
+    RoomInterface.furniture.place.stop();
   }
 
   Inventory.tabs.show();
@@ -6342,11 +6342,11 @@ Inventory.pages.furnitures = function ($element) {
   function setDisplay(furniture) {
     $display.html('<canvas class="inventory-furniture-display-canvas"></canvas>' + '<div class="inventory-furniture-display-information">' + '<b>' + furniture.title + '</b>' + '<p>' + furniture.description + '</p>' + '</div>');
 
-    if (Client.rooms.interface.active == true) {
+    if (RoomInterface.active == true) {
       const $button = $('<div class="dialog-button">Place in room</div>').appendTo($display.find(".inventory-furniture-display-information"));
       $button.click(function () {
         Inventory.hide();
-        Client.rooms.interface.furniture.place.start(furniture.id, function (result) {
+        RoomInterface.furniture.place.start(furniture.id, function (result) {
           if (result.entity.enabled == false) {
             result.stop();
             Inventory.show();
@@ -6513,7 +6513,7 @@ SocketMessages.register("OnUserFriendUpdate", function (data) {
   for (let index in data) {
     const id = data[index].id;
     if (Client.user.friends[id] == undefined) Client.user.friends[id] = {};
-    if (data[index].status == 0 && Client.user.friends[id].status != data[index].status && Client.user.friends[id].request == undefined && Client.rooms.interface.users[id] != undefined) data[index].request = new Client.rooms.interface.display.users.request(Client.rooms.interface.users[id]);
+    if (data[index].status == 0 && Client.user.friends[id].status != data[index].status && Client.user.friends[id].request == undefined && RoomInterface.users[id] != undefined) data[index].request = new RoomInterface.display.users.request(RoomInterface.users[id]);
     if (Client.user.friends[id].menu != undefined) Client.user.friends[id].menu.remove();
     if (data[index].status != -1) data[index].menu = MenuFriends.add(id);
 
