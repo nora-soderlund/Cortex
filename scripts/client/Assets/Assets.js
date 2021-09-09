@@ -18,7 +18,7 @@ class Assets {
     static async downloadManifest(asset, library = true) {
         const name = asset.substring(asset.lastIndexOf('/') + 1);
 
-        const path = Client.loader.settings.cdn + ((library)?("assets/" + asset + "/" + name + ".json"):("assets/" + asset + ".json"));
+        const path = Loader.settings.cdn + ((library)?("assets/" + asset + "/" + name + ".json"):("assets/" + asset + ".json"));
 
         if(Assets.promises[asset] == undefined)
             Assets.promises[asset] = {};
@@ -70,7 +70,7 @@ class Assets {
     static async downloadSpritesheet(asset, library = true) {
         const name = asset.substring(asset.lastIndexOf('/') + 1);
 
-        let path = Client.loader.settings.cdn + ((library)?("assets/" + asset + "/" + name):("assets/" + asset));
+        let path = Loader.settings.cdn + ((library)?("assets/" + asset + "/" + name):("assets/" + asset));
 
         if(library == true || asset.indexOf('.') == -1)
             path += ".png";

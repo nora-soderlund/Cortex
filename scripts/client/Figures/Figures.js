@@ -217,7 +217,7 @@ class Figures {
     };
 };
 
-Client.loader.addAsset(async function() {
+Loader.addAsset(async function() {
     Figures.data = await Assets.getManifest("HabboFigureData");
     Figures.map = await Assets.getManifest("HabboFigureMap");
     Figures.actions = await Assets.getManifest("HabboFigureActions");

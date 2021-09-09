@@ -2,9 +2,9 @@ window.onerror = async function(exception, file, line, column, error) {
     if(error == undefined)
         return;
 
-    Client.loader.setError("Reporting the error to the server...");
+    Loader.setError("Reporting the error to the server...");
     
-    Client.loader.show();
+    Loader.show();
 
     await SocketMessages.sendCall({
         OnUnhandledException: {
@@ -13,5 +13,5 @@ window.onerror = async function(exception, file, line, column, error) {
         }
     }, "OnUnhandledException");
 
-    Client.loader.hide();
+    Loader.hide();
 };

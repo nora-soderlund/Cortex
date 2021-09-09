@@ -24,8 +24,8 @@ Client.development = new function() {
     $stress.on("click", async function() {
         const $content = $("<p>Performing a stress test on the client...<br><br></p>");
 
-        Client.loader.setText($content);
-        Client.loader.show();
+        Loader.setText($content);
+        Loader.show();
 
         const room = Client.rooms.interface.active;
 
@@ -287,7 +287,7 @@ Client.development = new function() {
             Client.rooms.interface.start();
 
         setTimeout(function() {
-            Client.loader.hide();
+            Loader.hide();
         }, 1000);
     });
     
@@ -322,7 +322,7 @@ Client.development.frames = new function() {
     });
 };
 
-Client.loader.ready(function() {
+Loader.ready(function() {
     Client.development.furni = new function() {
         const entity = new Dialog({
             title: "Loading",
@@ -446,7 +446,7 @@ Client.loader.ready(function() {
     });
 });
 
-Client.loader.ready(function() {
+Loader.ready(function() {
     Client.development.shop = new function() {
         const entity = new Dialog({
             title: "Loading",

@@ -150,6 +150,6 @@ Client.rooms.interface.chat = new function() {
     });
 };
 
-Client.loader.addAsset(async function() {
+Loader.addAsset(async function() {
     Client.rooms.interface.chat.assets = await Assets.getManifest("HabboRoomChat");
 });

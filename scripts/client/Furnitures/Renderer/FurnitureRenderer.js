@@ -8,7 +8,7 @@ class FurnitureRenderer {
     };
 
     async renderer() {
-        const loading = await Assets.getSpritesheet((this.settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then(function(image) {
+        const loading = await Assets.getSpritesheet((this.settings.size == 1)?("HabboLoadingIcon"):("HabboLoading")).then((image) => {
             const context = this.$canvas[0].getContext("2d");
     
             context.canvas.width = image.width;
@@ -19,7 +19,7 @@ class FurnitureRenderer {
 
         const entity = new FurnitureEntity(this.settings);
     
-        entity.events.render.push(function(sprites) {
+        entity.events.render.push((sprites) => {
             const context = this.$canvas[0].getContext("2d");
 
             let minLeft = 0, minTop = 0, maxWidth = 0, maxHeight = 0;

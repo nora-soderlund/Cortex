@@ -44,7 +44,7 @@ Client.menu = new function() {
     });
 };
 
-Client.loader.ready(function() {
+Loader.ready(function() {
     const $user = Client.menu.addItem("user", function() {
         Client.menu.sub.$element.toggle();
     });

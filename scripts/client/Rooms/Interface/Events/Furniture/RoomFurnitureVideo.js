@@ -12,7 +12,7 @@ SocketMessages.register("OnRoomFurnitureVideoStart", function(data) {
         delete entity.video;
     }
 
-    entity.video = new Client.rooms.items.video(entity, Client.loader.settings.api.youtube + data.video + ".mp4", (data.time == undefined)?(0):(data.time));
+    entity.video = new Client.rooms.items.video(entity, Loader.settings.api.youtube + data.video + ".mp4", (data.time == undefined)?(0):(data.time));
 
     entity.sprites.push(entity.video);
 });

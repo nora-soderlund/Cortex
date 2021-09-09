@@ -1,64 +1,64 @@
-Client.loader = new function() {
-    this.$element = $("#client-loader");
+class Loader {
+    static $element = $("#client-loader");
 
-    this.$text = this.$element.find("#client-loader-text");
+    static $text = Loader.$element.find("#client-loader-text");
 
-    this.$scripts = $('<scripts id="client-scripts"></scripts>').appendTo(this.$element);
+    static $scripts = $('<scripts id="client-scripts"></scripts>').appendTo(Loader.$element);
 
-    this.assets = [];
-    this.readySteps = [];
+    static assets = [];
+    static readySteps = [];
 
-    this.show = function() {
-        this.$element.fadeIn();
+    static show() {
+        Loader.$element.fadeIn();
     };
 
-    this.setText = function(text) {
-        this.$text.html(text);
-    }
-
-    this.setError = function(text) {
-        this.setText("An error has occurred!<br>" + text);
-    }
-
-    this.hide = function() {
-        this.$element.fadeOut(500);
+    static setText(text) {
+        Loader.$text.html(text);
     };
 
-    this.steps = [];
-
-    this.addStep = function(step) {
-        this.steps.push(step);
+    static setError(text) {
+        Loader.setText("An error has occurred!<br>" + text);
     };
 
-    this.addAsset = function(asset) {
-        this.assets.push(asset);
+    static hide() {
+        Loader.$element.fadeOut(500);
     };
 
-    this.ready = function(step) {
-        this.readySteps.push(step);
+    static steps = [];
+
+    static addStep(step) {
+        Loader.steps.push(step);
     };
 
-    this.load = function(finished) {
-        if(this.steps.length == 0)
+    static addAsset(asset) {
+        Loader.assets.push(asset);
+    };
+
+    static ready(step) {
+        Loader.readySteps.push(step);
+    };
+
+    static load(finished) {
+        if(Loader.steps.length == 0)
             return finished();
 
-        this.steps[0](function() {
-            Client.loader.steps.shift();
+        Loader.steps[0](function() {
+            Loader.steps.shift();
 
-            Client.loader.load(finished);
+            Loader.load(finished);
         });
     };
 
-    this.loadScripts = function(data, finished) {
+    static loadScripts(data, finished) {
         if(data.length == 0)
             return finished();
 
-        this.loadScript(data, function() {
-            Client.loader.loadScripts(data, finished);
+        Loader.loadScript(data, function() {
+            Loader.loadScripts(data, finished);
         });
     };
 
-    this.loadScript = function(data, finished) {
+    static loadScript(data, finished) {
         while(data[0][0] == '@') {
             let name = data[0].substring(data[0].lastIndexOf('/') + 1);
 
@@ -74,7 +74,7 @@ Client.loader = new function() {
 
         console.log("[%cLoader%c]%c Downloading and running " + name + "...", "color: orange", "color: inherit", "color: lightblue");
 
-        $.getScript(Client.loader.settings.cdn + "scripts/client/" + data[0], function() {
+        $.getScript(Loader.settings.cdn + "scripts/client/" + data[0], function() {
             data.shift();
 
             finished();
@@ -82,33 +82,33 @@ Client.loader = new function() {
     };
 };
 
-Client.loader.addStep(function(finished) {
-    Client.loader.setText("Loading configuration...");
+Loader.addStep(function(finished) {
+    Loader.setText("Loading configuration...");
 
     $.getJSON("/client.json", function(data) {
-        Client.loader.settings = data;
+        Loader.settings = data;
         
-        $.getJSON(Client.loader.settings.cdn + "scripts/Client.json", function(data) {
-            Client.loader.data = data;
+        $.getJSON(Loader.settings.cdn + "scripts/Client.json", function(data) {
+            Loader.data = data;
 
-            Client.loader.data.scripts = [ "Client.js" ];
+            //Loader.data.scripts = [ "Client.js" ];
             
             finished();
         });
     });
 });
 
-Client.loader.addStep(function(finished) {
-    if(Client.loader.data.scripts.length == 0)
+Loader.addStep(function(finished) {
+    if(Loader.data.scripts.length == 0)
         return finished();
 
     console.log("[%cLoader%c]%c Starting the download of the client scripts...", "color: orange", "color: inherit", "color: lightblue");
     
-    Client.loader.setText("Downloading scripts...");
+    Loader.setText("Downloading scripts...");
     
     $.holdReady(true);
     
-    Client.loader.loadScripts(Client.loader.data.scripts, function() {
+    Loader.loadScripts(Loader.data.scripts, function() {
         $.holdReady(false);
     
         console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
@@ -117,20 +117,20 @@ Client.loader.addStep(function(finished) {
     });
 });
 
-Client.loader.addStep(function(finished) {
-    //if(Client.loader.data.fonts.length == 0)
+Loader.addStep(function(finished) {
+    //if(Loader.data.fonts.length == 0)
     //    return finished();
 
     console.log("[%cLoader%c]%c Starting the download of the font faces...", "color: orange", "color: inherit", "color: lightblue");
     
-    Client.loader.setText("Downloading fonts...");
+    Loader.setText("Downloading fonts...");
 
     const $canvas = $('<canvas width="100" height="100"></canvas>').appendTo(Client.$element);
 
     const context = $canvas[0].getContext("2d");
     
-    for(let index in Client.loader.data.fonts) {
-        context.font = "12px " + Client.loader.data.fonts[index] + "";
+    for(let index in Loader.data.fonts) {
+        context.font = "12px " + Loader.data.fonts[index] + "";
 
         context.fillText(".", 20, 20);
     }
@@ -140,21 +140,21 @@ Client.loader.addStep(function(finished) {
     finished();
 });
 
-Client.loader.addStep(async function(finished) {
+Loader.addStep(async function(finished) {
     console.log("[%cLoader%c]%c Starting the download of the pre-loaded assets...", "color: orange", "color: inherit", "color: lightblue");
 
-    Client.loader.setText("Preparing assets...");
+    Loader.setText("Preparing assets...");
 
-    for(let index in Client.loader.data.assets)
-        await Assets.getManifest(Client.loader.data.assets[index]);
+    for(let index in Loader.data.assets)
+        await Assets.getManifest(Loader.data.assets[index]);
 
     console.log("[%cLoader%c]%c Finished loading the pre-loaded assets!", "color: orange", "color: inherit", "color: lightblue");
 
     finished();
 });
 
-Client.loader.addStep(async function(finished) {
-    Client.loader.setText("Connecting to the server...");
+Loader.addStep(async function(finished) {
+    Loader.setText("Connecting to the server...");
     
     SocketMessages.register("OnSocketAuthenticate", function(data) {
         finished();
@@ -165,54 +165,54 @@ Client.loader.addStep(async function(finished) {
         
         switch(data) {
             case "USER_KEY_INVALID": {
-                Client.loader.setError("Your user key does not exist!");
+                Loader.setError("Your user key does not exist!");
             
                 break;
             }
 
             case "USER_KEY_UNAUTHORIZED": {
-                Client.loader.setError("Your user key's network address differs!");
+                Loader.setError("Your user key's network address differs!");
             
                 break;
             }
 
             default: {
-                Client.loader.setError(data);
+                Loader.setError(data);
                 
                 break;
             }
         }
 
-        Client.loader.show();
+        Loader.show();
     });
     
     Socket.server = await Socket.open();
 });
 
-Client.loader.addStep(async function(finished) {
-    Client.loader.setText("Executing scripts...");
+Loader.addStep(async function(finished) {
+    Loader.setText("Executing scripts...");
 
     Client.rooms.asset = await Assets.getManifest("HabboRoomContent");
 
     finished();
 });
 
-Client.loader.addStep(async function(finished) {
+Loader.addStep(async function(finished) {
     Client.rooms.navigator.show();
     
     finished();
 });
 
-Client.loader.addStep(async function(finished) {
-    for(let index in Client.loader.assets)
-        await Client.loader.assets[index]();
+Loader.addStep(async function(finished) {
+    for(let index in Loader.assets)
+        await Loader.assets[index]();
     
     finished();
 });
 
 if(theme != null) {
-    Client.loader.addStep(function(finished) {
-        Client.loader.setText("Loading theme configuration...");
+    Loader.addStep(function(finished) {
+        Loader.setText("Loading theme configuration...");
 
         $.getJSON("/hotel/styles/themes/" + theme + "/" + theme + ".json", function(data) {
             Client.theme.data = data;
@@ -222,13 +222,13 @@ if(theme != null) {
     });
 }
 
-Client.loader.load(function() {
-    Client.loader.setText("Brewing coffee...");
+Loader.load(function() {
+    Loader.setText("Brewing coffee...");
 
     SocketMessages.send({ OnUserReady: null });
 
-    Client.loader.hide();
+    Loader.hide();
 
-    for(let index in Client.loader.readySteps)
-        Client.loader.readySteps[index]();
+    for(let index in Loader.readySteps)
+        Loader.readySteps[index]();
 });
