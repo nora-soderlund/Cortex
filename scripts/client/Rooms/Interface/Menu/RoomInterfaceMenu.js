@@ -1,42 +1,48 @@
-RoomInterface.menu = new function() {
-    this.$element = $(
-        '<div class="room-interface-menu active">' +
-            '<div class="room-interface-menu-toggle"></div>' +
+const RoomInterfaceMenu = new class {
+    constructor() {
+        this.element = document.createElement("div");
+        this.element.className = "room-interface-menu active";
+        this.element.innerHTML = `
+            <div class="room-interface-menu-toggle"></div>
 
-            '<div class="room-interface-menu-content"></div>' +
-        '</div>'
-    ).appendTo(RoomInterface.$element);
+            <div class="room-interface-menu-content"></div>
+        `;
+        RoomInterface.element.append(this.element);
 
-    this.$toggle = this.$element.find(".room-interface-menu-toggle");
+        this.toggle = this.element.querySelector(".room-interface-menu-toggle");
 
-    this.$toggle.on("click", function() {
-        $(this).parent().toggleClass("active");
-    });
+        this.toggle.addEventListener("click", () => {
+            this.element.classList.toggle("active");
+        });
 
-    this.$content = this.$element.find(".room-interface-menu-content");
+        this.content = this.element.querySelector(".room-interface-menu-content");
+    
+        this.link("information", "Information", function() {
+            RoomInterface.information.toggle();
+        });
+        
+        const settings = this.link("settings", "Settings", function() {
+            Client.rooms.settings.toggle();
+        });
+    
+        RoomInterface.events.start.push(function() {
+            if(RoomInterface.data.user == Client.user.id)
+                settings.style.display = "block";
+            else
+                settings.style.display = "none";
+        });
+    };
 
-    this.link = function(identifier, title, click) {
-        const $element = $('<div class="room-interface-menu-link room-interface-menu-' + identifier + '">' + title + '</div>').appendTo(this.$content);
+    link(identifier, title, click) {
+        const element = document.createElement("div");
+        element.className = `room-interface-menu-link room-interface-menu-${identifier}`;
+        element.innerHTML = title;        
+        this.content.append(element);
 
-        $element.on("click", function() {
+        element.addEventListener("click", () => {
             click();
         });
 
-        return $element;
+        return element;
     };
-    
-    this.link("information", "Information", function() {
-        RoomInterface.information.toggle();
-    });
-    
-    const $settings = this.link("settings", "Settings", function() {
-        Client.rooms.settings.toggle();
-    });
-
-    RoomInterface.events.start.push(function() {
-        if(RoomInterface.data.user == Client.user.id)
-            $settings.show();
-        else
-            $settings.hide();
-    });
-};
+}();

@@ -4302,7 +4302,7 @@ RoomInterface.display.users = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-RoomInterface.menu = new function () {
+RoomInterfaceMenu = new function () {
   this.$element = $('<div class="room-interface-menu active">' + '<div class="room-interface-menu-toggle"></div>' + '<div class="room-interface-menu-content"></div>' + '</div>').appendTo(RoomInterface.$element);
   this.$toggle = this.$element.find(".room-interface-menu-toggle");
   this.$toggle.on("click", function () {
