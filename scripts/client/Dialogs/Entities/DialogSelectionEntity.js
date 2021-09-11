@@ -10,10 +10,10 @@ class DialogSelection {
 
         this.placeholder = this.element.querySelector(".dialog-selection-placeholder");
     
-        const options = this.element.querySelector(".dialog-selection-options");
+        const optionsElement = this.element.querySelector(".dialog-selection-options");
     
         this.placeholder.addEventListener("click", () => {
-            options.style.display = (options.style.display == "none")?("block"):("none");
+            optionsElement.style.display = (optionsElement.style.display == "none")?("block"):("none");
         });
     
         for(let index in options) {
@@ -21,17 +21,17 @@ class DialogSelection {
             option.className = "dialog-selection-option";
             option.value = options[index].value;
             option.innerText = options[index].text;
-            options.appendChild(option);
+            optionsElement.appendChild(option);
     
             option.addEventListener("click", () => {
-                options.querySelector(".dialog-selection-option.active").classList.remove("active");
+                optionsElement.querySelector(".dialog-selection-option.active").classList.remove("active");
     
                 option.classList.add("active");
     
                 this.placeholder.innerText = option.innerText;
                 this.placeholder.value = option.value;
     
-                options.style.display = "none";
+                optionsElement.style.display = "none";
             });
         }
     };

@@ -31,6 +31,9 @@ class SocketMessages {
     };
 
     static send(message) {
+        if(Socket.server == undefined)
+            return;
+            
         Socket.sent++;
 
         Socket.server.send(JSON.stringify(message));

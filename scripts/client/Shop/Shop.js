@@ -17,7 +17,7 @@ Client.shop = new function() {
 
     entity.setIcon = function(icon) {
         Assets.getSpritesheet("HabboShopIcons/icon_" + icon, false).then(function(spritesheet) {
-            const context = entity.$icon[0].getContext("2d");
+            const context = entity.icon.getContext("2d");
 
             context.imageSmoothingEnabled = false;
 
@@ -68,7 +68,7 @@ Client.shop = new function() {
                 entity.category = new Client.shop.categories[page.data.type](page);
             }
             catch(exception) {
-                entity.tabs.$content.html(exception);
+                entity.tabs.content.innerHTML = exception;
             }
         }
         else {
@@ -76,7 +76,7 @@ Client.shop = new function() {
                 entity.page = await Client.shop.types[page.data.type](page);
             }
             catch(exception) {
-                entity.category.$content.html(exception);
+                entity.category.content.innerHTML = exception;
             }
         }
     };
@@ -87,13 +87,15 @@ Client.shop = new function() {
 
         entity.header = new DialogHeader({ height: 95 });
 
-        entity.header.$element.appendTo(entity.$content);
+        entity.content.append(entity.header.element);
 
         entity.tabs = new DialogTabs(500);
 
-        entity.$icon = $('<canvas width="64" height="64"></canvas>');
+        entity.icon = document.createElement("canvas");
+        entity.icon.width = 64;
+        entity.icon.height = 64;
 
-        entity.header.setIcon(entity.$icon);
+        entity.header.setIcon(entity.icon);
 
         const categories = entity.pages.filter(x => x.parent == 0);
 
@@ -104,7 +106,7 @@ Client.shop = new function() {
 
         entity.tabs.show(categories[0].id);
 
-        entity.tabs.$element.appendTo(entity.$content);
+        entity.content.append(entity.tabs.element);
     });
 
     entity.events.show.push(function() {

@@ -25,7 +25,7 @@ SocketMessages.register("OnRoomEnter", async function(data) {
     RoomInterface.map.render().then(function() {
         RoomInterface.entity.addEntity(RoomInterface.map);
 
-        const width = RoomInterface.$element.width(), height = RoomInterface.$element.height();
+        const width = RoomInterface.element.width, height = RoomInterface.element.height;
 
         RoomInterface.entity.offset = [
             (width / 2) - ((RoomInterface.map.map.rows * 16) + (RoomInterface.map.map.columns * 16)),

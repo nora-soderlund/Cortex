@@ -1,83 +1,107 @@
 RoomInterface.display = new function() {
-    this.$element = $(
-        '<div class="room-interface-display">' +
-            '<div class="room-interface-display-content"></div>' +
+    this.element = document.createElement("div");
+    this.element.className = "room-interface-display";
+    this.element.innerHTML = `
+        <div class="room-interface-display-content"></div>
 
-            '<div class="room-interface-display-buttons"></div>' + 
-        '</div>'
-    ).hide().appendTo(RoomInterface.$element);
+        <div class="room-interface-display-buttons"></div> 
+    `;
+    this.element.style.display = "none";
+    RoomInterface.element.append(this.element);
 
-    this.$content = this.$element.find(".room-interface-display-content");
-    this.$buttons = this.$element.find(".room-interface-display-buttons");
+    this.content = this.element.querySelector(".room-interface-display-content");
+    this.buttons = this.element.querySelector(".room-interface-display-buttons");
 
     this.addButton = function(text, click) {
-        const $element = $('<div class="room-interface-display-button">' + text + '</div>').appendTo(this.$buttons);
+        const element = document.createElement("div");
+        element.className = "room-interface-display-button";
+        element.innerHTML = text;
+        this.buttons.append(element);
 +
-        $element.click(click);
+        element.click(click);
     };
 
     this.figure = async function(entity) {
         this.entity = entity;
 
-        this.$element.hide();
+        this.element.style.display = "none";
 
-        this.$content.html("");
-        this.$buttons.html("");
+        this.content.innerHTML = `
+            <div class="room-interface-display-title">${entity.data.name}</div>
 
-        const $header = $('<div class="room-interface-display-title">' + entity.data.name + '</div>').appendTo(this.$content);
+            <div class="room-interface-display-break"></div>
 
-        $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+            <div class="room-interface-display-grid">
+                <div class="room-interface-display-figure room-interface-display-bot">
+                    <canvas width="256" height="256"></canvas>
+                </div>
 
-        const $grid = $('<div class="room-interface-display-grid"></div>').appendTo(this.$content);
+                <div class="room-interface-display-badges"></div>
+            </div>
+        `;
+        this.buttons.innerHTML = "";
 
-        const $figure = $('<div class="room-interface-display-figure room-interface-display-bot"></div>').appendTo($grid);
+        const grid = this.content.querySelector(".room-interface-display-grid");
 
-        const $canvas = $('<canvas width="256" height="256"></canvas>').appendTo($figure);
+        const figure = grid.querySelector(".room-interface-display-figure");
 
-        new FigureRenderer(entity.data.figure, { direction: 4 }, $canvas);
+        const canvas = figure.querySelector("canvas");
 
-        const $badges = $('<div class="room-interface-display-badges"></div>').appendTo($grid);
+        new FigureRenderer(entity.data.figure, { direction: 4 }, canvas);
 
-        const $badge = [];
+        const badges = grid.querySelector(".room-interface-display-badges");
 
-        $badge[0] = $('<div class="room-interface-display-badge"></div>').appendTo($badges);
+        const badge = [];
 
-        $('<div class="room-interface-display-group"></div>').appendTo($badges);
+        badge[0] = document.createElement("div");
+        badge[0].className = "room-interface-display-badge";
+        badges.append(badge[0]);
 
-        for(let index = 1; index < 5; index++)
-            $badge[index] = $('<div class="room-interface-display-badge"></div>').appendTo($badges);
+        const group = document.createElement("div");
+        group.className = "room-interface-display-group";
+        badges.append(group);
+
+        for(let index = 1; index < 5; index++) {
+            badge[index] = document.createElement("div");
+            badge[index].className = "room-interface-display-badge";
+            badges.append(badge[index]);
+        }
 
         SocketMessages.sendCall({ OnUserBadgeRequest: entity.data.id }, "OnUserBadgeRequest").then(function(badges) {
             for(let index in badges)
-                (new BadgeRenderer(badges[index].badge)).appendTo($badge[index]);
+            badge[index].append(new BadgeRenderer(badges[index].badge));
         });
 
-        this.$element.show();
+        this.element.style.display = "block";
     };
 
     this.furniture = async function(entity) {
         this.entity = entity;
 
-        this.$element.hide();
-
-        this.$content.html("");
-        this.$buttons.html("");
+        this.element.style.display = "none";
 
         const furniture = await Furnitures.get(entity.furniture.settings.id);
 
-        const $header = $('<div class="room-interface-display-title">' + furniture.title + '</div>').appendTo(this.$content);
+        this.content.innerHTML = `
+            <div class="room-interface-display-title">${furniture.title}</div>
 
-        $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+            <div class="room-interface-display-break"></div>
 
-        const $canvas = $('<canvas class="room-interface-display-canvas"></canvas>').appendTo(this.$content);
+            <canvas class="room-interface-display-canvas"></canvas>
+        `;
+        this.buttons.innerHTML = "";
+
+        const canvas = this.content.querySelector(".room-interface-display-canvas");
 
         if(furniture.description.length != 0) {
-            $('<div class="room-interface-display-break"></div>').appendTo(this.$content);
+            this.content.innerHTML += `
+                <div class="room-interface-display-break"></div>
 
-            $('<div class="room-interface-display-description">' + furniture.description + '</div>').appendTo(this.$content);
+                <div class="room-interface-display-description">${furniture.description}</div>
+            `;
         }
 
-        new FurnitureRenderer({ id: furniture.id, direction: 4 }, $canvas, "rgb(28, 28, 26)");
+        new FurnitureRenderer({ id: furniture.id, direction: 4 }, canvas, "rgb(28, 28, 26)");
 
         if(RoomInterface.data.rights.includes(Client.user.id) || entity.data.user == Client.user.id) {
             this.addButton("Pickup", function() {
@@ -101,13 +125,13 @@ RoomInterface.display = new function() {
             }
         }
 
-        this.$element.show();
+        this.element.style.display = "block";
     };
 
     this.hide = function() {
         RoomInterface.display.entity = undefined;
         
-        RoomInterface.display.$element.hide();
+        RoomInterface.display.element.style.display = "none";
     };
 
     RoomInterface.cursor.events.click.push(function(entity) {

@@ -84,7 +84,7 @@ class Loader {
 
         element.src = `${Loader.settings.cdn}scripts/client/${data[0]}`;
 
-        document.appendChild(element);
+        document.body.append(element);
     };
 };
 

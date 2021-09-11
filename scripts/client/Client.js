@@ -4319,7 +4319,7 @@ RoomInterfaceMenu = new function () {
   };
 
   this.link("information", "Information", function () {
-    RoomInterface.information.toggle();
+    RoomInterfaceInformation.toggle();
   });
   const $settings = this.link("settings", "Settings", function () {
     Client.rooms.settings.toggle();
@@ -4332,7 +4332,7 @@ RoomInterfaceMenu = new function () {
 // Version: 5.2.11 (build 7510121) with Babel 7.8.7
 // Generated at: 2021-09-09 12:20:12
 ///////////////////////////////////////////////////////////////////////////////
-RoomInterface.information = new function () {
+RoomInterfaceInformation = new function () {
   const entity = new Dialog({
     title: "Room Information",
     size: {

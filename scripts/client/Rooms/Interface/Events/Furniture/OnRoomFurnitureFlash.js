@@ -15,6 +15,8 @@ SocketMessages.register("OnRoomFurnitureFlash", function(data) {
             RoomInterface.furnitures[furnitures[index]].furniture.setAnimation(animation);
     };
 
+    // TODO: wtf?
+
     setAnimation(data.animation);
 
     setTimeout(function() {

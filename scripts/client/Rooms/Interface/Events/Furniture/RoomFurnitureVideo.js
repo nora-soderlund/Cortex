@@ -7,7 +7,7 @@ SocketMessages.register("OnRoomFurnitureVideoStart", function(data) {
     if(entity.video != undefined) {
         entity.video.image.pause();
     
-        $(entity.video.image).remove();
+        entity.video.image.remove();
     
         delete entity.video;
     }
@@ -28,7 +28,7 @@ SocketMessages.register("OnRoomFurnitureVideoStop", function(data) {
         
     entity.video.image.pause();
 
-    $(entity.video.image).remove();
+    entity.video.image.remove();
 
     delete entity.video;
 });

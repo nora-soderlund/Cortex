@@ -354,7 +354,7 @@ const RoomCreation = new class extends Dialog {
         const next = document.createElement("div");
         next.className = "dialog-button";
         next.innerHTML = "Continue »";
-        next.addEventListener("click", () => {
+        next.addEventListener("click", async () => {
             await SocketMessages.sendCall({ OnRoomModelCreate: this.settings }, "OnRoomModelCreate");
 
             this.hide();

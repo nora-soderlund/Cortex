@@ -1,7 +1,9 @@
 RoomInterface.furniture.place = new function() {
     this.enabled = false;
 
-    this.$icon = $('<canvas></canvas>').css({ "position": "fixed", "pointer-events": "none" });
+    this.icon = document.createElement("canvas");
+    this.icon.style.position = "fixed";
+    this.icon.style.pointerEvents = "none";
 
     this.start = async function(furniture, finished, direction = null) {
         furniture = await Furnitures.get(furniture);
@@ -27,11 +29,11 @@ RoomInterface.furniture.place = new function() {
 
         this.entity.alpha = 0.5;
 
-        const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, this.$icon);
+        const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, this.icon);
 
         await this.entity.render();
 
-        this.$icon.appendTo(RoomInterface.$element);
+        RoomInterface.element.append(this.icon);
 
         RoomInterface.entity.addEntity(this.entity);
 
@@ -40,7 +42,7 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.push(this.hover);
         RoomInterface.cursor.events.unhover.push(this.unhover);
 
-        RoomInterface.entity.$canvas.bind("wheel", this.scroll);
+        RoomInterface.entity.canvas.addEventListener("wheel", this.scroll);
     };
 
     this.hover = function(position) {
@@ -79,7 +81,7 @@ RoomInterface.furniture.place = new function() {
 
         RoomInterface.furniture.place.iconShown = true;
 
-        RoomInterface.entity.$canvas.bind("mousemove", RoomInterface.furniture.place.move);
+        RoomInterface.entity.canvas.addEventListener("mousemove", RoomInterface.furniture.place.move);
     };
 
     this.hideIcon = function() {
@@ -88,9 +90,9 @@ RoomInterface.furniture.place = new function() {
 
         RoomInterface.furniture.place.iconShown = false;
 
-        RoomInterface.entity.$canvas.unbind("mousemove", RoomInterface.furniture.place.move);
+        RoomInterface.entity.canvas.removeEventListener("mousemove", RoomInterface.furniture.place.move);
         
-        RoomInterface.furniture.place.$icon.hide();
+        RoomInterface.furniture.place.icon.style.display = "none";
     };
 
     this.click = function() {
@@ -98,10 +100,9 @@ RoomInterface.furniture.place = new function() {
     };
 
     this.move = function(event) {
-        RoomInterface.furniture.place.$icon.css({
-            "left": event.offsetX,
-            "top": event.offsetY
-        }).show();
+        RoomInterface.furniture.place.icon.style.left = event.offsetX;
+        RoomInterface.furniture.place.icon.style.top = event.offsetY;
+        RoomInterface.furniture.place.icon.style.display = "block";
     };
 
     this.unhover = function() {
@@ -124,9 +125,9 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.push(RoomInterface.furniture.place.hover);
         RoomInterface.cursor.events.unhover.push(RoomInterface.furniture.place.unhover);
    
-        RoomInterface.entity.$canvas.bind("wheel", RoomInterface.furniture.place.scroll);
+        RoomInterface.entity.canvas.addEventListener("wheel", RoomInterface.furniture.place.scroll);
 
-        RoomInterface.furniture.place.$icon.appendTo(RoomInterface.$element);
+        RoomInterface.element.append(RoomInterface.furniture.place.icon);
     };
 
     this.unbind = function() {
@@ -135,9 +136,9 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.splice(RoomInterface.cursor.events.hover.indexOf(RoomInterface.furniture.place.hover), 1);
         RoomInterface.cursor.events.unhover.splice(RoomInterface.cursor.events.unhover.indexOf(RoomInterface.furniture.place.unhover), 1);
    
-        RoomInterface.entity.$canvas.unbind("wheel", RoomInterface.furniture.place.scroll);
+        RoomInterface.entity.canvas.removeEventListener("wheel", RoomInterface.furniture.place.scroll);
 
-        RoomInterface.furniture.place.$icon.remove();
+        RoomInterface.furniture.place.icon.remove();
     };
 
     this.stop = function() {

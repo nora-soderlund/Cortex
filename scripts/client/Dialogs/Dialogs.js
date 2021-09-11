@@ -10,8 +10,12 @@ const Dialogs = new function() {
             return a.timestamp - b.timestamp;
         });
 
-        for(let index in this.entities)
-            this.entities[index].element?.style.zIndex = 1 + index;
+        for(let index in this.entities) {
+            if(this.entities[index].element == null)
+                continue;
+
+            this.entities[index].element.style.zIndex = (1 + index);
+        }
     };
 
     this.add = (entity) => {
@@ -25,7 +29,7 @@ const Dialogs = new function() {
     };
 };
 
-$(window).on("keyup", function(event) {
+window.addEventListener("keyup", (event) => {
     if(event.code != "Escape")
         return;
 

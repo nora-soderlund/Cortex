@@ -18,7 +18,7 @@ const RoomInterfaceMenu = new class {
         this.content = this.element.querySelector(".room-interface-menu-content");
     
         this.link("information", "Information", function() {
-            RoomInterface.information.toggle();
+            RoomInterfaceInformation.toggle();
         });
         
         const settings = this.link("settings", "Settings", function() {

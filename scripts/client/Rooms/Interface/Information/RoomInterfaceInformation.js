@@ -1,44 +1,54 @@
-RoomInterface.information = new function() {
-    const entity = new Dialog({
-        title: "Room Information",
-        
-        size: {
-            width: 240
-        },
+const RoomInterfaceInformation = new class extends Dialog {
+    constructor(settings = {}) {
+        settings = {
+            title: "Room Information",
+            
+            size: {
+                width: 240
+            },
+    
+            offset: {
+                type: "center",
+    
+                top: -120
+            }
+        };
 
-        offset: {
-            type: "center",
+        super(settings);
 
-            top: -120
-        }
-    });
-
-    entity.events.create.push(function() {
-        entity.$content.addClass("room-interface-information");
-        
-        entity.$title = $('<p class="room-interface-information-title"></p>').appendTo(entity.$content);
-
-        entity.$owner = $('<p class="room-interface-information-owner"></p>').appendTo(entity.$content);
-
-        entity.$description = $('<p class="room-interface-information-description"></p>').appendTo(entity.$content);
-
-        entity.$thumbnail = $('<div class="room-interface-information-thumbnail"></div>').appendTo(entity.$content);
-    });
-
-    entity.events.show.push(function() {
-        entity.$title.text(RoomInterface.data.title);
-        entity.$owner.text("");
-        entity.$description.text((RoomInterface.data.description == undefined)?(""):(RoomInterface.data.description));
-
-        Game.getUser(RoomInterface.data.user).then(function(user) {
-            entity.$owner.text("By " + user.name);
+        this.events.create.push(() => {
+            this.content.classList.add("room-interface-information");
+            
+            this.title = document.createElement("p");
+            this.title.className = "room-interface-information-title";
+            this.content.append(this.title);
+            
+            this.owner = document.createElement("p");
+            this.owner.className = "room-interface-information-owner";
+            this.content.append(this.owner);
+            
+            this.description = document.createElement("p");
+            this.description.className = "room-interface-information-description";
+            this.content.append(this.description);
+            
+            this.thumbnail = document.createElement("div");
+            this.thumbnail.className = "room-interface-information-thumbnail";
+            this.content.append(this.thumbnail);
         });
-    });
-
-    RoomInterface.events.stop.push(function() {
-        if(entity.active)
-            entity.hide();
-    });
-
-    return entity;
-};
+    
+        this.events.show.push(() => {
+            this.title.innerText = RoomInterface.data.title;
+            this.owner.innerText = "";
+            this.description.innerText = ((RoomInterface.data.description == undefined)?(""):(RoomInterface.data.description));
+    
+            Game.getUser(RoomInterface.data.user).then((user) => {
+                this.owner.innerText = "By " + user.name;
+            });
+        });
+    
+        RoomInterface.events.stop.push(() => {
+            if(this.active)
+                this.hide();
+        });
+    };
+}();

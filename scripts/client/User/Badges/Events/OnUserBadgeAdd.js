@@ -5,13 +5,15 @@ SocketMessages.register("OnUserBadgeAdd", function(data) {
     
     entity.show();
 
-    BadgeRenderer(data.badge).css("margin", "auto").appendTo(entity.$display);
+    const renderer = BadgeRenderer(data.badge);    
+    renderer.style.margin = "auto";
+    entity.display.append(renderer);
 
     Badges.get(data.badge).then(function(data) {
-        entity.$info.html(
-            '<h1>Congratulations!</h1>' +
-            '<p>You have received the badge <b>' + data.title + '</b></p>' +
-            '<p>' + data.description + '</p>'
-        );
+        entity.info.innerHTML = `
+            <h1>Congratulations!</h1>
+            <p>You have received the badge <b>${data.title}</b></p>
+            <p>${data.description}</p>'
+        `;
     });
 });
