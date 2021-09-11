@@ -1,19 +1,24 @@
 RoomInterface.chat.input = new function() {
-    this.$element = $('<div class="room-interface-chat-input"></div>').appendTo(RoomInterface.$element);
+    this.element = document.createElement("div");
+    this.element.className = "room-interface-chat-input";
+    this.element.innerHTML = `
+        <input type="text" placeholder="Click here to chat...">
+    `;
+    RoomInterface.element.append(this.element);
 
-    this.$input = $('<input type="text" placeholder="Click here to chat...">').appendTo(this.$element);
+    this.input = this.element.querySelector("input");
 
-    this.$input.on("keyup", function(event) {
+    this.input.addEventListener("keyup", (event) => {
         if(event.key != "Enter")
             return;
 
-        if($(this).val().length == 0)
+        if(this.input.value.length == 0)
             return;
 
         SocketMessages.send({
-            OnRoomUserChat: $(this).val()
+            OnRoomUserChat: this.input.value
         });
 
-        $(this).val("");
+        this.input.value = "";
     });
 };

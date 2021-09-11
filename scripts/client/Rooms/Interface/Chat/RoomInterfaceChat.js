@@ -1,5 +1,7 @@
 RoomInterface.chat = new function() {
-    this.$element = $('<div class="room-interface-chat"></div>').appendTo(RoomInterface.$element);
+    this.element = document.createElement("div");
+    this.element.className = "room-interface-chat";
+    RoomInterface.element.append(this.element);
 
     this.interval = null;
 
@@ -36,8 +38,9 @@ RoomInterface.chat = new function() {
         if(color != undefined)
             sprite = await Assets.getSpriteColor("HabboRoomChat", "HabboRoomChat_" + style, color);
 
-        const $canvas = $('<canvas class="room-interface-chat-message"></canvas>');
-        const context = $canvas[0].getContext("2d");
+        const canvas = document.createElement("canvas");
+        canvas.className = "room-interface-chat-message";
+        const context = canvas.getContext("2d");
 
         const visualization = JSON.parse(JSON.stringify(this.assets.visualization["default"]));
 
@@ -99,13 +102,13 @@ RoomInterface.chat = new function() {
             left += parts[index].width;
         }
 
-        $canvas.css("left", center - (context.canvas.width / 2));
+        canvas.style.left = `${(center - (context.canvas.width / 2))}px`;
 
-        this.messages.push($canvas);
+        this.messages.push(canvas);
 
         this.history.addMessage(context.canvas, center - (context.canvas.width / 2));
 
-        $canvas.appendTo(this.$element);
+        this.element.append(canvas);
 
         this.updateMessages();
 
@@ -114,9 +117,9 @@ RoomInterface.chat = new function() {
 
     this.updateMessages = function() {
         for(let index = 0; index < this.messages.length; index++) {
-            const top = parseInt(this.messages[index].css("top"));
+            const top = parseInt(this.messages[index].style.top);
                 
-            if(top < 0) {
+            if(top < 30) {
                 this.messages[index].remove();
 
                 this.messages.splice(index, 1);
@@ -124,9 +127,7 @@ RoomInterface.chat = new function() {
                 continue;    
             }
 
-            this.messages[index].animate({
-                "top": "-=30"
-            }, 400);
+            this.messages[index].style.top = `${(top - 30)}px`;
         }
 
         if(this.messages.length == 0)
@@ -142,7 +143,7 @@ RoomInterface.chat = new function() {
 
         this.margin = RoomInterface.entity.offset[0];
 
-        this.$element.css("margin-left", RoomInterface.entity.offset[0] + "px");
+        this.element.style.marginLeft = `${RoomInterface.entity.offset[0]}px`;
     };
 
     RoomInterface.entity.events.render.push(function() {

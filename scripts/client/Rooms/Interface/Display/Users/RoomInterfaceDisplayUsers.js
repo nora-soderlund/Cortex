@@ -2,24 +2,30 @@ RoomInterface.display.users = new function() {
     this.tabs = new function() {
         this.entity = undefined;
 
-        this.$element = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
+        this.element = document.createElement("div");
+        this.element.className = "room-interface-user";
+        RoomInterface.element.append(this.element);
 
         this.click = function(entity) {
-            this.$element.html(
-                '<div class="room-interface-user-header">' + entity.entity.data.name + '</div>' +
-                '<div class="room-interface-user-content"></div>' +
-                '<div class="room-interface-user-footer"></div>' +
+            this.element.innerHTML = `
+                <div class="room-interface-user-header">${entity.entity.data.name}</div>
+                <div class="room-interface-user-content"></div>
+                <div class="room-interface-user-footer"></div>
                 
-                '<div class="room-interface-user-arrow"></div>'
-            );
+                <div class="room-interface-user-arrow"></div>
+            `;
 
             if(Client.theme.get("rooms/interface/tabs/figure", false) == true) {
-                this.$canvas = $('<canvas class="room-interface-user-figure" width="256" height="256"></canvas>').appendTo(this.$element);
+                this.canvas = document.createElement("canvas");
+                this.canvas.width = 256;
+                this.canvas.height = 256;
+                this.canvas.className = "room-interface-user-figure";
+                this.element.append(this.canvas);
 
                 entity.entity.figure.events.render.push(this.render);
             }
 
-            this.$content = this.$element.find(".room-interface-user-content");
+            this.content = this.element.querySelector(".room-interface-user-content");
 
             this.entity = entity;
 
@@ -29,7 +35,7 @@ RoomInterface.display.users = new function() {
         this.render = function(sprites) {
             const entity = RoomInterface.display.users.tabs;
 
-            const context = entity.$canvas[0].getContext("2d");
+            const context = entity.canvas.getContext("2d");
 
             context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
@@ -38,7 +44,7 @@ RoomInterface.display.users = new function() {
         };
 
         this.show = async function(page, previous = "default") {
-            this.$content.html("");
+            this.content.innerHTML = "";
 
             switch(page) {
                 case "default": {
@@ -150,29 +156,31 @@ RoomInterface.display.users = new function() {
         };
 
         this.add = function(text, click) {
-            const $element = $('<div class="room-interface-user-item">' + text + '</div>');
+            const element = document.createElement("div");
+            element.className = "room-interface-user-item";
+            element.innerHTML = text;
         
-            $element.on("click", function() {
+            element.addEventListener("click", () => {
                 click();
             });
 
-            $element.appendTo(this.$content);
+            this.content.append(element);
         };
 
         this.hide = function() {
-            if(this.$canvas != undefined) {
+            if(this.canvas != undefined) {
                 const index = this.entity.entity.figure.events.render.indexOf(this.render);
 
                 this.entity.entity.figure.events.render.splice(index, 1);
 
-                this.$canvas.remove();
+                this.canvas.remove();
 
-                delete this.$canvas;
+                delete this.canvas;
             }
 
             this.entity = undefined;
 
-            this.$element.hide();
+            this.element.style.display = "none";
         };
 
         this.hover = function() {
@@ -184,10 +192,9 @@ RoomInterface.display.users = new function() {
     
             const offset = this.entity.entity.getOffset();
     
-            this.$element.css({
-                "left": center + position[0] + offset[0],
-                "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
-            }).show();
+            this.element.style.left = `${(center + position[0] + offset[0])}px`;
+            this.element.style.bottom = `${(RoomInterface.$element.height() - (position[1] + offset[1]))}px`;
+            this.element.style.display = "block";
         };
 
         RoomInterface.cursor.events.click.push(function(entity) {
@@ -207,31 +214,33 @@ RoomInterface.display.users = new function() {
     };
 
     this.request = function(entity) {
-        const $element = $(
-            '<div class="room-interface-user room-interface-user-request">' +
-                '<div class="user-profile" data-user="' + entity.data.id + '"><i class="sprite-user-profile"></i> <b>Friend request from ' + entity.data.name + '</b></div>' +
+        const element = document.createElement("div");
+        element.className = "room-interface-user room-interface-user-request";
+        element.innerHTML = `
+            <div class="user-profile" data-user="${entity.data.id}"><i class="sprite-user-profile"></i> <b>Friend request from ${entity.data.name}</b></div>
 
-                '<div class="room-interface-user-request-close"></div>' +
+            <div class="room-interface-user-request-close"></div>
 
-                '<div class="room-interface-user-request-buttons">' +
-                    '<div class="room-interface-user-request-decline dialog-button">Decline</div>' +
-                    '<div class="room-interface-user-request-accept dialog-button"><i class="sprite-success"></i> Accept</div>' +
-                '</div>' +
+            <div class="room-interface-user-request-buttons">
+                <div class="room-interface-user-request-decline dialog-button">Decline</div>
+                <div class="room-interface-user-request-accept dialog-button"><i class="sprite-success"></i> Accept</div>
+            </div>
 
-                '<div class="room-interface-user-arrow"></div>' +
-            '</div>').appendTo(RoomInterface.$element);
+            <div class="room-interface-user-arrow"></div>
+        `;
+        RoomInterface.element.append(element);
 
-        $element.find(".room-interface-user-request-close").on("click", function() {
+        element.querySelector(".room-interface-user-request-close").addEventListener("click", () => {
             destroy();
         });
 
-        $element.find(".room-interface-user-request-decline").on("click", async function() {
+        element.querySelector(".room-interface-user-request-decline").addEventListener("click", async () => {
             await SocketMessages.sendCall({ OnUserFriendRemove: { user: entity.data.id } }, "OnUserFriendRemove");
 
             destroy();
         });
 
-        $element.find(".room-interface-user-request-accept").on("click", async function() {
+        element.querySelector(".room-interface-user-request-accept").addEventListener("click", async () => {
             await SocketMessages.sendCall({ OnUserFriendAdd: { user: entity.data.id } }, "OnUserFriendUpdate");
 
             destroy();
@@ -242,7 +251,7 @@ RoomInterface.display.users = new function() {
             
             RoomInterface.entity.events.render.splice(index, 1);
 
-            $element.remove();
+            element.remove();
         };
 
         this.destroy = destroy;
@@ -253,45 +262,45 @@ RoomInterface.display.users = new function() {
     
             const offset = entity.getOffset();
     
-            $element.css({
-                "left": center + position[0] + offset[0],
-                "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
-            }).show();
+            element.style.left = `${(center + position[0] + offset[0])}px`;
+            element.style.bottom = `${(RoomInterface.$element.height() - (position[1] + offset[1]))}px`;
+            element.style.display = "block";
         };
     
         RoomInterface.entity.events.render.push(hover);
     };
 
-    this.$name = $('<div class="room-interface-user"></div>').appendTo(RoomInterface.$element);
+    this.name = document.createElement("div");
+    this.name.className = "room-interface-user";
+    RoomInterface.element.append(this.name);
 
     this.hover = function(entity) {
         if(entity == undefined || entity.entity.name != "figure") {
-            this.$name.hide();
+            this.name.style.display = "none";
 
             return;
         }
 
         if(RoomInterface.display.users.tabs.entity != undefined && entity.entity == RoomInterface.display.users.tabs.entity.entity) {
-            this.$name.hide();
+            this.name.style.dispaly = "none";
 
             return;
         }
 
-        this.$name.html(
-            '<div class="room-interface-user-title">' + entity.entity.data.name + '</div>' +
+        this.name.innerHTML = `
+            <div class="room-interface-user-title">${entity.entity.data.name}</div>
             
-            '<div class="room-interface-user-arrow"></div>'
-        );
+            <div class="room-interface-user-arrow"></div>
+        `;
 
         const center = RoomInterface.entity.center;
         const position = RoomInterface.entity.offset;
 
         const offset = entity.entity.getOffset();
 
-        this.$name.css({
-            "left": center + position[0] + offset[0],
-            "bottom": RoomInterface.$element.height() - (position[1] + offset[1])
-        }).show();
+        this.name.style.left = `${(center + position[0] + offset[0])}px`;
+        this.name.style.bottom = `${(RoomInterface.$element.height() - (position[1] + offset[1]))}px`;
+        this.name.style.display = "block";
     };
 
     RoomInterface.entity.events.render.push(function() {

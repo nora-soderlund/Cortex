@@ -17,44 +17,52 @@ Client.rooms.navigator = new function() {
 
     entity.events.create.push(function() {
         entity.header = new DialogHeader();
-
-        entity.header.$element.appendTo(entity.$content);
+        
+        entity.content.append(entity.header.element);
 
         entity.tabs = new DialogTabs(400);
 
-        entity.tabs.add("public", "Public", function($element) {
+        entity.tabs.add("public", "Public", function(element) {
             entity.header.setTitle("Public Lounges!");
     
             entity.header.setDescription("");
-    
-            entity.header.setIcon($('<div class="room-navigator-public-sprite"></div>'));
+
+            const icon = document.createElement("div");
+            icon.className = "room-navigator-public-sprite";
+            entity.header.setIcon(icon);
         });
 
-        entity.tabs.add("all_rooms", "All Rooms", function($element) {
+        entity.tabs.add("all_rooms", "All Rooms", function(element) {
             entity.header.setTitle("Explore a new room!");
     
             entity.header.setDescription("Explore a new culture with each and every room you enter and meet different kind of people!");
     
-            entity.header.setIcon($('<div class="room-navigator-explore-sprite"></div>'));
+            const icon = document.createElement("div");
+            icon.className = "room-navigator-explore-sprite";
+            entity.header.setIcon(icon);
         });
 
-        entity.tabs.add("events", "Events", function($element) {
+        entity.tabs.add("events", "Events", function(element) {
             entity.header.setTitle("Publish an event!");
     
             entity.header.setDescription("Public an event to advertise your room and gain interest!");
     
-            entity.header.setIcon($('<div class="room-navigator-event-sprite"></div>'));
+            const icon = document.createElement("div");
+            icon.className = "room-navigator-event-sprite";
+            entity.header.setIcon(icon);
         });
 
-        entity.tabs.add("my_rooms", "My Rooms", async function($element) {
+        entity.tabs.add("my_rooms", "My Rooms", async function(element) {
             entity.header.setTitle("Create your own room!");
     
             entity.header.setDescription("Create and furnish your own room to just your likings and show it off to your friends!");
     
-            entity.header.setIcon($('<div class="room-navigator-create-sprite"></div>'));
+            const icon = document.createElement("div");
+            icon.className = "room-navigator-create-sprite";
+            entity.header.setIcon(icon);
         });
 
-        entity.tabs.click(async function(identifier, $element) {
+        entity.tabs.click(async function(identifier, element) {
             entity.pause();
 
             const rooms = await SocketMessages.sendCall({ "OnRoomNavigatorUpdate": identifier }, "OnRoomNavigatorUpdate");
@@ -66,29 +74,35 @@ Client.rooms.navigator = new function() {
 
                 for(let index in rooms[key])
                     list.add(rooms[key][index]);
-                
-                list.$element.appendTo($element);
+
+                element.append(list.element);
             }
 
             entity.unpause();
         });
         
-        entity.$home = $('<div class="room-navigator-tab-icon room-navigator-tab-home"></div>').on("click", function() {
+        entity.home = document.createElement("div");
+        entity.home.className = "room-navigator-tab-icon room-navigator-tab-home";
+        entity.home.addEventListener("click", () => {
             SocketMessages.send({ OnRoomNavigatorEnter: Client.user.home });
-        }).appendTo(entity.tabs.$header);
+        });
+        entity.tabs.header.append(entity.home);
         
-        entity.$create = $('<div class="room-navigator-tab-icon room-navigator-tab-create"></div>').on("click", function() {
+        entity.create = document.createElement("div");
+        entity.create.className = "room-navigator-tab-icon room-navigator-tab-create";
+        entity.create.addEventListener("click", () => {
             RoomCreation.toggle();
-        }).appendTo(entity.tabs.$header);
+        });
+        entity.tabs.header.append(entity.home);
 
         entity.tabs.show("my_rooms");
 
-        entity.tabs.$element.appendTo(entity.$content);
+        entity.content.append(entity.tabs.element);
     });
 
     entity.events.show.push(function() {
         //if(Client.user.home == null)
-            entity.$home.hide();
+            entity.home.style.display = "none";
         //else
         //    entity.$home.show();
 

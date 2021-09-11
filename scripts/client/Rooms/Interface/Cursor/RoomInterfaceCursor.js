@@ -12,7 +12,7 @@ RoomInterface.cursor = new function() {
         doubleclick: []
     };
 
-    RoomInterface.entity.$canvas.on("mousedown", function(event) {
+    RoomInterface.entity.canvas.addEventListener("mousedown", (event) => {
         RoomInterface.cursor.down = true;
 
         RoomInterface.cursor.downTimestamp = performance.now();
@@ -24,11 +24,15 @@ RoomInterface.cursor = new function() {
 
             RoomInterface.frameLimit = 0;
         }
-    }).on("mouseup", function() {
+    });
+
+    RoomInterface.entity.canvas.addEventListener("mouseup", () => {
         RoomInterface.cursor.down = false;
 
         RoomInterface.frameLimit = RoomInterface.cursor.downFrame;
-    }).on("mousemove", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("mousemove", (event) => {
         if(RoomInterface.entity.currentEntity != undefined && RoomInterface.cursor.down)
             RoomInterface.entity.currentEntity.sprite.mousedown(event);
 
@@ -42,11 +46,15 @@ RoomInterface.cursor = new function() {
         RoomInterface.entity.offset[1] += (event.offsetY - RoomInterface.cursor.position[1]);
 
         RoomInterface.cursor.position = [ event.offsetX, event.offsetY ];
-    }).on("touchstart", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("touchstart", (event) => {
         RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
         RoomInterface.cursor.down = true;
-    }).on("touchmove", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("touchmove", (event) => {
         if(RoomInterface.cursor.position == null)
             RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
@@ -57,9 +65,13 @@ RoomInterface.cursor = new function() {
         RoomInterface.entity.offset[1] += (event.touches[0].clientY - RoomInterface.cursor.position[1]);
 
         RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
-    }).on("touchend", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("touchend", (event) => {
         RoomInterface.cursor.down = false;
-    }).on("dblclick", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("dblclick", (event) => {
         if(RoomInterface.furniture.place.enabled)
             return;
 
@@ -68,7 +80,9 @@ RoomInterface.cursor = new function() {
         
         for(let index in RoomInterface.cursor.events.doubleclick)
             RoomInterface.cursor.events.doubleclick[index](RoomInterface.entity.currentEntity, event);
-    }).on("click", function(event) {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("click", (event) => {
         if(performance.now() - RoomInterface.cursor.downTimestamp > 250)
             return;
 
@@ -88,7 +102,9 @@ RoomInterface.cursor = new function() {
         
         for(let index in RoomInterface.cursor.events.click)
             RoomInterface.cursor.events.click[index](RoomInterface.entity.currentEntity, event);
-    }).on("mouseout", function() {
+    });
+    
+    RoomInterface.entity.canvas.addEventListener("mouseout", () => {
         RoomInterface.cursor.down = false;
 
         RoomInterface.cursor.position = [ 0, 0 ];

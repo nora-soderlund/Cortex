@@ -8,7 +8,7 @@ Client.rooms.editor = function(settings, change) {
             <canvas class="room-editor-tiles"></canvas>
         `;
 
-        const canvas = this.element.querySelector(".room-editor-tiles");
+        const canvasElement = this.element.querySelector(".room-editor-tiles");
 
         let map = settings.map, rows = map.length, columns = 0, renderOffset = { left: 0, top: 0 };
 
@@ -53,13 +53,13 @@ Client.rooms.editor = function(settings, change) {
             context.strokeRect(settings.door.column * 16, settings.door.row * 16, 15.5, 15.5);
         };
         
-        const canvas = Canvas.addCanvas(canvas, { render, draggable: true, offset: { left: canvas.width / 2, top: (canvas.height / 2) - (rows * 4) } });
+        const canvas = Canvas.addCanvas(canvasElement, { render, draggable: true, offset: { left: canvasElement.width / 2, top: (canvasElement.height / 2) - (rows * 4) } });
 
         this.canvas = canvas;
 
         let down = false, lastCoordinate = { row: null, column: null }, timestamp = performance.now();
 
-        canvas.addEventListener("mousedown", () => {
+        canvasElement.addEventListener("mousedown", () => {
             if(canvas.draggableEnabled && (performance.now() - canvas.draggableTimestamp) > 200)
                 return;
 
@@ -69,11 +69,11 @@ Client.rooms.editor = function(settings, change) {
             down = true;
         });
         
-        canvas.addEventListener("mouseup", () => {
+        canvasElement.addEventListener("mouseup", () => {
             down = false;
         });
         
-        canvas.addEventListener("mousemove", (event) => {
+        canvasElement.addEventListener("mousemove", (event) => {
             const innerPosition = {
                 left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top),
                 top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top)
