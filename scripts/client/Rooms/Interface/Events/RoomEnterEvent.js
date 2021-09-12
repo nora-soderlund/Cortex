@@ -31,8 +31,6 @@ SocketMessages.register("OnRoomEnter", async function(data) {
             (width / 2) - ((RoomInterface.map.map.rows * 16) + (RoomInterface.map.map.columns * 16)),
             (height / 2) - ((RoomInterface.map.map.rows * 8) + (RoomInterface.map.map.columns * 8))
         ];
-
-        console.log(RoomInterface.entity.offset);
     });
 
     RoomInterface.start();

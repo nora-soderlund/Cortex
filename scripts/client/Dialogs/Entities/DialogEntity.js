@@ -67,8 +67,8 @@ class Dialog {
                     event = event || window.event;
                     event.preventDefault();
                     
-                    offsetX = clientX - event.clientX;
-                    offsetY = clientY - event.clientY;
+                    let offsetX = clientX - event.clientX;
+                    let offsetY = clientY - event.clientY;
 
                     clientX = event.clientX;
                     clientY = event.clientY;
@@ -182,10 +182,10 @@ class Dialog {
         this.width = width;
         this.height = height;
 
-        this.container.style.width = width;
-        this.container.style.height = height;
-        this.container.style.minWidth = width;
-        this.container.style.minHeight = height;
+        this.container.style.width = `${width}px`;
+        this.container.style.height = `${height}px`;
+        this.container.style.minWidth = `${width}px`;
+        this.container.style.minHeight = `${height}px`;
     };
 
     setOffset(type, left = 0, top = 0) {
@@ -234,18 +234,18 @@ class Dialog {
     };
 
     setResizable(enabled = true) {
-        if(enabled) {
-            this.resizable = document.createElement("div");
-            this.resizable.classList.add("dialog-default-resizable");
-            this.element.appendChild(this.resizable);
+        if(enabled && !this.resizable) {
+            this.resizableElement = document.createElement("div");
+            this.resizableElement.classList.add("dialog-default-resizable");
+            this.element.appendChild(this.resizableElement);
 
             this.resizableOnMouseDownAlias = (event) => this.resizableOnMouseDown(event);
 
-            this.resizable.addEventListener("mousedown", this.resizableOnMouseDownAlias);
+            this.resizableElement.addEventListener("mousedown", this.resizableOnMouseDownAlias);
         }
-        else {
-            this.resizable?.removeEventListener("mousedown", this.resizableOnMouseDownAlias);
-            this.resizable?.remove();
+        else if(!enabled && this.resizable) {
+            this.resizableElement.removeEventListener("mousedown", this.resizableOnMouseDownAlias);
+            this.resizableElement.remove();
 
             window.removeEventListener("mousemove", this.resizableOnMouseMoveAlias);
             window.removeEventListener("mouseup", this.resizableOnMouseUpAlias);

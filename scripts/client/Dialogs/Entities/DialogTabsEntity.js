@@ -3,6 +3,7 @@ class DialogTabs {
 
     constructor(height) {
         this.element = document.createElement("div");
+        this.element.className = "dialog-tabs";
         this.element.innerHTML = `
             <div class="dialog-tabs-header"></div>
 
