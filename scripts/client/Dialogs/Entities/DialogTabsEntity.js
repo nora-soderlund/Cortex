@@ -1,4 +1,6 @@
 class DialogTabs {
+    active = null;
+
     constructor(height) {
         this.element = document.createElement("div");
         this.element.innerHTML = `
@@ -36,7 +38,8 @@ class DialogTabs {
     };
 
     hide() {
-        this.header.querySelector(".dialog-tabs-button[active]").removeAttribute("active");
+        this.active?.removeAttribute("active");
+        this.active = null;
         
         this.content.innerHTML = "";
     };
@@ -47,15 +50,16 @@ class DialogTabs {
             
         this.hide();
             
-        this.buttons[identifier].element.attr("active", "");
+        this.active = this.buttons[identifier].element;
+        this.active.setAttribute("active", "");
 
         this.content.innerHTML = "";
 
         for(let index in this.callbacks)
-            await this.callbacks[index](identifier, this.$content);
+            await this.callbacks[index](identifier, this.content);
 
         if(this.buttons[identifier].callback != undefined)
-            this.buttons[identifier].callback(this.$content);
+            this.buttons[identifier].callback(this.content);
 
         this.selected = identifier;
     };

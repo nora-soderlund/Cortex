@@ -2,7 +2,7 @@ const RoomInterface = new class {
     constructor() {
         this.element = document.createElement("div");
         this.element.className = "room";
-        Client.element.append(this.element);
+        Client.element.prepend(this.element);
     
         this.entity = new RoomEntity(this.element);
     };

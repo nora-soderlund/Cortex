@@ -32,8 +32,8 @@ class DialogHeader {
     };
 
     getContext(context) {
-        this.image.width = this.element.width;
-        this.image.height = this.element.height;
+        this.image.width = this.element.clientWidth;
+        this.image.height = this.element.clientHeight;
         
         return this.image.getContext(context);
     };

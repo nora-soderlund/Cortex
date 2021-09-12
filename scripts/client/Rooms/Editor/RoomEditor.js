@@ -29,8 +29,8 @@ Client.rooms.editor = function(settings, change) {
         const render = function(canvas) {
             const context = canvas.getContext("2d");
 
-            context.canvas.width = canvas.parentElement.width;
-            context.canvas.height = canvas.parentElement.height;
+            context.canvas.width = canvas.parentElement.clientWidth;
+            context.canvas.height = canvas.parentElement.clientHeight;
            
             renderOffset = { left: canvas.offset.left, top: canvas.offset.top };
 

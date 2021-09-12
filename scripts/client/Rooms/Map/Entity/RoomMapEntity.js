@@ -90,7 +90,9 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
         const height = (this.rows * 16) + (this.columns * 16) + this.settings.floor.thickness + (this.depth * 16) + 10;
 
         this.floor = [];
-        this.$floor = $('<canvas width="' + width + '" height="' + height + '"></canvas>');
+        this.floorCanvas = document.createElement("canvas");
+        this.floorCanvas.width = width;
+        this.floorCanvas.height = height;
 
         const allRectangles = [];
 
@@ -137,7 +139,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
             }
         }
 
-        const context = this.$floor[0].getContext("2d");
+        const context = this.floorCanvas.getContext("2d");
 
         for(let _depth = 0; _depth <= this.depth; _depth++) {
             const rectangles = allRectangles.filter(x => Math.ceil(x.depth) == _depth);
@@ -219,7 +221,7 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
     this.renderWall = async function() {
         const patterns = await this.renderPatterns("wall", this.settings.wall.material);
         
-        const context = this.$wall[0].getContext("2d");
+        const context = this.wallCanvas.getContext("2d");
 
         context.canvas.width = (this.rows * 32) + (this.columns * 32) + (2 * this.settings.floor.thickness);
         context.canvas.height = (this.rows * 32) + (this.columns * 16) + (this.depth * 16) + this.settings.floor.thickness;
@@ -466,5 +468,5 @@ Client.rooms.map.entity = function(map, door = {}, floor = {}, wall = {}) {
     for(let key in wall)
         this.settings.wall[key] = wall[key];
 
-    this.$wall = $('<canvas></canvas>');
+    this.wallCanvas  = document.createElement("canvas");
 };

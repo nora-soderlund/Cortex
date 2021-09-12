@@ -88,9 +88,9 @@ Client.rooms.navigator = new function() {
         });
         entity.tabs.header.append(entity.home);
         
-        entity.create = document.createElement("div");
-        entity.create.className = "room-navigator-tab-icon room-navigator-tab-create";
-        entity.create.addEventListener("click", () => {
+        const create = document.createElement("div");
+        create.className = "room-navigator-tab-icon room-navigator-tab-create";
+        create.addEventListener("click", () => {
             RoomCreation.toggle();
         });
         entity.tabs.header.append(entity.home);

@@ -7,8 +7,10 @@ class Loader {
     static readySteps = [];
 
     static show() {
-        Loader.element.classList.remove("animation-fade-out");
-        Loader.element.classList.add("animation-fade-in");
+        //Loader.element.classList.remove("animation-fade-out");
+        //Loader.element.classList.add("animation-fade-in");
+
+        Loader.element.style.display = "block";
     };
 
     static setText(text) {
@@ -20,8 +22,10 @@ class Loader {
     };
 
     static hide() {
-        Loader.element.classList.remove("animation-fade-in");
-        Loader.element.classList.add("animation-fade-out");
+        //Loader.element.classList.remove("animation-fade-in");
+        //Loader.element.classList.add("animation-fade-out");
+
+        Loader.element.style.display = "none";
     };
 
     static steps = [];

@@ -27,13 +27,13 @@ const Menu = new class {
         });
     
         RoomInterface.events.start.push(function() {
-            inventory.show();
-            camera.show();
+            inventory.style.display = "";
+            camera.style.display = "";
         });
     
         RoomInterface.events.stop.push(function() {
-            camera.hide();
-            inventory.hide();
+            camera.style.display = "none";
+            inventory.style.display = "none";
         });
     };
 
@@ -55,10 +55,11 @@ Loader.ready(function() {
         MenuSub.element.style.display = ((MenuSub.element.style.display == "none")?("block"):("none"));
     });
 
+    user.innerHTML = "";
+
     const canvas = document.createElement("div");
     canvas.className = "menu-sprite menu-user";
-
-    user.innerHTML = canvas;
+    user.append(canvas);
     
     const entity = new FigureEntity(Client.user.figure);
     
@@ -72,7 +73,7 @@ Loader.ready(function() {
     });
 
     entity.events.render.push(function() {
-        canvas.innerHTML = entity.canvas;
+        canvas.append(entity.canvas);
     });
 
     entity.process().then(function() {

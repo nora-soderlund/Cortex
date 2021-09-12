@@ -91,8 +91,6 @@ RoomInterface.display = new function() {
         `;
         this.buttons.innerHTML = "";
 
-        const canvas = this.content.querySelector(".room-interface-display-canvas");
-
         if(furniture.description.length != 0) {
             this.content.innerHTML += `
                 <div class="room-interface-display-break"></div>
@@ -100,6 +98,8 @@ RoomInterface.display = new function() {
                 <div class="room-interface-display-description">${furniture.description}</div>
             `;
         }
+
+        const canvas = this.content.querySelector(".room-interface-display-canvas");
 
         new FurnitureRenderer({ id: furniture.id, direction: 4 }, canvas, "rgb(28, 28, 26)");
 

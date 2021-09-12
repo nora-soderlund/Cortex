@@ -57,8 +57,8 @@ class RoomEntity {
     };
 
     updateCanvas() {
-        const width = this.canvas.parentElement.width;
-        const height = this.canvas.parentElement.height;
+        const width = this.canvas.parentElement.clientWidth;
+        const height = this.canvas.parentElement.clientHeight;
 
         this.canvas.width = width;
         this.canvas.height = height;

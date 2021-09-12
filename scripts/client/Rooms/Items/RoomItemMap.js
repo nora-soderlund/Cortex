@@ -10,14 +10,14 @@ Client.rooms.items.map = function(parent, map = "", door = {}, floor = {}, wall 
 
         entity.parent.center = entity.map.settings.wall.thickness + entity.map.rows * 32;
 
-        const floor = new Client.rooms.items.sprite(entity, entity.map.$floor[0]);
+        const floor = new Client.rooms.items.sprite(entity, entity.map.floorCanvas);
 
         floor.index = 0;
         
         floor.setOffset(-entity.parent.center, -(entity.map.depth * 16));
 
         floor.mouseover = function(position, center) {
-            const context = entity.parent.$canvas[0].getContext("2d");
+            const context = entity.parent.canvas.getContext("2d");
 
             context.setTransform(1, .5, -1, .5, entity.map.rows * 32 - center, 0);
 
@@ -33,17 +33,19 @@ Client.rooms.items.map = function(parent, map = "", door = {}, floor = {}, wall 
 
         entity.sprites.push(floor);
 
-        const $shadowCanvas = $('<canvas width="' + floor.image.width + '" height="' + (floor.image.height + 10) + '"></canvas>');
-        const shadowCanvas = $shadowCanvas[0].getContext("2d");
+        const shadowCanvas = document.createElement("canvas");
+        shadowCanvas.width = floor.image.width;
+        shadowCanvas.height = floor.image.height + 10;
+        const shadowContext = shadowCanvas.getContext("2d");
         
-        if(shadowCanvas.filter != undefined) {
-            shadowCanvas.filter = "blur(10px) brightness(0%) opacity(50%)";
-            shadowCanvas.drawImage(floor.image, 0, 10);
+        if(shadowContext.filter != undefined) {
+            shadowContext.filter = "blur(10px) brightness(0%) opacity(50%)";
+            shadowContext.drawImage(floor.image, 0, 10);
 
-            shadowCanvas.filter = "blur(0) brightness(100%) opacity(100%)";
-            shadowCanvas.drawImage(floor.image, 0, 0);
+            shadowContext.filter = "blur(0) brightness(100%) opacity(100%)";
+            shadowContext.drawImage(floor.image, 0, 0);
 
-            const shadow = new Client.rooms.items.sprite(entity, shadowCanvas.canvas);
+            const shadow = new Client.rooms.items.sprite(entity, shadowContext.canvas);
 
             shadow.index = -1000;
             
@@ -58,7 +60,7 @@ Client.rooms.items.map = function(parent, map = "", door = {}, floor = {}, wall 
 
         
 
-        const wall = new Client.rooms.items.sprite(entity, entity.map.$wall[0]);
+        const wall = new Client.rooms.items.sprite(entity, entity.map.wallCanvas);
 
         wall.index = -2000;
         
