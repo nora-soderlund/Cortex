@@ -94,7 +94,7 @@ class FurnitureEntity {
                 layers[key] = {};
 
             for(let property in directions[key])
-                layers[property] = directions[key][property];
+                layers[key][property] = directions[key][property];
         }
         
         for(let index = 0; index < layerCount; index++) {
