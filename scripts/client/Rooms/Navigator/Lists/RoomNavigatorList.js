@@ -1,17 +1,19 @@
 Client.rooms.navigator.list = function(settings) {
-    this.$element = $(
-        '<div class="room-navigator-list">' +
-            '<div class="room-navigator-list-header">' +
-                '<div class="room-navigator-list-toggle"></div>' +
+    this.element = document.createElement("div");
+    this.element.className = "room-navigator-list";
+    this.element.innerHTML = `
+        <div class="room-navigator-list-header">
+            <div class="room-navigator-list-toggle"></div>
 
-                '<p class="room-navigator-list-title"></p>' +
+            <p class="room-navigator-list-title"></p>
 
-                '<div class="room-navigator-list-expand"></div>' + 
-            '</div>' +
-        '</div>'
-    );
+            <div class="room-navigator-list-expand"></div> 
+        </div>
 
-    this.$table = $('<div class="room-navigator-list-table"></div>').appendTo(this.$element);
+        <div class="room-navigator-list-table"></div>
+    `;
+
+    this.table = this.element.querySelector(".room-navigator-list-table");
 
     this.settings = {
         active: false,
@@ -24,13 +26,13 @@ Client.rooms.navigator.list = function(settings) {
 
     this.set = function(settings) {
         if(settings.title != undefined)
-            this.$element.find(".room-navigator-list-title").html(settings.title);
+            this.element.querySelector(".room-navigator-list-title").innerHTML = settings.title;
 
         if(settings.active != undefined) {
             if(settings.active)
-                this.$element.attr("active", "");
+                this.element.setAttribute("active", "");
             else
-                this.$element.removeAttr("active");
+               this.element.removeAttribute("active");
         }
 
         for(let key in settings)
@@ -56,52 +58,53 @@ Client.rooms.navigator.list = function(settings) {
 
         this.settings.count++;
         
-        const $element = $(
-            '<div class="room-navigator-list-item">' +
-                '<div class="room-navigator-list-users" style="background: ' + color + '">' +
-                    '<p class="room-navigator-list-users-count">' +
-                        '<i></i>' + room.users +
-                    '</p>' +
-                '</div>' +
-                room.title +
-            '</div>'
-        ).appendTo(this.$table);
+        const element = document.createElement("div");
+        element.className = "room-navigator-list-item";
+        element.innerHTML = `
+            <div class="room-navigator-list-users" style="background: ${color}">
+                <p class="room-navigator-list-users-count">
+                    <i></i> ${room.users}
+                </p>
+            </div>
+            ${room.title}
+        `;
+        this.table.append(element);
 
         Game.getUser(room.user).then(function(user) {
-            $('<div class="room-navigator-list-owner">By ' + user.name + '</div>').appendTo($element);
+            const owner = document.createElement("div");
+            owner.className = "room-navigator-list-owner";
+            owner.innerHTML = `By ${user.name}`;
+            element.append(owner);
         });
 
-        $element.click(async function() {
+        element.addEventListener("click", async () => {
             SocketMessages.send({ OnRoomNavigatorEnter: room.id });
         });
 
         if(this.settings.count > 10) {
-            this.$expandButton.show();
+            this.expandButton.style.display = "block";
 
-            $element.addClass("room-navigator-list-expanded");
+            element.classList.add("room-navigator-list-expanded");
         }
     };
     
-    this.$expandButton = this.$element.find(".room-navigator-list-expand").on("click", { list: this }, function(event) {
-        const list = event.data.list;
+    this.expandButton = this.element.querySelector(".room-navigator-list-expand");
+    this.expandButton.addEventListener("click", (event) => {
+        if(this.settings.collapsed) {
+            this.table.querySelector(".room-navigator-list-expanded").style.display = "none";
 
-        if(list.settings.collapsed) {
-            list.$table.find(".room-navigator-list-expanded").hide();
-
-            $(this).removeAttr("active");
+            this.expandButton.removeAttribute("active");
         }
         else {
-            list.$table.find(".room-navigator-list-expanded").show();
+            this.table.querySelector(".room-navigator-list-expanded").style.display = "block";
 
-            $(this).attr("active", "");
+            this.expandButton.setAttribute("active", "");
         }
 
-        list.settings.collapsed = !list.settings.collapsed;
+        this.settings.collapsed = !this.settings.collapsed;
     });
 
-    this.$element.find(".room-navigator-list-toggle").on("click", { list: this }, function(event) {
-        const list = event.data.list;
-
-        list.set({ active: !list.settings.active });
+    this.element.querySelector(".room-navigator-list-toggle").addEventListener("click", (event) => {
+        this.set({ active: !this.settings.active });
     });
 };
