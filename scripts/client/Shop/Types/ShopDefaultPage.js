@@ -65,5 +65,5 @@ Client.shop.types.default = async function(page) {
         });
     }
 
-    Client.shop.category.content.innerHTML = element;
+    Client.shop.category.content.append(element);
 };

@@ -50,14 +50,14 @@ class Socket {
             
                     //console.log("[%cSocketNetwork%c]%c Communicated ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms (to " + Math.round(result.time - time) + "ms, from " + Math.round(Date.now() - result.time) + "ms); sent " + sent + "/" + result.received + "; received " + received + "/" + result.sent, "color: orange", "color: inherit", "color: lightblue");
                 
-                    //Client.development.$network.text("Ping " + (Math.round((performance.now() - tick) *  100) / 100) + "ms");
+                    ClientDevelopment.ping.innerText = (Math.round((performance.now() - tick) *  100) / 100);
                 }, 1000);
 
                 SocketMessages.block("OnSocketUpdate");
             
                 SocketMessages.register("OnSocketUpdate", function(data) {
                     //Client.development.$uptime.html("Uptime: " + data.uptime + "");
-                    //Client.development.$players.html("(" + data.users + " users)");
+                    ClientDevelopment.online.innerText = (data.users);
                 });
 
                 resolve(server);

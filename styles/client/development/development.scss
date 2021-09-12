@@ -1,26 +1,34 @@
-.client-development {
-    position: absolute;
-
-    top: 32px;
-    right: 0;
-    
-    margin: 12px;
-
-    color: rgba(255, 255, 255, .5);
-}
-
 #client-development {
-    overflow: hidden;
-    
     position: fixed;
 
     left: 0;
-    bottom: 0;
+    //top: 32px;
+    top: 0;
+
+    pointer-events: none;
+    
+    padding: 12px;
+
+    color: rgba(255, 255, 255, .5);
 
     width: 100%;
-    height: 256px;
 
-    background: #242424;
+    z-index: 4086;
 
-    border-top: 1px solid #525252;
+    box-sizing: border-box;
+
+    .client-development-right {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+    
+        padding: 12px;
+
+        box-sizing: border-box;
+
+        text-align: right;
+    }
 }

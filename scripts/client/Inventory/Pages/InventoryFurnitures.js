@@ -129,7 +129,10 @@ Inventory.pages.furnitures = function(element) {
             const renderer = new FurnitureRenderer({ id: furniture.id, size: 1 }, Inventory.furnitures[id].canvas);
         
             Inventory.furnitures[id].element.addEventListener("click", () => {
-                Inventory.furnitures[id].element.parentElement.querySelector(".active").classList.remove("active");
+                const active = Inventory.furnitures[id].element.parentElement.querySelector(".active");
+                
+                if(active != null)
+                    active.classList.remove("active");
 
                 Inventory.furnitures[id].element.classList.add("active");
                 

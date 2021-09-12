@@ -157,7 +157,7 @@ class RoomEntity {
 
         this.frameRates.push(timestamp);
 
-        //Client.development.$frames.text(this.frameRates.length + " FPS");
+        ClientDevelopment.frames.innerText = `, ${this.frameRates.length} FPS`;
 
         return { median, milliseconds, frames: this.frameRates.length };
     };

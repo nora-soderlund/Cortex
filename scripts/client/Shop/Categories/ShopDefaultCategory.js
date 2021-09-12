@@ -39,7 +39,10 @@ Client.shop.categories.default = function(page) {
 
         const button = element.querySelector(".shop-pages-item-button");
         button.addEventListener("click", () => {
-            parent.querySelector(".shop-pages-item.active").classList.remove("active");
+            const active = parent.querySelector(".shop-pages-item.active");
+            
+            if(active != null)
+                active.classList.remove("active");
 
             element.classList.add("active");
 
@@ -81,7 +84,7 @@ Client.shop.categories.default = function(page) {
     const subPages = Client.shop.pages.filter(x => x.parent == page.id);
 
     for(let index in subPages)
-        this.addPage(subPages[index], this.$list);
+        this.addPage(subPages[index], this.list);
 
-    Client.shop.tabs.content.innerHTML = this.element;
+    Client.shop.tabs.content.append(this.element);
 };

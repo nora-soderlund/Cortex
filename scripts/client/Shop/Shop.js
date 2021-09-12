@@ -65,14 +65,20 @@ Client.shop = new function() {
     
         if(page.parent == 0) {
             try {
+                Client.shop.tabs.content.innerHTML = "";
+
                 entity.category = new Client.shop.categories[page.data.type](page);
             }
             catch(exception) {
+
                 entity.tabs.content.innerHTML = exception;
             }
         }
         else {
             try {
+
+                Client.shop.category.content.innerHTML = "";
+
                 entity.page = await Client.shop.types[page.data.type](page);
             }
             catch(exception) {

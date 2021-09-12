@@ -1,5 +1,7 @@
 {
     "scripts": [
+        "ClientDevelopment.js",
+        
         "Keys/Keys.js",
         
         "Socket/Socket.js",
