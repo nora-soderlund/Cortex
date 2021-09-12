@@ -1,7 +1,6 @@
 class FurnitureEntity {
     constructor(settings = {}) {
         this.update(settings);
-        console.error(settings);
     };
 
     settings = {
