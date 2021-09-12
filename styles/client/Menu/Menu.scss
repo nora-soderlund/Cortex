@@ -19,7 +19,7 @@
 
     display: grid;
     
-    grid-template-columns: auto max-content;
+    grid-template-columns: 1fr 1fr 1fr;
 
     &:after {
         content: '';

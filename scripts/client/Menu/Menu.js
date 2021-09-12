@@ -4,11 +4,14 @@ const Menu = new class {
         this.element.id = "menu";
         this.element.innerHTML = `
             <div class="menu-items"></div>
+
+            <div class="menu-chat"></div>
         `;
 
         Client.element.append(this.element);
 
         this.icons = this.element.querySelector(".menu-items");
+        this.chat = this.element.querySelector(".menu-chat");
 
         this.addItem("navigator", function() {
             Client.rooms.navigator.toggle();

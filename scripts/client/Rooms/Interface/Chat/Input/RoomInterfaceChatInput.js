@@ -4,7 +4,7 @@ RoomInterface.chat.input = new function() {
     this.element.innerHTML = `
         <input type="text" placeholder="Click here to chat...">
     `;
-    RoomInterface.element.append(this.element);
+    Menu.chat.append(this.element);
 
     this.input = this.element.querySelector("input");
 

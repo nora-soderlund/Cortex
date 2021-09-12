@@ -106,7 +106,7 @@ RoomInterface.chat = new function() {
 
         this.messages.push(canvas);
 
-        this.history.addMessage(context.canvas, center - (context.canvas.width / 2));
+        //this.history.addMessage(context.canvas, center - (context.canvas.width / 2));
 
         this.element.append(canvas);
 
@@ -117,7 +117,7 @@ RoomInterface.chat = new function() {
 
     this.updateMessages = function() {
         for(let index = 0; index < this.messages.length; index++) {
-            const top = parseInt(this.messages[index].style.top);
+            const top = this.messages[index].offsetTop;
                 
             if(top < 30) {
                 this.messages[index].remove();
