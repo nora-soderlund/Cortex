@@ -95,29 +95,40 @@ class Loader {
 Loader.addStep(async function(finished) {
     Loader.setText("Loading configuration...");
 
-    Loader.settings = await (await fetch("/client.json")).json();
-    Loader.data = await (await fetch(`${Loader.settings.cdn}scripts/Client.json`)).json();
+    Loader.settings = await (await fetch("/scripts/client.json")).json();
 
     finished();
 });
 
 Loader.addStep(function(finished) {
-    if(Loader.data.scripts.length == 0)
+    /*if(Loader.settings.scripts.length == 0)
         return finished();
 
     console.log("[%cLoader%c]%c Starting the download of the client scripts...", "color: orange", "color: inherit", "color: lightblue");
     
     Loader.setText("Downloading scripts...");
     
-    Loader.loadScripts(Loader.data.scripts, function() {
+    Loader.loadScripts(Loader.settings.scripts, function() {
         console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
 
         finished();
-    });
+    });*/
+
+    console.log("[%cLoader%c]%c Downloading and running the client...", "color: orange", "color: inherit", "color: lightblue");
+
+    const element = document.createElement("script");
+    
+    element.onload = () => {
+        finished();
+    };
+
+    element.src = `/scripts/client.js`;
+
+    document.body.append(element);
 });
 
 Loader.addStep(function(finished) {
-    //if(Loader.data.fonts.length == 0)
+    //if(Loader.settings.fonts.length == 0)
     //    return finished();
 
     console.log("[%cLoader%c]%c Starting the download of the font faces...", "color: orange", "color: inherit", "color: lightblue");
@@ -133,8 +144,8 @@ Loader.addStep(function(finished) {
 
     const context = canvas.getContext("2d");
     
-    for(let index in Loader.data.fonts) {
-        context.font = "12px " + Loader.data.fonts[index] + "";
+    for(let index in Loader.settings.fonts) {
+        context.font = "12px " + Loader.settings.fonts[index] + "";
 
         context.fillText(".", 20, 20);
     }
@@ -149,8 +160,8 @@ Loader.addStep(async function(finished) {
 
     Loader.setText("Preparing assets...");
 
-    for(let index in Loader.data.assets)
-        await Assets.getManifest(Loader.data.assets[index]);
+    for(let index in Loader.settings.assets)
+        await Assets.getManifest(Loader.settings.assets[index]);
 
     console.log("[%cLoader%c]%c Finished loading the pre-loaded assets!", "color: orange", "color: inherit", "color: lightblue");
 
