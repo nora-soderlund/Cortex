@@ -52,15 +52,13 @@ Client.rooms.editor = function(settings, change) {
 
             context.strokeRect(settings.door.column * 16, settings.door.row * 16, 15.5, 15.5);
         };
-        
-        const canvas = Canvas.addCanvas(canvasElement, { render, draggable: true, offset: { left: canvasElement.width / 2, top: (canvasElement.height / 2) - (rows * 4) } });
 
-        this.canvas = canvas;
+        this.canvas = new Canvas(canvasElement, { render, draggable: true, offset: { left: canvasElement.width / 2, top: (canvasElement.height / 2) - (rows * 4) } });
 
         let down = false, lastCoordinate = { row: null, column: null }, timestamp = performance.now();
 
         canvasElement.addEventListener("mousedown", () => {
-            if(canvas.draggableEnabled && (performance.now() - canvas.draggableTimestamp) > 200)
+            if(this.canvas.draggableEnabled && (performance.now() - this.canvas.draggableTimestamp) > 200)
                 return;
 
             if(!Keys.down["ShiftLeft"])
@@ -75,8 +73,8 @@ Client.rooms.editor = function(settings, change) {
         
         canvasElement.addEventListener("mousemove", (event) => {
             const innerPosition = {
-                left: (event.offsetX - canvas.offset.left) * 0.5 + (event.offsetY - canvas.offset.top),
-                top: (event.offsetX - canvas.offset.left) * -0.5 + (event.offsetY - canvas.offset.top)
+                left: (event.offsetX - this.canvas.offset.left) * 0.5 + (event.offsetY - this.canvas.offset.top),
+                top: (event.offsetX - this.canvas.offset.left) * -0.5 + (event.offsetY - this.canvas.offset.top)
             };
 
             const coordinate = {
@@ -108,8 +106,8 @@ Client.rooms.editor = function(settings, change) {
                     map[coordinate.row] = [];
 
                     if(coordinate.row < 0) {
-                        canvas.offset.top -= 8;
-                        canvas.offset.left += 16;
+                        this.canvas.offset.top -= 8;
+                        this.canvas.offset.left += 16;
                     }
                 }
                 else if(map[coordinate.row][coordinate.column] == undefined) {
@@ -126,8 +124,8 @@ Client.rooms.editor = function(settings, change) {
 
                     if(!hasColumn) {
                         if(coordinate.column < 0) {
-                            canvas.offset.top -= 8;
-                            canvas.offset.left -= 16;
+                            this.canvas.offset.top -= 8;
+                            this.canvas.offset.left -= 16;
                         }
                     }
                 }

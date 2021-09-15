@@ -12,13 +12,6 @@ const RoomInterface = new class {
 
     active = false;
 
-    frameLimit = 60;
-    frameLimitStamp = null;
-
-    frameAdjust = 2;
-    frameAdjustTimestamp = performance.now();
-    frameAdjustCounts = [];    
-
     events = {
         start: [],
         stop: []
@@ -33,13 +26,13 @@ const RoomInterface = new class {
         for(let index in this.events.start)
             this.events.start[index]();
 
-        this.frameLimitStamp = performance.now();
-
-        window.requestAnimationFrame(this.render);
+        this.entity.canvas.enabled = true;
     };
 
     async stop() {
         RoomInterface.active = false;
+
+        this.entity.canvas.enabled = false;
         
         for(let index in RoomInterface.events.stop)
             RoomInterface.events.stop[index]();
@@ -110,7 +103,7 @@ const RoomInterface = new class {
     async clear() {
         this.chat.clear();
 
-        this.entity.entities.length = 0;
+        this.entity.entities.length = 0;    
         
         if(this.active)
             await this.stop();

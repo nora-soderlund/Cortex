@@ -1,17 +1,21 @@
 class RoomEntity {
     constructor(parent) {
-        this.canvas = document.createElement("canvas");
-        parent.append(this.canvas);
+        this.parent = parent;
+
+        const canvas = document.createElement("canvas");
+        parent.append(canvas);
+
+        this.canvas = new Canvas(canvas, { enabled: false });
+
+        this.canvas.render = () => this.render();
     };
     
     background = "#111";
 
-    offset = [ 0, 0 ];
-
     center = 0;
 
     setOffset(left, top) {
-        this.offset = [ left, top ];
+        this.canvas.offset = { left, top };
     };
 
     entities = [];
@@ -29,8 +33,8 @@ class RoomEntity {
             return undefined;
 
         const offset = [
-            position[0] - this.offset[0] - this.center,
-            position[1] - this.offset[1]
+            position[0] - this.canvas.offset.left - this.center,
+            position[1] - this.canvas.offset.top
         ];
 
         const sprites = (type == null)?(this.sprites):(this.sprites.filter(x => x.parent.name == type));
@@ -57,11 +61,11 @@ class RoomEntity {
     };
 
     updateCanvas() {
-        const width = this.canvas.parentElement.clientWidth;
-        const height = this.canvas.parentElement.clientHeight;
+        const width = this.parent.clientWidth;
+        const height = this.parent.clientHeight;
 
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.canvas.width = width;
+        this.canvas.canvas.height = height;
 
         /*.css({
             "width": Math.floor(width * window.devicePixelRatio),
@@ -71,33 +75,18 @@ class RoomEntity {
 
     sprites = [];
 
-    frame = 0;
-    frameRate = 24;
-    frameRates = [];
-    frameStamp = performance.now();
-    framePerformance = [];
-
     render() {
         let timestamp = performance.now();
 
-        if((timestamp - this.frameStamp) > 1000 / this.frameRate) {
-            this.frame++;
-
-            if(this.frame > this.frameRate)
-                this.frame = 0;
-
-            this.frameStamp = timestamp;
-        }
-
         for(let index = 0; index < this.entities.length; index++)
-            this.entities[index].process(timestamp, this.frame);
+            this.entities[index].process(timestamp, this.canvas.frame);
 
         this.updateCanvas();
 
         for(let index = 0; index < this.events.beforeRender.length; index++)
             this.events.beforeRender[index]();
         
-        const context = this.canvas.getContext("2d");
+        const context = this.canvas.canvas.getContext("2d");
 
         context.fillStyle = this.background;
 
@@ -122,7 +111,7 @@ class RoomEntity {
             return a.getIndex() - b.getIndex();
         });
 
-        const offset = [ this.center + this.offset[0], this.offset[1] ];
+        const offset = [ this.center + this.canvas.offset.left, this.canvas.offset.top ];
         
         for(let index = 0; index < this.sprites.length; index++)
             this.sprites[index].render(context, offset);
@@ -132,7 +121,7 @@ class RoomEntity {
 
         context.restore();
 
-        if(this.framePerformance.length == this.frameRate)
+        /*if(this.framePerformance.length == this.frameRate)
             this.framePerformance.shift();
 
         const milliseconds = (Math.round((performance.now() - timestamp) * 100) / 100);
@@ -157,9 +146,9 @@ class RoomEntity {
 
         this.frameRates.push(timestamp);
 
-        ClientDevelopment.frames.innerText = `, ${this.frameRates.length} FPS`;
+        ClientDevelopment.frames.innerText = `, ${this.frameRates.length} FPS`;*/
 
-        return { median, milliseconds, frames: this.frameRates.length };
+        return { median: 0, milliseconds: 0, frames: 0 };
     };
 
     events = {

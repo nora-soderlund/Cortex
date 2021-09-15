@@ -12,7 +12,7 @@ RoomInterface.cursor = new function() {
         doubleclick: []
     };
 
-    RoomInterface.entity.canvas.addEventListener("mousedown", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("mousedown", (event) => {
         RoomInterface.cursor.down = true;
 
         RoomInterface.cursor.downTimestamp = performance.now();
@@ -26,13 +26,13 @@ RoomInterface.cursor = new function() {
         }
     });
 
-    RoomInterface.entity.canvas.addEventListener("mouseup", () => {
+    RoomInterface.entity.canvas.canvas.addEventListener("mouseup", () => {
         RoomInterface.cursor.down = false;
 
         RoomInterface.frameLimit = RoomInterface.cursor.downFrame;
     });
     
-    RoomInterface.entity.canvas.addEventListener("mousemove", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("mousemove", (event) => {
         if(RoomInterface.entity.currentEntity != undefined && RoomInterface.cursor.down)
             RoomInterface.entity.currentEntity.sprite.mousedown(event);
 
@@ -42,36 +42,36 @@ RoomInterface.cursor = new function() {
             return;
         }
 
-        RoomInterface.entity.offset[0] += (event.offsetX - RoomInterface.cursor.position[0]);
-        RoomInterface.entity.offset[1] += (event.offsetY - RoomInterface.cursor.position[1]);
+        //RoomInterface.entity.offset[0] += (event.offsetX - RoomInterface.cursor.position[0]);
+        //RoomInterface.entity.offset[1] += (event.offsetY - RoomInterface.cursor.position[1]);
 
         RoomInterface.cursor.position = [ event.offsetX, event.offsetY ];
     });
     
-    RoomInterface.entity.canvas.addEventListener("touchstart", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("touchstart", (event) => {
         RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
         RoomInterface.cursor.down = true;
     });
     
-    RoomInterface.entity.canvas.addEventListener("touchmove", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("touchmove", (event) => {
         if(RoomInterface.cursor.position == null)
             RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
 
         if(!RoomInterface.cursor.down)
             return;
 
-        RoomInterface.entity.offset[0] += (event.touches[0].clientX - RoomInterface.cursor.position[0]);
-        RoomInterface.entity.offset[1] += (event.touches[0].clientY - RoomInterface.cursor.position[1]);
+        RoomInterface.entity.offset.left += (event.touches[0].clientX - RoomInterface.cursor.position[0]);
+        RoomInterface.entity.offset.top += (event.touches[0].clientY - RoomInterface.cursor.position[1]);
 
         RoomInterface.cursor.position = [ event.touches[0].clientX, event.touches[0].clientY ];
     });
     
-    RoomInterface.entity.canvas.addEventListener("touchend", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("touchend", (event) => {
         RoomInterface.cursor.down = false;
     });
     
-    RoomInterface.entity.canvas.addEventListener("dblclick", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("dblclick", (event) => {
         if(RoomInterface.furniture.place.enabled)
             return;
 
@@ -82,7 +82,7 @@ RoomInterface.cursor = new function() {
             RoomInterface.cursor.events.doubleclick[index](RoomInterface.entity.currentEntity, event);
     });
     
-    RoomInterface.entity.canvas.addEventListener("click", (event) => {
+    RoomInterface.entity.canvas.canvas.addEventListener("click", (event) => {
         if(performance.now() - RoomInterface.cursor.downTimestamp > 250)
             return;
 
@@ -104,7 +104,7 @@ RoomInterface.cursor = new function() {
             RoomInterface.cursor.events.click[index](RoomInterface.entity.currentEntity, event);
     });
     
-    RoomInterface.entity.canvas.addEventListener("mouseout", () => {
+    RoomInterface.entity.canvas.canvas.addEventListener("mouseout", () => {
         RoomInterface.cursor.down = false;
 
         RoomInterface.cursor.position = [ 0, 0 ];
