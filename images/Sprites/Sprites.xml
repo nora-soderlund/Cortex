@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:2994c346530078f071f6b6d53a84290a:39a60534cf64292f03e06149b09e6db1:c43aba4fdaea3040fc976da76a6a1485$ -->
+<!-- $TexturePacker:SmartUpdate:b4b0a370501c5a7ad2f60d47d2f49807:9606b0901d42af78ccb3f2912c8ab161:c43aba4fdaea3040fc976da76a6a1485$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,8 +19,8 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Sprites.png" width="247" height="252">
-    <sprite n="arrow-big-left" x="52" y="37" w="44" h="29"/>
+<TextureAtlas imagePath="Sprites.png" width="252" height="252">
+    <sprite n="arrow-big-left" x="80" y="37" w="44" h="29"/>
     <sprite n="beta" x="5" y="0" w="16" h="7"/>
     <sprite n="cross" x="127" y="0" w="11" h="11"/>
     <sprite n="cursor-pointer" x="34" y="37" w="18" h="24"/>
@@ -31,13 +31,14 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="dropdown" x="89" y="0" w="10" h="10"/>
     <sprite n="dropup" x="99" y="0" w="10" h="10"/>
     <sprite n="information" x="53" y="16" w="17" h="18"/>
-    <sprite n="lock-big-password" x="138" y="77" w="36" h="44"/>
-    <sprite n="lock-big-private" x="80" y="77" w="29" h="43"/>
-    <sprite n="lock-big-public" x="109" y="77" w="29" h="43"/>
+    <sprite n="lock-big-password" x="178" y="77" w="36" h="44"/>
+    <sprite n="lock-big-private" x="120" y="77" w="29" h="43"/>
+    <sprite n="lock-big-public" x="149" y="77" w="29" h="43"/>
     <sprite n="lock" x="195" y="0" w="13" h="16"/>
-    <sprite n="menu-camera" x="174" y="77" w="38" h="45"/>
+    <sprite n="menu-camera" x="214" y="77" w="38" h="45"/>
+    <sprite n="menu-hotel" x="52" y="37" w="28" h="28"/>
     <sprite n="menu-pointer-right" x="21" y="0" w="8" h="8"/>
-    <sprite n="menu-sub-achievements" x="96" y="37" w="31" h="30"/>
+    <sprite n="menu-sub-achievements" x="124" y="37" w="31" h="30"/>
     <sprite n="pen" x="70" y="16" w="17" h="18"/>
     <sprite n="player-next" x="208" y="0" w="21" h="16"/>
     <sprite n="player-pause" x="229" y="0" w="16" h="16"/>
@@ -49,12 +50,12 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="pointer-right" x="37" y="0" w="8" h="8"/>
     <sprite n="reference" x="138" y="0" w="13" h="11"/>
     <sprite n="room-chat-history" x="87" y="16" w="98" h="21"/>
-    <sprite n="room-door-plus" x="127" y="37" w="40" h="40"/>
+    <sprite n="room-door-plus" x="155" y="37" w="40" h="40"/>
     <sprite n="room-thumbnail" x="0" y="122" w="71" h="55"/>
-    <sprite n="room-tile-add" x="167" y="37" w="40" h="40"/>
-    <sprite n="room-tile-down" x="207" y="37" w="40" h="40"/>
-    <sprite n="room-tile-remove" x="0" y="77" w="40" h="40"/>
-    <sprite n="room-tile-up" x="40" y="77" w="40" h="40"/>
+    <sprite n="room-tile-add" x="195" y="37" w="40" h="40"/>
+    <sprite n="room-tile-down" x="0" y="77" w="40" h="40"/>
+    <sprite n="room-tile-remove" x="40" y="77" w="40" h="40"/>
+    <sprite n="room-tile-up" x="80" y="77" w="40" h="40"/>
     <sprite n="settings" x="185" y="16" w="21" h="21"/>
     <sprite n="success" x="164" y="0" w="16" h="13"/>
     <sprite n="tiles" x="109" y="0" w="18" h="10"/>

@@ -22,6 +22,8 @@ class Dialog {
     };
     
     create() {
+        console.log("create");
+
         if(this.created)
             return;
 
@@ -112,12 +114,18 @@ class Dialog {
     };
 
     show() {
+        console.log("show");
         this.create();
 
         this.active = true;
 
-        for(let index in this.events.show)
+        console.log(this.events.show.length);
+
+        for(let index = 0; index < this.events.show.length; index++) {
+            console.log("call " + index);
+
             this.events.show[index]();
+        }
 
         this.element.style.display = "block";
     };

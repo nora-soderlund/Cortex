@@ -1,0 +1,17 @@
+#hotel {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    background: linear-gradient(to bottom, #069, #15507c);
+
+    &.active {
+        display: block;
+    }
+}

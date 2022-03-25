@@ -15,13 +15,15 @@ const RoomCreation = new class extends Dialog {
 
         super(settings);
 
-        this.events.create.push(function() {
+        this.events.create.push(() => {
+            console.error("create");
             this.element.style.overflow = "initial";
     
             this.content.classList.add("room-creation");
         });
 
-        this.events.show.push(function() {
+        this.events.show.push(() => {
+            console.error("show");
             Client.rooms.navigator.hide();
     
             this.settings = {};
@@ -29,7 +31,7 @@ const RoomCreation = new class extends Dialog {
             this.showProperties();
         });
     
-        this.events.destroy.push(function() {
+        this.events.destroy.push(() => {
             if(RoomCreation.editor != undefined) {
                 RoomCreation.editor.destroy();
     

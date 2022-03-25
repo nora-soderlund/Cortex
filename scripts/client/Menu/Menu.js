@@ -13,6 +13,10 @@ const Menu = new class {
         this.icons = this.element.querySelector(".menu-items");
         this.chat = this.element.querySelector(".menu-chat");
 
+        this.addItem("hotel", function() {
+            
+        });
+
         this.addItem("navigator", function() {
             Client.rooms.navigator.toggle();
         });

@@ -1,6 +1,6 @@
 $url: url('./../images/Sprites/Sprites.png');
 
-@mixin sprite-arrow-big-left { background: $url -52px -37px; width: 44px; height: 29px; }
+@mixin sprite-arrow-big-left { background: $url -80px -37px; width: 44px; height: 29px; }
 .sprite-arrow-big-left { position: relative; width: 44px; height: 29px; margin-right: 44px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-arrow-big-left(); } }
 
 @mixin sprite-beta { background: $url -5px -0px; width: 16px; height: 7px; }
@@ -33,25 +33,28 @@ $url: url('./../images/Sprites/Sprites.png');
 @mixin sprite-information { background: $url -53px -16px; width: 17px; height: 18px; }
 .sprite-information { position: relative; width: 17px; height: 18px; margin-right: 17px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-information(); } }
 
-@mixin sprite-lock-big-password { background: $url -138px -77px; width: 36px; height: 44px; }
+@mixin sprite-lock-big-password { background: $url -178px -77px; width: 36px; height: 44px; }
 .sprite-lock-big-password { position: relative; width: 36px; height: 44px; margin-right: 36px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-lock-big-password(); } }
 
-@mixin sprite-lock-big-private { background: $url -80px -77px; width: 29px; height: 43px; }
+@mixin sprite-lock-big-private { background: $url -120px -77px; width: 29px; height: 43px; }
 .sprite-lock-big-private { position: relative; width: 29px; height: 43px; margin-right: 29px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-lock-big-private(); } }
 
-@mixin sprite-lock-big-public { background: $url -109px -77px; width: 29px; height: 43px; }
+@mixin sprite-lock-big-public { background: $url -149px -77px; width: 29px; height: 43px; }
 .sprite-lock-big-public { position: relative; width: 29px; height: 43px; margin-right: 29px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-lock-big-public(); } }
 
 @mixin sprite-lock { background: $url -195px -0px; width: 13px; height: 16px; }
 .sprite-lock { position: relative; width: 13px; height: 16px; margin-right: 13px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-lock(); } }
 
-@mixin sprite-menu-camera { background: $url -174px -77px; width: 38px; height: 45px; }
+@mixin sprite-menu-camera { background: $url -214px -77px; width: 38px; height: 45px; }
 .sprite-menu-camera { position: relative; width: 38px; height: 45px; margin-right: 38px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-menu-camera(); } }
+
+@mixin sprite-menu-hotel { background: $url -52px -37px; width: 28px; height: 28px; }
+.sprite-menu-hotel { position: relative; width: 28px; height: 28px; margin-right: 28px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-menu-hotel(); } }
 
 @mixin sprite-menu-pointer-right { background: $url -21px -0px; width: 8px; height: 8px; }
 .sprite-menu-pointer-right { position: relative; width: 8px; height: 8px; margin-right: 8px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-menu-pointer-right(); } }
 
-@mixin sprite-menu-sub-achievements { background: $url -96px -37px; width: 31px; height: 30px; }
+@mixin sprite-menu-sub-achievements { background: $url -124px -37px; width: 31px; height: 30px; }
 .sprite-menu-sub-achievements { position: relative; width: 31px; height: 30px; margin-right: 31px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-menu-sub-achievements(); } }
 
 @mixin sprite-pen { background: $url -70px -16px; width: 17px; height: 18px; }
@@ -87,22 +90,22 @@ $url: url('./../images/Sprites/Sprites.png');
 @mixin sprite-room-chat-history { background: $url -87px -16px; width: 98px; height: 21px; }
 .sprite-room-chat-history { position: relative; width: 98px; height: 21px; margin-right: 98px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-chat-history(); } }
 
-@mixin sprite-room-door-plus { background: $url -127px -37px; width: 40px; height: 40px; }
+@mixin sprite-room-door-plus { background: $url -155px -37px; width: 40px; height: 40px; }
 .sprite-room-door-plus { position: relative; width: 40px; height: 40px; margin-right: 40px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-door-plus(); } }
 
 @mixin sprite-room-thumbnail { background: $url -0px -122px; width: 71px; height: 55px; }
 .sprite-room-thumbnail { position: relative; width: 71px; height: 55px; margin-right: 71px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-thumbnail(); } }
 
-@mixin sprite-room-tile-add { background: $url -167px -37px; width: 40px; height: 40px; }
+@mixin sprite-room-tile-add { background: $url -195px -37px; width: 40px; height: 40px; }
 .sprite-room-tile-add { position: relative; width: 40px; height: 40px; margin-right: 40px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-tile-add(); } }
 
-@mixin sprite-room-tile-down { background: $url -207px -37px; width: 40px; height: 40px; }
+@mixin sprite-room-tile-down { background: $url -0px -77px; width: 40px; height: 40px; }
 .sprite-room-tile-down { position: relative; width: 40px; height: 40px; margin-right: 40px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-tile-down(); } }
 
-@mixin sprite-room-tile-remove { background: $url -0px -77px; width: 40px; height: 40px; }
+@mixin sprite-room-tile-remove { background: $url -40px -77px; width: 40px; height: 40px; }
 .sprite-room-tile-remove { position: relative; width: 40px; height: 40px; margin-right: 40px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-tile-remove(); } }
 
-@mixin sprite-room-tile-up { background: $url -40px -77px; width: 40px; height: 40px; }
+@mixin sprite-room-tile-up { background: $url -80px -77px; width: 40px; height: 40px; }
 .sprite-room-tile-up { position: relative; width: 40px; height: 40px; margin-right: 40px; &:after { content: ''; position: absolute; left: 0; top: 0; @include sprite-room-tile-up(); } }
 
 @mixin sprite-settings { background: $url -185px -16px; width: 21px; height: 21px; }

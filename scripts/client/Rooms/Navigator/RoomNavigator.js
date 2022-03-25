@@ -93,7 +93,8 @@ Client.rooms.navigator = new function() {
         create.addEventListener("click", () => {
             RoomCreation.toggle();
         });
-        entity.tabs.header.append(entity.home);
+        entity.tabs.header.append(create);
+        console.log(entity.tabs.header);
 
         entity.tabs.show("my_rooms");
 
