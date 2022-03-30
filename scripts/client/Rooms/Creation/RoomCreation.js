@@ -178,7 +178,7 @@ const RoomCreation = new class extends Dialog {
         
         const tabs = new DialogTabs(231);
 
-        tabs.add("default", "Default Maps", function(element) {
+        tabs.add("default", "Default Maps", (element) => {
             if(RoomCreation.editor != undefined) {
                 RoomCreation.editor.destroy();
 
@@ -187,9 +187,9 @@ const RoomCreation = new class extends Dialog {
 
             element.parentElement.style.overflow = "auto";
 
-            const models = document.createElement("div");
-            models.className = "room-creation-models";
-            element.append(models);
+            const roomCreationModels = document.createElement("div");
+            roomCreationModels.className = "room-creation-models";
+            element.append(roomCreationModels);
 
             for(let index in models) {
                 const map = models[index].map.split('|');
@@ -207,12 +207,12 @@ const RoomCreation = new class extends Dialog {
                 element.innerHTML = `
                     <p class="room-creation-model-tiles">${tiles} tiles</div>
                 `;
-                models.append(element);
+                roomCreationModels.append(element);
                 
                 element.prepend(new RoomCreationMap(map, models[index].door));
 
                 element.addEventListener("click", () => {
-                    models.querySelector(".room-creation-model.active").classList.remove("active");
+                    roomCreationModels.querySelector(".room-creation-model.active")?.classList.remove("active");
 
                     element.classList.add("active");
 
@@ -224,7 +224,7 @@ const RoomCreation = new class extends Dialog {
             }
         });
 
-        tabs.add("editor", "Map Editor", function(element) {
+        tabs.add("editor", "Map Editor", (element) => {
             element.parentElement.style.overflow = "visible";
 
             const grid = document.createElement("div");
@@ -273,7 +273,7 @@ const RoomCreation = new class extends Dialog {
                 }
             };
 
-            const editor = new Client.rooms.editor(data, function(map) {
+            const editor = new Client.rooms.editor(data, (map) => {
                 this.settings.map.map = map;
 
                 //const $canvas = new RoomCreationMap(map.split('|'), this.settings.map.door);

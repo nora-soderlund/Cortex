@@ -24,7 +24,7 @@ class DialogSelection {
             optionsElement.appendChild(option);
     
             option.addEventListener("click", () => {
-                optionsElement.querySelector(".dialog-selection-option.active").classList.remove("active");
+                optionsElement.querySelector(".dialog-selection-option.active")?.classList.remove("active");
     
                 option.classList.add("active");
     

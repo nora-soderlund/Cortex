@@ -11,7 +11,11 @@ class Dialog {
         this.active = false;
         this.created = false;
 
-        this.size = { width: settings.size.width || "auto", height: settings.size.height || "auto" };
+        this.size = {
+            width: ((settings.size != undefined)?(settings.size.width || "auto"):("auto")),
+            height: ((settings.size != undefined)?(settings.size.height || "auto"):("auto"))
+        };
+        
         this.offset = settings.offset || { type: "center", left: 0, top: 0 };
 
         this.title = settings.title || "Loading...";

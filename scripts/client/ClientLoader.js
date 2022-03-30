@@ -95,36 +95,41 @@ class Loader {
 Loader.addStep(async function(finished) {
     Loader.setText("Loading configuration...");
 
-    Loader.settings = await (await fetch("/scripts/client.json")).json();
+    Loader.settings = await (await fetch("/manifest.json")).json();
 
     finished();
 });
 
-Loader.addStep(function(finished) {
-    /*if(Loader.settings.scripts.length == 0)
-        return finished();
+Loader.addStep(async function(finished) {
+    if(Loader.settings.version == "debug") {
+        const scripts = await (await fetch("/scripts.json")).json();
 
-    console.log("[%cLoader%c]%c Starting the download of the client scripts...", "color: orange", "color: inherit", "color: lightblue");
-    
-    Loader.setText("Downloading scripts...");
-    
-    Loader.loadScripts(Loader.settings.scripts, function() {
-        console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
+        if(scripts.length == 0)
+            return finished();
 
-        finished();
-    });*/
+        console.log("[%cLoader%c]%c Starting the download of the client scripts...", "color: orange", "color: inherit", "color: lightblue");
+        
+        Loader.setText("Downloading scripts...");
+        
+        Loader.loadScripts(scripts, function() {
+            console.log("[%cLoader%c]%c Finished loading the client scripts!", "color: orange", "color: inherit", "color: lightblue");
 
-    console.log("[%cLoader%c]%c Downloading and running the client...", "color: orange", "color: inherit", "color: lightblue");
+            finished();
+        });
+    }
+    else {
+        console.log("[%cLoader%c]%c Downloading and running the client...", "color: orange", "color: inherit", "color: lightblue");
 
-    const element = document.createElement("script");
-    
-    element.onload = () => {
-        finished();
-    };
+        const element = document.createElement("script");
+        
+        element.onload = () => {
+            finished();
+        };
 
-    element.src = `/scripts/client.js`;
+        element.src = `/scripts/client.js`;
 
-    document.body.append(element);
+        document.body.append(element);
+    }
 });
 
 Loader.addStep(function(finished) {

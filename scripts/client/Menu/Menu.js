@@ -59,7 +59,9 @@ const Menu = new class {
 
 Loader.ready(function() {
     const user = Menu.addItem("user", function() {
-        MenuSub.element.style.display = ((MenuSub.element.style.display == "none")?("block"):("none"));
+        WardrobeDialog.toggle();
+        
+        //MenuSub.element.style.display = ((MenuSub.element.style.display == "none")?("block"):("none"));
     });
 
     user.innerHTML = "";
