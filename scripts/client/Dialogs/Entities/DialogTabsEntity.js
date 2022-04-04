@@ -7,10 +7,11 @@ class DialogTabs {
         this.element.innerHTML = `
             <div class="dialog-tabs-header"></div>
 
-            <div class="dialog-tabs-container" style="height: ${height}px">
+            <div class="dialog-tabs-container">
                 <div class="dialog-tabs-content"></div>
             </div>
         `;
+        this.element.style.height = `${height}px`;
     
         this.header = this.element.querySelector(".dialog-tabs-header");
         this.content = this.element.querySelector(".dialog-tabs-content");

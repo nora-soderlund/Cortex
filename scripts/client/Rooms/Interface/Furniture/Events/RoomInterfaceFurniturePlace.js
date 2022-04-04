@@ -42,7 +42,7 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.push(this.hover);
         RoomInterface.cursor.events.unhover.push(this.unhover);
 
-        RoomInterface.entity.canvas.addEventListener("wheel", this.scroll);
+        RoomInterface.entity.canvas.canvas.addEventListener("wheel", this.scroll);
     };
 
     this.hover = function(position) {
@@ -81,8 +81,8 @@ RoomInterface.furniture.place = new function() {
 
         RoomInterface.furniture.place.iconShown = true;
 
-        RoomInterface.entity.canvas.addEventListener("mousemove", RoomInterface.furniture.place.move);
-    };
+        RoomInterface.entity.canvas.canvas.addEventListener("mousemove", RoomInterface.furniture.place.move);
+    }; 
 
     this.hideIcon = function() {
         if(RoomInterface.furniture.place.iconShown == false)
@@ -90,7 +90,7 @@ RoomInterface.furniture.place = new function() {
 
         RoomInterface.furniture.place.iconShown = false;
 
-        RoomInterface.entity.canvas.removeEventListener("mousemove", RoomInterface.furniture.place.move);
+        RoomInterface.entity.canvas.canvas.removeEventListener("mousemove", RoomInterface.furniture.place.move);
         
         RoomInterface.furniture.place.icon.style.display = "none";
     };
@@ -125,7 +125,7 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.push(RoomInterface.furniture.place.hover);
         RoomInterface.cursor.events.unhover.push(RoomInterface.furniture.place.unhover);
    
-        RoomInterface.entity.canvas.addEventListener("wheel", RoomInterface.furniture.place.scroll);
+        RoomInterface.entity.canvas.canvas.addEventListener("wheel", RoomInterface.furniture.place.scroll);
 
         RoomInterface.element.append(RoomInterface.furniture.place.icon);
     };
@@ -136,7 +136,7 @@ RoomInterface.furniture.place = new function() {
         RoomInterface.cursor.events.hover.splice(RoomInterface.cursor.events.hover.indexOf(RoomInterface.furniture.place.hover), 1);
         RoomInterface.cursor.events.unhover.splice(RoomInterface.cursor.events.unhover.indexOf(RoomInterface.furniture.place.unhover), 1);
    
-        RoomInterface.entity.canvas.removeEventListener("wheel", RoomInterface.furniture.place.scroll);
+        RoomInterface.entity.canvas.canvas.removeEventListener("wheel", RoomInterface.furniture.place.scroll);
 
         RoomInterface.furniture.place.icon.remove();
     };

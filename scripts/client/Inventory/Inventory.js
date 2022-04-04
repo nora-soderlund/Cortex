@@ -16,7 +16,7 @@ const Inventory = new Dialog({
 Inventory.pages = {};
 
 Inventory.events.create.push(async function() {
-    Inventory.tabs = new DialogTabs("100%");
+    Inventory.tabs = new DialogTabs("280");
 
     Inventory.tabs.element.classList.add("inventory-tabs");
 

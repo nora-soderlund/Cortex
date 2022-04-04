@@ -26,7 +26,7 @@ Inventory.pages.furnitures = function(element) {
         if(RoomInterface.active == true) {
             const button = document.createElement("div");
             button.className = "dialog-button";
-            button.innerTExt = "Place in room";
+            button.innerText = "Place in room";
             
             display.querySelector(".inventory-furniture-display-information").append(button);
 
