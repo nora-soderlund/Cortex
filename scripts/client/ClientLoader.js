@@ -126,7 +126,7 @@ Loader.addStep(async function(finished) {
             finished();
         };
 
-        element.src = `/scripts/client.js`;
+        element.src = `/scripts/client.js?v=${new Date().getMilliseconds()}`;
 
         document.body.append(element);
     }
